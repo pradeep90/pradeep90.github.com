@@ -5,6 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>My Website - Bash - Average of Nth fields</title>
         <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     </head>
     <body>
         <div id="header">
@@ -55,7 +56,7 @@ test_bar.py:43</code></pre>
 <li>repeatable</li>
 </ul>
 <h3 id="heres-one-idea">Here’s one idea</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">awk</span> -F: <span class="st">'{ sum += $2 } END { print sum / NR }</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">awk</span> -F: <span class="st">'{ sum += $2 } END { print sum / NR }'</span></code></pre>
 <p>You can figure out what it means even if you aren’t familiar with Awk.</p>
 <p>Awk will iterate over each line and pattern-match based on the rules we gave.</p>
 <p>Here’s the breakdown:</p>
