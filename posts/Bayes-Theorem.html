@@ -67,7 +67,7 @@
 <p><strong>Posterior odds</strong> = <strong>Prior odds</strong> * <strong>Likelihood ratio</strong></p>
 </blockquote>
 <p>Prior odds represent our probability estimates for the hypotheses before seeing the evidence.</p>
-<p>Likelihood Ratio says whether the evidence strongly supports or contradicts any hypotheses.</p>
+<p><strong>Likelihood Ratio</strong> says whether the evidence strongly supports or contradicts any hypotheses. <em>This</em> captures differing predictions which differ only in likelihood. <em>This</em> will help us distinguish between subtly different hypotheses.</p>
 <p>Posterior odds tells us our probability estimates for the hypotheses after updating on the evidence.</p>
 <p>Prior odds = Prior probability for H : Prior probability for ~H</p>
 <p>where H is the hypothesis, and ~H is the inverse of this hypothesis (i.e., the union of all the alternative hypotheses). If there are just two hypotheses, then it’s just H1 and H2 - like the coin will land on heads or tails.</p>
@@ -78,26 +78,28 @@
 <p>1% of women at age forty who participate in routine screening have breast cancer. 80% of women with breast cancer will get positive mammographies. 9.6% of women without breast cancer will also get positive mammographies. A woman in this age group had a positive mammography in a routine screening. What is the probability that she actually has breast cancer?</p>
 </blockquote>
 <p>The Prior odds of a woman having breast cancer = 1:99 (because probability = 1% = 1/100. So odds = 1:(100 - 1))</p>
-<p>If you have breast cancer, likelihood of getting positive mammography = 80%</p>
-<p>If you don’t have breast cancer, likelihood of getting positive mammography = 9.6%</p>
-<p>So, likelihood ratio for getting a positive mammography = 80 / 9.6 = 8.33</p>
-<p>It’s quite greater than 1, so it’s strong evidence. You get a positive mammography, you should increase your estimate that you have breast cancer.</p>
-<p>But, wait…</p>
-<p>Posterior odds = Prior odds * Likelihood ratio = (1:99) * 8.33 = 8.33 : 99</p>
-<p>In probability terms, that is 8.33 / (8.33 + 99) = 0.0776 = <strong>7.76%</strong></p>
+<p>If you have breast cancer, likelihood of getting positive mammography = 98%</p>
+<p>If you don’t have breast cancer, likelihood of getting positive mammography = 9.8%</p>
+<blockquote>
+<p>You get a positive mammography. Damn. It means you have breast cancer, right? Isn’t that a distinguishing evidence? I mean, look, if you have breast cancer, 98% chance you will get positive mammography. And you <em>got</em> positive mammography. That means it’s 98% likely you have cancer! Right? OMG OMG OMG. I’m freaking out.</p>
+</blockquote>
+<p>Wait…</p>
+<p>Likelihood ratio for getting a positive mammography = 98 / 9.8 = 10</p>
+<p>Posterior odds = Prior odds * Likelihood ratio = (1:99) * 10 = 10 : 99</p>
+<p>In probability terms, that is 10 / (10 + 99) = 0.0917 = <strong>9.17%</strong></p>
+<p>Posterior probability after the test result is <strong>9.17%</strong> that you have breast cancer.</p>
 <h1 id="the-laws-of-reasoning">The Laws of Reasoning</h1>
-<p>Wait a minute! Even after getting a positive f*cking mammography, your probability is still less than 8%.</p>
-<p>Holy Crap! That means that you shouldn’t be so scared.</p>
-<p>Imagine what we would think by default: we would take a positive test result to mean that <em>for sure</em> we have cancer.</p>
+<p>Wait a minute! Even after getting a positive f*cking mammography, your probability is still less than 10%.</p>
+<p>Holy Crap! Imagine what we would think by default: we would take a positive test result to mean that <em>for sure</em> we have cancer.</p>
 <p>Nope. That is plain wrong. This is a super counter-intuitive insight that Bayes Theorem gives us.</p>
 <p><em>This</em> is why we need to think like Bayesians, not dumbasses. And this is just the tip of the iceberg.</p>
 <p>Anywhere you need to come to correct beliefs, you <em>need</em> to use Bayes Theorem. Remember, there is <a href="./The-Prediction-Game.html#what-does-probability-mean">one correct answer</a> in Reality. Bayes Theorem is how we get to that correct answer. It’s not a tool or a cool technique. It is the fundamental Law of Reasoning.</p>
 <p>You can’t just have any damn beliefs you want about the world. The only <em>correct</em> beliefs are those in accordance with the Laws of Reasoning. You may not be able to compute it at all times, but you must keep it in mind that there is a right answer and that any arbitrary beliefs you happen to hold are almost certainly wrong.</p>
 <p>The more you use Bayes Theorem, the more you will get to correct beliefs, i.e., you will get to the Hypotheses with high Prediction Score. The more you violate this Law, the worse your Prediction Score will get.</p>
-<p>And remember, your Prediction Score determines everything. We wanted to maximize Utility. For that, we found we needed to maximize Prediction Score. For that, we found we needed to discover Hypotheses with highest Prediction Score and lowest Complexity. And for <em>that</em>, we now realize, we need to use Bayes Theorem.</p>
+<p>And remember, your Prediction Score determines everything. We wanted to maximize Utility. For that, we found we need to maximize Prediction Score. For that, we found we need to discover Hypotheses with highest Prediction Score and lowest Complexity. And for <em>that</em>, we now realize, we need to use Bayes Theorem.</p>
 <h1 id="evidence-and-likelihood-ratio">Evidence and Likelihood Ratio</h1>
 <p>Bayes Theorem rewards hypotheses in proportion to the amount they <a href="./The-Prediction-Game.html">bet</a> on the winning outcome. What matters here is not the absolute bet your hypothesis makes, but your bet <em>relative</em> to the other hypotheses’ bets.</p>
-<p>Make the right predictions, and more importantly, make them accurately where others are wrong. If you can keep your prediction accuracy when all around you are losing theirs, yours is the Posterior Probability and everything in it.</p>
+<p>Make the right predictions, and more importantly, make them accurately where others are wrong. If you can keep your prediction accuracy when all around you are losing theirs, yours are the Posterior Odds and everything in them.</p>
 <p>Those hypotheses that predicted the winning outcome will get pushed up. Those that didn’t will perish. That is what the <em>Likelihood Ratio</em> captures. The more uniquely you predict something, the more your Likelihood Ratio will be. The more you mis-predict like a dumbass, the less your Likelihood Ratio will be.</p>
 <p>Likelihood Ratio = Likelihood of evidence given H / Likelihood of evidence given ~H</p>
 <p>aka how much you said it would happen / how much the other guy said it would happen.</p>
@@ -106,7 +108,7 @@
 <li><p>Strong Evidence in favour of your Hypothesis</p>
 <p>You say it will happen for sure. He says it won’t happen at all. It happens. You win. He bites the dust.</p>
 <p>You say 80% chance of happening.</p>
-<p>The other hypothesis says only 10% chance of happening.</p>
+<p>The other hypothesis-guy says only 10% chance of happening.</p>
 <p>It happens.</p>
 <p>Your Likelihood Ratio for this evidence = 80 / 10 = 8.</p>
 <p>This means your Posterior Odds = Prior Odds * 8.</p>
