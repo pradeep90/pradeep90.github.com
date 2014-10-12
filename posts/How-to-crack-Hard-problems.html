@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Rationality Essays - How to crack Hard problems</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/hello-world.js"></script>
+	<script type="text/javascript" src="../js/header-links.js"></script>
+
+	<!-- Google Analytics stuff -->
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-51321929-1', 'pradeep90.github.io');
+	  ga('send', 'pageview');
+
+	</script>
+
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="../">Rationality Essays</a>
+            </div>
+            <div id="navigation">
+                <a href="../">Home</a>
+                <a href="../sequences.html">Sequences</a>
+                <!-- <a href="/about.html">About</a> -->
+                <a href="../archive.html">Archive</a>
+            </div>
+        </div>
+
+        <div id="content">
+            <h1>How to crack Hard problems</h1>
+
+            <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center>
+
+<h1 id="how-indeed">How indeed?</h1>
+<p>Bang your head against the problem in every single way you can imagine.</p>
+<p>Struggle to understand it. This is what your expression should look like.</p>
+<center>
+<div class="figure">
+<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Clint_Eastwood_-_1960s.JPG/393px-Clint_Eastwood_-_1960s.JPG" alt="The Clint Eastwood squint" /><p class="caption">The Clint Eastwood squint</p>
+</div>
+</center>
+
+<p>At <strong>no</strong> point are you allowed to go ask somebody else for help. At no point are you allowed to go off and search for the solution online.</p>
+<h1 id="hard-problems">Hard problems</h1>
+<p>Concretely, what does this look like?</p>
+<p>You know those exercises at the end of every chapter in a top-class textbook (Math, Science, Engineering, whatever)?</p>
+<p>We may do the Easy questions, no problem. It’s just a breeze.</p>
+<p>Then, there are the Medium questions - stuff that will take at least 15 minutes for you to get them.</p>
+<p>What I mean here by HARD problems is not even the Difficult questions marked in the third part of the exercise set.</p>
+<p>What I mean is the kind of problem that is marked with a star. The ones that are optional for the class. All the extra-super-hard problems right at the end that nobody in their right mind does.</p>
+<p>Yeah. THOSE problems.</p>
+<p>That’s the beginning of what I mean by HARD problems. Needless to say, once you’re capable of solving the real-frigging-hard problems, the difficult problems will begin to seem mere ordinary problems that you solve without thinking twice.</p>
+<hr />
+<h1 id="here-are-some-steps">Here are some steps</h1>
+<h2 id="step-1-make-a-list-of-all-the-things-you-dont-understand---all-the-concepts">Step 1: Make a list of all the things you don’t understand - all the concepts</h2>
+<h2 id="step-2-turn-that-into-a-list-of-specific-questions">Step 2: Turn that into a list of <em>specific</em> questions</h2>
+<p>Need not be complete. This is an ongoing list.</p>
+<p>Write down exactly <strong>WHY</strong> you can’t solve the problem right now.</p>
+<h2 id="step-3-go-through-the-material-you-have-and-mark-out-the-stuff-that-you-understand-for-sure.">Step 3: Go through the material you have and mark out the stuff that you understand for sure.</h2>
+<p>Cool. Sense of progress. Feeling that you can do it.</p>
+<p>Now, let’s take care of those other bastards.</p>
+<h2 id="step-4-take-each-unsolved-question-at-a-time">Step 4: Take each unsolved question at a time</h2>
+<p>Take each concept you haven’t understood yet, one at a time</p>
+<p>Go through the material you have, looking <em>specifically</em> for this concept.</p>
+<p>Ignore everything else, abstract away all extraneous detail, hone in on anything related to this concept.</p>
+<p>(More techniques later.)</p>
+<p>Do this for every concept / question on your list.</p>
+<h2 id="step-5-go-back-to-step-1-until-youre-nearly-done">Step 5: Go back to Step 1 until you’re nearly done</h2>
+<hr />
+<h1 id="a-personal-example">A personal example</h1>
+<h2 id="haskell-power-set-example">Haskell “power set” example</h2>
+<p>I was studying this awesome kick-ass introductory book on Haskell (<a href="http://learnyouahaskell.com/chapters">Learn you a Haskell for Great Good</a> - Insane book. Highly recommended).</p>
+<p>I was in the middle of the chapter on Monads. The author mentions that there’s a neat trick where you can get the power set of a set by using <code>filterM</code> in a simple manner.</p>
+<p>No prizes for guessing what I do.</p>
+<p>I need to test my understanding here.</p>
+<p>Cool. Won’t scroll down any further.</p>
+<p>For the next 30 minutes I was scribbling away on a notebook about some way of getting the power set from a list using <code>filterM</code>.</p>
+<p>To no avail.</p>
+<p>Tested out a couple of ideas in the Haskell interpreter. Nothing worked.</p>
+<blockquote>
+<p>“Ok. Fine, I tried. Let me just look at the solution now.”</p>
+</blockquote>
+<p>No. You’re not allowed to do that.</p>
+<p>Go home, Pradeep. (I was in the office at the time.)</p>
+<p>Cool. I went home.</p>
+<p>Came back the next day. Didn’t have a chance to do any Haskell that day.</p>
+<p>The day after that, I have some time.</p>
+<blockquote>
+<p>“Hmmm… Oh, yeah… I was stuck on this power set problem.”</p>
+</blockquote>
+<p>Hadn’t thought about the problem at all.</p>
+<p>Ok. Started a fresh attack on it.</p>
+<p>So, here’s the part where you expect me to say, “And then the answer just popped into my mind out of nowhere and I tested it out and it worked and I found my dream-girl princess because of this and we lived happily ever after.”</p>
+<p>Nah.</p>
+<p>I tried out some stuff for five minutes.</p>
+<p>And THEN the answer popped into my mind out of nowhere and all the rest of the stuff.</p>
+<p>The point is that, now I knew all the things that had been like vague “understandings” in my mind.</p>
+<p>You know, the kind where there’s some prof giving a lecture and you’re just nodding your head along and you even <strong>feel</strong> you understand him completely… but you really don’t. As evidenced by your results on the final exam.</p>
+<p>There’s just no substitute for hard action that tests your ability to its limits.</p>
+<hr />
+<h1 id="techniques">Techniques</h1>
+<h2 id="never-underestimate-the-power-of-a-good-nights-sleep">Never underestimate the power of a good night’s sleep</h2>
+<p>Q: What do you think sleep does for learning?</p>
+<p>(Answers coming soon.)</p>
+<h2 id="take-a-break">Take a break!</h2>
+<p>It is impossible for you to <em>think hard</em> about a problem for more than an hour at a time.</p>
+<hr />
+<h1 id="postlude">Postlude</h1>
+<p>When you have banged your head about for what seems like forever and have bruised your head to the size of a pumpkin, you may NOW go to a person in the know and ask two or three pointed specific questions.</p>
+<p>These questions should be like <em>door-keys</em>.</p>
+<p>You should be confident that once you have the answers to these questions (aka the <em>keys</em>), you can basically go straight ahead and open the door to the safe.</p>
+<p>You should have figured out just about everything else.</p>
+<p>Once you get these answers and turn the key in the keyhole, everything else should click into place and the safe should open.</p>
+<p>And here’s the kicker - the person you go to needn’t even know the answers.</p>
+<p>You will eventually advance to the point where nobody you know has the answers to all your questions.</p>
+<p>That’s cool.</p>
+<p>Just the process of searching together for the answer will give you the value you want. Putting your different perspectives into the problem should do the trick.</p>
+<h1 id="silent-guardian">Silent Guardian</h1>
+<p>Those were the techniques you can use, weapons in your Bat tool-belt. Weapons that you can use to blast through HARD problems.</p>
+<p>But what’s the most important component?</p>
+<p>You’ve got to believe.</p>
+<p>Believe what?</p>
+<p>“<strong>I’m Batman!</strong>” (in a gruff voice)</p>
+<p>You have to believe that with enough smart thinking, you CAN solve the problem.</p>
+<h1 id="watchful-protector">Watchful Protector</h1>
+<p>Here’s a personal example about confidence.</p>
+<p>The last project I worked on felt like it was too difficult. It seemed like I would never come to understand much of the code (It was a web browser layout engine project).</p>
+<p>For five months, the whole thing felt like a brick wall. Completely opaque. Couldn’t decipher it even if my life depended on it.</p>
+<p>Then, all of a sudden, a coworker - and very close companion here - started making a prolific number of commits to the project. He was just diving into the code head-first, and making changes here and there. Nothing too big on its own, mind you, but a lot of changes when taken over time. He was at the point where he was making 2 Pull Requests to the upstream repository every single day - one in the morning session, one in the afternoon.</p>
+<p>That’s a “Holy Crap!” moment, btw.</p>
+<p>I had basically been dragging my feet for the last couple of months. My mind had shut itself down, convinced that there was just no way to make sense of all the complex code and that only the insane awesome hackers upstream could make any meaningful changes to it.</p>
+<p>And here he was, going off making small changes here and there to every single part of the code.</p>
+<p>Holy Crap!</p>
+<p>That was the last straw.</p>
+<p>One month after that, I understood EVERY single line of the layout code. I knew <em>exactly</em> why every single case was there, why it did something.</p>
+<p>I discovered about a dozen mistakes in the code and opportunities for improvement.</p>
+<p>I got to the point where I could actually say, “This part here is <em>wrong</em>. And here’s <em>why</em>. And <em>this</em> is what we should be doing.”</p>
+<p>The brick wall had turned to clear glass.</p>
+<p>I could see everything. It was completely transparent now (except for the float-handling code - ain’t nobody in the world but pcwalton who can understand <em>that</em> code :P ).</p>
+<p>Enough bragging. I didn’t turn into some mutant or something.</p>
+<p>I was just able to very clearly understand something complex and intimidating that had held me at bay for months.</p>
+<p>Whenever I’m feeling doubtful about my ability to crack some complex-looking problem, I just need to think back to the times in my life where I have overcome problems that looked damn-near impossible to me. And then it’s back to Step One. I’m on my way.</p>
+<h1 id="dark-knight">Dark Knight</h1>
+<p>Now, I’m working on a completely different project. Something that’s perhaps 12x as complex as the previous one.</p>
+<p>It’s got 10x as much code as the previous one and it’s in a field I’ve never really worked in before.</p>
+<p>What should I do? :)</p>
+<p>Put on my Batsuit, of course.</p>
+<p><code>&lt;cue Dark Knight theme music. da da da da da da da...&gt;</code></p>
+
+<div class="info">Posted on April 18, 2014</div>
+<div class="info"><b>Tags</b>: Hard problems, problem-solving, confidence in rationality</div>
+
+<div style="text-align: right">
+  <p>Part of <a href="../sequences.html"><i>The Hard Problems Sequence</i></a>
+
+  <p>Previous post: &quot;<a href>Start of Sequence</a>&quot;
+
+  <p>Next post: &quot;<a href="What-is-holding-you-back.html">What is holding you back?</a>&quot;
+</div>
+
+<br />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'spkrationalitytrainingground'; // required: replace example with your forum shortname
+    var disqus_identifier = '/posts/How-to-crack-Hard-problems.html';
+    var disqus_title = 'How to crack Hard problems';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+        </div>
+        <div id="footer">
+	  All artwork by <a href="http://blog.sujeet.me/">Sujeet Gholap</a>.
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>
