@@ -62,15 +62,16 @@
 <p>But, there aren’t always hugely differing predictions. We can handle the case where hypotheses make exactly opposite predictions. But what if one guy says something will happen with a likelihood of 20% and the other guy says it will happen with a likelihood of 30%? What now? Should we just do nothing?</p>
 <p>Enter Mr. BT</p>
 <h1 id="the-epic-awesome-mr.bayes-theorem">The Epic Awesome Mr. Bayes Theorem</h1>
+<p>We know our current beliefs about the hypotheses (Prior Odds). We want to know our beliefs after looking at the evidence (Posterior Odds). How do we get from Prior Odds to Posterior Odds?</p>
 <p>Here you go:</p>
 <blockquote>
 <p><strong>Posterior odds</strong> = <strong>Prior odds</strong> * <strong>Likelihood ratio</strong></p>
 </blockquote>
 <p>Prior odds represent our probability estimates for the hypotheses before seeing the evidence.</p>
-<p><strong>Likelihood Ratio</strong> says whether the evidence strongly supports or contradicts any hypotheses. <em>This</em> captures differing predictions which differ only in likelihood. <em>This</em> will help us distinguish between subtly different hypotheses.</p>
+<p><strong>Likelihood Ratio</strong> says whether the evidence strongly supports or contradicts any hypotheses. <em>This</em> captures predictions which differ only in likelihood. <em>This</em> will help us distinguish between subtly different hypotheses.</p>
 <p>Posterior odds tells us our probability estimates for the hypotheses after updating on the evidence.</p>
 <p>Prior odds = Prior probability for H : Prior probability for ~H</p>
-<p>where H is the hypothesis, and ~H is the inverse of this hypothesis (i.e., the union of all the alternative hypotheses). If there are just two hypotheses, then it’s just H1 and H2 - like the coin will land on heads or tails.</p>
+<p>where H is this hypothesis, and ~H is the other hypothesis - the coin will land on heads or it will land on tails.</p>
 <p>Likelihood ratio for some evidence = Likelihood of seeing this evidence given H / Likelihood of seeing this evidence given ~H</p>
 <h1 id="worked-out-example">Worked-out Example</h1>
 <p>Problem statement:</p>
