@@ -67,16 +67,17 @@
 <blockquote>
 <p><strong>Posterior odds</strong> = <strong>Prior odds</strong> * <strong>Likelihood ratio</strong></p>
 </blockquote>
-<p>Prior odds represent our probability estimates for the hypotheses before seeing the evidence.</p>
-<p><strong>Likelihood Ratio</strong> says whether the evidence strongly supports or contradicts any hypotheses. <em>This</em> captures predictions which differ only in likelihood. <em>This</em> will help us distinguish between subtly different hypotheses.</p>
-<p>Posterior odds tells us our probability estimates for the hypotheses after updating on the evidence.</p>
+<p><strong>Prior odds</strong> represent our probability estimates for the hypotheses before seeing the evidence.</p>
 <p>Prior odds = Prior probability for H : Prior probability for ~H</p>
-<p>where H is this hypothesis, and ~H is the other hypothesis - the coin will land on heads or it will land on tails.</p>
+<p>where H is this hypothesis, and ~H is the other hypothesis (e.g., heads vs tails)</p>
+<p><strong>Posterior odds</strong> tells us our probability estimates for the hypotheses after updating on the evidence.</p>
+<p><strong>Likelihood Ratio</strong> says whether the evidence strongly supports or contradicts any hypotheses. <em>This</em> captures predictions which differ only in likelihood. <em>This</em> will help us distinguish between subtly different hypotheses.</p>
 <p>Likelihood ratio for some evidence = Likelihood of seeing this evidence given H / Likelihood of seeing this evidence given ~H</p>
+<p>If one hypothesis predicts something with more likelihood than another, then it will have a Likelihood Ratio &gt; 1, therefore its Odds will increase. The hypothesis which gave the smaller likelihood will have Likelihood Ratio &lt; 1, therefore its Odds will decrease. This matches our intuition - the hypothesis that predicted actual events with more certainty should be more true than the hypothesis that was more vague.</p>
 <h1 id="worked-out-example">Worked-out Example</h1>
 <p>Problem statement:</p>
 <blockquote>
-<p>1% of women at age forty who participate in routine screening have breast cancer. 80% of women with breast cancer will get positive mammographies. 9.6% of women without breast cancer will also get positive mammographies. A woman in this age group had a positive mammography in a routine screening. What is the probability that she actually has breast cancer?</p>
+<p>1% of women at age forty who participate in routine screening have breast cancer. 98% of women with breast cancer will get positive mammographies. 9.8% of women without breast cancer will also get positive mammographies. A woman in this age group had a positive mammography in a routine screening. What is the probability that she actually has breast cancer?</p>
 </blockquote>
 <p>The Prior odds of a woman having breast cancer = 1:99 (because probability = 1% = 1/100. So odds = 1:(100 - 1))</p>
 <p>If you have breast cancer, likelihood of getting positive mammography = 98%</p>
@@ -130,6 +131,10 @@
 <li><p>Not Evidence either way</p>
 <p>It ain’t evidence if it doesn’t distinguish between two hypotheses. If you say it will happen with 80% probability, and so does the other hypothesis, it doesn’t make any difference whether it happens or not. You know nothing more than you did before. Nobody wins.</p></li>
 </ul>
+<h1 id="sharp-and-unique">Sharp and Unique</h1>
+<p>The above discussion on Evidence means that Hypotheses that make sharp, <em>unique</em> predictions are generally more valuable than vague ones.</p>
+<p>If they are wrong, we get to know it quickly because they bet everything on a few, specific outcomes and so will be penalized with a very low Likelihood Ratio if something else happens. All the other outcomes are Strong evidence <em>against</em> them.</p>
+<p>And if they are right, then they Win like hell, because they will have very high Likelihood Ratio. It was a <em>unique</em> prediction. So, no one else predicted it. It was a <em>sharp</em> prediction. So, their likelihood for this outcome is very high. So the denominator is small and the numerator is high - bingo! Strong evidence <em>for</em> this hypothesis. Strong evidence <em>against</em> all the others. You have come to the truth about the matter - aka a Hypothesis with high Predictive Power. Exactly what you want.</p>
 <h1 id="reasoning-using-bayes-theorem">Reasoning using Bayes Theorem</h1>
 <p>Generate hypotheses about the world (or the specific thing you’re interested in). Collect evidence and update on them. Enjoy more accurate beliefs.</p>
 <p>Also, run hypothesis tests to produce new evidence. Look at the possible hypotheses and see where they make <em>differing predictions</em>.</p>
