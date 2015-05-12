@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Rationality Essays - New Big Problem: Complexity</title>
+        <link rel="stylesheet" type="text/css" href="../../css/default.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/highlight.css" />
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/hello-world.js"></script>
+	<script type="text/javascript" src="../../js/header-links.js"></script>
+
+	<!-- Google Analytics stuff -->
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-51321929-1', 'pradeep90.github.io');
+	  ga('send', 'pageview');
+
+	</script>
+
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="../../">Rationality Essays</a>
+            </div>
+            <div id="navigation">
+                <a href="../../">Home</a>
+                <a href="../../sequences.html">Sequences</a>
+                <!-- <a href="/about.html">About</a> -->
+                <a href="../../archive.html">Archive</a>
+            </div>
+        </div>
+
+        <div id="content">
+            <h1>New Big Problem: Complexity</h1>
+
+            <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center>
+
+<p><strong>Entry Question</strong>: Why aren’t we successful at cracking problems?</p>
+<hr />
+<h1 id="complexity">Complexity</h1>
+<p>This seems to happen even when we have a theoretical basis for solving the problem.</p>
+<p>It seems that some real-world problems are just too complex to be described by simple theories and that’s why we aren’t able to just solve them by using the theories.</p>
+<p>In terms of a Rationality technique, there seems to be No Silver Bullet that can guarantee an order of magnitude increase in Impact.</p>
+<h1 id="what-is-complexity">What is Complexity?</h1>
+<p>Taboo it.</p>
+<p>Examples of Complexity:</p>
+<p>Why can’t we understand a technical paper in one shot? Why does it take such a long time to understand difficult matters?</p>
+<p>Hypothesis: Complexity = Hardness of a Problem</p>
+<p>The harder a problem is, the more complex it is.</p>
+<p>But calling it “complex” doesn’t tell us anything more about it. It doesn’t pay any more rent. We can already see that the problem is hard. Knowing that is “complex” doesn’t give us any more hint about the solution.</p>
+<p>Hypothesis: Complexity = Cost of the Solution</p>
+<p>Cost is what we care about.</p>
+<p>If we can get a solution at low cost (time, energy, resources, whatever), then we don’t care how “complex” it is and so on.</p>
+<p>For example, we humans can hop, skip, and jump our way across any street. Pretty hard to get a robot to do that. We don’t care that it is technically a very complex activity. It is very cheap for us to do that, and that’s all that matters.</p>
+<p>Wait. Does “cost” pay rent here? Can we tell something useful from that label?</p>
+<p>Yeah. You can tell precisely how much of your resources you would need to solve the problem.</p>
+<h1 id="what-about-no-silver-bullet-and-essential-complexity">What about No Silver Bullet and Essential Complexity?</h1>
+<p>What does Frederick Brooks mean by Complexity there?</p>
+<p>Is that also a kind of cost?</p>
+<h1 id="what-are-the-lower-limits-on-the-cost">What are the lower limits on the Cost?</h1>
+<p>Can you drive it down to zero? That’s the question here.</p>
+<p>Are there theoretical limits on how easily or how quickly some agent can do some task?</p>
+<p>For example, I’ve heard that you need to get actual evidence from the world - several bits of information - to form correct hypotheses about what’s happening. In other words, it’s not possible to theorize correctly without getting evidence. It’s highly improbable that the hypothesis you conjure from thin air would match the hypothesis that correctly predicts everything in the world.</p>
+<p>Which means, the cost of getting a correct hypothesis is <em>at least</em> the cost of getting the necessary evidence.</p>
+<p>Plus, you need to process the evidence. Ideally, you would do Bayesian updating on it and stuff. But that would require vast amounts of computing power cos you would have to conceive of lots of different hypotheses (possibly infinite?) and handle all of them based on the evidence. So, a bounded reasoner - one with limited resources - would do worse than an ideal Bayesian reasoner.</p>
+<p>Now, we humans are not even close to the best bounded reasoner. We have lots of quirks in our mind design. So, it will be even costlier for us to get to the correct hypotheses.</p>
+<h1 id="what-is-the-cost-of-solving-a-problem">What is the cost of solving a problem?</h1>
+<p>How would we characterize the cost in terms of our human brain design?</p>
+<p>Assume we care about the time taken to solve a problem and the amount of “information” we have to study in order to reach the final solution.</p>
+<p>Can we do it without any new “information”?</p>
+<p>What if we just retreated into a quiet room somewhere, without no computers or internet connection, and just thought hard about the problem?</p>
+<p>We would have to use the “information” already in our brain and then keep inferring different things from it till we get to the final solution. We can’t get any more information (maybe specific techniques or lemmas or whatever) from anywhere.</p>
+<p>How much time would it take then?</p>
+<p>Would it be possible at all?</p>
+<p>For some problems, it should be. Say you have a cheatsheet of the rules for integral calculus with you. You’re given a tough integration problem. Now, given the rules it is definitely <em>possible</em> to get to the solution. You may not find it anytime soon, but it is doable.</p>
+<p>What kinds of problems would require more “information” than you currently possess? How much more information would you need before you’re able to solve the problem?</p>
+<p>However, it’s not just about information and raw thinking here. There’s also the question of motivation. If you don’t feel like you’re making progress after a while, you will give up. Even if you want to solve the problem, you won’t feel like taking the action necessary.</p>
+<p>So, that’s one more requirement. Not just time and information. Also Will Power and Motivation.</p>
+<h1 id="confusion">Confusion</h1>
+<p>When you’re <a href>confused</a> about a problem, you won’t be able to solve it at all. It will be impenetrable to you. You won’t be surprised by things you hadn’t predicted, you won’t be able to update on evidence, and you won’t be able to discover the causes of effects.</p>
+<p>Basically, the cost of a solution when you’re confused is basically infinite. Or is it?</p>
+<p>What would it take to un-confuse you and get you to the solution? Well, if there are people who are not confused about the solution, they can help resolve your confusion. But will you actually learn or will you just put in more or less fake rules in your mind (“gravity” -&gt; makes balls reach ground at the same time)?</p>
+<p>I don’t know about this. Maybe you will continue to treat the problem as a great mystery even after you see someone demonstrate the solution. Maybe you will just think of him as a mysteriously gifted person - a genius.</p>
+<p>What if he enumerates the underlying rules by which that phenomenon works? What then? What if he tells you about Newton’s Laws of Motion?</p>
+<p>Well… look at schoolchildren all over the world. They learn about the Laws of Motion. And they are able to use it to solve the problems on their physics exam. But does their belief really constrain their anticipation? Do they expect the two balls to hit the ground at the same time, knowing that the acceleration is the same? Or have they just learnt some passwords to write down in their exams (“… because of Newton’s Laws of Motion.”)?</p>
+<p>Okay. Let’s assume that the cost of resolving your confusion is very high even if someone else is clear about the solution and explains it to you.</p>
+<p>And if <em>nobody</em> currently knows the solution of the problem (consciousness, AGI, Akrasia, etc.), then they can’t resolve your confusion. The cost of the solution for you is basically infinite. You have pretty much no way of getting the solution.</p>
+<p>So, in cutting edge fields, where practically no one else knows the solution, if you’re confused about a problem, you have basically no way of getting to the solution. The cost of the solution is the cost of you resolving your own confusion plus the cost of the solution you come up with after resolving your confusion.</p>
+<h1 id="not-confused">Not Confused</h1>
+<p>Ok. We have learnt our lesson. We need to reduce the cost of resolving our confusion like hell. This way we can blast away our confusion in various areas. Also, we need to make sure we don’t get confused in the first place. It’s better to be wrong than to be confused.</p>
+<p>When you’re not confused, what is the minimum cost at which you can solve any given problem? How fast can you zoom ahead?</p>
+<p>Why are some problems not solvable? Like, for example, in an exam or a competition, you may solve some problems but get stuck on others. You can’t solve them even if you had the time. Why is that? Can we avoid that? What if others have been able to solve that problem? What if nobody has been able to solve that problem?</p>
+<h1 id="information">Information</h1>
+<p>What is this whole business with “information”?</p>
+<p>What do we mean by that? We don’t take in information. We read books, we watch videos, we listen to stuff. What is the connection between information and those modes of input?</p>
+<p>Can two people derive different amounts of “information” from the same source? If so, then information would depend on the person too, not just the knowledge source.</p>
+<p>How much information do you need to solve a problem? How can we MEASURE that? What if we restrict some of the information? Then, we can run an experiment or hypothesis test.</p>
+<h1 id="cost">Cost</h1>
+<p>How long will it take me to understand a subject?</p>
+<p>What do you mean “understand”?</p>
+<p>Ok. I mean how long will it take me to have decent predictive power about a subject?</p>
+<p>What are the various Events in the Territory of Complexity / Cost?</p>
+<p>I want to know the cost of:</p>
+<ul>
+<li><p>getting predictive power about a subject</p></li>
+<li><p>answering questions about a subject</p></li>
+<li><p>doing actions related to a subject</p></li>
+</ul>
+<hr />
+<p>What is the cost of mastering some new subject, say Linear Algebra?</p>
+<p>What does “mastering” mean here?</p>
+<h1 id="current-abilities">Current abilities</h1>
+<p>A person, X, has some amount of memory recall, some knowledge of stuff, some experience inferring ideas.</p>
+<p>Basically, he has some specified powers of human cognition.</p>
+<p>What is the quickest aka least cost way in which he can master a subject?</p>
+<p>How can we structure the learning material so that, given his current abilities, he can master it fastest?</p>
+<h1 id="questions-i-want-answered">Questions I want answered</h1>
+<p>Given my current thinking abilities and knowledge level, answer these questions in terms of my specific abilities (memory, motivation generation skill, reasoning skill, etc.):</p>
+<p>How long will it take me to solve a given problem?</p>
+<p>How long will it take me to master the basics of a subject, say Mathematical Logic?</p>
+<p>How long will it take me to crack some research problem?</p>
+<p>How long will it take me to execute some plan - write an essay, learn some skill, etc.?</p>
+<p>How much more information / knowledge would I need to solve a problem?</p>
+<p>How much more information to crack a research problem?</p>
+<p>How much more information to master the basics of a subject?</p>
+<hr />
+<p>Without changing my current thinking abilities:</p>
+<p>What is the minimum possible amount of time in which I could solve a problem?</p>
+<p>How do I minimize the time taken to solve a problem?</p>
+<p>Do I use some specific techniques or frame the problem in a certain way?</p>
+<p>Do I get the information formatted in a certain way?</p>
+<hr />
+<p>How do I improve my thinking abilities?</p>
+<p>What are the different aspects of my thinking (chunks) that affect my performance?</p>
+<hr />
+<p>In other words, what are the <em>limiting factors</em> that make me take so long to solve problems, etc.?</p>
+<h1 id="memory-limits">Memory Limits</h1>
+<p>Reading a ton of important stuff is cool, but it is of no use if you can’t recall it when needed.</p>
+<blockquote>
+<p>Powerful memory… [HPMOR]</p>
+</blockquote>
+<p>The best we can do as of now to keep our memory strong is to either re-read important books and stuff when we have begun to forget them or use a Spaced Repetition system to do that for us automatically.</p>
+<p>How many possible Spaced Repetition flashcards can I make?</p>
+<h1 id="thinking-limits">Thinking Limits</h1>
+<p>We saw that my career as a reader is gonna be finite. But, reading is not all I want to do. I want to think great thoughts. I want to come up with useful ideas on my own. I want to do research.</p>
+<p>What are the limits on this kind of output?</p>
+<p>I seem to be thinking mostly through essays these days. On average, how many new thoughts per essay?</p>
+<p><strong>MAJOR LIMIT</strong>: <a href="http://lesswrong.com/lw/k8/how_to_seem_and_be_deep/">Cached Thoughts</a>!</p>
+<p>Your brain only runs at 100Hz. If you’re trying to think in realtime, much of the work must have been precomputed. (from: http://lesswrong.com/lw/k8/how_to_seem_and_be_deep/)</p>
+<p>You <em>literally</em> can’t think up new ideas too fast.</p>
+<p><strong>Question</strong>: So, how many new ideas really can you think up in an hour? What are the limits? How do we optimize our Original Thinking?</p>
+<hr />
+<p>Fuck! This means Deliberate Practice is indispensable! You need to have stuff hardcoded and ready to go inside your brain. The correct next step must be at your fingertips at all times.</p>
+<p>It seems like you will only consider thoughts from among the pool of ideas you’ve already thought about deeply. This makes it very important to think deeply about the most important ideas in your life.</p>
+<p>It is all Cached Thoughts! There is no such thing as incredibly complex on-the-spot thinking. Your brain literally doesn’t run through that many instructions in that small time-frame.</p>
+<p><strong>Corollary</strong>: Whoa! This means that those incredibly brilliant answers that geniuses are supposed to have come up with on the spot have simmered in their brains for a while!</p>
+<p>(More precisely, the intermediate results needed for them to come up with the final answer have simmered in their brains for a while)</p>
+<p>NO ONE can do complex original thinking on the spot. This is like High-Delay Blindness. Everyone on this planet is prey to this problem (just like old age, disease, death, asphyxiation, burns, ice-stuff, etc.).</p>
+<p><strong>Corollary</strong>: You shouldn’t expect TOO much out of people on the spot.</p>
+<p>Maybe you can do a lot better, but you can’t think of everything on the go.</p>
+<p>So, don’t put <em>too</em> much pressure on people. Like, asking a student to come up with the solution to a tough problem while standing in front of the whole class. Or, expecting some presenter to innovate a solution right in the middle of the Q&amp;A.</p>
+<p>And don’t think badly of someone brave enough to say that he needs to take some time to think through the problem deeply. That is an original thinker right there.</p>
+<p>Which means all those people exhorting you to think on your feet all the time are full of shit.</p>
+<p>i.e.,</p>
+<p><strong>Corollary</strong>: People who insist on doing all their thinking on the fly are screwed (or rather, non-optimal).</p>
+<p>You <em>need</em> to take time to think deeply.</p>
+<p><strong>Corollary</strong>: If the number of steps your brain can take is limited, then it should pay to enumerate the possibilities by hand.</p>
+<p>Don’t buy into the hype of geniuses and innovators who just come up with stuff in an instant. That shit is just the affect heuristic speaking (I think).</p>
+<p>Worse, it makes you feel bad when <em>you</em> can’t pull those stunts yourself - as if you lack the mysterious aura of awesomeness that these geniuses possess.</p>
+<p>Fuck! This means I shouldn’t beat myself up too much when I take time to solve some math problems. With practice solving those kind of problems, I should become much faster - aka my Cached Thoughts should evolve to make me get to the solution in a couple of jumps. But, when I’m facing some truly confusing problem, I shouldn’t expect to hack through the mental foliage in an instant. There are a lot of intermediate results I need to come up with before I can make the leap to the solution.</p>
+<hr />
+<p>Corollary: Be suspicious of anyone who seems to be making a massive update of beliefs on the spot.</p>
+<p>The person is probably <em>not</em> actually updating all his beliefs and expectations.</p>
+<p>Corollary: Maybe epiphanies or other in-the-moment enlightenments only involve a small change to existing ideas - maybe seeing something slightly differently or adding one more detail.</p>
+<p>You can’t possibly go through a whole bunch of changes in an instant.</p>
+<h1 id="writing-limits">Writing Limits</h1>
+<p>It’s not enough to think great thoughts. I need to communicate them to others so that everybody can benefit from them, and more importantly I get enough eyeballs to identify the bugs in my thinking.</p>
+<p>I would need to write essays or technical papers for that.</p>
+<p>What are the limits on this kind of output?</p>
+<p>My typing speed is one goddamn prosaic limit.</p>
+<p>Note that we shouldn’t count my peak speed. My speed while <em>composing</em> new thoughts is way different from my speed while just transcribing some notes.</p>
+<p>Not only is it slow, I also get tired. I can’t type every minute of the day. What is the maximum I can (consistently) type in a day?</p>
+<p>I hope and pray that someone comes up with a much faster human-computer interface really soon.</p>
+<p>How many essays do I have left? Make it count.</p>
+<h1 id="programming-limits">Programming Limits</h1>
+<p>This is another major limitation. If I have to write programs as part of my training or as part of my general work in the future, then there is only a limited number of programs I can write.</p>
+<h1 id="taking-action-limits">Taking Action Limits</h1>
+<p>As mentioned earlier, simply reading about ideas is useless to me. I need to take action on them and make those ideas pay <a href>rent</a>.</p>
+<p>What are some limits on the actions I can take on the ideas I learn?</p>
+<h1 id="beware-the-extrapolation-fallacy">Beware the Extrapolation Fallacy!</h1>
+<p>Make sure these “limits” really are limits. What if there was a breakthrough somehow and these limits were shattered?</p>
+<p>So, try to account for things that could change in the future. Maybe look to the past to see if any of these were altered drastically.</p>
+<p>In other words, talk in terms of fundamental limits.</p>
+<h1 id="skill-limits">Skill limits</h1>
+<p>What are the skills you can master?</p>
+<p>How long does it take gain a quantum of skill? Are you faster at gaining skill in some areas than in others?</p>
+<h1 id="what-now">What now?</h1>
+<p>So what if I have these limits? How do my decisions change now?</p>
+<h1 id="ps">PS</h1>
+<ul>
+<li>Am writing this essay out on my own without referring to my haphazard notes on the topic. Much more fun. Already hit upon some new ideas :)</li>
+</ul>
+
+<div class="info">Posted on November 18, 2014</div>
+<div class="info"><b>Tags</b>: complexity, cost, big problem</div>
+
+<div style="text-align: right">
+  <p>Part of <a href="../sequences.html"><i>No Sequence</i></a>
+
+  <p>Previous post: &quot;<a href>Start of Sequence</a>&quot;
+
+  <p>Next post: &quot;<a href>Head of Sequence</a>&quot;
+</div>
+
+<br />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'spkrationalitytrainingground'; // required: replace example with your forum shortname
+    var disqus_identifier = '/posts/drafts/New-Big-Problem-Complexity.html';
+    var disqus_title = 'New Big Problem: Complexity';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+        </div>
+        <div id="footer">
+	  All artwork by <a href="http://blog.sujeet.me/">Sujeet Gholap</a>.
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>
