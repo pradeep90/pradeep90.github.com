@@ -74,6 +74,8 @@
 <li><p>Website Notes - Avoid a “Notes” section. That’s just a loophole for disorganized crap.</p></li>
 </ul>
 <hr />
+<h1 id="writing-an-essay">Writing an Essay</h1>
+<p>TODO</p>
 <h1 id="rationality-techniques">Rationality Techniques</h1>
 <p>Product: <em>Actually</em> benefiting from those techniques</p>
 <p>Changes: Acquiring, Learning, and Applying them (as per the <a href="./The-Technique-Trap.html">Technique Trap</a>).</p>
@@ -99,14 +101,19 @@
 <p>Next, I want to <em>actually</em> learn the techniques using accurate instructions. I want to <em>actually</em> look at the instructions from an authoritative source instead of just going by my own impression. I need to enumerate the various scenarios for the particular technique, and build my skill in each of them.</p>
 <p>Finally, I want to <em>actually</em> apply my techniques. A lot. I need to have empirical evidence saying that I have indeed applied so-and-so technique hundreds of times.</p>
 <p>So, what is the Deployment Pipeline here? What are the changes and what are the products that must reflect those changes promptly?</p>
-<p>For beliefs, the product is a belief with empirical evidence. Whenever I get a new belief or remember an unquestioned belief, I need to go and get empirical evidence related to it. Also, I may not get all the evidence at once. So, whenever I find some new evidence, in a book or through personal experience, I need to update my belief. In short, I need to minimize the time it takes for me to find empirical evidence for a belief. If I neglect to do so, as usually happens, the belief has a cycle time of infinity. Bad.</p>
-<p>For acquiring techniques, the product is (the name of) a technique backed by empirical evidence. I need to reduce the time between my hearing about a technique and actually seeking empirical evidence about it. Again, if I haven’t looked for empirical evidence at all, the technique has a cycle time of infinity.</p>
-<p>For learning techniques, the product consists of the instructions for a technique, a Feedback Mechanism, the various scenarios the technique deals with, and lots of practice handling those scenarios correctly. As each of those components changes, I need to change my routine. If my understanding of the instructions changes, or if I improve the Feedback Mechanism, or come up with different scenarios, I need to learn again - I need to use the possibly new instructions with the possibly new Feedback Mechanism on the possibly new scenarios. That is the <em>only</em> empirical way to know that I’ve learned the technique. If I never re-learn despite the changes, the cycle time is infinity.</p>
-<p>For applying techniques, the product is the benefit I get from the technique. I need to reduce the time I take to apply them several times, maybe hundreds of times. Most often, I don’t apply them even ten times, essentially turning the cycle time to infinity.</p>
+<p>For beliefs, the product is a belief with empirical evidence. Whenever I get a new belief or remember an unquestioned belief or come across new evidence, I need to update the product.</p>
+<p>For acquiring techniques, the product is (the name of) a technique backed by empirical evidence. I need to update it whenever I get new evidence or come across new techniques.</p>
+<p>For learning techniques, the product consists of the instructions, the Feedback Mechanism, the various scenarios the technique deals with, and lots of practice handling these scenarios using these instructions correctly as per the feedback. As each of those components changes, I need to change my routine. If my understanding of the instructions changes, or if I improve the Feedback Mechanism, or come up with different scenarios, I need to learn again - I need to practice with the new configuration. That is the <em>only</em> empirical way to know that I’ve learned the technique.</p>
+<p>For applying techniques, the product is the benefit I get from the technique. I observe the benefit using a Feedback Mechanism. I need to apply each technique several times, maybe hundreds of times.</p>
 <p>Cool. So, <em>that</em> is what Empiricism actually means to me.</p>
-<p>We need to minimize the cycle time (reflect changes as soon as possible) and also get high quality (actually get the results). For that, the authors of Continuous Delivery recommend doing frequent, automated releases.</p>
-<p>Now, how do I create frequent, automated releases of the above process?</p>
-<p>For one, don’t use the belief or technique until it has reached the end of the pipeline. Don’t believe something unless you get evidence, and don’t use a technique until you have tested it and learned it empirically.</p>
+<p>For each of the above pipelines, we need to minimize the cycle time (reflect changes as soon as possible) and also get high quality (actually get the results). For that, the authors of Continuous Delivery recommend doing frequent, automated releases. Note that if I haven’t run the pipeline at all, the belief or technique has a cycle time of infinity. Bad.</p>
+<p>Now, how do I create frequent, automated releases of the above pipelines?</p>
+<p>At first, I need to get to Hello World - a Minimum Viable Product, if you will - and then take it from there. A belief with bare minimum empirical evidence; a technique with the same; a technique with simple instructions, a simple Feedback Mechanism, and one scenario. So, I will have a working pipeline for each of the above. From now, it’s a matter of iterating.</p>
+<p>For beliefs, I need to accumulate evidence incrementally and update the product (belief + some empirical evidence). I need to do this nearly automatically after I come across new beliefs or evidence. Not quite sure how to do that. Maintaining a queue of beliefs and evidence might help. I can also forbid myself from using any beliefs other than the empirically-backed ones I’ve maintained on my website.</p>
+<p>For acquiring techniques, I can do frequent releases by adding evidence incrementally.</p>
+<p>For learning techniques, I can do frequent releases by keeping track of the components of each technique on my website. If one of them changes, say I discover some more scenarios for a technique, I can immediately practice handling them. To this end, I can maintain a <a href="./The-Counter.html">Counter</a> list of how many times I’ve practiced each scenario.</p>
+<p>For applying techniques, I can again maintain a Counter for how many times I’ve applied a technique.</p>
+<p>The common idea is that I need to reduce the cycle time by whatever means, and releasing frequently forces me to do so. I will start finding all kinds of ways to get it done. The key to making the pipeline nearly automatic might be to forbid myself from using a belief or technique unless I’ve updated it through the pipeline.</p>
 <h1 id="worthiness-and-embracing-vulnerability">Worthiness and Embracing Vulnerability</h1>
 <h1 id="fat-loss-and-muscle-gain">Fat loss and muscle gain</h1>
 <p>Changes Healthy or unhealthy food Cardio Weight-lifting Sleep Supplements Feedback Weight Body Fat level Muscles Delay Times?</p>
@@ -122,10 +129,11 @@
 <h1 id="prediction-book">Prediction Book</h1>
 <h1 id="possessions---cleaning-and-maintenance">Possessions - Cleaning and Maintenance</h1>
 <p>Cycle: Dirt on the floor -&gt; Clean floor</p>
+<h1 id="drills">Drills</h1>
 
 <div class="info">Created: August  2, 2015</div>
 <div class="info">Last modified: August  7, 2015</div>
-<div class="info">Status: finished</div>
+<div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: feedback loop, complexity</div>
 
 <div id="sequence-navigation" style="text-align: right">
