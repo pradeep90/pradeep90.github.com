@@ -9,8 +9,8 @@
         <link rel="stylesheet" type="text/css" href="./css/default.css" />
         <link rel="stylesheet" type="text/css" href="./css/highlight.css" />
 
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-	<script type="text/javascript" src="./js/header-links.js"></script>
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+	<!-- <script type="text/javascript" src="/js/header-links.js"></script> -->
 
 	<!-- Google Analytics stuff -->
 	<script>
@@ -45,26 +45,47 @@
 
 <p><strong>Entry Question</strong>: How do I reduce cycle times for products I care about?</p>
 <hr />
-<p>Deployment Pipeline: What are my Products, Changes, Feedback, and Delay Times?</p>
-<h1 id="thoughts">Thoughts</h1>
-<p>Wow! Frequent releases are awesome for rapid development. I was able to make changes to my website I’d wanted to do for ages.</p>
-<p>You know at each point that if something went wrong, it was your last change that did it. You <em>always</em> have the freedom to rollback to a working version. Immense freedom.</p>
+<h1 id="put-that-in-your-pipe">Put that in your pipe</h1>
+<p>We want every action to have an impact. What is the point of hard work if you miss the target? Thus, we judge everything by its consequences. Not by the intentions, not by the worthiness of the actions, only the consequences. This is what we call Consequentialism. Or Rationality!</p>
+<p>How do we avoid fruitless work in real life?</p>
+<p>We want to optimize certain things in life. As terminal goals, we want to optimize our health, wealth, happiness, relationships, etc. To reach those goals, we have certain instrumental goals - get to a healthier body-fat level, create a successful company, practice various happiness habits, learn certain social skills, etc. We can think of these as Products.</p>
+<p>There are several actions that can affect the final Products - the food we eat, the work we do, the skills we practice. We can think of these as Changes.</p>
+<p>Here’s the nub: We want each Change to improve the Product somehow. Else, it is a pointless “Change”. However, several factors distort the flow. For one, we may <em>think</em> that the Change will improve the Product, but we may be wrong. Worse, the Change will actually improve the Product, but with a long delay (as with exercise and health) and so we may ditch it prematurely.</p>
+<p>In short, we want each Change to <em>actually</em> cut through to the final Product and cut through fast.</p>
+<h1 id="deployment-pipeline">Deployment Pipeline</h1>
+<p>Enter this fascinating programming book called <a href>Continuous Delivery</a>. The authors suggest that the way to make each Change actually cut through is by automating the flow as much as possible. Ideally, the Product should start getting updated <em>whenever</em> you make a Change. More importantly, to cut through fast, we need to reduce the <em>cycle time</em> - the time it takes to go from a new Change to an improvement in the Product.</p>
+<p>In short, you have a Deployment Pipeline from Change to Product. You need to ensure that whenever you make a Change, the Pipeline quickly gets triggered and starts rebuilding the Product. You want to make sure you get high quality - that each Change really is reflected in the Product. Next, you want to minimize the cycle time - the time it takes for Changes to propagate through the Pipeline.</p>
+<p>The question is now: how do we minimize cycle time and get high quality?</p>
+<p>The answer from Continuous Delivery: Make frequent, automated releases and have visible feedback.</p>
+<p>By making frequent releases, at each point, you make small changes and so you have lower risk. You always have the confidence of a working release behind you, and can experiment boldly. You get faster feedback about the Product and can “benefit from the most useful source of information available: the experience of implementing it”<sup><a href="#fn1" class="footnoteRef" id="fnref1">1</a></sup>.</p>
+<p>By automating the release process, you have control over the way each Change affects the Product. Because computers work more reliably, you’re guaranteed that each step you take is fruitful and is actually having an impact.</p>
+<p>Finally, by getting visible feedback on every change, you know very quickly how your Product is coming along and can do what needs to be done instead of shooting in the dark.</p>
+<h1 id="continuous-delivery-and-motivation">Continuous Delivery and Motivation</h1>
+<p>Short cycle time leads to low delay. As per the Motivation Equation, you feel high motivation for actions with low delay. So, you will probably <em>only</em> do things for which you have low cycle time. (Examples? Counter-examples?) Conversely, you won’t do things that have high cycle time. This leads to a reinforcing feedback loop - they have high cycle time, so you don’t do them frequently, which leads to even higher cycle time (because things pile up) and so on, until it goes into oblivion.</p>
+<p>Lower risk means you feel higher value. The Continuous Delivery authors mention that by releasing frequently you lower the risk of any new change. If anything goes wrong, you can always rollback to a working state. You can thus experiment with no downside. Actions that were earlier daunting now seem attractive.</p>
+<p>Frequent releases give you higher expectancy. Because you want to release frequently, you work in small manageable increments. And since the previous state is known to work, you can code with confidence. This means that you have higher expectancy of success and thus feel more motivated.</p>
+<p>So, having a snappy Deployment Pipeline with low cycle time and frequent releases will give us high motivation. We will do things we had put off earlier.</p>
+<h1 id="fundamental-questions-of-deployment">Fundamental Questions of Deployment</h1>
+<p>How can we diagnose a Product we want to optimize?</p>
+<ul>
+<li><p>When was your last release?</p></li>
+<li><p>How frequently do you release?</p></li>
+<li><p>How long is the Cycle Time?</p></li>
+<li><p>How do you get Feedback?</p></li>
+</ul>
+<p>Simply aiming to minimize the cycle time may not be good enough. I start procrastinating by saying that I will only work when it is super-short. That’s why you need to aim to release something, yesterday. Even if it is something crappy, you’re making progress. You can correct course with feedback.</p>
+<p>What cycle? How is the cycle formed? Why really is it important to minimize cycle time?</p>
+<p>How do frequent, automated releases reduce cycle time?</p>
+<p>Note: You aren’t certain of the outcome. That’s why you can’t just make a grand plan and simply implement. You <em>need</em> feedback. You <em>need</em> to see how things go and then correct course. That is one of the reasons why you need a short cycle time - so that you can get fast feedback and nix wasteful effort.</p>
+<hr />
+<p>Let’s go through some of the important Products in my life and optimize their Deployment Pipelines.</p>
 <h1 id="website">Website</h1>
-<p>Product: Surprising, Informative Essays on my Website</p>
-<p>Changes: Making notes in</p>
-<ul>
-<li>Diary</li>
-<li>Org</li>
-<li>Phone</li>
-<li>Reading Books (whether or not I make notes)</li>
-<li>Discussions with friends</li>
-</ul>
-<p>Feedback:</p>
-<ul>
-<li>Reading the Website</li>
-</ul>
+<p>The Product here is a collection of surprising, informative essays on my website. My website should reflect the ideas in my head, and thus reflect their Changes. I get ideas by writing notes in my diary, Org files, phone (when I’m on the go), reading books (whether or not I make notes), and discussing with friends.</p>
+<p>Now, I release my website every night through a script. So, I do in fact have frequent, automated releases here. However, the problem isn’t with releasing the essays I’ve written up inside my website directory. It’s with the ideas I haven’t written down, the drafts I haven’t cleaned up, and the old essays I haven’t updated yet. <em>That</em> is where my cycle time skyrockets.</p>
+<p>When was the last time I released an idea from my diaries? A long time ago. I’m routinely surprised when I flip through the pages once in a while - I’ve forgotten much of it. Similarly, I can’t remember the last draft I turned into an essay, or the last essay I updated. Worst of all, I have this file called “Website-Notes.org” burgeoning with all kinds of “great” ideas. None of them have seen the light of day.</p>
+<p>I need feedback about the ideas I haven’t implemented (perhaps by looking at the index of my diaries), about the number of drafts (should ideally be zero), and about essays that are out of date. I need to calculate some of them manually - for example, going through my essays regularly and seeing which ones need updating.</p>
 <h2 id="delay-times">Delay Times?</h2>
-<p>To reduce cycle time from idea to website, I have to eliminate my Org notes. Right now, they’re an intermediary. A buffer. Hence, a delay between an idea and its explanation. Maybe Next-Actions can stay. But everything else would have to go on the website.</p>
+<p>To reduce cycle time from idea to website, I have to eliminate my Org notes. Right now, they’re an intermediary, a buffer. Hence, a delay between an idea and its explanation. Maybe Next-Actions can stay. But everything else would have to go on the website.</p>
 <p>Plus, now that we have nightly builds, we can just add stuff to the various Notes pages and get them reflected to the website automatically. No extra hassle. No more excuses. <strong>That’s</strong> what you get with automation!</p>
 <p>Hmmm… One way to keep my Website synced with my Notes is to use <em>only</em> the Website as my View. No direct viewing of the notes files. That way, I lengthen the cycle time of mere “notes” lying around on my computer And shorten the cycle time of stuff that is part of my website.</p>
 <p>No reading of Org notes. No reading of Diary notes. No reading of Phone notes. They are all just <em>inputs</em>, not outputs. The Model to my website’s View.</p>
@@ -75,7 +96,8 @@
 </ul>
 <hr />
 <h1 id="writing-an-essay">Writing an Essay</h1>
-<p>TODO</p>
+<p>The Product here is a surprising and well-written essay. The ideas in my head are the Changes that can affect the final Product.</p>
+<p>For each idea, I need to ask when I last released it. More generally, how frequently do I release it?</p>
 <h1 id="rationality-techniques">Rationality Techniques</h1>
 <p>Product: <em>Actually</em> benefiting from those techniques</p>
 <p>Changes: Acquiring, Learning, and Applying them (as per the <a href="./The-Technique-Trap.html">Technique Trap</a>).</p>
@@ -130,9 +152,23 @@
 <h1 id="possessions---cleaning-and-maintenance">Possessions - Cleaning and Maintenance</h1>
 <p>Cycle: Dirt on the floor -&gt; Clean floor</p>
 <h1 id="drills">Drills</h1>
+<p>TODO</p>
+<h1 id="friends">Friends?</h1>
+<p>TODO</p>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>PG on Planning</p>
+<blockquote>
+<p>Planning is a necessary evil. It is a response to risk: the more dangerous an undertaking, the more important it is to plan ahead. Powerful tools decrease risk, and so decrease the need for planning. The design of your program can then benefit from what is probably the most useful source of information available: the experience of implementing it.</p>
+<p>– Paul Graham, <a href="http://ep.yimg.com/ty/cdn/paulgraham/acl1.txt">Introduction</a> of ANSI Common Lisp</p>
+</blockquote>
+<a href="#fnref1">↩</a></li>
+</ol>
+</div>
 
 <div class="info">Created: August  2, 2015</div>
-<div class="info">Last modified: August  7, 2015</div>
+<div class="info">Last modified: August  9, 2015</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: feedback loop, complexity</div>
 

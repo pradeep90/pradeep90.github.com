@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="icon" type="image/png" href="./images/favicon-32x32.png" sizes="32x32" />
 	<link rel="icon" type="image/png" href="./images/favicon-16x16.png" sizes="16x16" />
-        <title>Bayes Theorem Learning - SPK's Rationality Essays</title>
+        <title>Spaced Repetition - My Principles - SPK's Rationality Essays</title>
         <link rel="stylesheet" type="text/css" href="./css/default.css" />
         <link rel="stylesheet" type="text/css" href="./css/highlight.css" />
 
@@ -39,33 +39,39 @@
         </div>
 
         <div id="content">
-          <h1 id="post-title">Bayes Theorem Learning</h1>
+          <h1 id="post-title">Spaced Repetition - My Principles</h1>
 
             <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
 
-<h1 id="introduction">Introduction</h1>
-<p>I want to learn the technique of Bayes Theorem.</p>
-<p>For that, I need accurate instructions, a Feedback Mechanism, scenarios in which I would need to use the theorem, and lots of practice.</p>
-<h1 id="v1.0">v1.0</h1>
-<p>As mentioned in <a href="./Cycle-Time.html">Cycle Time</a>, I need to start with a Hello World v1.0 of the technique. This means having very simple instructions, a primitive Feedback Mechanism, one <em>real-world</em> scenario, and maybe a dozen repetitions as practice.</p>
-<p>Simple instructions:</p>
+<p><strong>Note</strong>: I use <code>org-drill</code> in Emacs as my Spaced Repetition system.</p>
+<h1 id="principles">Principles</h1>
+<p>The Master Principle: Never forget anything important twice. Whenever you forget something, add it.</p>
+<p>Add drills for <em>concrete</em> details that you forgot. “That guy… what’s his name…” - add it. “That sort of <em>thing</em>…” - add it. No more “thing” or “sort of like a” or “kind of”. Know the precise term. There will be a network of concrete things you have forgotten (or perhaps never really encoded). Add them all.</p>
+<p>Make it a question you need to answer. Pose an actual real-world problem whose solution you have to find, instead of some passive fact whose parts you have to guess (sometimes based on the surrounding words). Ideally, it should be of the form: given a Situation, how do you get the desired Outcome?</p>
 <blockquote>
-<p>Posterior odds = Prior odds * Likelihood ratio</p>
+<p>Q: X and Y have happened. How do you make Z happen? :drill:</p>
+<p>A: Do [Foo] and [Bar]</p>
 </blockquote>
-<p>Primitive Feedback Mechanism:</p>
-<p>Hmmm… Predictive Power? That is, number of instances where I predicted the answer correctly.</p>
-<p>One real-world scenario:</p>
-<p>Essays vs Outlines?</p>
+<p>Lastly, batch. Creating a drill in the moment when you forget something is inconvenient. Instead, maintain a stack of things you want to remember and process it later.</p>
+<h1 id="lessons">Lessons</h1>
+<p>If you haven’t tested it, why do you expect to remember it? Only expect to remember those memories that you have <em>tested</em>. Yes, memories with which you have a high emotional or intellectual engagement will probably stay with you. Still doesn’t excuse your general forgetfulness.</p>
+<h1 id="spaced-repetition-techniques">Spaced Repetition Techniques</h1>
+<p>Don’t have too many cloze deletions in one drill.<sup><a href="#fn1" class="footnoteRef" id="fnref1">1</a></sup></p>
+<h1 id="ideas-for-the-next-level">Ideas for the Next Level</h1>
+<p>Generate all possible scenarios and memorize the correct responses, just like for a multiplication table. Memorize all the design patterns in OOP, for example (not that you’re going to use OOP anytime soon); all the Category Theory laws and their derivations - Category, Functor, Monads, etc.; all the important concepts in Haskell - Lens, Free Monad, whatever.</p>
+<p>(I’m not too sure about this one) When you get new insights, add them to your drill stack. Process them a bit when they come about and then push them for another round. This should prevent me from forgetting good ideas.</p>
+<p>Measure your speed of recall by Time per Drill. I usually take around 10s per drill. When things are slow, 15s per drill. And when going well, 7s per drill.</p>
+<div class="footnotes">
 <hr />
-<p>Let’s do it.</p>
-<p>H1: Essays are more awesome.</p>
-<p>H2: Outlines are more awesome.</p>
-<p>Let’s pick up where we left at the end of the first experiment in <a href="./Essays-vs-Outlines.html">Essays vs Outlines</a>. I got some hunches about the nature of essays and outlines. Let’s examine those hypotheses now.</p>
+<ol>
+<li id="fn1"><p><a href="http://www.super-memory.com/help/il_full.htm#Practical_problems_with_memorizing_lists">SuperMemo link</a><a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
 
-<div class="info">Created: August  8, 2015</div>
-<div class="info">Last modified: August  8, 2015</div>
+<div class="info">Created: August  9, 2015</div>
+<div class="info">Last modified: August  9, 2015</div>
 <div class="info">Status: in-progress</div>
-<div class="info"><b>Tags</b>: Bayes Theorem</div>
+<div class="info"><b>Tags</b>: Spaced Repetition</div>
 
 <div id="sequence-navigation" style="text-align: right">
   <p>Part of <a href="./sequences.html"><i>No Sequence</i></a>
@@ -80,8 +86,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'spkrationalitytrainingground'; // required: replace example with your forum shortname
-    var disqus_identifier = '/Bayes-Theorem.html';
-    var disqus_title = 'Bayes Theorem Learning';
+    var disqus_identifier = '/Spaced-Repetition-My-Principles.html';
+    var disqus_title = 'Spaced Repetition - My Principles';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
