@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="icon" type="image/png" href="./images/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="./images/favicon-16x16.png" sizes="16x16" />
+        <title>Dashboard Notes - SPK's Rationality Essays</title>
+        <link rel="stylesheet" type="text/css" href="./css/default.css" />
+        <link rel="stylesheet" type="text/css" href="./css/highlight.css" />
+
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+	<!-- <script type="text/javascript" src="/js/header-links.js"></script> -->
+
+	<!-- Google Analytics stuff -->
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-51321929-1', 'pradeep90.github.io');
+	  ga('send', 'pageview');
+
+	</script>
+
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="./">Rationality Essays</a>
+            </div>
+            <div id="navigation">
+                <a href="./">Home</a>
+                <a href="./sequences.html">Sequences</a>
+                <!-- <a href="/about.html">About</a> -->
+                <a href="./archive.html">Archive</a>
+            </div>
+        </div>
+
+        <div id="content">
+          <h1 id="post-title">Dashboard Notes</h1>
+
+            <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
+
+<p><strong>Note</strong>: These my notes for implementing a single Dashboard from which to view my progress on different projects.</p>
+<h1 id="meta">Meta</h1>
+<p>So many bright ideas as I keep implementing stuff!</p>
+<ul>
+<li>[2015-08-02 Sun] Use Org Agenda (didn’t pan out)</li>
+<li>Decouple Model from View</li>
+<li>Have Emacs as the View</li>
+</ul>
+<h1 id="principles">Principles</h1>
+<p>Read-only - only changeable by changing the projects</p>
+<p>Ideally, I should control things from here. Else, there would be duplication of information.</p>
+<p>Everything is information. Why didn’t you use the Dashboard? <em>What</em> did you do instead? Bring that into your Dashboard loop. At all times, you’re doing SOMETHING. Just change it till you’re doing what needs to be done. Keep your eyes wide open. Likewise about - “boohoo, I’m not doing anything. I suck. I’m not making progress.” In short, what algorithm did you use to decide what to do? What wrote your bottom line? WHY aren’t you doing it? (Answer: Motivation.) More importantly, what are you doing? Why?</p>
+<p>Don’t do anything that’s not in the Dashboard. Else, you’re increasing the cycle time for the Dashboard. Remember, Projects (Change) -&gt; Dashboard (Product). If there’s any change in your projects, your Dashboard should know.</p>
+<h1 id="what-do-i-want-to-see">What do I want to see?</h1>
+<p>Results of tests, analyses, stats, etc. Link Checker output (?)</p>
+<p>Notifications</p>
+<p>My current goals What I want to keep in mind</p>
+<p>Game of Rationality score (full score, maybe)</p>
+<p>Progress towards Goals Are things broken? What needs to be done? What should I do now?</p>
+<p>Links to the projects</p>
+<p>Website and Essay stats Essays I’m working on right now Words per day ./site check | grep broken</p>
+<p>Life Stats (stuff from Life Constraints) Sleep hours Health Stats What I’m eating Emotional Health stuff - gratitude journal, etc. Read for 2 hours everyday Write for &gt;= 1 hour everyday Study Math for &gt;= 1 hour everyday</p>
+<p>Reading Stats Books I’m reading (maybe fetch from Goodreads)</p>
+<p>Arbtt The current categories aren’t very helpful. I want to know <em>where</em> I’ve spent my time and <em>how</em> I can improve it. Evidence: I still use my beloved bscl to tell me how <em>exactly</em> I’ve spent my time. Conclusion: The categories need to evolve with my preferences.</p>
+<p>Drill Stats When I last ran org-drill</p>
+<p>Practice stats #hours of practice, obviously Number of days left Number of days so far Number of hours left</p>
+<p>Emacs key frequencies - unused short keys, highly used long keys.</p>
+<p>Windshield! Keep the important stuff right where you will use it again and again.</p>
+<h1 id="implementation">Implementation</h1>
+<p>No reason why the different status commands have to be run at the same time. Run them at their own frequencies (git status every minute, arbtt every 1 or 5 minutes, drill every 10 minutes) Prepare the dashboard file from the various status files every minute =&gt; quick feedback.</p>
+<p>Separate Model from View Models: The individual dashboard log files They get updated by the individual cron jobs The logs are like databases, they contain <em>only</em> the data. No formatting or other metadata. What format should the data be in? JSON? For now, let’s just say “pure text” - the value is the entire content of the file. No further metadata. Test: Go look at the individual log files. Do they contain extra formatting data? Problem: Will have to <em>parse</em> stuff from Arbtt, git status, etc. if we have to store data in JSON or whatever. View: Format Right now, the dashboard.dash file (in markdown format) Later, could be in HTML format Or a pdf Or a page on my website. Whatever. So, I would need a templating language here to take the raw data from the model and format it. This is actually the Publish-Subscribe model</p>
+<p>Have the View in elisp!</p>
+<p>Key in Dashboard buffer - Run “update all”</p>
+<p>Dashboard mode (so that I can add keys in its mode map)</p>
+<h1 id="further-ideas">Further ideas</h1>
+<p>Maybe publish snapshots of my Dashboard on my website</p>
+
+<div class="info">Created: August 10, 2015</div>
+<div class="info">Last modified: August 10, 2015</div>
+<div class="info">Status: in-progress notes</div>
+<div class="info"><b>Tags</b>: notes, dashboard</div>
+
+<div id="sequence-navigation" style="text-align: right">
+  <p>Part of <a href="./sequences.html"><i>No Sequence</i></a>
+
+  <p>Previous post: &quot;<a href>Start of Sequence</a>&quot;
+
+  <p>Next post: &quot;<a href>Head of Sequence</a>&quot;
+</div>
+
+<br />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'spkrationalitytrainingground'; // required: replace example with your forum shortname
+    var disqus_identifier = '/Dashboard-Notes.html';
+    var disqus_title = 'Dashboard Notes';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+        </div>
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>
