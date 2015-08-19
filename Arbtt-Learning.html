@@ -51,6 +51,12 @@
 <p>How do I waste time on my computer? I browse random sites, I watch videos, or read unrelated books. Cool. I’ve tagged all of them with the “Junk” category.</p>
 <p>How do I waste time otherwise? I browse the web on my tablet. So, I want another stat: Time on computer / Total time. I can use the total time logged by the <code>last</code> command. After subtracting my gym time, household chores time, and reading time, what is left must have been spent sleeping or surfing videos on my tablet.</p>
 <p>Also, I need to stop using other tools like my very own <code>bscl</code>, so that arbtt gets the TLC it needs to match my needs. Bring the pain forward, as the XP people say.</p>
+<h1 id="useful-commands">Useful commands</h1>
+<p>Note: I use tab-separated values (tsv) as the output format because the raw data will have long names (especially Firefox titles) and you have to scroll right to see much of the data in the table.</p>
+<p>To find out untagged data from the last 24 hours:</p>
+<pre><code>arbtt-stats -m 0 --output-format tsv -x Work: -x Junk: -x Life: -f '$sampleage &lt; 24:00'</code></pre>
+<p>To find out general data from the last 3 hours (to see the actual programs you used):</p>
+<pre><code>arbtt-stats -m 0 --output-format tsv -f '$sampleage &lt; 3:00'</code></pre>
 <hr />
 <h1 id="installation-and-setup">Installation and Setup</h1>
 <ul>
@@ -67,7 +73,7 @@
 </ul>
 
 <div class="info">Created: August  5, 2015</div>
-<div class="info">Last modified: August  9, 2015</div>
+<div class="info">Last modified: August 19, 2015</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, arbtt</div>
 
