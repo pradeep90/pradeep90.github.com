@@ -47,36 +47,93 @@
 <p><strong>Questions</strong>: How can we think scientifically? Perhaps design thinking would be more useful.</p>
 <hr />
 <h1 id="summary">Summary</h1>
-<p>What is a causal model? How does it deal with reductionism and empiricism?</p>
-<p>Why is a causal model so important? Claim: You cannot get high predictive power without a causal model. Who doesn’t have it? Can we do without it? What about people in design?</p>
-<p>How can you test if someone has a good causal model or not? What is a good enough hypothesis?</p>
-<p>Science is about getting a good causal model. How exactly does science help us build a good causal model of some domain? What are the individual skills? How is it related to the ideal way of thinking?</p>
+<p>What is a causal model? A possibly-incomplete description of a state-transition function.</p>
+<p>Why is a causal model so important? Because the better your model, the better your predictions, and thus the better your performance.</p>
+<p>How do we judge causal models? Bayes Theorem and experimentation.</p>
+<p>How do we use the scientific method? Do we have a precise algorithm? No. It’s an art.</p>
+<p>Is the above process actually giving us a better causal model? Yes. But you have to extend your model over time.</p>
 <p>What are some sources of cheap evidence? Learning and experimentation.</p>
-<h1 id="causal-model">Causal Model</h1>
-<p>Science is all about getting an accurate causal model of some domain, I think.</p>
-<p>Having a causal model is not optional. Without it you just have a bunch of predictions, so you will be severely penalized when you’re asked about a different random experiment. This is also what Eliezer was talking about in Mysterious Answers to Mysterious Questions. You need to have a causal model making the predictions. That is why everything will become super-clear and there will be no more confusion. For you will be able to see <em>everything</em>!</p>
-<p>State-transition model is key here. Your hypothesis doesn’t just work with variables (dependent or independent or whatever). It works with the entire state. In the future, if I look at some other variable, your hypothesis should make correct predictions.</p>
+<h1 id="what-is-a-causal-model">What is a Causal Model?</h1>
+<p>The world moves from one state to another. We can observe different properties of a state - the objects, etc.</p>
+<p>We can imagine the universe as running a program that decides what state should come after any given state. In short, there is a state-transition function that governs the universe.</p>
+<p>Reductionism says that reality is made up of one level. All other things that we perceive - the objects, the shapes, the colours - are just layers of abstraction in our own mind. The most accurate function would deal with the fundamental units of the universe - quantum fields or whatever.</p>
+<p>However, we cannot possibly model such a complex function. To figure out exactly what will happen next, we have to simulate the universe ourselves and we simply do not have that kind of computing power.</p>
+<p>So, we use imprecise but useful views of the world. We ignore certain details and emphasize others. For example, in economics, we ignore all the biological details of humans and just treat them as agents who have certain preferences. In thermodynamics, we deal with temperature and energy without caring about the cost or aesthetics of the system. In mechanics, we deal with mass and force and velocity, and ignore the cost or temperature or other details.</p>
+<p>Also, whatever model we have of the world is necessarily a guess. We have to test it empirically to ensure it matches reality. We can have the most beautiful model ever, but if it doesn’t describe the real world we have to discard it.</p>
+<p>So, a causal model is something that can tell you what will happen next if you give it a state of the world. If you have a causal model of gravity, then if someone drops a ball from the top of a building, your model should predict exactly where it will be after one second. Similarly, if you have a causal model of a car, then you should be able to say what will happen if I empty the fuel tank and turn the key in the ignition.</p>
+<p>A good causal model should be capable of handling any kind of state you throw at it, no matter how “extreme”. With a car, say, exactly how far will I be able to travel if the tank is half-full with gasoline? What if I add a cup of water to the tank? What if the car was sitting outside all night and it snowed heavily? What if I have ten people in the car? What if I have just one? What if I remove the hood of the car? What if I use a different brand of tyres? What if I travel only in the first gear? You need to have a really good grasp on things to be able to predict the precise outcomes of all these different conditions.</p>
+<p>Most of our simplified models deal with states that we are likely to find. A car expert deals with most commonly found states of a car, with different values for the velocity of the car, with different values for the mass of the car, etc. But these assume that the thing we call a “car” is recognizable as a vehicle - maybe it has some wheels, an engine, whatnot. What if you remove the wheels and engine and steering wheel and everything, and just plonk a computer in there somewhere and run the QuickSort algorithm on a list of one million integers and ask the car expert how long it will take to complete? He may not be able to make any useful predictions. Yet, this is a valid state of the world and shows the limitations of the model.</p>
+<p>We can think of causal models as simply programs that tell you what state of the world will occur next when you give them a particular state. And since the state of the world is very huge, what this means in practice is that your program simply tells you about certain key variables - speed of the car, distance of the ball from the ground, etc. Also, some models may be uncertain about which outcome really occurs and so may assign probabilities to different outcomes instead of state a result outright.</p>
+<h1 id="why-are-causal-models-important">Why are Causal Models important?</h1>
+<p>Remember, we want <a href="./Truth-Predictive-Power.html">predictive power</a>. We need to know exactly what will happen if we modify the world a certain way, so that we can shape reality to do our bidding. And the most accurate model is the one that reality itself uses. We can’t really use that one, so we use simplified models. But, the point stands: the closer we get to the actual state-transition function used by reality, the more accurate our predictions will be.</p>
+<p>Can you get decent predictive power without using a causal model? Well, like we saw with the car expert, you may not be able to handle all possible states. A layman’s model of a car may be quite vague - just a few hard-coded, imprecise predictions - “if tank is nearly empty, car won’t run much longer”; “if tyres are well-inflated, car will run faster”. But, the game is still about predicting the next state for a given state.</p>
+<p>In short, all questions of fact are about states of the world. And whatever helps you answer questions about the state of the world, we call them causal models. Those models may handle a few states or many and they may give you precise predictions or vague ones.</p>
+<p>So, anywhere that you want to know the truth about something, you must have a causal model, whether good or poor. The better your causal model, the better your performance. In a field like painting, you need to know what will happen if you paint a particular part in blue, or magenta, or whatever. You need to know the resulting stroke for each type of brush you have. Of course, you would deal with more complex concepts than these - what if I do it in an “expressionist” style - but the idea is the same. You need to be able to predict the outcome of different experiments. You need to have a good causal model.</p>
+<p>Whatever you create, be it a computer program or a car or a painting or your dinner, you make decisions every step along the way. Those decisions are based on your best guess of what will happen in different situations. “Should I add some more salt?” “Should I refactor this module?”. Your decisions are only as good as your causal model of the domain. So, you need to get a good causal model.</p>
 <p>Science is so powerful because when you do get it right, you understand exactly how the states of the world unfold. There is no more mystery. You know how the system generates each of the variables you perceive. You also know how it will behave even after you change a bunch of parts inside it.</p>
 <blockquote>
 <p>Science doesn’t work by waving wands and chanting spells, it works by knowing how the universe works on such a deep level that you know exactly what to do in order to make the universe do what you want.</p>
 <p>– Harry Potter, <a href>HPMOR Chapter 7</a></p>
 </blockquote>
 <p>Why do we care about having a causal model? Because the more you can predict how something behaves, the more you can tweak it to do what you want at low cost.</p>
-<p>Note that this is why you need to do a literature review before you go and do some new research. You need to understand the old causal model before you propose any extensions to it.</p>
 <p>Note: All your explanations have to be mundane and completely specified - you can’t have mysterious parts in your causal model. You should ideally be able to write your hypothesis as a computer program. (Mysterious Answers to Mysterious Questions)</p>
-<h1 id="what-is-a-good-enough-hypothesis">What is a good enough hypothesis?</h1>
-<p>I keep saying what <em>isn’t</em> a hypothesis. But, what <em>is</em> one? What kind of hypothesis is good enough for our purposes?</p>
-<h1 id="causal-model-in-design">Causal Model in Design?</h1>
-<p>How does this affect the question about using the scientific method in other domains, like design? Is the causal model really complicated in those areas? Well, you can always approximate it. The point that you can’t use anything but the scientific method still stands.</p>
-<p>Now the question arises: in what language do you express the causal model? It is a program that you use to generate predictions for different experiments. Which language do you use?</p>
-<p>Also, what you’re trying to do is approximate the actual working of the system, which is described completely in terms of interactions between atoms or quantum fields or whatever. That hypothesis is too huge for us to generate and too complex for us to handle, so we make some simplifying assumptions and build hypotheses on top of them. But the general principle stands, the closer you get to the actual algorithm that the universe is using to generate its states, the more predictive power you will have.</p>
-<h1 id="building-a-causal-model">Building a Causal Model</h1>
-<p>Building a causal model, I suspect, is nothing but programming.</p>
-<p>In computer programming, we use a well-understood programming language to describe a process that will give us the behaviour we want. Thankfully, computers can use our descriptions to create the processes in real life.</p>
-<p>In science, as I understand it, we use a less well-defined language to describe real-world processes. And because the language isn’t well-defined, computers can’t instantiate the processes we describe. Perhaps the domains here are more complex than those that computer programs deal with, so it’s harder to describe it well.</p>
-<p>However, if we understand the language of the domain reasonably well, we may be able to use the powerful techniques of computer programming here and leverage them to make faster progress. Also, if we understand the domain well enough, we may be able to design new and more powerful languages.</p>
+<h1 id="how-to-judge-causal-models-bayes-theorem">How to judge Causal Models: Bayes Theorem</h1>
+<p>Causal models, hypotheses, and programs are just different names for the same thing. We just want something that will tell us the next state for a given state. We assume that if the model doesn’t make any prediction, then it just says that all possible states are equally likely.</p>
+<p>How do we decide which hypothesis (aka causal model) to believe? How much confidence should we have in our hypothesis?</p>
+<p>Enter our old friend: Bayes Theorem.</p>
+<p>We assign prior probability to a hypothesis based on the length of the program. Occam’s Razor says that simpler causal models are more likely than other models that make the same predictions. In our interpretation, this means that shorter programs are more likely than longer ones that make the same predictions. Longer programs (more complex hypotheses) have exponentially less probability than shorter ones - this is the complexity penalty. We do this for all the hypotheses.</p>
+<p>Whenever we are uncertain about the actual state, we call it an experiment (e.g., the position of the ball). And we call the different possible values of the states as the possible outcomes of the experiment (e.g., the ball is one feet above the ground, ten feet above the ground, etc.).</p>
+<p>So, whenever we observe the outcome of an experiment, we update our beliefs about our hypotheses using Bayes Theorem.</p>
+<blockquote>
+<p>Bayes Theorem (in odds form):</p>
+<p>Posterior odds = Prior odds x Likelihood Ratio</p>
+</blockquote>
+<p>Each outcome we observe can give us evidence about our hypotheses. We update on all the evidence we have and get the posterior odds for each hypothesis.</p>
+<p>Finally, when we have to make predictions about what the outcome for a new experiment will be, we simply take the predictions of all our hypotheses weighted by their posterior probabilities.</p>
+<p>Of course, we aren’t content with just passively updating on evidence we happen to observe. We seek new evidence by running experiments. We modify the state of the world, thus creating a new experiment, and update on the outcome of this new experiment.</p>
+<p>Also, we don’t just create any random state. We look at particularly those states that will distinguish between two or more hypotheses. We enumerate the states where hypotheses have differing predictions and make exactly those states happen.</p>
+<p>Therefore, science lets us build good hypotheses about the world.</p>
+<h1 id="the-ideal-way-of-thinking">The Ideal Way of Thinking</h1>
+<p>The above way of generating hypotheses and updating on evidence is the most efficient way of getting predictive power. It’s not based on rules of thumb or anything. It is based on probability theory.</p>
+<p>Sadly, we don’t have the resources to run the ideal thinking process. So, we have to cut corners and use approximations and rules of thumb. But, we have to keep in mind that the more we resemble the ideal process of thinking, the more predictive power we will have.</p>
+<h1 id="scientific-method-v1.0">Scientific Method v1.0</h1>
+<p>How would a rough scientific thinking process look like?</p>
+<p>List the experiments you care about. About what states of the world are you uncertain?</p>
+<p>Do literature research before you start to do original research. Do some scholarship to catch up on the hypotheses and evidence collected so far in that area. You should be able to use the causal model built so far to predict what the researchers claim it predicts.</p>
+<p>Now for some original research. Look at the experiments around you and observe their outcomes. Extend your causal model to predict these outcomes. Build or obtain alternative causal models that also explain the evidence so far. I don’t know how exactly to build causal models. It’s all magic so far. We have to rely on the mysterious abilities of the human mind for this.</p>
+<p>Now, look at the differing predictions between the hypotheses you have. Modify the world to a state where the hypotheses predict different outcomes. Update on the evidence you get. Also, maybe seek other evidence that might bear on the question.</p>
+<p>Repeat as desired. The End.</p>
+<p>At each point, you will have updated all your hypotheses on the all the evidence so far, thus knowing precisely how accurate each hypothesis is. Also, if you keep extending and modifying your causal model to handle in a simple manner the evidence you collect, you will have a maximally predictive hypothesis at each point. You will have a model that handles all the states you care about so far, which is the point.</p>
+<p>So, not only should you update your confidence in existing hypothesis using Bayes Theorem, you should also build new and improved hypotheses, and calculate their posterior probability from scratch using all the evidence you have.</p>
+<h1 id="practical-science-is-an-art">Practical Science is an Art</h1>
+<p>How do we approximate the above ideal way of thinking in practice? It’s all very well to know that we should update on evidence using Bayes Theorem, but we don’t always have the luxury of using it explicitly. How do we build mental habits of thinking roughly according to Bayes Theorem?</p>
+<p>I suspect this sort of practical science is, ironically, an art.</p>
+<p>TODO As Knuth says, science is that which you understand well enough to tell a computer to simulate. Everything else is art. We still don’t understand bounded Bayesian thinking well enough to teach computers to do it - that would be Artificial General Intelligence. So, it’s going to be an art till then.</p>
+<blockquote>
+<p>“You’re an artist, Mr. White.” (TODO)</p>
+</blockquote>
+<p>Corollary: Don’t expect to have some strict algorithm to tell you what to do (formulate hypothesis, do an experiment, measure the results, make a cardboard poster, as per Hermione). It’s necessarily going to be rough and scratchy. Deal with it.</p>
+<h1 id="extending-hypotheses">Extending hypotheses</h1>
+<p>How do we generate hypotheses for the first time, in a brand-new area where we don’t have existing causal models? How do we generate alternative hypotheses? How do we extend an existing hypothesis to deal with more states?</p>
+<p>In short, how do we extend a hypothesis to handle evidence that it currently can’t? This is where the game is. We are highly unlikely to build correct hypotheses on our first try. We have to build new ones based on the evidence we see.</p>
+<p>This is the exact analogue of programming. There, we need to build programs over time based on the feedback we get from unit tests and manually running it and such. Also, every time we get a new idea or get changed requirements, we need to extend our program to reflect the changes. We can’t build any non-trivial program without iterating it on feedback.</p>
+<p>How do programmers do it, then? How do they extend a program over time? Well, it’s not an exact science there either. What they have are rules of thumb, folk wisdom, and so on to guide them in how to change a program to handle new requirements. Still, they have figured out a lot about how to deal with change and we can transfer their techniques to the world of science.</p>
+<p>If essays are one medium for expressing hypotheses, then our problem is that of building an essay over time. Which we saw is analogous to that of extending a program over time. So, we need to learn the best techniques that essayists (technical writers, in general) and programmers use to build their product over time. Add a dash of probability theory and we should be on our way.</p>
+<h1 id="other-questions-about-science">Other Questions about Science</h1>
+<p>What am I still uncertain about?</p>
+<p>How do we think by default? How does it differ from scientific thinking? What do we routinely fail to do? How can we bridge the gap? If we can figure out where we usually fail to think scientifically, we can gain much from correcting our thinking there.</p>
+<p>What experiments will give us the most expected evidence?</p>
+<p>Our hypothesis should conform to hypotheses we already believe with high probability. So, if you’re building a hypothesis about a car, you should obey Newton’s laws of motion because that hypothesis has a lot of evidence behind it. This is just another way of saying that you should write the hypothesis program in the language of the domain. In mechanics, you would need to deal with forces and masses and energy and so on, because the properties of those things have been understood really well. People already have a good causal model that predicts the outcomes for a lot of states. So, you should make sure you extend that model to handle a few more states (or be more accurate about existing states) instead of just creating one from scratch.</p>
+<p>Other things being equal, we want a causal model that makes narrow predictions. It says that, for a given state, X will happen and Y will not happen.</p>
+<p>Remember Conservation of Expected Evidence.</p>
+<p>Also, remember locating the hypothesis. Though, that opens the question: how do we locate hypotheses given evidence? This might be difficult because you have to actually design the hypotheses - they aren’t all there in front of you.</p>
+<p>Heuristics and Biases: You also need to learn to overcome the biases in your mind.</p>
+<p>We routinely fail to notice what our beliefs forbid (if they do at all). That was the whole point of Eliezer’s sequence on Mysterious Answers to Mysterious Questions. If you predict that something will happen, you are necessarily predicting that the other thing will not. Also, we avoid testing our beliefs. We like to stay comfortable. Then, we also fail to collect empirical evidence - we just go by our naive thoughts. Even when we decide to think scientifically, we may not choose the most informative hypothesis tests.</p>
+<h1 id="use-the-model-not-your-own-mind">Use the model, not your own mind</h1>
+<p>Use the actual program of a hypothesis to generate its predictions. Don’t use your own brain to do it. For example, if someone says intelligence arises due to “emergence”, ask how the emergence hypothesis predicts the outcome of a particular experiment given the state of the brain. What if you have half the brain? Will you have half the “intelligence”? What if I pour acid into the brain? How is the emergence hypothesis using the state of the brain at all to decide whether it will be intelligent? It’s not. You decide whether or not some brain state will lead to intelligence and attribute that to the emergence hypothesis. Bad dog! Use the program, not your mind, to make predictions.</p>
+<p>Keep the model separate and ask if it makes any predictions on its own about some experiment. If you have to fill in some blanks yourself, then your model is incomplete and you’re most likely missing some key insights. Make all your assumptions and prior knowledge explicit in the model so that a neutral person can use it to generate the predictions without consulting you. (This is exactly how we write essays, by the way).</p>
 <h1 id="fundamental-questions-of-science">Fundamental Questions of Science</h1>
-<p>The core question is: do you have a causal model that generates predictions?</p>
+<p>One core question is: do you have a causal model that generates predictions?</p>
 <p>(You can think of this as a hypothesis: “I have a causal model about this domain”. The following experiments will test whether you really do.)</p>
 <p>If you can’t handle changed conditions, you don’t really have a causal model. If you can’t explain why exactly you predicted this particular outcome, not another, you don’t really have a causal model.</p>
 <p>What will happen if I change the conditions? Can your hypothesis handle the new case? Is your hypothesis a causal description or just a bunch of predictions for some specific cases? The fundamental question here is similar to that in programming - can you handle change? If you try to encode each of the special cases (what will happen if X happens, if Y happens, etc.), then your hypothesis will become very large and get penalized for complexity. You have to extract a common causal model that generates all of those special cases parsimoniously.</p>
@@ -87,15 +144,14 @@
 <p>Look at alternative hypotheses. You will be surprised by how often you can’t even think of one.</p>
 <p>Where are you not getting the results you want? You have the wrong hypotheses there.</p>
 <p>How can you falsify your current hypothesis? Raise strong alternative hypotheses.</p>
-<h1 id="scientific-thinking-skills">Scientific Thinking skills</h1>
-<h2 id="sources-of-evidence">Sources of Evidence</h2>
+<h1 id="sources-of-evidence">Sources of Evidence</h1>
 <p>I can’t hope to apply the scientific method by myself in the natural sciences. Evidence in those areas is costly. In psychology, for instance, I need to test a lot of people and do a lot of replications before I can be confident.</p>
 <p>So, where is evidence not too costly?</p>
 <p>In programming! You have the program and its source code. You can test it however you want and you can automate it too. In short, these days, you have some of the cheapest evidence ever! You can run your tests every five minutes to tell you if something is broken. How’s that for cheap and fast evidence?</p>
 <p>Other areas of design too seem to have cheap evidence. In painting, you can use your own taste to judge different variations. Places like business and writing and so on also seem to have cheaper forms of evidence than the natural sciences. However, getting feedback from others is still a bottleneck. In music or art or architecture, you have to survey a lot of people to get a good idea of what they will like.</p>
 <p>That is the biggest advantage of programming: you have to ask only the computer, not other people. And the computer is a dumb, obedient, cheap, and automatable source of feedback.</p>
 <p>In short, there seem to be two sources of evidence: learning from others and experimenting on your own. By learning from others - asking people or reading books or journal papers or websites - you get evidence secondhand. By running experiments - on nature, on others, on yourself - you get evidence firsthand. Secondhand evidence is often vastly cheaper than firsthand evidence.</p>
-<h2 id="ideas-for-scientific-method-domain-from-hpmor">Ideas for Scientific Method Domain (from HPMOR)</h2>
+<h1 id="ideas-for-scientific-method-domain-from-hpmor">Ideas for Scientific Method Domain (from HPMOR)</h1>
 <p>(Note: This is just a v1.0 list. Keep updating it with time.)</p>
 <p>If you come across some strange or awesome thing, ask if you know its causal structure.</p>
 <p>If Y is an important subject, test out predictions about its various <em>properties</em>. How much low-hanging fruit is left? How much power does this concept have?</p>
@@ -116,19 +172,12 @@
 <p>If you see some fact of the world Y, ask what caused Y to be like that. example: historical stuff like democracy, markets, etc.</p>
 <p>If you strongly believe some causal model is true, ask what would it take to convince you otherwise? Always be looking for ways to test your beliefs.</p>
 <p>If you see X do some awesome thing Y, ask <em>how</em> X does Y.</p>
-<h2 id="the-scientific-method-in-short-and-in-theory">The Scientific Method: In short, and in theory</h2>
-<p>Outcome =&gt; Update on Evidence - enumerate the hypotheses that might matter</p>
-<p>Random Experiment =&gt; Generate Hypotheses using the possible outcomes</p>
-<p>Also, Generate Experiment =&gt; Modify the state so that it distinguishes between two hypotheses</p>
-<p>Information to maintain: list of major hypotheses (per domain), list of special hypotheses, list of evidence (per domain), list of strange evidence. Types of values you can find: experiments, outcomes, hypotheses, predictions, and domains. Domain = set of experiments, I think.</p>
-<p>Feedback: Get it from your predictions for various Random Experiments.</p>
-<p>Heuristics and Biases: You also need to learn to overcome the biases in your mind.</p>
-<p>What about essay-writing as a means of getting to the truth? How does that work exactly? How does that compare to a scientific paper?</p>
-<h2 id="skills">Skills</h2>
-<p>Empiricism is one of the most important skills. I need to distinguish between the map and the territory and always seek empirical evidence. Next, I need to think in terms of anticipation-constraints instead of mere words. Then, I need to maintain hypotheses explicitly and update them on evidence. Lastly, I need to run hypothesis tests that distinguish well between my hypotheses.</p>
-<p>We routinely fail to notice what our beliefs forbid (if they do at all). That was the whole point of Eliezer’s sequence on Mysterious Answers to Mysterious Questions. If you predict that something will happen, you are necessarily predicting that the other thing will not. Also, we avoid testing our beliefs. We like to stay comfortable. Then, we also fail to collect empirical evidence - we just go by our naive thoughts. Even when we decide to think scientifically, we may not choose the most informative hypothesis tests.</p>
-<p>Right now, I’m hitting a block because there seem to be so many things you can do (on the same sentence) and I don’t know where to start. Ok, Rapid Prototyping 101 - build a bare minimum hello world version. What can I not release without? I can deal with empiricism later. Anticipation-constraining is important, but right now I need something that will do work that cannot be replaced, a sine qua non if you will. What makes the scientific method the scientific method is the idea of differing predictions between hypotheses. Even the Bayesian updating on evidence can be done later. But testing things experimentally is the unique core of science, I think.</p>
 <h1 id="notes">Notes</h1>
+<h2 id="causal-model-and-programming">Causal Model and Programming</h2>
+<p>Building a causal model, I suspect, is nothing but programming.</p>
+<p>In computer programming, we use a well-understood programming language to describe a process that will give us the behaviour we want. Thankfully, computers can use our descriptions to create the processes in real life so we can observe any property we want.</p>
+<p>In science, as I understand it, we use a less well-defined language to describe real-world processes. And because the language isn’t well-defined, computers can’t instantiate the processes we describe. Perhaps the domains here are more complex than those that computer programs deal with, so it’s harder to describe it well.</p>
+<p>However, if we understand the language of the domain reasonably well, we may be able to use the powerful techniques of computer programming here and leverage them to make faster progress. Also, if we understand the domain well enough, we may be able to design new and more powerful languages.</p>
 <h2 id="science-and-programming">Science and Programming</h2>
 <p>Hypotheses are programs. If science is about formulating and testing hypotheses, how can you do that without writing programs (in whatever language)?</p>
 <p>Writing programs would force you to be explicit about your ideas and would probably resolve most “debates”. The point is, right now scientists are dealing with implicit programs - models in their head or maybe stuff written out in technical jargon. Can we do better?</p>
@@ -140,6 +189,8 @@
 <p>You can’t write a good essay without positing a causal model, I suspect. We might find it awkward to read an essay without a “because”. We might find it empty and without substance. An easy test: compare essays with usual internet blog posts. I find the latter to be utterly devoid of substance. I predict that the blog posts I find to be shallow and empty will not present any causal model of the subject they’re talking about. Let me stick my neck out further: I predict that bad writing will not present any causal model, period.</p>
 <p>Yes, good writing needs style, too. That may even be half the work of writing, as PG says, but I think positing a cause for the phenomena you see is the first business of essay writing. Remember, an essay has to be true before it is beautiful. All considerations of beauty and style come after we have decided the questions of fact.</p>
 <p>PG is already ahead of the curve here (again). He says that he writes essays with the sole purpose of figuring things out. What is that but getting a good causal model of a subject? Even more importantly, he consciously aims for maximum surprise! That is, he wants to come up with hypotheses that differ from conventional ones in ways that matter.<sup><a href="#fn1" class="footnoteRef" id="fnref1">1</a></sup></p>
+<p>Also, essay-writing (and I suspect any detailed form of writing) forces you to be explicit about your hypothesis. Because you’re writing for a neutral smart reader who doesn’t already know the topic, you have to specify all the details of your model and show exactly how it predicts what you claim it does. You can’t slip by with a half-baked mysterious “model” the way you can when you’re just thinking. It can be hard to see in your head where the model falls short but in writing the holes in your thinking become plain to everyone.</p>
+<p>Remember how we saw that hypotheses are nothing but programs? Essays are just one medium for writing those “programs”. Yes, it’s in technical English and it isn’t very precise, but it does a good job.</p>
 <p>In short, I suspect that essay-writing is just scientific thinking in disguise. There may be no explicit hypothesis testing or rigorous use of empirical evidence, but at the end of the day, you are still positing causes for things and trying to reject those ruled out by evidence.</p>
 <p>This tells us how we might optimize essay-writing. The closer we can get to scientific thinking, by being more empirical with the evidence we collect and using probabilities where we can and making our hypotheses more falsifiable, the better our ideas (and thus our essays) will be.</p>
 <h2 id="sidenote-science-vs-design">Sidenote: Science vs Design?</h2>
@@ -221,6 +272,10 @@
 <p>I believe resin content of various pine species will affect its energy output.</p>
 </blockquote>
 <p>Ok. But how exactly does the energy output vary with the resin content? Can you predict the relation across a wide variety of existing pine species? What if I introduce more resin into the tree? What if I remove the resin content (I’m talking out of my ass here, pardon me)? What if people genetically modify some pine species so that it has more resin content? Talking about cause, why do you predict that resin content will affect the energy output at all? What is your explanation for the link between the two?</p>
+<h2 id="what-science-is-not">What Science is not</h2>
+<p>Science is all about getting an accurate causal model of some domain.</p>
+<p>Having a causal model is not optional. Without it you just have a bunch of predictions, so you will be severely penalized when you’re asked about a different random experiment. This is also what Eliezer was talking about in Mysterious Answers to Mysterious Questions. You need to have a causal model making the predictions. That is why everything will become super-clear and there will be no more confusion. For you will be able to see <em>everything</em>!</p>
+<p>State-transition model is key here. Your hypothesis doesn’t just work with variables (dependent or independent or whatever). It works with the entire state. In the future, if I look at some other variable, your hypothesis should make correct predictions.</p>
 <div class="footnotes">
 <hr />
 <ol>
@@ -229,7 +284,7 @@
 </div>
 
 <div class="info">Created: August 18, 2015</div>
-<div class="info">Last modified: August 19, 2015</div>
+<div class="info">Last modified: August 21, 2015</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: scientific method</div>
 
