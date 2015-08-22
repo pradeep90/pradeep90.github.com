@@ -44,15 +44,13 @@
 
             <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
 
-<p><strong>Questions</strong>: How can we think scientifically? Perhaps design thinking would be more useful.</p>
+<p><strong>Questions</strong>: How can we think scientifically?</p>
 <hr />
 <h1 id="summary">Summary</h1>
-<p>What is a causal model? A possibly-incomplete description of a state-transition function.</p>
-<p>Why is a causal model so important? Because the better your model, the better your predictions, and thus the better your performance.</p>
-<p>How do we judge causal models? Bayes Theorem and experimentation.</p>
-<p>How do we use the scientific method? Do we have a precise algorithm? No. It’s an art.</p>
-<p>Is the above process actually giving us a better causal model? Yes. But you have to extend your model over time.</p>
-<p>What are some sources of cheap evidence? Learning and experimentation.</p>
+<p>What is a causal model? A possibly-incomplete description of a state-transition function. Why is a causal model so important? Because the better your model, the better your predictions, and thus the better your performance. How do we judge causal models? Bayes Theorem and experimentation. How do we use the scientific method? Do we have a precise algorithm? No. It’s an art. Is the above process actually giving us a better causal model? Yes. But you have to extend your model over time.</p>
+<p>What are some skills we need? Designing good hypotheses, updating well on evidence, using an explicit and external model, extending hypotheses, learning from existing sources, experimenting, overcoming our biases, etc.</p>
+<p>What are the costs and tradeoffs in scientific thinking? How do we divide time between scholarship and original research?</p>
+<p>I need to figure out a causal model of the process of building causal models, something capable of handling different states. This should tell me how much the different actions would cost, what path I should take for a particular problem, how likely I am to fail in some particular action, etc.</p>
 <h1 id="what-is-a-causal-model">What is a Causal Model?</h1>
 <p>The world moves from one state to another. We can observe different properties of a state - the objects, etc.</p>
 <p>We can imagine the universe as running a program that decides what state should come after any given state. In short, there is a state-transition function that governs the universe.</p>
@@ -113,25 +111,23 @@
 <p>“You’re an artist, Mr. White.” (TODO)</p>
 </blockquote>
 <p>Corollary: Don’t expect to have some strict algorithm to tell you what to do (formulate hypothesis, do an experiment, measure the results, make a cardboard poster, as per Hermione). It’s necessarily going to be rough and scratchy. Deal with it.</p>
-<h1 id="extending-hypotheses">Extending hypotheses</h1>
-<p>How do we generate hypotheses for the first time, in a brand-new area where we don’t have existing causal models? How do we generate alternative hypotheses? How do we extend an existing hypothesis to deal with more states?</p>
-<p>In short, how do we extend a hypothesis to handle evidence that it currently can’t? This is where the game is. We are highly unlikely to build correct hypotheses on our first try. We have to build new ones based on the evidence we see.</p>
-<p>This is the exact analogue of programming. There, we need to build programs over time based on the feedback we get from unit tests and manually running it and such. Also, every time we get a new idea or get changed requirements, we need to extend our program to reflect the changes. We can’t build any non-trivial program without iterating it on feedback.</p>
-<p>How do programmers do it, then? How do they extend a program over time? Well, it’s not an exact science there either. What they have are rules of thumb, folk wisdom, and so on to guide them in how to change a program to handle new requirements. Still, they have figured out a lot about how to deal with change and we can transfer their techniques to the world of science.</p>
-<p>If essays are one medium for expressing hypotheses, then our problem is that of building an essay over time. Which we saw is analogous to that of extending a program over time. So, we need to learn the best techniques that essayists (technical writers, in general) and programmers use to build their product over time. Add a dash of probability theory and we should be on our way.</p>
-<h1 id="other-questions-about-science">Other Questions about Science</h1>
-<p>What am I still uncertain about?</p>
-<p>How do we think by default? How does it differ from scientific thinking? What do we routinely fail to do? How can we bridge the gap? If we can figure out where we usually fail to think scientifically, we can gain much from correcting our thinking there.</p>
-<p>What experiments will give us the most expected evidence?</p>
-<p>Our hypothesis should conform to hypotheses we already believe with high probability. So, if you’re building a hypothesis about a car, you should obey Newton’s laws of motion because that hypothesis has a lot of evidence behind it. This is just another way of saying that you should write the hypothesis program in the language of the domain. In mechanics, you would need to deal with forces and masses and energy and so on, because the properties of those things have been understood really well. People already have a good causal model that predicts the outcomes for a lot of states. So, you should make sure you extend that model to handle a few more states (or be more accurate about existing states) instead of just creating one from scratch.</p>
+<h1 id="designing-good-hypotheses">Designing Good Hypotheses</h1>
 <p>Other things being equal, we want a causal model that makes narrow predictions. It says that, for a given state, X will happen and Y will not happen.</p>
-<p>Remember Conservation of Expected Evidence.</p>
 <p>Also, remember locating the hypothesis. Though, that opens the question: how do we locate hypotheses given evidence? This might be difficult because you have to actually design the hypotheses - they aren’t all there in front of you.</p>
-<p>Heuristics and Biases: You also need to learn to overcome the biases in your mind.</p>
-<p>We routinely fail to notice what our beliefs forbid (if they do at all). That was the whole point of Eliezer’s sequence on Mysterious Answers to Mysterious Questions. If you predict that something will happen, you are necessarily predicting that the other thing will not. Also, we avoid testing our beliefs. We like to stay comfortable. Then, we also fail to collect empirical evidence - we just go by our naive thoughts. Even when we decide to think scientifically, we may not choose the most informative hypothesis tests.</p>
+<p>Is your hypothesis technical? What does it forbid?</p>
+<p>How can you falsify your current hypothesis? Raise strong alternative hypotheses. You will be surprised by how often you can’t even think of one.</p>
+<h1 id="updating-on-evidence">Updating on Evidence</h1>
+<p>Remember Conservation of Expected Evidence.</p>
 <h1 id="use-the-model-not-your-own-mind">Use the model, not your own mind</h1>
 <p>Use the actual program of a hypothesis to generate its predictions. Don’t use your own brain to do it. For example, if someone says intelligence arises due to “emergence”, ask how the emergence hypothesis predicts the outcome of a particular experiment given the state of the brain. What if you have half the brain? Will you have half the “intelligence”? What if I pour acid into the brain? How is the emergence hypothesis using the state of the brain at all to decide whether it will be intelligent? It’s not. You decide whether or not some brain state will lead to intelligence and attribute that to the emergence hypothesis. Bad dog! Use the program, not your mind, to make predictions.</p>
 <p>Keep the model separate and ask if it makes any predictions on its own about some experiment. If you have to fill in some blanks yourself, then your model is incomplete and you’re most likely missing some key insights. Make all your assumptions and prior knowledge explicit in the model so that a neutral person can use it to generate the predictions without consulting you. (This is exactly how we write essays, by the way).</p>
+<h1 id="extending-hypotheses">Extending hypotheses</h1>
+<p>How do we generate hypotheses for the first time, in a brand-new area where we don’t have existing causal models? How do we generate alternative hypotheses? How do we extend an existing hypothesis to deal with more states?</p>
+<p>In short, how do we extend a hypothesis to handle evidence that it currently can’t? This is where the game is. We are highly unlikely to build correct hypotheses on our first try. We have to build new ones based on the evidence we see.</p>
+<p>Our hypothesis should conform to hypotheses we already believe with high probability. So, if you’re building a hypothesis about a car, you should obey Newton’s laws of motion because that hypothesis has a lot of evidence behind it. This is just another way of saying that you should write the hypothesis program in the language of the domain. In mechanics, you would need to deal with forces and masses and energy and so on, because the properties of those things have been understood really well. People already have a good causal model that predicts the outcomes for a lot of states. So, you should make sure you extend that model to handle a few more states (or be more accurate about existing states) instead of just creating one from scratch.</p>
+<p>This is the exact analogue of programming. There, we need to build programs over time based on the feedback we get from unit tests and manually running it and such. Also, every time we get a new idea or get changed requirements, we need to extend our program to reflect the changes. We can’t build any non-trivial program without iterating it on feedback.</p>
+<p>How do programmers do it, then? How do they extend a program over time? Well, it’s not an exact science there either. What they have are rules of thumb, folk wisdom, and so on to guide them in how to change a program to handle new requirements. Still, they have figured out a lot about how to deal with change and we can transfer their techniques to the world of science.</p>
+<p>If essays are one medium for expressing hypotheses, then our problem is that of building an essay over time. Which we saw is analogous to that of extending a program over time. So, we need to learn the best techniques that essayists (technical writers, in general) and programmers use to build their product over time. Add a dash of probability theory and we should be on our way.</p>
 <h1 id="fundamental-questions-of-science">Fundamental Questions of Science</h1>
 <p>One core question is: do you have a causal model that generates predictions?</p>
 <p>(You can think of this as a hypothesis: “I have a causal model about this domain”. The following experiments will test whether you really do.)</p>
@@ -139,18 +135,41 @@
 <p>What will happen if I change the conditions? Can your hypothesis handle the new case? Is your hypothesis a causal description or just a bunch of predictions for some specific cases? The fundamental question here is similar to that in programming - can you handle change? If you try to encode each of the special cases (what will happen if X happens, if Y happens, etc.), then your hypothesis will become very large and get penalized for complexity. You have to extract a common causal model that generates all of those special cases parsimoniously.</p>
 <p>To help you see what conditions to change, use taboo. See through the labels that seem meaningful to you and talk in terms of the territory. Don’t say “food”, say “an apple” or “a rotting chicken leg”.</p>
 <p>Another way to know if you really have a causal model: why do you predict exactly this particular outcome? Why not some other one? You should have a good explanation for why the world ended up in this state and not another. Your causal model should generate precisely this outcome. Else, all you have is just a prediction, and when your hypothesis is questioned about a different experiment, it will have nothing useful to say and thus get downshifted. “Fertilizer makes plants grow bigger” - why doesn’t it make plants grow smaller? Why did you pick an arbitrary position?</p>
-<p>Next, why are you running this <em>particular</em> experiment? What is the alternative hypothesis? Is this the most informative differing prediction from your hypothesis?</p>
-<p>Is your hypothesis technical? What does it forbid?</p>
-<p>Look at alternative hypotheses. You will be surprised by how often you can’t even think of one.</p>
-<p>Where are you not getting the results you want? You have the wrong hypotheses there.</p>
-<p>How can you falsify your current hypothesis? Raise strong alternative hypotheses.</p>
-<h1 id="sources-of-evidence">Sources of Evidence</h1>
+<h1 id="model-of-our-mind">Model of our Mind</h1>
+<p>How do we think by default? How does it differ from scientific thinking? What do we routinely fail to do? How can we bridge the gap? If we can figure out where we usually fail to think scientifically, we can gain much from correcting our thinking there.</p>
+<p>We routinely fail to notice what our beliefs forbid (if they do at all). That was the whole point of Eliezer’s sequence on Mysterious Answers to Mysterious Questions. If you predict that something will happen, you are necessarily predicting that the other thing will not. Also, we avoid testing our beliefs. We like to stay comfortable. Then, we also fail to collect empirical evidence - we just go by our naive thoughts. Even when we decide to think scientifically, we may not choose the most informative hypothesis tests.</p>
+<p>Heuristics and Biases: You need to learn to overcome the biases in your mind.</p>
+<h1 id="tradeoffs-in-scientific-thinking">Tradeoffs in Scientific Thinking</h1>
+<p>What are the costs of the various parts of scientific thinking? What should we focus on? What should we give up on? More importantly, where will I gain the most value by thinking scientifically?</p>
+<p>How many pieces of evidence can I update on in a year? In a lifetime? How many times can I extend a hypothesis based on new evidence? How many experiments can I run? How many hypotheses can I learn from others? In short, how much predictive power can I hope to acquire throughout a normal lifetime?</p>
+<p>The answers will decide where I should focus.</p>
+<p>What are the different domains I can work on?</p>
+<h1 id="scholarship-vs-research">Scholarship vs Research</h1>
+<p>Where should I aim to do original research myself and where should I aim to just learn existing hypotheses from other? Let’s start from the opposite end: what if I couldn’t do any original research at all? How far would I get? Similarly with experimentation: how far would I get with no scholarship?</p>
+<p>Original research simply means building a causal model by myself using new evidence, perhaps by extending an existing model. Note that you can’t escape building hypotheses completely. Every plan you make depends on a hypothesis.</p>
+<p>You simply don’t have the evidence or the evidence-processing power in your brain to build highly accurate models about the domains you work in. Scientists who study your domain may provide generic models that give you a decent amount of predictive power, but our world is complex enough that you cannot have any model that fits the exact work you need to do (or if you do, you’re not going to be paid too much for it).</p>
+<p>Designing is all about building hypotheses. Each version of the product you make is a hypothesis. You want to get certain features from your product (speed or cost or beauty) and you try to shape your material (metal or cloth or words on paper) into a form that provides those features. Most of the time, you aren’t even sure about the exact features you want, so you have to build hypotheses about the feature set itself.</p>
+<p>In short, wherever you are uncertain, you need to get evidence and build hypotheses.</p>
+<p>In some areas, people would have already done most of the work; all you would need to do is verify the hypothesis that they have hit upon the right hypothesis. If a lot of smart people have reviewed and replicated the evidence and come to the same conclusions, that points to the hypothesis being a good one.</p>
+<p>But, in other, more informal areas of life, you need to build hypotheses yourself. Designing a plan, a program, a career, a relationship, whatever.</p>
+<p>So, to the extent that your field has been studied by scientists or other people who have built causal models, you need to learn from them. This isn’t a fight between doing research on your own and learning from others.</p>
+<h1 id="evidence-is-costly">Evidence is Costly</h1>
+<p>Getting evidence is costly. Updating on evidence is costly. Not only is it hard, it is also error-prone. So we need to be as efficient as we can, and let others do as much of the work as possible.</p>
+<p>We can only collect and update on so much evidence, I suspect. So we need to pick our battles wisely. A corollary is that we must not try to do our own hypothesis-building in areas where there exists a lot of research. This is the Virtue of Scholarship.</p>
+<p>Note, however, that to become good at scientific thinking, we need to practice doing it a lot. Instead of doing fully original research, we may simply practice using existing research by not peeking at the answers.</p>
+<h1 id="the-cost-of-evidence">The Cost of Evidence</h1>
 <p>I can’t hope to apply the scientific method by myself in the natural sciences. Evidence in those areas is costly. In psychology, for instance, I need to test a lot of people and do a lot of replications before I can be confident.</p>
 <p>So, where is evidence not too costly?</p>
 <p>In programming! You have the program and its source code. You can test it however you want and you can automate it too. In short, these days, you have some of the cheapest evidence ever! You can run your tests every five minutes to tell you if something is broken. How’s that for cheap and fast evidence?</p>
 <p>Other areas of design too seem to have cheap evidence. In painting, you can use your own taste to judge different variations. Places like business and writing and so on also seem to have cheaper forms of evidence than the natural sciences. However, getting feedback from others is still a bottleneck. In music or art or architecture, you have to survey a lot of people to get a good idea of what they will like.</p>
 <p>That is the biggest advantage of programming: you have to ask only the computer, not other people. And the computer is a dumb, obedient, cheap, and automatable source of feedback.</p>
+<p>Where are you not getting the results you want? You have the wrong hypotheses there.</p>
 <p>In short, there seem to be two sources of evidence: learning from others and experimenting on your own. By learning from others - asking people or reading books or journal papers or websites - you get evidence secondhand. By running experiments - on nature, on others, on yourself - you get evidence firsthand. Secondhand evidence is often vastly cheaper than firsthand evidence.</p>
+<h1 id="how-to-learn-from-existing-sources">How to Learn from Existing Sources</h1>
+<p>How should we learn about existing causal models? We don’t want to do original research all the time. (Hint: learn from scientific books and papers)</p>
+<h1 id="how-to-experiment">How to Experiment</h1>
+<p>What experiments will give us the most expected evidence?</p>
+<p>Why are you running this <em>particular</em> experiment? What is the alternative hypothesis? Is this the most informative differing prediction from your hypothesis?</p>
 <h1 id="ideas-for-scientific-method-domain-from-hpmor">Ideas for Scientific Method Domain (from HPMOR)</h1>
 <p>(Note: This is just a v1.0 list. Keep updating it with time.)</p>
 <p>If you come across some strange or awesome thing, ask if you know its causal structure.</p>
@@ -193,6 +212,8 @@
 <p>Remember how we saw that hypotheses are nothing but programs? Essays are just one medium for writing those “programs”. Yes, it’s in technical English and it isn’t very precise, but it does a good job.</p>
 <p>In short, I suspect that essay-writing is just scientific thinking in disguise. There may be no explicit hypothesis testing or rigorous use of empirical evidence, but at the end of the day, you are still positing causes for things and trying to reject those ruled out by evidence.</p>
 <p>This tells us how we might optimize essay-writing. The closer we can get to scientific thinking, by being more empirical with the evidence we collect and using probabilities where we can and making our hypotheses more falsifiable, the better our ideas (and thus our essays) will be.</p>
+<h2 id="science-and-skill">Science and Skill</h2>
+<p>First, we build an explicit causal model of the domain we care about. We ensure that the external hypothesis is fully capable of handling the likely states of the system. Then, we burn each part of the causal model into our head with practice. So, we can now make predictions about the domain without having to refer to the external model. We will have it in our head. We will have the information at our fingertips, so to speak.</p>
 <h2 id="sidenote-science-vs-design">Sidenote: Science vs Design?</h2>
 <p>One of my beliefs right now is that if we started thinking more scientifically, we would solve a lot more problems quickly. I need to drill down to the core of this and find out exactly when (or if) this is true, and how far scientific thinking can help me.</p>
 <p>Let us look at the conventional hypothesis I differ from. How else do people suggest you should think?</p>
@@ -284,7 +305,7 @@
 </div>
 
 <div class="info">Created: August 18, 2015</div>
-<div class="info">Last modified: August 21, 2015</div>
+<div class="info">Last modified: August 22, 2015</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: scientific method</div>
 
