@@ -129,6 +129,16 @@
 <p>This is the exact analogue of programming. There, we need to build programs over time based on the feedback we get from unit tests and manually running it and such. Also, every time we get a new idea or get changed requirements, we need to extend our program to reflect the changes. We can’t build any non-trivial program without iterating it on feedback.</p>
 <p>How do programmers do it, then? How do they extend a program over time? Well, it’s not an exact science there either. What they have are rules of thumb, folk wisdom, and so on to guide them in how to change a program to handle new requirements. Still, they have figured out a lot about how to deal with change and we can transfer their techniques to the world of science.</p>
 <p>If essays are one medium for expressing hypotheses, then our problem is that of building an essay over time. Which we saw is analogous to that of extending a program over time. So, we need to learn the best techniques that essayists (technical writers, in general) and programmers use to build their product over time. Add a dash of probability theory and we should be on our way.</p>
+<hr />
+<p>One method could be to rewrite your hypotheses over and over, compressing it each time with your new understanding.</p>
+<p>This is the strategy I’ve used when writing summaries for chapters. Summaries are basically causal models that predict all the evidence I’ve seen. I write a disorganized version that simply has the key point from each paragraph or so. Then, I write a summary of those ideas, trying to capture it in three or four sentences. I’m forced to be succinct here because I can only write a couple of sentences in my diary index. I test whether my summary captures each of the points in my original notes aka whether my current hypothesis predicts all the evidence accurately. Then, I rewrite the summary and try to make it even more succinct. Again, I test it against my previous summary and the original notes. Rinse and repeat, till I’ve got a highly polished gem.<sup><a href="#fn1" class="footnoteRef" id="fnref1">1</a></sup></p>
+<p>We probably do this as programmers too. We just call it refactoring, in which we ensure that our final code pass all the tests, just like I tested whether my summary does explain all the evidence. Writers call it rewriting.</p>
+<p>Corollary: If rewriting your hypotheses aka essays makes them better, you should rewrite your essays as much as possible, especially over time, as you gather more evidence.</p>
+<p>PG already beat me to it:</p>
+<blockquote>
+<p>Maybe I’m excessively attached to conciseness. I write code the same way I write essays, making pass after pass looking for anything I can cut. But I have a legitimate reason for doing this. You don’t know what the ideas are until you get them down to the fewest words.</p>
+<p>– Paul Graham, <a href>Persuade xor Discover</a></p>
+</blockquote>
 <h1 id="fundamental-questions-of-science">Fundamental Questions of Science</h1>
 <p>One core question is: do you have a causal model that generates predictions?</p>
 <p>(You can think of this as a hypothesis: “I have a causal model about this domain”. The following experiments will test whether you really do.)</p>
@@ -231,9 +241,9 @@
 <p>Essays are about getting a good causal model of the subject. Essay writers may not use the scientific method explicitly, but the end is much the same. You don’t just talk about the topic on the surface, you dig deeper. You posit causes for the phenomena you see. You may not be doing it rigorously, but if you have a lot of experience in the domain, you will hit the target more often than not. Paul Graham is a great example in the domain of startups and programming languages and writing.</p>
 <p>You can’t write a good essay without positing a causal model, I suspect. We might find it awkward to read an essay without a “because”. We might find it empty and without substance. An easy test: compare essays with usual internet blog posts. I find the latter to be utterly devoid of substance. I predict that the blog posts I find to be shallow and empty will not present any causal model of the subject they’re talking about. Let me stick my neck out further: I predict that bad writing will not present any causal model, period.</p>
 <p>Yes, good writing needs style, too. That may even be half the work of writing, as PG says, but I think positing a cause for the phenomena you see is the first business of essay writing. Remember, an essay has to be true before it is beautiful. All considerations of beauty and style come after we have decided the questions of fact.</p>
-<p>PG is already ahead of the curve here (again). He says that he writes essays with the sole purpose of figuring things out. What is that but getting a good causal model of a subject? Even more importantly, he consciously aims for maximum surprise! That is, he wants to come up with hypotheses that differ from conventional ones in ways that matter.<sup><a href="#fn1" class="footnoteRef" id="fnref1">1</a></sup></p>
+<p>PG is already ahead of the curve here (again). He says that he writes essays with the sole purpose of figuring things out. What is that but getting a good causal model of a subject? Even more importantly, he consciously aims for maximum surprise! That is, he wants to come up with hypotheses that differ from conventional ones in ways that matter.<sup><a href="#fn2" class="footnoteRef" id="fnref2">2</a></sup></p>
 <p>Also, essay-writing (and I suspect any detailed form of writing) forces you to be explicit about your hypothesis. Because you’re writing for a neutral smart reader who doesn’t already know the topic, you have to specify all the details of your model and show exactly how it predicts what you claim it does. You can’t slip by with a half-baked mysterious “model” the way you can when you’re just thinking. It can be hard to see in your head where the model falls short but in writing the holes in your thinking become plain to everyone.</p>
-<p>Remember how we saw that hypotheses are nothing but programs? Essays are just one medium for writing those “programs”. Yes, it’s in technical English and it isn’t very precise, but it does a good job.<sup><a href="#fn2" class="footnoteRef" id="fnref2">2</a></sup></p>
+<p>Remember how we saw that hypotheses are nothing but programs? Essays are just one medium for writing those “programs”. Yes, it’s in technical English and it isn’t very precise, but it does a good job.<sup><a href="#fn3" class="footnoteRef" id="fnref3">3</a></sup></p>
 <p>In short, I suspect that essay-writing is just scientific thinking in disguise. There may be no explicit hypothesis testing or rigorous use of empirical evidence, but at the end of the day, you are still positing causes for things and trying to reject those ruled out by evidence.</p>
 <p>This tells us how we might optimize essay-writing. The closer we can get to scientific thinking, by being more empirical with the evidence we collect and using probabilities where we can and making our hypotheses more falsifiable, the better our ideas (and thus our essays) will be.</p>
 <h2 id="science-and-skill">Science and Skill</h2>
@@ -324,13 +334,14 @@
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>Corollaries are a good indicator that the writer is building up a causal model, because he is able to make predictions for other situations too, instead of having a blank “hypothesis” that just handles one particular situation.<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>Also, we humans usually think much the same cached thoughts over and over. I don’t want to waste my time like that; I need to turn my brain on new problems. It’s hard to realize you’re repeating the same thoughts when you’re just thinking. However, by writing explicit essays, coming up with new hypotheses for new phenomena, we can make sure to break new ground each time.<a href="#fnref2">↩</a></p></li>
+<li id="fn1"><p>This is probably how we can write as succinctly as Godric Gryffindor was purported to. We figure out the causal model that generates all the states we see, and simply transcribe it. Easier said than done, though.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>Corollaries are a good indicator that the writer is building up a causal model, because he is able to make predictions for other situations too, instead of having a blank “hypothesis” that just handles one particular situation.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>Also, we humans usually think much the same cached thoughts over and over. I don’t want to waste my time like that; I need to turn my brain on new problems. It’s hard to realize you’re repeating the same thoughts when you’re just thinking. However, by writing explicit essays, coming up with new hypotheses for new phenomena, we can make sure to break new ground each time.<a href="#fnref3">↩</a></p></li>
 </ol>
 </div>
 
 <div class="info">Created: August 18, 2015</div>
-<div class="info">Last modified: August 25, 2015</div>
+<div class="info">Last modified: August 27, 2015</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: scientific method</div>
 
