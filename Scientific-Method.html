@@ -182,6 +182,15 @@
 <p>That is the biggest advantage of programming: you have to ask only the computer, not other people. And the computer is a dumb, obedient, cheap, and automatable source of feedback.</p>
 <p>Where are you not getting the results you want? You have the wrong hypotheses there.</p>
 <p>In short, there seem to be two sources of evidence: learning from others and experimenting on your own. By learning from others - asking people or reading books or journal papers or websites - you get evidence secondhand. By running experiments - on nature, on others, on yourself - you get evidence firsthand. Secondhand evidence is often vastly cheaper than firsthand evidence.</p>
+<h1 id="states">States</h1>
+<p>If a causal model is nothing but a state-transition function, then we need to know what exactly “states” are and how to describe them.</p>
+<p>A state of the world is a set of observable variables. At any point of time, we can observe the value of any of those variables. Each variable has a domain of values.</p>
+<p>Here’s the important part: your hypothesis has to talk about the value of each of those variables. Else, it is essentially making random guess and will thus be penalized heavily by Bayes Theorem.</p>
+<p>Also, it has to talk about what will happen next for every possible configuration of those variables. You should be able to predict the state of the system after one second, after one minute, etc. Essentially, time is also an observable variable. So, you should be able to talk about the state of the system for different values of time.</p>
+<p>An experiment or hypothesis test is nothing but the examination of a variable. The possible outcomes of an experiment are just the possible values of that variable.</p>
+<p>How do we choose which variables to look at? Look at the instruments you have. Those will determine what variables you can observe. But, not every variable may be useful - the colour of a car may not be too useful in an economic model of its supply and demand.</p>
+<p>So, we need to abstract: emphasize a few variables and ignore the rest. What is a good abstraction? Maybe good abstractions are those that capture all the variables that can change upon the change of mutable variables. That is, you have the ability to modify the value of certain variables, by turning some knobs or adding or removing ingredients. I suspect that the only observables that we care about are those that can potentially change when we change the mutable variables. (I think scientists call mutable variables as independent variables and the rest as dependent variables.)</p>
+<p>How could you go wrong in describing states? You could be wrong about the domain of a variable - it could take on some value you didn’t know about. Or, you could have missed some important variables.</p>
 <h1 id="how-to-learn-from-existing-sources">How to Learn from Existing Sources</h1>
 <p>How should we learn about existing causal models? We don’t want to do original research all the time. (Hint: learn from scientific books and papers)</p>
 <p>See nothing but causal models, experiments, outcomes, and predictions. Why? Because these are all that matter in my search for predictive power. Don’t be distracted by the text of the source.</p>
@@ -355,7 +364,7 @@
 </div>
 
 <div class="info">Created: August 18, 2015</div>
-<div class="info">Last modified: September  4, 2015</div>
+<div class="info">Last modified: September  5, 2015</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: scientific method</div>
 
