@@ -55,12 +55,33 @@
 <p>What should we do first? Do some scholarship and catch up to the best causal model known in the field. Test that you can explain all the evidence so far. Perhaps build the causal model yourself by using only their evidence, not their explanations. After learning from existing resources, you should have a causal model that strongly predicts all their evidence. That is the only test of your causal model. Nothing else matters.</p>
 <p>Then, list questions about which your model is still inaccurate. Get evidence about these questions (through new experiments or from others) and magically refine your model to cover these too. Maybe come up with alternative causal models and look at their differing predictions to eliminate wrong ones. I’m not sure how to generate these.</p>
 <h1 id="causal-model-as-a-program">Causal Model as a Program</h1>
-<p>What am I still uncertain about? How to extend a causal model for new evidence and how to generate alternative causal models.</p>
-<p>What is a “causal model”? Taboo that phrase. It is something that gives you a prediction for some experiment. Actually, it tells you the next state given some previous state. How exactly does it tell you?</p>
+<p>What is a “causal model”? Taboo that phrase. It is something that gives you a prediction for some experiment. Actually, it tells you the next state given some previous state.</p>
+<p>The next state of what? The entire world? Well, ideally, yes. But, we can’t possibly compute the next state for every single atom in the entire world.</p>
+<p>You need to know the state of the system at every point. However, knowing that in full detail is impossible. So, you create a cheaper model of the system and use that instead. Instead of using the language elements provided by reality, you create your own and make sure that it approximates the system.</p>
+<p>Basically, you create a cheaper model of reality’s state-transition function. For the states of what - the whole world or of a particular system (collection of atoms)?</p>
+<p>Reality has just one layer, it is we who add layers of abstraction to let our puny brains handle things. Let’s just say that atoms are the most fundamental layer of reality (it’s probably quarks or quantum fields, but still).</p>
+<p>Physics gives you a causal model to describe how atoms behave. We can build other models on top of physics to describe higher abstractions, like objects, people, crops, whatever. This is similar to how programmers build higher-level languages on top of assembly language so that they can describe more complex processes. In the end, the program that they run is still in assembly language, they just deal with it differently. Similarly, the higher-level causal models we have, like that of minds in psychology or planets in astronomy, still talk about atoms, we just deal with them differently.</p>
+<p>That’s what all the scientific domains do. They give you a language to describe reality at the abstraction level they care about. Chemistry is the study of matter, as Walter White says, psychology is the study of minds, and so on.</p>
+<p>I want a fully reductionistic version of causal models. Why? Because that is the only way to precisely answer all possible questions about the world. Also, because I want our models to scale to very complex problems. We have a pretty good idea of how to scale a reductionistic model to tackle giant, hairy problems - that’s what programming is about.</p>
+<p>In any case, our causal model is about some particular system, not the entire world. The atoms in that system will work according to the laws of physics, and so the higher level model which are built on top of physics will describe how the more abstract state of the system evolves.</p>
+<h1 id="concrete-examples-of-causal-models">Concrete examples of causal models</h1>
+<p>What domain-specific languages do people use to express hypotheses?</p>
+<p>Describe the features of some languages in domains like psychology, physics, astronomy, etc. and show some hypotheses written in those languages.</p>
+<p>Specifically, talk about the kind of hypotheses <em>not</em> allowed by the language. That is what determines how good the language is.</p>
+<hr />
+<p>Remember to use your hypothesis explicitly to make predictions (not using your mind). Also, judge it purely using predictive power. Can the alternative formulations of hypotheses give you the same predictive power (like using relationships between independent and dependent variables)?</p>
+<h1 id="reality-as-a-programming-language">Reality as a Programming Language</h1>
+<p>What do I want from this formulation of causal models? I want to know how to extend a causal model based on some evidence, generate alternative hypotheses, and test a model effectively. Also, how to compose models.</p>
+<p>Let’s analyze the language using the framework provided in <a href>SICP</a>: primitives, means of composition, and means of abstraction.</p>
+<p>If we look at a causal model as a program, what does it do?</p>
+<p>Once you realize that you have to compose causal models to get bigger ones, you know you can test individual sub-models and put them together with confidence. You know you can choose a different sub-model (of the same type) and create an alternative model.</p>
+<p>Could a causal model simply be a cause: A causes B? Is that rich enough to capture all the state-transitions in the world? Basically, I want something that can express any possible state-transition - that’s what a causal model is for. Wait, what does that mean, A “causes” B? Alternatively, could we have a model being a state-transition for a set of related inputs (like a function)?</p>
+<p>What about feedback loops?</p>
+<p>Maybe how you extend hypotheses is you get causes for each prediction, and then you try to combine them in a succinct way. You look at known causes that lead to that particular state. Then, you look at other causes that lead to the input state of that cause, and so on till you have a chain of causes from the initial state to the final state.</p>
+<h1 id="how-to-build-causal-models-lessons-from-programming">How to build Causal Models: Lessons from Programming</h1>
 <p>Let’s look at the world of programming. A causal model is nothing but a program. And, in functional programming, a program can be taken to be a single function that takes an input and gives an output.</p>
 <p>How can you describe the program? A valid way is to enumerate all the possible inputs and specify their outputs. However, not only is this tedious, it’s heavily penalized by Occam’s Razor because it’s too long. So, another way is to write the function as a composition of smaller functions. The same issue occurs with the smaller functions, and so you build a function hierarchically, till you bottom-out by using fundamental language elements.</p>
 <p>Similarly, we can think of a causal model as a composition of smaller causes, each of which takes the world from a set of input states to a set of output states, thus giving you an overall “cause” that takes the world from the set of initial states to the set of final states.</p>
-<h1 id="how-to-build-causal-models-lessons-from-programming">How to build Causal Models: Lessons from Programming</h1>
 <p>How do we build causal models based on new evidence?</p>
 <p>We can see this in terms of changing the input and output sets of the model. Initially, our model may handle only a few input states (and thus as many output states - since we assume that the world is deterministic - one input state leads to exactly one output state).</p>
 <p>The type of a function tells you what sort of values you can give it as input and what sort of values you can expect. Similarly, the type of a causal model, or the abstraction we use, will tell you what information about the input state you must tell it and what information about the output state it can tell you in return.</p>
@@ -68,18 +89,13 @@
 <p>We infer how the composed function will work by analyzing the behaviour of the component functions (in a similar fashion, until we hit some fundamental functions) and extrapolating.</p>
 <p>We generate alternative causal models (aka programs) by using different valid functions along the causal chain.</p>
 <p>Keep in mind that we have to rely on our not-fully-understood mental processes to do much of the work for us. If we could understand this stuff well enough to describe it to a computer, we would have AGI, which we don’t.</p>
-<h1 id="testing---reality-as-a-programming-language">Testing - Reality as a Programming Language</h1>
-<p>How do we test the behaviour of a function? Note that reality is running the program. We’re simply giving it input states and asking for the outputs.</p>
-<p>Reality gives us the basic building blocks for our causal model, the way a programming language gives us language elements. Instead of typing characters in a file, we physically accumulate material.</p>
-<p>We assume that a certain configuration of atoms will work the same way everywhere, every time.</p>
-<p>Ah. Here’s a problem. In functional programming, the functions don’t have side effects on each other. You can examine them independently, put them together, and expect them to work as usual.</p>
-<p>Reality isn’t like that. It’s more like a side-effect based language.</p>
-<p>What is the exact analogy between a program and a causal model?</p>
-<p>A function is represented in the final executable program by a bunch of assembly instructions. A particular causal entity, I think, is represented by a bunch of atoms.</p>
-<hr />
-<p>Maybe think about it using the primitives, means of composition, and means of abstraction framework.</p>
-<p>What do I want from this formulation of causal models? How to extend a causal model based on some evidence, generate alternative hypotheses, and test a model effectively. How to compose models?</p>
-<p>Once you realize that you have to compose causal models to get bigger ones, you know you can test individual sub-models and put them together with confidence. You know you can choose a different sub-model (of the same type) and create an alternative model.</p>
+<h1 id="start-simple-dig-deeper-when-in-trouble">Start simple; Dig deeper when in trouble</h1>
+<p>Remember that you can work at a superficial level for simple stuff. Don’t go too high up the causal chain. Don’t taboo too much.</p>
+<p>Say you notice that a tap is dripping. Why? An independent variable is how much the valve is open. A dependent variable is how much water is flowing out of the tap. We generally characterize the tap by saying that the amount of water flowing out is proportional to how much the valve is open. However, this is only true because of other properties of the tap - the inner structure should be well-built, it shouldn’t be blocked, etc.</p>
+<p>In most cases, the above relationship will do. It will give you the predictive power you want (which is all we care about).</p>
+<p>So, perhaps, we must first figure out a relationship between variables, and then look for some causal explanation. We must build hypotheses iteratively and start digging deeper only when our initial hypothesis can’t handle some experiment.</p>
+<p>Basically, you have two hypotheses: one saying that the underlying mechanism of the system is fine and that therefore a simple relationship (water flow is proportional to the valve’s opening) will hold; the other one saying that the core is not fine and that the relationship will not hold. So, we use the system assuming that the relationship holds. If we find that it doesn’t, then we need to dig deeper into the underlying mechanism and fix the real problem (some kind of blockage in the tap, or no water in the tank).</p>
+<p>In any case, you should understand the underlying mechanism that supports the simple relationship you use, i.e., be aware of the assumptions you’re making.</p>
 <h1 id="what-is-a-causal-model">What is a Causal Model?</h1>
 <p>The world moves from one state to another. We can observe different properties of a state - the objects, etc.</p>
 <p>We can imagine the universe as running a program that decides what state should come after any given state. In short, there is a state-transition function that governs the universe.</p>
@@ -178,6 +194,11 @@
 <p>So, the most basic question is: do you have a hypothesis or just a prediction? “If I do X, Y will happen” is just a prediction, not a useful hypothesis.</p>
 <p>In short, don’t be satisfied with the mere prediction. Ask “why”! Why does X lead to Y?</p>
 <p>Also, ask whether you can predict exactly which outcome will happen? For example, early in the psychological theory of learned helplessness, Martin Seligman was asked by John Teasdale whether the theory could predict which one-third of the subjects wouldn’t learn to be helpless when faced with uncontrollable noises. It’s not just enough to say that one-third will resist helplessness, you have to predict precisely which ones and why.</p>
+<hr />
+<p>If you have a “hypothesis”, ask: is this a hypothesis or just a prediction?</p>
+<p>Taboo the important words.</p>
+<p>Always ask “why”! Do you have a causal model? Do you answer “why” or do you just have a bunch of predictions without any cause? Design your causal model with causes, not predictions.</p>
+<p>When you make a prediction, you have to describe the state of the world completely. You can’t just talk about the value of one particular variable.</p>
 <h1 id="model-of-our-mind">Model of our Mind</h1>
 <p>How do we think by default? How does it differ from scientific thinking? What do we routinely fail to do? How can we bridge the gap? If we can figure out where we usually fail to think scientifically, we can gain much from correcting our thinking there.</p>
 <p>We routinely fail to notice what our beliefs forbid (if they do at all). That was the whole point of Eliezer’s sequence on Mysterious Answers to Mysterious Questions. If you predict that something will happen, you are necessarily predicting that the other thing will not. Also, we avoid testing our beliefs. We like to stay comfortable. Then, we also fail to collect empirical evidence - we just go by our naive thoughts. Even when we decide to think scientifically, we may not choose the most informative hypothesis tests.</p>
@@ -393,7 +414,7 @@
 </div>
 
 <div class="info">Created: August 18, 2015</div>
-<div class="info">Last modified: September  7, 2015</div>
+<div class="info">Last modified: September  8, 2015</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: scientific method</div>
 
