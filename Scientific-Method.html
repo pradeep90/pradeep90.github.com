@@ -48,20 +48,29 @@
 <p>Instead of trying to find the perfect description of the scientific method, let’s start with a simple, inefficient process and improve it based on feedback.</p>
 <hr />
 <h1 id="aim-obtain-a-good-model">Aim: Obtain a good model</h1>
-<p>We are uncertain about the outcomes of various scenarios. We need to predict what will happen, so that we can make good decisions. We have questions we want to answer, problems we want to solve. So, we use a model of the domain to help us answer those questions. The better our model, the better our predictions will be.</p>
-<p>And since the quality of our decisions depends on the quality of our predictions, the better our predictions, the better our performance will be.</p>
-<p>So, our one and only aim is to get good models of the domain.</p>
-<p>How do we do that? Using science.</p>
-<h1 id="first-try">First try</h1>
-<p>What’s the bare minimum we can do to get a reasonably predictive model?</p>
-<p>Guess a model for how things work. Then, think hard to guess another way it could be. Look at their differing predictions and run experiments to test them.</p>
-<p>What’s so unique and scientific about this? Well, we’re looking at where they differ and testing them using experiments. That’s the heart of the scientific method.</p>
+<p>We are uncertain about the outcomes of various scenarios. We need to predict what will happen, so that we can make good decisions. We have questions we want to answer, problems we want to solve. So, we use a model of the domain to help us answer those questions.</p>
+<p>The better our model, the better our predictions will be. Wait. In what sense will our predictions be better? Well, it is a matter of induction. We humans believe that if we process the evidence we have by using Bayes Theorem, we will get the most accurate predictions overall. Yes, a mythical hypothesis that made exactly the right predictions for everything you see would be great to have, but you don’t know what it is in advance. So, it doesn’t help you make future predictions. The best you can do is use Bayes Theorem constantly.</p>
+<p>So, our one and only aim is to use Bayes Theorem to get a model with high posterior probability.</p>
+<h1 id="the-scientific-method-v1.0">The Scientific Method v1.0</h1>
+<p>Get an existing causal model and show how it makes predictions for different experiments. This way we get a hypothesis with decent posterior probability. We aren’t doing any actual research here, just accepting an existing model and ensuring that we can use it to make predictions.</p>
+<p>Let’s test this by getting 5 causal models with 10 experiments each.</p>
+<h1 id="the-scientific-method-v2.0-tentative">The Scientific Method v2.0 (tentative)</h1>
+<p>What’s the bare minimum we can do to use Bayes Theorem in a domain?</p>
+<p>Guess a model for how things work. Then, think hard to guess another way it could be. Look at their differing predictions and observe the actual outcome.</p>
+<p>How does this help get a model with high posterior probability? By looking at the differing predictions, we get strong evidence one way or another. We will reject one of the two hypotheses and become more confident in the other.</p>
+<h1 id="the-scientific-method-v3.0-tentative">The Scientific Method v3.0 (tentative)</h1>
+<p>I think we should aim to run experiments next - manipulate some independent variables to see what happens.</p>
 <h1 id="notes">Notes</h1>
 <p>Identify the variables you care about. What can you observe? These are your dependent variables. What can you manipulate? These are your independent variables. Your job is now to find out what will happen for different values of the independent variables.</p>
 <p>How do we improve our models? Remember, you have to predict the existing evidence as well as the previous model, and then some. Maybe you can think of this as a branching out - the old model plus two or more different changes.</p>
+<h2 id="posterior-probability">Posterior probability</h2>
+<p>I was confused about our actual aim. Did we want to get a hypothesis with high predictive power (one that makes accurate, narrow predictions for a lot of experiments) or one with high posterior probability (one that has a lot of evidence backing it)?</p>
+<p>Well, how would you find out if it has high predictive power? Only by testing its predictions in a variety of situations. Which would be counted as evidence in updating the posterior probability. Actually, no. To compute the posterior probability according to Bayes Theorem, you need to know the other hypotheses in play, whereas you can compute predictive power by looking at one hypothesis alone. But, predictive power only calculates the quality of your predictions on the few experiments you have observed. It tells you nothing about the other experiments.</p>
+<p>I got confused by this vague concept of “predictive power”. It seems like it makes sense, but it actually doesn’t.</p>
+<p>You want to know how much to believe a model. And the way to do that is to use Bayes Theorem.</p>
 
 <div class="info">Created: August 18, 2015</div>
-<div class="info">Last modified: September 19, 2015</div>
+<div class="info">Last modified: September 20, 2015</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: scientific method</div>
 
