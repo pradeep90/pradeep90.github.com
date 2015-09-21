@@ -45,21 +45,49 @@
             <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
 
 <p><strong>Questions</strong>: How can we think scientifically?</p>
-<p>Instead of trying to find the perfect description of the scientific method, let’s start with a simple, inefficient process and improve it based on feedback.</p>
+<p>Instead of trying to find the perfect description of the scientific method, let’s start with a simple, inefficient process and improve it based on feedback. Judge each version only using empirical evidence; don’t theorize idly.</p>
 <hr />
 <h1 id="aim-obtain-a-good-model">Aim: Obtain a good model</h1>
 <p>We are uncertain about the outcomes of various scenarios. We need to predict what will happen, so that we can make good decisions. We have questions we want to answer, problems we want to solve. So, we use a model of the domain to help us answer those questions.</p>
 <p>The better our model, the better our predictions will be. Wait. In what sense will our predictions be better? Well, it is a matter of induction. We humans believe that if we process the evidence we have by using Bayes Theorem, we will get the most accurate predictions overall. Yes, a mythical hypothesis that made exactly the right predictions for everything you see would be great to have, but you don’t know what it is in advance. So, it doesn’t help you make future predictions. The best you can do is use Bayes Theorem constantly.</p>
 <p>So, our one and only aim is to use Bayes Theorem to get a model with high posterior probability.</p>
 <h1 id="the-scientific-method-v1.0">The Scientific Method v1.0</h1>
-<p>Get an existing causal model and show how it makes predictions for different experiments. This way we get a hypothesis with decent posterior probability. We aren’t doing any actual research here, just accepting an existing model and ensuring that we can use it to make predictions.</p>
-<p>Let’s test this by getting 5 causal models with 10 experiments each.</p>
-<h1 id="the-scientific-method-v2.0-tentative">The Scientific Method v2.0 (tentative)</h1>
+<p>Let’s theorize about causal models based only on hardcore empirical evidence. We’ll look at causal models of different shades of accuracy - some that are mathematically precise, others that are vague and hand-waving. We’ll talk about consequences, alternative hypotheses, differing predictions, experiments, and other such scientific things by looking at concrete examples. Let’s not build castles in the air.</p>
+<p>Mission: Get three concrete examples of “causal models”, along with three experiments each.</p>
+<p>How will I know I’ve done it right? You should be able to use the models to make predictions for the experiments.</p>
+<p>Okay. Go.</p>
+<h2 id="collecting-models">Collecting models</h2>
+<h3 id="pgs-inequality-and-risk">PG’s Inequality and Risk</h3>
+<p>Only two ways to reduce economic inequality - give money to the poor or take it from the rich.</p>
+<p>If you want to give money to the poor, you have to get it from somewhere; you can’t get it from the poor, so you have to get it from the rich.</p>
+<p>Therefore, giving money to the poor means taking it away from the rich, and vice-versa.</p>
+<p>If you help the poor become more productive, they would become richer, but the rich wouldn’t become poorer.</p>
+<p>However, making the poor more productive won’t reduce economic inequality, because it makes the rich richer too. Why? Because if there are more rich poor people, there are more workers and customers for the rich people.</p>
+<h3 id="steve-yegges-the-emacs-problem">Steve Yegge’s The Emacs Problem</h3>
+<p>When you write in Lisp, you don’t need to have configuration files that need special-processing. You can write them in Lisp, and use the full power of the language.</p>
+<p>Why do people rave about the power of separating code and data? Because they’re using languages that can’t do a good job of representing code as data. (why can’t those languages do that?)</p>
+<p>Why does he say people really want to represent code as data? Because the half-languages for configuration are all creeping towards Turing-completeness.</p>
+<h3 id="steve-yegges-practicing-programming">Steve Yegge’s Practicing Programming</h3>
+<p>Don’t read this blog if someone is insisting that you read it. Wait until you really think you want to get better at programming. Why? Homework just seems to kill the desire to learn. (why?)</p>
+<p>Merely doing your job everyday doesn’t qualify as real practice. Because you have to set aside some time once in a while and do focused practice in order to get better at something.</p>
+<p>Why are the great engineers as good as they are? Because they practice all the time.</p>
+<h1 id="future-ideas">Future ideas</h1>
+<p>I want to understand how a model makes predictions. I want to know the process, so that I can replicate it. So, after asking why, ask what other consequences this cause has. Note how it makes each prediction.</p>
+<p>I want to get a complete understanding of how models work - how you can make predictions using them, extend them, generate alternative hypotheses, test them, and so on. Right now, the term “causal model” is a black box to me. I don’t understand exactly how it works inside. But I need to.</p>
 <p>What’s the bare minimum we can do to use Bayes Theorem in a domain?</p>
-<p>Guess a model for how things work. Then, think hard to guess another way it could be. Look at their differing predictions and observe the actual outcome.</p>
-<p>How does this help get a model with high posterior probability? By looking at the differing predictions, we get strong evidence one way or another. We will reject one of the two hypotheses and become more confident in the other.</p>
-<h1 id="the-scientific-method-v3.0-tentative">The Scientific Method v3.0 (tentative)</h1>
-<p>I think we should aim to run experiments next - manipulate some independent variables to see what happens.</p>
+<p>Guess a model for how things work. Then, think hard to guess another way it could be. Look at their differing predictions and observe the actual outcome. How does this help get a model with high posterior probability? By looking at the differing predictions, we get strong evidence one way or another. We will reject one of the two hypotheses and become more confident in the other.</p>
+<p>I think we should aim to run experiments next - manipulate some independent variables to see what happens. Always be looking for ways to test your beliefs.</p>
+<p>Look for surprises. They are places where your current model is wrong. Note that this is basically a recipe for doing research.</p>
+<blockquote>
+<p>Surprises are things that you not only didn’t know, but that contradict things you thought you knew. And so they’re the most valuable sort of fact you can get.</p>
+<p>– Paul Graham, <a href>The Age of the Essay</a></p>
+</blockquote>
+<p>How do we “learn” a causal model from some resource? What would that look like? Would we memorize the predictions or the core engine that generates those predictions? I need concrete examples for this.</p>
+<p>In cases where the resource provides both the causal model and some tests, you can check for yourself if you can generate predictions correctly. In more vague cases, you would need to build the precise causal model yourself based on the evidence provided.</p>
+<p>When you taboo some term, also provide three concrete examples to really drive it in.</p>
+<h1 id="satisfying-work">Satisfying Work</h1>
+<p>Do I have satisfying work for my scientific method missions? Why not?</p>
+<p>I need to have a clear goal, step-by-step instructions (so that it’s work, not problem-solving), and continuous feedback.</p>
 <h1 id="notes">Notes</h1>
 <p>Identify the variables you care about. What can you observe? These are your dependent variables. What can you manipulate? These are your independent variables. Your job is now to find out what will happen for different values of the independent variables.</p>
 <p>How do we improve our models? Remember, you have to predict the existing evidence as well as the previous model, and then some. Maybe you can think of this as a branching out - the old model plus two or more different changes.</p>
@@ -70,7 +98,7 @@
 <p>You want to know how much to believe a model. And the way to do that is to use Bayes Theorem.</p>
 
 <div class="info">Created: August 18, 2015</div>
-<div class="info">Last modified: September 20, 2015</div>
+<div class="info">Last modified: September 21, 2015</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: scientific method</div>
 
