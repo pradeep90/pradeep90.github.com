@@ -51,6 +51,46 @@
 <p>We are uncertain about the outcomes of various scenarios. We need to predict what will happen, so that we can make good decisions. We have questions we want to answer, problems we want to solve. So, we use a model of the domain to help us answer those questions.</p>
 <p>The better our model, the better our predictions will be. Wait. In what sense will our predictions be better? Well, it is a matter of induction. We humans believe that if we process the evidence we have by using Bayes Theorem, we will get the most accurate predictions overall. Yes, a mythical hypothesis that made exactly the right predictions for everything you see would be great to have, but you don’t know what it is in advance. So, it doesn’t help you make future predictions. The best you can do is use Bayes Theorem constantly.</p>
 <p>So, our one and only aim is to use Bayes Theorem to get a model with high posterior probability.</p>
+<h1 id="goal-of-this-essay">Goal of this essay</h1>
+<p>Right now, the term “causal model” is a black box to me. I don’t understand exactly how it works inside. But I need to. I want to get a complete understanding of how causal models work.</p>
+<p>First, I want to know about causal models (aka hypotheses) and predictions. What does a causal model look like (and what does it not look like)? What do predictions look like (ditto)? How does a model help you make predictions? How can you find out which experiments it talks about? For how many experiments does it make predictions?</p>
+<p>Next, I want to know about alternative hypotheses. How do models differ from one another? How would a model differ from an improved version of it? How do independent and dependent variables enter the picture? What do scientific experiments look like?</p>
+<h1 id="causal-models">Causal Models</h1>
+<p>How do we get or create a causal model? What is a causal model? What isn’t a causal model? It is pointless to say “everything is a causal model”.</p>
+<p>Give me three examples of things that are causal models and three examples of things that are not.</p>
+<h2 id="say-no-to-definitions">Say No to Definitions</h2>
+<p>Definitions aren’t causal models. “A generous person is someone who shares his wealth with others”. Well, say John shared $5 equally with his four friends when he was a kid. Is he a “generous person”? Well, according to the definition, yes. But, after ten years, will he share the $5000 he gets in a lottery? The definition doesn’t help you make future predictions. If you do make predictions, it would be because of the evidence you saw (him sharing $5 as a kid), which is quite weak evidence, especially when it comes to what he will do for big amounts of money when he is much older. The definition is nothing but a label - “generous” - and just knowing the label doesn’t help you make narrow predictions.</p>
+<p>Basically, when should you agree that a definition applies to a person? If John shared $5 with his friends when he was a kid, does that make him a “generous person” and thus likely to share even $5000? Or would you wait for more evidence? Why should you wait? Isn’t the definition clear? The definition is only as good as the criteria you use to apply it.</p>
+<p>John shared $5 with his friends. Ok, as per the definition, he now has the label “generous person”. Big deal. So what? The word “generous” doesn’t mean anything by itself. We only care about the predictions that it allows us to make.</p>
+<p>To assure yourself of this, let’s say someone argues that the definition is not “air-tight” enough. They say we should label someone “generous” only after they have done a hundred deeds of wealth-sharing. Ok, assume John shares $5 everyday, does that make him “generous”? Now, they say it must be significant percentage of his wealth.</p>
+<p>What if he does that on a hundred (or a thousand) occasions - somehow replenishing his wealth afterwards - but then one day doesn’t share even when his close friend is in dire need? Is he still “generous”? More pertinently, what do you predict he will do tomorrow when another friend is in need? Will you say that he won’t help the friend? But, he is “generous” according to the definition, right? Or, will you say that he will help the friend? But, he might have turned cold and therefore stopped helping anyone.</p>
+<p>Anyway, the lesson is: don’t argue using definitions.</p>
+<p>Then, what do you argue using?</p>
+<p>What is it that definitions don’t have? Well, they don’t let you make predictions about specific experiments.</p>
+<h2 id="sine-qua-non">Sine qua non</h2>
+<p>What is the smallest thing that can still be called a causal model?</p>
+<h2 id="compression">Compression</h2>
+<p>A causal model is a compressed version of all the predictions it makes. It is useful only insofar as it makes predictions. We don’t need it for anything else. We could write out each prediction it makes and use that, but that hypothesis would be penalized according to Occam’s Razor.</p>
+<p>However, we can’t deal with the expanded list of predictions by itself. That’s too much detail to hold in our heads. Instead, we must chunk it up hierarchically so that we can comprehend it.</p>
+<p>How do we compress all the predictions we want to make?</p>
+<p>I think we break the system into parts, model each of those parts, and put them together to model the system as a whole. This gives us the questions: How do we split up the system? What is the smallest part we model directly? How do we put together different models? Further, I suspect that we carve the system at the points where we can manipulate or observe it.</p>
+<p>Wait. We probably also abstract the system using different layers. How is each layer expressed in terms of the layer below it? Do we need to care about the lower layers at all? What are the criteria we need to meet in order to use some abstraction?</p>
+<p>Well, what decides the abstraction layers? What decides the parts into which you break the system? Give me concrete examples of each.</p>
+<h2 id="cause-and-effect">Cause and Effect</h2>
+<p>One form of “cause” that scientists talk about is some independent variable that changes one or more dependent variables when you manipulate it, keeping everything else constant. Ok. But what happens when other things are not constant? What happens when you change some of the other independent variables? Rather, if you figure out the isolated effect of each independent variable, how do you put together those effects?</p>
+<p>For one, we get to know that the independent variable does have some effect on our dependent variables. It may have well have been that changing the variable does nothing, like when changing the colour of paint on a car does pretty much nothing to make it move faster.</p>
+<h1 id="problems-in-figure-out-causal-models">Problems in figure out Causal Models</h1>
+<p>The main difficulty I’m having in getting a concrete feel for causal models is that I’m not able to bring up real examples of causal models. I get the feeling that most causal models are vague [citation needed]. For example, in books, the whole chapter seems to be the causal model - it’s hard to analyze.</p>
+<p>Plus, it seems like we humans use our mind to make the predictions, based on the words given in some book. “There are two ways of reducing economic inequality” - I use my mental model of “economic inequality” to imagine the distribution of wealth among the populace. I see the pie chart showing how much each strata of society owns in wealth.</p>
+<p>Remember, though, that what’s happening inside our head isn’t magic. We can taboo the terms - replace them by what they represent - and make the model more precise.</p>
+<h1 id="predictions">Predictions</h1>
+<p>Is it that a causal model is just about making predictions for specific experiments? I think we get confused by the words that are part of the model. We should treat the causal model purely as a source of predictions for experiments. Give it an experiment, and ask it for the prediction. That’s all. Nothing else about it matters.</p>
+<p>Also, note that there may be nothing vague about an experiment. We can give it a very precise question, like how will it take a small round pebble of a given weight to reach the bottom of a building if you throw it from the fifth floor?</p>
+<p>Hmmm…. so that’s another variable - the precision of the experiment. Sometimes, you care about very sharp answers - like how many minutes will the ambulance take to reach this accident victim? Other times, you care about vague answers - will I be able to return from the bathroom before this commercial break ends?</p>
+<p>Are all experiments of this form: “given a configuration of independent variables, what will the values of the dependent variables be”?</p>
+<p>What does a variable look like? What values can it take? Let’s collect some variables, values, experiments, and predictions.</p>
+<h2 id="how-does-a-model-make-predictions">How does a model make predictions?</h2>
+<p>Does it explicitly name the variables? How else can it talk about them?</p>
 <h1 id="the-scientific-method-v1.0">The Scientific Method v1.0</h1>
 <p>Let’s theorize about causal models based only on hardcore empirical evidence. We’ll look at causal models of different shades of accuracy - some that are mathematically precise, others that are vague and hand-waving. We’ll talk about consequences, alternative hypotheses, differing predictions, experiments, and other such scientific things by looking at concrete examples. Let’s not build castles in the air.</p>
 <p>Mission: Get three concrete examples of “causal models”, along with three experiments each.</p>
@@ -72,8 +112,7 @@
 <p>Merely doing your job everyday doesn’t qualify as real practice. Because you have to set aside some time once in a while and do focused practice in order to get better at something.</p>
 <p>Why are the great engineers as good as they are? Because they practice all the time.</p>
 <h1 id="future-ideas">Future ideas</h1>
-<p>I want to understand how a model makes predictions. I want to know the process, so that I can replicate it. So, after asking why, ask what other consequences this cause has. Note how it makes each prediction.</p>
-<p>I want to get a complete understanding of how models work - how you can make predictions using them, extend them, generate alternative hypotheses, test them, and so on. Right now, the term “causal model” is a black box to me. I don’t understand exactly how it works inside. But I need to.</p>
+<p>I want to understand how a model makes predictions. So, after asking why, ask what other consequences this cause has.</p>
 <p>What’s the bare minimum we can do to use Bayes Theorem in a domain?</p>
 <p>Guess a model for how things work. Then, think hard to guess another way it could be. Look at their differing predictions and observe the actual outcome. How does this help get a model with high posterior probability? By looking at the differing predictions, we get strong evidence one way or another. We will reject one of the two hypotheses and become more confident in the other.</p>
 <p>I think we should aim to run experiments next - manipulate some independent variables to see what happens. Always be looking for ways to test your beliefs.</p>
@@ -84,13 +123,17 @@
 </blockquote>
 <p>How do we “learn” a causal model from some resource? What would that look like? Would we memorize the predictions or the core engine that generates those predictions? I need concrete examples for this.</p>
 <p>In cases where the resource provides both the causal model and some tests, you can check for yourself if you can generate predictions correctly. In more vague cases, you would need to build the precise causal model yourself based on the evidence provided.</p>
-<p>When you taboo some term, also provide three concrete examples to really drive it in.</p>
+<p>When you taboo some term (like “causal model”), provide three concrete examples to really drive it in.</p>
+<p>Don’t just ask what something is. Also ask what it is not! Look at what could falsify your hypothesis. If you say “if Y, then X”, think of some Y that doesn’t lead to X.</p>
+<h1 id="how-to-learn-a-causal-model">How to learn a causal model</h1>
+<p>Maybe take some resource, maybe a book chapter or essay, and condense it till you have the shortest amount of words that can still make the same predictions as the original.</p>
 <h1 id="satisfying-work">Satisfying Work</h1>
 <p>Do I have satisfying work for my scientific method missions? Why not?</p>
 <p>I need to have a clear goal, step-by-step instructions (so that it’s work, not problem-solving), and continuous feedback.</p>
 <h1 id="notes">Notes</h1>
 <p>Identify the variables you care about. What can you observe? These are your dependent variables. What can you manipulate? These are your independent variables. Your job is now to find out what will happen for different values of the independent variables.</p>
 <p>How do we improve our models? Remember, you have to predict the existing evidence as well as the previous model, and then some. Maybe you can think of this as a branching out - the old model plus two or more different changes.</p>
+<p>Note that we usually employ our minds at some step when using causal models. If we knew the subject well enough, we would be able to describe it to a computer (like stock-market analysis programs that choose which stocks to buy, according to our specifications). Ideally, we want to capture the model in explicit terms, so that we can sub out the work to computers. But, sometimes, we may be forced to use the poorly-understood capabilities of our own brain. Like in Psychology where we judge how angry a person seems upon getting hit on the head - we can’t quite tell a computer to do that as accurately.</p>
 <h2 id="posterior-probability">Posterior probability</h2>
 <p>I was confused about our actual aim. Did we want to get a hypothesis with high predictive power (one that makes accurate, narrow predictions for a lot of experiments) or one with high posterior probability (one that has a lot of evidence backing it)?</p>
 <p>Well, how would you find out if it has high predictive power? Only by testing its predictions in a variety of situations. Which would be counted as evidence in updating the posterior probability. Actually, no. To compute the posterior probability according to Bayes Theorem, you need to know the other hypotheses in play, whereas you can compute predictive power by looking at one hypothesis alone. But, predictive power only calculates the quality of your predictions on the few experiments you have observed. It tells you nothing about the other experiments.</p>
@@ -98,7 +141,7 @@
 <p>You want to know how much to believe a model. And the way to do that is to use Bayes Theorem.</p>
 
 <div class="info">Created: August 18, 2015</div>
-<div class="info">Last modified: September 21, 2015</div>
+<div class="info">Last modified: September 22, 2015</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: scientific method</div>
 
