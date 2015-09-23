@@ -79,10 +79,6 @@
 <h2 id="cause-and-effect">Cause and Effect</h2>
 <p>One form of “cause” that scientists talk about is some independent variable that changes one or more dependent variables when you manipulate it, keeping everything else constant. Ok. But what happens when other things are not constant? What happens when you change some of the other independent variables? Rather, if you figure out the isolated effect of each independent variable, how do you put together those effects?</p>
 <p>For one, we get to know that the independent variable does have some effect on our dependent variables. It may have well have been that changing the variable does nothing, like when changing the colour of paint on a car does pretty much nothing to make it move faster.</p>
-<h1 id="problems-in-figure-out-causal-models">Problems in figure out Causal Models</h1>
-<p>The main difficulty I’m having in getting a concrete feel for causal models is that I’m not able to bring up real examples of causal models. I get the feeling that most causal models are vague [citation needed]. For example, in books, the whole chapter seems to be the causal model - it’s hard to analyze.</p>
-<p>Plus, it seems like we humans use our mind to make the predictions, based on the words given in some book. “There are two ways of reducing economic inequality” - I use my mental model of “economic inequality” to imagine the distribution of wealth among the populace. I see the pie chart showing how much each strata of society owns in wealth.</p>
-<p>Remember, though, that what’s happening inside our head isn’t magic. We can taboo the terms - replace them by what they represent - and make the model more precise.</p>
 <h1 id="predictions">Predictions</h1>
 <p>Is it that a causal model is just about making predictions for specific experiments? I think we get confused by the words that are part of the model. We should treat the causal model purely as a source of predictions for experiments. Give it an experiment, and ask it for the prediction. That’s all. Nothing else about it matters.</p>
 <p>Also, note that there may be nothing vague about an experiment. We can give it a very precise question, like how will it take a small round pebble of a given weight to reach the bottom of a building if you throw it from the fifth floor?</p>
@@ -91,26 +87,68 @@
 <p>What does a variable look like? What values can it take? Let’s collect some variables, values, experiments, and predictions.</p>
 <h2 id="how-does-a-model-make-predictions">How does a model make predictions?</h2>
 <p>Does it explicitly name the variables? How else can it talk about them?</p>
-<h1 id="the-scientific-method-v1.0">The Scientific Method v1.0</h1>
-<p>Let’s theorize about causal models based only on hardcore empirical evidence. We’ll look at causal models of different shades of accuracy - some that are mathematically precise, others that are vague and hand-waving. We’ll talk about consequences, alternative hypotheses, differing predictions, experiments, and other such scientific things by looking at concrete examples. Let’s not build castles in the air.</p>
-<p>Mission: Get three concrete examples of “causal models”, along with three experiments each.</p>
-<p>How will I know I’ve done it right? You should be able to use the models to make predictions for the experiments.</p>
-<p>Okay. Go.</p>
-<h2 id="collecting-models">Collecting models</h2>
-<h3 id="pgs-inequality-and-risk">PG’s Inequality and Risk</h3>
+<h1 id="problems-in-figuring-out-causal-models">Problems in figuring out Causal Models</h1>
+<p>The main difficulty I’m having in getting a concrete feel for causal models is that I’m not able to bring up real examples of causal models. I get the feeling that most causal models are too big and vague [citation needed]. For example, in books, the whole chapter seems to be the causal model - it’s hard to analyze.</p>
+<p>Plus, it seems like we humans use our mind to make the predictions, based on the words given in some book. “There are two ways of reducing economic inequality” - I use my mental model of “economic inequality” to imagine the distribution of wealth among the populace. I see the pie chart showing how much each strata of society owns in wealth. Remember, though, that what’s happening inside our head isn’t magic. We can taboo the terms - replace them by what they represent - and make the model more precise.</p>
+<p>Maybe figure out the <em>exact</em> questions you want to answer and then take it from there. Enumerate the possible answers.</p>
+<p>What else could a causal model be?</p>
+<h1 id="causal-model-finally">Causal Model, finally</h1>
+<p>Here’s my model about how causal models work.</p>
+<h2 id="hierarchy-of-variables">Hierarchy of variables</h2>
+<p>In some field, we have instruments for observation and manipulation. Call the things we can observe as dependent variables, and the things we can manipulate as independent variables. Note that when you don’t manipulate its value, an independent variable X would be set by the value of some other independent variable Y. So, in that model, you would treat X as a dependent variable.</p>
+<p>A causal model tells you (perhaps incompletely) what values the dependent variables will take for some configuration of the independent variables.</p>
+<p>This much seems implied by the form of Bayes Theorem, which asks you make predictions for any configuration of the system, i.e., predict the value of a dependent variable for some configuration of independent variables. If your model didn’t make any predictions for some scenario, then it would be held to make a random prediction, and thus most likely penalized in its posterior probability.</p>
+<p>One of the main things that a model will do, is group the variables. It will assert which dependent variables will change for a change in an independent variable. So, I think you will end up with a hierarchy of independent variables, with dependent variables forming the leaves.</p>
+<p>This tells us how to split the system into parts, model the parts, and glue them together.</p>
+<p>Can a model omit some dependent variables? A complete model would talk about every variable for every configuration. A partial model, though, could just handle a few configurations of the independent variables. Also, it could talk only about a small group of variables - basically, one or more independent variables, and some dependent variables that they affect. That is, I hypothesize, essentially the smallest possible causal model.</p>
+<h2 id="layers-of-abstraction">Layers of Abstraction</h2>
+<p>Now, how do we deal with layers of abstraction? Maybe you get different layers of abstraction when you have different instruments for observing or manipulating the system. Really? Can’t you have lower-level instruments but still model the system at a higher-level, based on its regularities?</p>
+<p>For example, binary code is the lowest level of abstraction we use in a computer (you could go into NAND gates or raw atoms, but let’s stop it here). How do we build abstractions of assembly language and successions of higher-level languages? We sacrifice a bit of inefficiency to capture common patterns and make it easier to write bigger programs. We remove duplication, in other words.</p>
+<p>Why do we create abstractions? So that we can make useful predictions. For example, you can analyze binary code to come to perfectly legitimate conclusions about the behaviour of a program, but it would be tedious and error-prone. So, whenever you have a theoretical model of some system, but it’s too painful to reason about, you abstract it so that it becomes easier to see the consequences you care about.</p>
+<p>What does an abstraction layer look like? Maybe the dependent and independent variables will just represent a clump of lower-level variables, and we can simply use the same hierarchy of variables idea as above. So, we need to create higher-level dependent variables such that the value we observe here is made up of the values of some lower-level dependent variables, but using a more convenient tool. Similarly, we need to create higher-level independent variables whose values we can change using a convenient tool, which would in turn change the values of some lower-level independent variables.</p>
+<p>How exactly, though? And how can you manipulate the independent variables or observe the dependent variables if you don’t have high-level tools? If you’re going to design the tools, how will you design them?</p>
+<p>Perhaps I can figure out the abstraction if I taboo the important terms.</p>
+<h2 id="asking-why">Asking “why”</h2>
+<p>When we ask “why” a model makes a certain prediction, we really want to know the values of dependent variables that come between the independent variable and the dependent variable. We want to know how it happens. We want to make the chain of reasoning more detailed.</p>
+<p>Make sure it handles changed conditions, especially those with other independent variables. Example: food makes snails move faster. What if we have the smell of food, but not the food itself?</p>
+<p>Also, try different ways of manipulating the independent variable. For example, to get aspirin to the brain (or whatever), directly take aspirin pills, or dissolve it in water and drink it, or inject it, or something.</p>
+<p>Remember that time is a key independent variable.</p>
+<p>Test the causal link in other scenarios. For example, if you say natural selection has made some gene more prevalent in some populations, check whether it increases the inclusive genetic fitness of those humans; otherwise natural selection won’t increase its relative frequency in the next generation.</p>
+<p>Why do you predict this particular outcome? How come X leads to Y, and not Z? Why would an electrical field change the foraging behaviour of an insect?</p>
+<h2 id="further-notes">Further notes</h2>
+<p>Note: I need to handle feedback loops sometime. For now, we’ll just go with the hierarchy of variables.</p>
+<p>I was stymied by the apparent impenetrability of the “models” I saw all around because they used symbols to represent previously-specified sub-models. That’s why it felt like they didn’t follow the model above.</p>
+<h2 id="testing-my-hypothesis">Testing my hypothesis</h2>
+<p>So, my above model suggests that you cannot have a causal model that doesn’t deal with a hierarchy of variables and layers of abstractions.</p>
+<p>Specifically, what do we predict from the hierarchy-of-variables model? That a model will predict what will happen for some (or all) configurations of the independent variables in some domain. And that it will specify a hierarchy by grouping related variables. Sometimes, it may only talk about a few of the independent variables and the variables dependent on them.</p>
+<p>What do we predict from the layers-of-abstraction model? That a model will talk about dependent and independent variables, just like above, but that they will represent lower-level dependent and independent variables respectively.</p>
+<p>Let’s look at 10 hypotheses I have so far.</p>
+<h1 id="collecting-models">Collecting models</h1>
+<h2 id="pgs-inequality-and-risk">PG’s Inequality and Risk</h2>
 <p>Only two ways to reduce economic inequality - give money to the poor or take it from the rich.</p>
+<p>[Translation: give money to poor -&gt; wealth of poor; take it from the rich -&gt; wealth of rich; wealth of poor, wealth of rich -&gt; economic inequality]</p>
 <p>If you want to give money to the poor, you have to get it from somewhere; you can’t get it from the poor, so you have to get it from the rich.</p>
+<p>[Translation: get money from rich -&gt; give money to poor; get money from poor -&gt; give money to poor (not much money here)]</p>
 <p>Therefore, giving money to the poor means taking it away from the rich, and vice-versa.</p>
+<p>[because there are no other causal links from get money from rich or to give money to poor.]</p>
 <p>If you help the poor become more productive, they would become richer, but the rich wouldn’t become poorer.</p>
+<p>[Translation: do stuff (education, etc.) -&gt; productivity of poor -&gt; wealth of poor]</p>
 <p>However, making the poor more productive won’t reduce economic inequality, because it makes the rich richer too. Why? Because if there are more rich poor people, there are more workers and customers for the rich people.</p>
-<h3 id="steve-yegges-the-emacs-problem">Steve Yegge’s The Emacs Problem</h3>
+<p>[Translation: productivity of poor -&gt; more workers -&gt; wealth of rich; wealth of poor -&gt; customers -&gt; wealth of rich;]</p>
+<h2 id="steve-yegges-the-emacs-problem">Steve Yegge’s The Emacs Problem</h2>
 <p>When you write in Lisp, you don’t need to have configuration files that need special-processing. You can write them in Lisp, and use the full power of the language.</p>
 <p>Why do people rave about the power of separating code and data? Because they’re using languages that can’t do a good job of representing code as data. (why can’t those languages do that?)</p>
+<p>[Translating the above into variables: language -&gt; how well they represent code as data -&gt; do you feel like raving about the power of separating code and data.</p>
+<p>He says that most current languages can’t do a good job here, and so that means their users will rave about the power of separating code and data. But why? It can’t be that if your product doesn’t do a good job of something you will rave about the opposite (or can it)? I think we need to specify some more variables between the not-good-job bit and the raving bit. Maybe it’s to do with the commitment and consistency effect - where you start valuing something more just because you’re doing it (though I’m not sure of the precise relationship).]</p>
 <p>Why does he say people really want to represent code as data? Because the half-languages for configuration are all creeping towards Turing-completeness.</p>
-<h3 id="steve-yegges-practicing-programming">Steve Yegge’s Practicing Programming</h3>
+<p>[Translation: how expressive you want the configuration language to be (A) -&gt; Turing-completeness of configuration language (B); A -&gt; representing code as data or not.]</p>
+<h2 id="steve-yegges-practicing-programming">Steve Yegge’s Practicing Programming</h2>
 <p>Don’t read this blog if someone is insisting that you read it. Wait until you really think you want to get better at programming. Why? Homework just seems to kill the desire to learn. (why?)</p>
+<p>[Translation: homework -&gt; read blog, desire to learn; desire to learn -&gt; read blog; desire to learn, read blog -&gt; how much you learn;]</p>
 <p>Merely doing your job everyday doesn’t qualify as real practice. Because you have to set aside some time once in a while and do focused practice in order to get better at something.</p>
+<p>[Translation: how you do your job -&gt; time, focussed practice -&gt; performance]</p>
 <p>Why are the great engineers as good as they are? Because they practice all the time.</p>
+<p>[Translation: how much they practice -&gt; skill level of the great engineers]</p>
 <h1 id="future-ideas">Future ideas</h1>
 <p>I want to understand how a model makes predictions. So, after asking why, ask what other consequences this cause has.</p>
 <p>What’s the bare minimum we can do to use Bayes Theorem in a domain?</p>
@@ -139,9 +177,14 @@
 <p>Well, how would you find out if it has high predictive power? Only by testing its predictions in a variety of situations. Which would be counted as evidence in updating the posterior probability. Actually, no. To compute the posterior probability according to Bayes Theorem, you need to know the other hypotheses in play, whereas you can compute predictive power by looking at one hypothesis alone. But, predictive power only calculates the quality of your predictions on the few experiments you have observed. It tells you nothing about the other experiments.</p>
 <p>I got confused by this vague concept of “predictive power”. It seems like it makes sense, but it actually doesn’t.</p>
 <p>You want to know how much to believe a model. And the way to do that is to use Bayes Theorem.</p>
+<h1 id="the-scientific-method-v1.0">The Scientific Method v1.0</h1>
+<p>Let’s theorize about causal models based only on hardcore empirical evidence. We’ll look at causal models of different shades of accuracy - some that are mathematically precise, others that are vague and hand-waving. We’ll talk about consequences, alternative hypotheses, differing predictions, experiments, and other such scientific things by looking at concrete examples. Let’s not build castles in the air.</p>
+<p>Mission: Get three concrete examples of “causal models”, along with three experiments each.</p>
+<p>How will I know I’ve done it right? You should be able to use the models to make predictions for the experiments.</p>
+<p>Okay. Go.</p>
 
 <div class="info">Created: August 18, 2015</div>
-<div class="info">Last modified: September 22, 2015</div>
+<div class="info">Last modified: September 23, 2015</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: scientific method</div>
 
