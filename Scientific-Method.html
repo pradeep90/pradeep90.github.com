@@ -101,6 +101,7 @@
 <p>One of the main things that a model will do, is group the variables. It will assert which dependent variables will change for a change in an independent variable. So, I think you will end up with a hierarchy of independent variables, with dependent variables forming the leaves.</p>
 <p>This tells us how to split the system into parts, model the parts, and glue them together.</p>
 <p>Can a model omit some dependent variables? A complete model would talk about every variable for every configuration. A partial model, though, could just handle a few configurations of the independent variables. Also, it could talk only about a small group of variables - basically, one or more independent variables, and some dependent variables that they affect. That is, I hypothesize, essentially the smallest possible causal model.</p>
+<p>Note that you could postulate some hidden variables that you can’t observe right now. However, at least in theory, you should be able to create tools to observe them.</p>
 <h2 id="layers-of-abstraction">Layers of Abstraction</h2>
 <p>Now, how do we deal with layers of abstraction? Maybe you get different layers of abstraction when you have different instruments for observing or manipulating the system. Really? Can’t you have lower-level instruments but still model the system at a higher-level, based on its regularities?</p>
 <p>For example, binary code is the lowest level of abstraction we use in a computer (you could go into NAND gates or raw atoms, but let’s stop it here). How do we build abstractions of assembly language and successions of higher-level languages? We sacrifice a bit of inefficiency to capture common patterns and make it easier to write bigger programs. We remove duplication, in other words.</p>
@@ -108,9 +109,11 @@
 <p>What does an abstraction layer look like? Maybe the dependent and independent variables will just represent a clump of lower-level variables, and we can simply use the same hierarchy of variables idea as above. So, we need to create higher-level dependent variables such that the value we observe here is made up of the values of some lower-level dependent variables, but using a more convenient tool. Similarly, we need to create higher-level independent variables whose values we can change using a convenient tool, which would in turn change the values of some lower-level independent variables.</p>
 <p>How exactly, though? And how can you manipulate the independent variables or observe the dependent variables if you don’t have high-level tools? If you’re going to design the tools, how will you design them?</p>
 <p>Perhaps I can figure out the abstraction if I taboo the important terms.</p>
-<h2 id="asking-why">Asking “why”</h2>
+<h2 id="asking-how-and-why">Asking “how” and “why”</h2>
 <p>When we ask “why” a model makes a certain prediction, we really want to know the values of dependent variables that come between the independent variable and the dependent variable. We want to know how it happens. We want to make the chain of reasoning more detailed.</p>
-<p>Make sure it handles changed conditions, especially those with other independent variables. Example: food makes snails move faster. What if we have the smell of food, but not the food itself?</p>
+<p>To be precise, when we ask why X causes Y, we want to get a detailed chain of reasoning between X and Y. When we ask why X came about, we want to know what caused X in the first place. So, the first question is really “how” and the second one is “why”.</p>
+<p>Make sure it handles changed conditions. If you say variable A causes variable B, ensure that for every value of A, you can determine the value of B. This is one of the main advantages of a cause - once you know the value of the independent variable, you don’t care about any of its ancestors or other variables.</p>
+<p>Importantly, vary the other independent variables too. Example: food makes snails move faster. What if we have the smell of food, but not the food itself?</p>
 <p>Also, try different ways of manipulating the independent variable. For example, to get aspirin to the brain (or whatever), directly take aspirin pills, or dissolve it in water and drink it, or inject it, or something.</p>
 <p>Remember that time is a key independent variable.</p>
 <p>Test the causal link in other scenarios. For example, if you say natural selection has made some gene more prevalent in some populations, check whether it increases the inclusive genetic fitness of those humans; otherwise natural selection won’t increase its relative frequency in the next generation.</p>
@@ -123,6 +126,23 @@
 <p>Specifically, what do we predict from the hierarchy-of-variables model? That a model will predict what will happen for some (or all) configurations of the independent variables in some domain. And that it will specify a hierarchy by grouping related variables. Sometimes, it may only talk about a few of the independent variables and the variables dependent on them.</p>
 <p>What do we predict from the layers-of-abstraction model? That a model will talk about dependent and independent variables, just like above, but that they will represent lower-level dependent and independent variables respectively.</p>
 <p>Let’s look at 10 hypotheses I have so far.</p>
+<h2 id="probabilistic-models">Probabilistic Models</h2>
+<p>I think Bayesian Networks work by starting with a hypothesis and then creating new hypotheses based on the evidence. Every piece of information received shifts the belief strengths of the links. The network essentially represents a new hypothesis at each point.</p>
+<p>The way I was imagining hypotheses was that you have a space of hypotheses, each of them making different predictions, and that you update their posterior probabilities using the evidence. In science, for example, you create experiments that test the differing predictions of two or more hypotheses, and thus eliminate at least one of them.</p>
+<p>So, are we saying that every hypothesis - every causal model - will be in the form of a Bayesian belief network? Well, yes, it will have the tree structure, but it will be fixed. You won’t change the network or update the parameters based on new evidence. If it can’t predict some evidence, its posterior probability will go down. That’s all.</p>
+<p>Note that the variables in the tree need not all be observable. You could postulate some hidden variables to make the math work right.</p>
+<h2 id="testing-further">Testing further</h2>
+<p>I need to check whether the prose examples of hypotheses conform to my idea of a causal tree. I should be able to easily convert prose hypotheses into causal trees.</p>
+<p>Also, I need to check whether the predictions they make are in the form of independent and dependent variables.</p>
+<p>Let’s do that for 10 concrete prose hypotheses.</p>
+<p>Later, we can work on alternative hypotheses (which I suspect are different causal structures with maybe extra dummy variables) and experimentation.</p>
+<p>Results: I think prose really is a succinct way of expressing causes. Sure, you may be more precise with a causal tree, but it really is already very compressed in prose form.</p>
+<p>To avoid duplicating effort, I suspect I must aim to make the prose form work better, instead of overthrowing it and installing a new form in place. For one, most of the world’s hypotheses seem to be expressed in prose form. (What about programs? What about math?)</p>
+<p>In short, if the causal tree format is the bee’s knees, I want to know how well I can approximate it using prose, because that seems to be the only thing that scales. Plus, human minds have lots of limitations, and prose really may have lasted this long because it is best suited for our brains. Also, good luck describing a complicated causal tree without graphing software. (Wait. Test: How exactly do you describe a complicated causal tree using prose, then?)</p>
+<p>Another test is: how do you describe a cause when there are multiple independent variables causing a dependent variable? Like, acceleration of a body depends on its mass and the net force applied to it.</p>
+<p>Test whether the above model is expressive enough to cover the workings of a state machine.</p>
+<p>Test your model of the scientific method on Mysterious Answers to Mysterious Questions.</p>
+<p>Release the scientific method. Take a half-baked version of causal models and look to generate alternative hypotheses and experiments.</p>
 <h1 id="collecting-models">Collecting models</h1>
 <h2 id="pgs-inequality-and-risk">PG’s Inequality and Risk</h2>
 <p>Only two ways to reduce economic inequality - give money to the poor or take it from the rich.</p>
@@ -149,6 +169,28 @@
 <p>[Translation: how you do your job -&gt; time, focussed practice -&gt; performance]</p>
 <p>Why are the great engineers as good as they are? Because they practice all the time.</p>
 <p>[Translation: how much they practice -&gt; skill level of the great engineers]</p>
+<h2 id="defining-property-by-paul-graham">Defining Property by Paul Graham</h2>
+<p>People are enjoying music and movies without paying for them. The record labels and the movie studios argue that they own the music and that thus people are stealing the music and movies.</p>
+<p>[pay -&gt; get goods and services “steal” -&gt; get goods and services “own music”, pay -&gt; should get money from it (how much?) “own music” and people “steal” -&gt; you won’t get much money You aren’t getting much money, but you “own” the music; therefore, people are “stealing”; But, another possibility is that you don’t “own” the music. ]</p>
+<p>Thinking of treating smells as property sounds ridiculous to PG. Why? Because it “won’t work” to treat smells as property. Why?</p>
+<p>When could we charge for smells?</p>
+<p>If it works to treat something as property, you may count it as property.</p>
+<p>Hunter gatherers didn’t treat land as property the way we do. (why?)</p>
+<p>The definition of property changes very slowly (why?). So, people think it has a single, unchanging definition.</p>
+<p>With the arrival of networks, data moves much faster and cheaper (how?).</p>
+<p>Wishful thinking and short-term greed -&gt; labels and studios are accusing us all of stealing (as opposed to accepting it and doing something else with the new technology; but will any business owner really do that?)</p>
+<p>driven by bonuses, not equity; therefore, try to extract money from stuff they do already.</p>
+<p>are you saying that if they were driven by equity, they would behave otherwise? What about newspaper owners and stuff?</p>
+<p>When people can charge for content without “warping society” to do it, we should allow them to charge for it.</p>
+<p>The crazy legal measures that the labels and studios have been taking seem like warping society. What newspapers and magazines are doing don’t.</p>
+<p>if you’re using a definition of property that doesn’t work you would be lobbying for laws that would break the internet, etc.</p>
+<p>if you have working democracies and multiple sovereign countries, people can’t easily buy laws making the definition of property whatever they want it to be; not so with a single, autocratic government.</p>
+<p>No single point of attack for people trying to warp the law -&gt; people running the US don’t like it; but it’s in our interest. Why? Because private property is an extremely useful idea - arguably one of our greatest inventions. (but exactly how useful is it?)</p>
+<p>So far, each new definition of private property has brought more material wealth. (why?)</p>
+<p>seems reasonable to suppose that new ones will too - why? Because things that have happened regularly before will probably continue</p>
+<p>if just a few powerful people were too lazy to upgrade, we would have to keep running an obsolete version, which would be a disaster (how?)</p>
+<hr />
+<p>My analysis: You treat something as private property when it is rival and excludable (why should it be rival?). However, you can enact laws to artificially make something excludable - like in the case of piracy laws - even when the service is no longer intrinsically excludable (music and movies after data transfer became cheap). So, now what? Should you allow artificial exclusion or not? What are the costs and benefits?</p>
 <h1 id="future-ideas">Future ideas</h1>
 <p>I want to understand how a model makes predictions. So, after asking why, ask what other consequences this cause has.</p>
 <p>What’s the bare minimum we can do to use Bayes Theorem in a domain?</p>
@@ -184,7 +226,7 @@
 <p>Okay. Go.</p>
 
 <div class="info">Created: August 18, 2015</div>
-<div class="info">Last modified: September 23, 2015</div>
+<div class="info">Last modified: September 24, 2015</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: scientific method</div>
 
