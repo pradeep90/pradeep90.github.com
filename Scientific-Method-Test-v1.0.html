@@ -45,11 +45,10 @@
             <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
 
 <h1 id="scientific-method-v1.0">Scientific Method v1.0</h1>
-<p>Enough theorizing. Let’s put our ideas about the scientific method to the test.</p>
-<p>Let’s take a basic, inefficient version of the scientific method and see how far we can get with it.</p>
-<p>Specifically, I want to know how to learn from some resource. I want to figure out how to extract the causal model being explained. We can look at original research later. Right now, just obtaining a precise causal model will be good enough.</p>
+<p>Enough theorizing. Let’s put our ideas about the scientific method to the test. Let’s take a basic, inefficient version of the scientific method and see how far we can get with it.</p>
+<p>I want to figure out how to extract the causal model from some resource. We can look at original research later. Right now, just obtaining a precise causal model will be good enough.</p>
 <p>Here’s my v1.0 algorithm: Look at each paragraph and get the causal link. Essentially, take the first and last lines of each paragraph. Then, put all the causal links together into one model.</p>
-<p>Mission: Use this on 30 paragraphs.</p>
+<p>Mission: Use this on 30 paragraphs. (Edit: Didn’t do that many.)</p>
 <p>Time: 1h30m</p>
 <h1 id="what-doesnt-seem-like-work-by-paul-graham">What Doesn’t Seem Like Work by Paul Graham</h1>
 <h2 id="raw-paragraph-summaries">Raw paragraph summaries</h2>
@@ -62,16 +61,13 @@
 <p>The stranger your tastes seem to other people, the stronger evidence they probably are of what you should do.</p>
 <p>It seemed curious that the same task could be painful to one person and pleasant to another, but I didn’t realize at the time what this imbalance implied, because I wasn’t looking for it.</p>
 <p>So I bet it would help a lot of people to ask themselves about this explicitly. What seems like work to other people that doesn’t seem like work to you?</p>
-<h2 id="variables">Variables</h2>
-<p>person, occupation, time in career, know what you want to do, age, boring?, interested in maths, what you really like, how many people, how certainly you know, does it seem like work to others, does it seem like work to you, is it well suited for you; how strange do your tastes seem to others, how strong evidence is it, you really should do this, did it seem curious, painful or pleasant to all, did he realize what this imbalance meant, was he looking for it, ask themselves explicitly or not, will it help them.</p>
-<p>Important variables: time in career, know what you want to do, certainty;</p>
 <h2 id="causal-links">Causal Links</h2>
 <p>Most people don’t know so early or so certainly. But PG’s father did.</p>
 <p>(This is surprising evidence if you earlier had the causal link that “early in life -&gt; won’t know what you want to do”)</p>
 <p>Most people get bored when they become around 15 and live in the country. PG’s father didn’t.</p>
 <p>(Another piece of surprising evidence.)</p>
-<p>PG (and most people) find textbook problems to be work. PG’s father found them to be a reward.</p>
-<p>(Ditto.)</p>
+<p>PG (and most people) find textbook problems to be work. PG’s father found them to be a reward. And, most people don’t go on to become successful mathematicians; PG’s father did.</p>
+<p>(Ditto. Basically, PG suspects a correlation between not finding something to be work and becoming successful at it.)</p>
 <p>So, he says, if something that seems like work to others doesn’t seem like work to you, then you’re well suited for it.</p>
 <p>(How?)</p>
 <p>The stranger your tastes seem to other people, the stronger evidence they probably are of what you should do.</p>
@@ -98,11 +94,17 @@
 <p>The main leap of inference in this essay was, I think, that being good at something when others aren’t translates into scarcity power. It isn’t enough just to be good, you have to be much better than others.</p>
 <h2 id="causal-model">Causal Model</h2>
 <p>you like something -&gt; won’t find it to be work</p>
-<p>you like X, most people don’t like X -&gt;</p>
+<p>you like something -&gt; will probably do it well</p>
+<p>you like X, most people don’t like X -&gt; you will probably be good at X, they won’t</p>
 <p>you’re good at X, very few others are good at X -&gt; you have scarcity power</p>
+<p>scarcity power -&gt; <span class="math">$$$</span></p>
 <h1 id="conclusion">Conclusion</h1>
 <p>I got quite a few causal links from that essay. However, I wasn’t trying to be precise. For example, it’s quite vague as to “what seems like work” to a person and what doesn’t. Still, we have the essential structure of the model and it’s quite falsifiable right now.</p>
-<p>How do we represent complicated causes? Like, if A and B and not C, then D. I think we should use a variable X that combines A and B and not C, and talk about the values of D for the 8 possible states of X.</p>
+<h1 id="further-questions">Further Questions</h1>
+<p>How do we represent complicated causes? Like, if A and B and not C, then D. I think we should use a variable X that combines A and B and not C, and talk about the values of D for the 8 possible states of X. However, not sure how the variables A, B, and C will cause different values of X.</p>
+<p>Also, how do we decide the direction of causality? For example, how do we say whether it is that liking something makes it not feel like work or the other way round?</p>
+<p>Mainly, I’m unsure about how to specify a causal link precisely. What is a necessary and sufficient condition to say that A causes B?</p>
+<p>Next, what clear advantages are we getting by thinking using causes?</p>
 
 <div class="info">Created: September 28, 2015</div>
 <div class="info">Last modified: September 28, 2015</div>
