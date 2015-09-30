@@ -56,26 +56,9 @@
 <p>First, I want to know about causal models (aka hypotheses) and predictions. What does a causal model look like (and what does it not look like)? What do predictions look like (ditto)? How does a model help you make predictions? How can you find out which experiments it talks about? For how many experiments does it make predictions?</p>
 <p>Next, I want to know about alternative hypotheses. How do models differ from one another? How would a model differ from an improved version of it? How do independent and dependent variables enter the picture? What do scientific experiments look like?</p>
 <p>Most importantly, I want to figure out a process by which to get better hypotheses - the scientific method, in other words. Instead of trying to get it right on the first try, I want to refine the process over time using empirical evidence.</p>
-<hr />
-<p>After my process description epiphany, let’s revisit the scientific method. And let’s build it up iteratively!</p>
-<h1 id="causal-model-finally">Causal Model, finally</h1>
-<p>Here’s my model about how causal models work.</p>
-<h2 id="hierarchy-of-variables">Hierarchy of variables</h2>
-<p>In some field, we have instruments for observation and manipulation. Call the things we can observe as dependent variables, and the things we can manipulate as independent variables. Note that when you don’t manipulate its value, an independent variable X would be set by the value of some other independent variable Y. So, in that model, you would treat X as a dependent variable.</p>
-<p>A causal model tells you (perhaps incompletely) what values the dependent variables will take for some configuration of the independent variables.</p>
-<p>This much seems implied by the form of Bayes Theorem, which asks you make predictions for any configuration of the system, i.e., predict the value of a dependent variable for some configuration of independent variables. If your model didn’t make any predictions for some scenario, then it would be held to make a random prediction, and thus most likely penalized in its posterior probability.</p>
-<p>One of the main things that a model will do, is group the variables. It will assert which dependent variables will change for a change in an independent variable. So, I think you will end up with a hierarchy of independent variables, with dependent variables forming the leaves.</p>
-<p>This tells us how to split the system into parts, model the parts, and glue them together.</p>
-<p>Can a model omit some dependent variables? A complete model would talk about every variable for every configuration. A partial model, though, could just handle a few configurations of the independent variables. Also, it could talk only about a small group of variables - basically, one or more independent variables, and some dependent variables that they affect. That is, I hypothesize, essentially the smallest possible causal model.</p>
-<p>Note that you could postulate some hidden variables that you can’t observe right now. However, at least in theory, you should be able to create tools to observe them.</p>
-<h2 id="layers-of-abstraction">Layers of Abstraction</h2>
-<p>Now, how do we deal with layers of abstraction? Maybe you get different layers of abstraction when you have different instruments for observing or manipulating the system. Really? Can’t you have lower-level instruments but still model the system at a higher-level, based on its regularities?</p>
-<p>For example, binary code is the lowest level of abstraction we use in a computer (you could go into NAND gates or raw atoms, but let’s stop it here). How do we build abstractions of assembly language and successions of higher-level languages? We sacrifice a bit of inefficiency to capture common patterns and make it easier to write bigger programs. We remove duplication, in other words.</p>
-<p>Why do we create abstractions? So that we can make useful predictions. For example, you can analyze binary code to come to perfectly legitimate conclusions about the behaviour of a program, but it would be tedious and error-prone. So, whenever you have a theoretical model of some system, but it’s too painful to reason about, you abstract it so that it becomes easier to see the consequences you care about.</p>
-<p>What does an abstraction layer look like? Maybe the dependent and independent variables will just represent a clump of lower-level variables, and we can simply use the same hierarchy of variables idea as above. So, we need to create higher-level dependent variables such that the value we observe here is made up of the values of some lower-level dependent variables, but using a more convenient tool. Similarly, we need to create higher-level independent variables whose values we can change using a convenient tool, which would in turn change the values of some lower-level independent variables.</p>
-<p>How exactly, though? And how can you manipulate the independent variables or observe the dependent variables if you don’t have high-level tools? If you’re going to design the tools, how will you design them?</p>
-<p>Perhaps I can figure out the abstraction if I taboo the important terms.</p>
-<h2 id="asking-how-and-why">Asking “how” and “why”</h2>
+<p>Remember, my aim is not to prove to others that the scientific method can be very useful. It is to test for <em>myself</em> whether the scientific method is as powerful as I think it is. I really don’t know. I get the feeling that it can be very useful as a problem-solving tool, but in the end that’s just a hunch. I need to find out for sure.</p>
+<p>For that, I must learn how to formulate causal models, as taught in the domain of causality, and test my understanding on real-world problems. Only when I can solve real problems as well or better than current standards can I say that the scientific method, as I have understood it, is powerful.</p>
+<h1 id="asking-how-and-why">Asking “how” and “why”</h1>
 <p>When we ask “why” a model makes a certain prediction, we really want to know the values of dependent variables that come between the independent variable and the dependent variable. We want to know how it happens. We want to make the chain of reasoning more detailed.</p>
 <p>To be precise, when we ask why X causes Y, we want to get a detailed chain of reasoning between X and Y. When we ask why X came about, we want to know what caused X in the first place. So, the first question is really “how” and the second one is “why”.</p>
 <p>Make sure it handles changed conditions. If you say variable A causes variable B, ensure that for every value of A, you can determine the value of B. This is one of the main advantages of a cause - once you know the value of the independent variable, you don’t care about any of its ancestors or other variables.</p>
@@ -84,51 +67,18 @@
 <p>Remember that time is a key independent variable.</p>
 <p>Test the causal link in other scenarios. For example, if you say natural selection has made some gene more prevalent in some populations, check whether it increases the inclusive genetic fitness of those humans; otherwise natural selection won’t increase its relative frequency in the next generation.</p>
 <p>Why do you predict this particular outcome? How come X leads to Y, and not Z? Why would an electrical field change the foraging behaviour of an insect?</p>
-<h2 id="sine-qua-non">Sine qua non</h2>
+<h1 id="sine-qua-non">Sine qua non</h1>
 <p>What is the smallest thing that can still be called a causal model? Well, that would be a single causal link.</p>
-<h2 id="further-notes">Further notes</h2>
+<h1 id="further-notes">Further notes</h1>
 <p>Note: I need to handle feedback loops sometime. For now, we’ll just go with the hierarchy of variables.</p>
 <p>I was stymied by the apparent impenetrability of the “models” I saw all around because they used symbols to represent previously-specified sub-models. That’s why it felt like they didn’t follow the model above.</p>
-<h2 id="testing-my-hypothesis">Testing my hypothesis</h2>
-<p>So, my above model suggests that you cannot have a causal model that doesn’t deal with a hierarchy of variables and layers of abstractions.</p>
-<p>Specifically, what do we predict from the hierarchy-of-variables model? That a model will predict what will happen for some (or all) configurations of the independent variables in some domain. And that it will specify a hierarchy by grouping related variables. Sometimes, it may only talk about a few of the independent variables and the variables dependent on them.</p>
-<p>What do we predict from the layers-of-abstraction model? That a model will talk about dependent and independent variables, just like above, but that they will represent lower-level dependent and independent variables respectively.</p>
-<p>Let’s look at 10 hypotheses I have so far.</p>
-<h2 id="probabilistic-models">Probabilistic Models</h2>
-<p>I think Bayesian Networks work by starting with a hypothesis and then creating new hypotheses based on the evidence. Every piece of information received shifts the belief strengths of the links. The network essentially represents a new hypothesis at each point.</p>
-<p>The way I was imagining hypotheses was that you have a space of hypotheses, each of them making different predictions, and that you update their posterior probabilities using the evidence. In science, for example, you create experiments that test the differing predictions of two or more hypotheses, and thus eliminate at least one of them.</p>
-<p>So, are we saying that every hypothesis - every causal model - will be in the form of a Bayesian belief network? Well, yes, it will have the tree structure, but it will be fixed. You won’t change the network or update the parameters based on new evidence. If it can’t predict some evidence, its posterior probability will go down. That’s all.</p>
-<p>Note that the variables in the tree need not all be observable. You could postulate some hidden variables to make the math work right.</p>
-<h2 id="testing-further">Testing further</h2>
-<p>I need to check whether the prose examples of hypotheses conform to my idea of a causal tree. I should be able to easily convert prose hypotheses into causal trees.</p>
-<p>Also, I need to check whether the predictions they make are in the form of independent and dependent variables.</p>
-<p>Let’s do that for 10 concrete prose hypotheses.</p>
-<p>Later, we can work on alternative hypotheses (which I suspect are different causal structures with maybe extra dummy variables) and experimentation.</p>
-<h1 id="prose-is-king">Prose is King?</h1>
-<p>Results: I think prose really is a succinct way of expressing causes. Sure, you may be more precise with a causal tree, but it really is already very compressed in prose form.</p>
-<p>To avoid duplicating effort, I suspect I must aim to make the prose form work better, instead of overthrowing it and installing a new form in place. For one, most of the world’s hypotheses seem to be expressed in prose form. (What about programs? What about math?)</p>
-<p>In short, if the causal tree format is the bee’s knees, I want to know how well I can approximate it using prose, because that seems to be the only thing that scales. Plus, human minds have lots of limitations, and prose really may have lasted this long because it is best suited for our brains. Also, good luck describing a complicated causal tree without graphing software. (Wait. Test: How exactly do you describe a complicated causal tree using prose, then?)</p>
-<p>Another test is: how do you describe a cause when there are multiple independent variables causing a dependent variable? Like, acceleration of a body depends on its mass and the net force applied to it.</p>
-<p>Test whether the above model is expressive enough to cover the workings of a state machine.</p>
-<p>Test your model of the scientific method on Mysterious Answers to Mysterious Questions.</p>
-<h1 id="learning">Learning</h1>
-<p>What do I need the scientific method for right now? I want to learn precise causal models from resources. Also, of course, I want to do research on my own by coming up with alternative hypotheses and experimenting.</p>
-<p>What does it mean to “learn” a precise causal model? What would I actually end up doing?</p>
-<p>Well, at the end, I must have each link in the causal tree. So, “learning” would seem to be about analyzing and acquiring causal links from the resource. If the resource (book chapter or essay) already presents them explicitly, I just have to copy them. Else, I might have to extract them from the text.</p>
-<p>So, one task is to get the causal model from the resource. However, it probably also provides some evidence supporting the model. So, update the model on the evidence using Bayes Theorem.</p>
-<h1 id="structure-learning">Structure Learning</h1>
-<p>One form of “cause” that scientists talk about is some independent variable that changes one or more dependent variables when you manipulate it, keeping everything else constant. Ok. But what happens when other things are not constant? What happens when you change some of the other independent variables? Rather, if you figure out the isolated effect of each independent variable, how do you put together those effects?</p>
-<p>For one, we get to know that the independent variable does have some effect on our dependent variables. It may have well have been that changing the variable does nothing, like when changing the colour of paint on a car does pretty much nothing to make it move faster.</p>
-<p>Also, note that a causal link from A to B only tells you what effect A will have on B. I also want to know what effect A has on other variables. Figure that out too.</p>
-<p>This basically helps you learn the structure of the causal model. You still have to figure out the exact parameters for each causal link, but you know how the model looks.</p>
-<p>Test my idea that the variables in each causal link will be based on the tools you have. Get concrete examples of variables.</p>
 <h1 id="summarizing">Summarizing</h1>
 <p>What about summarizing? Actually, what is summarizing? If you need each causal link in the tree, how can you compress it even further? I need to look at concrete examples of uncompressed and compressed causal models. How do they differ? Is it to do with a layer of abstraction? Are you perhaps encapsulating some parts of the model? I mean, it can’t literally be about having fewer causal links, can it? Because we’re assuming that each causal link is from an independent variable to an dependent variable. So, you have to account for the value of every variable. How can you do that with fewer causal links?</p>
 <p>Maybe you summarize by abstracting common links. That is probably the same as using higher-level variables. You start to see the patterns. However, be careful to specify all the possible values of the abstract variables. Be precise.</p>
 <p>I suspect that each piece of advice you get from a book is just an abstract causal link, hopefully backed by controlled experiments. However, you usually don’t know exactly how the different pieces of advice will combine. That’s why you need domain expertise to figure out how complex scenarios play out. This holds for every piece of advice ever - just having evidence from controlled experiments is not enough. You need to know how they combine.</p>
 <p>What does a controlled experiment really tell you? I think it just hints at the causal structure, plus a bit about the strength of the causal link.</p>
 <p>Your diary summaries are examples of succinct but predictive models. Study them. They probably will have very few, abstract causal links. To test this, look at them and see if they form abstract causal links.</p>
-<h1 id="variables-vs-process-descriptions">Variables vs Process Descriptions</h1>
+<h1 id="causal-diagram-vs-process-description">Causal Diagram vs Process Description</h1>
 <p>I somehow feel uncomfortable with this idea of causal links between variables. It seems unsatisfactory to me.</p>
 <p>What I really want is a description of the underlying process that reality is using to generate what we see. I want to know the program that reality is running. That is what programs are - descriptions of processes. And, I think, that is what hypotheses are too.</p>
 <p>The idea of isolating all the variables (independent or dependent) and looking at their relationships seems too low-level to me, like I’m missing the forest for the trees. I want to know the deep process that generates those surface phenomena. Plus, the variables seem quite fragile; they seem to be based on your current tools for observation or manipulation. I want to go beyond current tools. I want to know “how the universe works on such a deep level that you know exactly what to do to make the universe do what you want”. I want an in-depth understanding of the domain, dammit.</p>
@@ -138,8 +88,6 @@
 <p>This is why I feel queasy about using probabilities within a hypothesis. That’s the ultimate sign that you don’t understand the domain too well - you’re basically guessing at what will happen (and will thus get a lower posterior probability than someone who makes sure predictions). If you know the exact model that underpins a domain, you will be able to predict exactly what will happen, no two ways about it.</p>
 <p>Maybe we can have probabilities to represent our confidence in different hypotheses (their prior probabilities), because we don’t know which hypothesis reality is using, but within the hypothesis, we should be sure of what we expect.</p>
 <p>In short, a tree belief network is just not expressive enough, I think. You need a better language with which to describe processes.</p>
-<h2 id="questions">Questions</h2>
-<p>How will you make predictions about experiments if you don’t talk about the variables?</p>
 <h1 id="do-some-scholarship-dude">Do some Scholarship, dude</h1>
 <p>Eliezer already covered all this in his Epistemology sequence. There’s a well-understood field that studies the area of causal models - in a very rigorous, mathematical way.</p>
 <h1 id="scientific-method-v1.0">Scientific Method v1.0</h1>
@@ -161,33 +109,7 @@
 <p>Don’t just ask what something is. Also ask what it is not! Look at what could falsify your hypothesis. If you say “if Y, then X”, think of some Y that doesn’t lead to X.</p>
 <h1 id="how-to-learn-a-causal-model">How to learn a causal model</h1>
 <p>Maybe take some resource, maybe a book chapter or essay, and condense it till you have the shortest amount of words that can still make the same predictions as the original.</p>
-<h1 id="satisfying-work">Satisfying Work</h1>
-<p>Do I have satisfying work for my scientific method missions? Why not?</p>
-<p>I need to have a clear goal, step-by-step instructions (so that it’s work, not problem-solving), and continuous feedback.</p>
-<h1 id="notes">Notes</h1>
-<p>Identify the variables you care about. What can you observe? These are your dependent variables. What can you manipulate? These are your independent variables. Your job is now to find out what will happen for different values of the independent variables.</p>
-<p>How do we improve our models? Remember, you have to predict the existing evidence as well as the previous model, and then some. Maybe you can think of this as a branching out - the old model plus two or more different changes.</p>
-<p>Note that we usually employ our minds at some step when using causal models. If we knew the subject well enough, we would be able to describe it to a computer (like stock-market analysis programs that choose which stocks to buy, according to our specifications). Ideally, we want to capture the model in explicit terms, so that we can sub out the work to computers. But, sometimes, we may be forced to use the poorly-understood capabilities of our own brain. Like in Psychology where we judge how angry a person seems upon getting hit on the head - we can’t quite tell a computer to do that as accurately.</p>
-<h2 id="posterior-probability">Posterior probability</h2>
-<p>I was confused about our actual aim. Did we want to get a hypothesis with high predictive power (one that makes accurate, narrow predictions for a lot of experiments) or one with high posterior probability (one that has a lot of evidence backing it)?</p>
-<p>Well, how would you find out if it has high predictive power? Only by testing its predictions in a variety of situations. Which would be counted as evidence in updating the posterior probability. Actually, no. To compute the posterior probability according to Bayes Theorem, you need to know the other hypotheses in play, whereas you can compute predictive power by looking at one hypothesis alone. But, predictive power only calculates the quality of your predictions on the few experiments you have observed. It tells you nothing about the other experiments.</p>
-<p>I got confused by this vague concept of “predictive power”. It seems like it makes sense, but it actually doesn’t.</p>
-<p>You want to know how much to believe a model. And the way to do that is to use Bayes Theorem.</p>
-<h1 id="the-scientific-method-v1.0">The Scientific Method v1.0</h1>
-<p>Let’s theorize about causal models based only on hardcore empirical evidence. We’ll look at causal models of different shades of accuracy - some that are mathematically precise, others that are vague and hand-waving. We’ll talk about consequences, alternative hypotheses, differing predictions, experiments, and other such scientific things by looking at concrete examples. Let’s not build castles in the air.</p>
-<p>Mission: Get three concrete examples of “causal models”, along with three experiments each.</p>
-<p>How will I know I’ve done it right? You should be able to use the models to make predictions for the experiments.</p>
-<p>Okay. Go.</p>
-<h1 id="say-no-to-definitions">Say No to Definitions</h1>
-<p>Definitions aren’t causal models. “A generous person is someone who shares his wealth with others”. Well, say John shared $5 equally with his four friends when he was a kid. Is he a “generous person”? Well, according to the definition, yes. But, after ten years, will he share the $5000 he gets in a lottery?</p>
-<p>The definition doesn’t help you make future predictions. If you do make predictions, it would be because of the evidence you saw (him sharing $5 as a kid), which is quite weak evidence, especially when it comes to what he will do for big amounts of money when he is much older. The definition is nothing but a label - “generous” - and just knowing the label doesn’t help you make narrow predictions.</p>
-<p>Basically, when should you agree that a definition applies to a person? If John shared $5 with his friends when he was a kid, does that make him a “generous person” and thus likely to share even $5000? Or would you wait for more evidence? Why should you wait? Isn’t the definition clear? The definition is only as good as the criteria you use to apply it.</p>
-<p>John shared $5 with his friends. Ok, as per the definition, he now has the label “generous person”. Big deal. So what? The word “generous” doesn’t mean anything by itself. We only care about the predictions that it allows us to make.</p>
-<p>To assure yourself of this, let’s say someone argues that the definition is not “air-tight” enough. They say we should label someone “generous” only after they have done a hundred deeds of wealth-sharing. Ok, assume John shares $5 everyday, does that make him “generous”? Now, they say it must be significant percentage of his wealth.</p>
-<p>What if he does that on a hundred (or a thousand) occasions - somehow replenishing his wealth afterwards - but then one day doesn’t share even when his close friend is in dire need? Is he still “generous”? More pertinently, what do you predict he will do tomorrow when another friend is in need? Will you say that he won’t help the friend? But, he is “generous” according to the definition, right? Or, will you say that he will help the friend? But, he might have turned cold and therefore stopped helping anyone.</p>
-<p>Anyway, the lesson is: don’t argue using definitions.</p>
-<p>Then, what do you argue using?</p>
-<p>What is it that definitions don’t have? Well, they don’t let you make predictions about specific experiments.</p>
+<p>Basically, how do we test whether we’ve extracted an accurate causal model? We make sure it can precisely explain all the correlations we observed before. So, make a list up front of the observed correlations in some particular resource. Identify the variables you care about. What can you observe? These are your dependent variables. What can you manipulate? These are your independent variables.</p>
 <h1 id="collecting-models">Collecting models</h1>
 <h2 id="pgs-inequality-and-risk">PG’s Inequality and Risk</h2>
 <p>Only two ways to reduce economic inequality - give money to the poor or take it from the rich.</p>
@@ -238,7 +160,7 @@
 <p>My analysis: You treat something as private property when it is rival and excludable (why should it be rival?). However, you can enact laws to artificially make something excludable - like in the case of piracy laws - even when the service is no longer intrinsically excludable (music and movies after data transfer became cheap). So, now what? Should you allow artificial exclusion or not? What are the costs and benefits?</p>
 
 <div class="info">Created: August 18, 2015</div>
-<div class="info">Last modified: September 28, 2015</div>
+<div class="info">Last modified: September 30, 2015</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: scientific method</div>
 
