@@ -90,6 +90,31 @@
 <p>In short, a tree belief network is just not expressive enough, I think. You need a better language with which to describe processes.</p>
 <h1 id="do-some-scholarship-dude">Do some Scholarship, dude</h1>
 <p>Eliezer already covered all this in his Epistemology sequence. There’s a well-understood field that studies the area of causal models - in a very rigorous, mathematical way.</p>
+<h1 id="what-ive-learned-so-far">What I’ve learned so far</h1>
+<h2 id="diffs">Diffs</h2>
+<p>How has my understanding of the scientific method improved over the last month?</p>
+<p>The main leap so far is the notion of a causal model, in terms of a Causal Bayesian Network. It’s no longer a black box to me. I have a good idea of the pieces inside.</p>
+<p>Also, I no longer talk about the whole state of the world. We assume the temporal and spatial locality of causality, so we can break the world into chunks and deal with the chunks independently. So, exploit your knowledge of which things happen close together to simplify your model.</p>
+<p>One more thing I learned was to identify correlations first, and then posit causal explanations.</p>
+<p>I’m convinced that you need to answer “how” by bringing in as many variables as you can between cause and effect. Otherwise, your model can’t answer questions about those variables and will thus be marked down by Bayes Theorem.</p>
+<p>Ah! You’re not done when you just include a few variables in your model. You need to accommodate every variable that you can observe or manipulate. Also, you must be able to answer low-level questions after tabooing the abstract words.</p>
+<p>Also, you need to answer “why” for every top-level variable - what causes it to be so?</p>
+<h2 id="to-do">To-do</h2>
+<p>What do I still need to do? I need to resume collecting concrete examples of causal models, differing predictions, experiments, etc. so that I can test my understanding. If Causal Bayesian Networks are truly capable of expressing any model, then you should be able to use them to describe all the scientific models around you, big or small.</p>
+<p>How will we get differing predictions if we just build one causal model from the data? Or, maybe we posit alternative causal models, with varying causal structures and parameter values. Test this by looking at alternative hypotheses from the scientific world - do they fit the pattern of different causal structures governing the same variables?</p>
+<p>I don’t fully understand what a causal link actually means. What can’t it be?</p>
+<p>Now that we deal in causal models, I’m not sure what it means to extend a model. If it is about adding new causal links to constrain new variables, that’s fine, I guess.</p>
+<p>Tests that remain: Can a causal model in the above style forbid outcomes and otherwise focus your uncertainty, as required by Mysterious Answers to Mysterious Questions? How does it help you ask questions like “what can’t it be”?</p>
+<p>How would you go about trying to test or falsify a causal model? For example, take my beliefs about the world. How to test them efficaciously? If you posit that A causes B, then if you intervene at A, then B should take the predicted value. Otherwise, if you’re just observing A, then B should be independent of its non-effects given A.</p>
+<p>Also, I need to test the causal model idea on multivalued variables.</p>
+<p>I’m still not sure about latent variables. I suspect that they come in when you’ve not really understood the domain well, because if you’ve captured the system in detail, you won’t need any extraneous variables. Reductionism means that you can explain stuff in terms of smaller stuff. All virtual or latent variables should just be labels for some configuration of stuff.</p>
+<p>I’m uncertain about using causal models to help in designing programs or art or whatever. I don’t know if they scale well to such complex endeavours. Perhaps a formal system (or language) is more suited to the task? How so?</p>
+<h2 id="remember-this">Remember this</h2>
+<p>See nothing but causal models, experiments, outcomes, and predictions.</p>
+<p>I must obtain precise causal models.</p>
+<h2 id="whats-next">What’s next?</h2>
+<p>Go through Mysterious Answers to Mysterious Questions and check whether your new understanding covers everything.</p>
+<p>Play around with a bunch of concrete causal models. See what happens when you have a bunch of causes for some variable - how do their conditional probabilities interact? Maybe get software for this (R, perhaps?).</p>
 <h1 id="scientific-method-v1.0">Scientific Method v1.0</h1>
 <p>Decide on a basic process of learning and use it on a hundred resources. In two days.</p>
 <p>Actually do deliberate practice. Follow its principles.</p>
@@ -110,6 +135,17 @@
 <h1 id="how-to-learn-a-causal-model">How to learn a causal model</h1>
 <p>Maybe take some resource, maybe a book chapter or essay, and condense it till you have the shortest amount of words that can still make the same predictions as the original.</p>
 <p>Basically, how do we test whether we’ve extracted an accurate causal model? We make sure it can precisely explain all the correlations we observed before. So, make a list up front of the observed correlations in some particular resource. Identify the variables you care about. What can you observe? These are your dependent variables. What can you manipulate? These are your independent variables.</p>
+<h1 id="mysterious-answers-to-mysterious-questions">Mysterious Answers to Mysterious Questions</h1>
+<p>Let’s see if my understanding of causal models as Causal Bayesian Networks can satisfy the requirements of a good hypothesis stated in Eliezer’s Sequence.</p>
+<h2 id="anticipated-consequences">Anticipated consequences</h2>
+<p>Anticipated consequences are all about talking in terms of the variables. If a tree falls in a forest and no one is around to hear it, you expect the vibrations-in-the-air variable to change and you expect no brain to have any auditory-processing. There is no confusion at all once you think in terms of the variables.</p>
+<p>What was wrong with the “hypothesis” that phlogiston caused fire? He says there were no advance predictions. Why is that? Well, you can’t observe or manipulate phlogiston, and you can’t observe or manipulate any of its parent causes either. So, it tells you nothing at all.</p>
+<p>What about Wulky Wilkinsen’s “post-utopian” work? Can’t we say “post-utopian” style causes your books to show “colonial alienation”? But, we can’t observe or manipulate either of those variables, nor any of their parent causes.</p>
+<p>The lesson is to always talk in terms of variables that you can observe or manipulate. Further, you must specify precisely what effects you expect a cause to have (and thus what observed effects would falsify your belief). If a “cause” doesn’t precisely control what values the “effect” will have, then that causal link is useless.</p>
+<p>What about the theory that elan vital causes aliveness in living beings? Again, you can’t observe or manipulate elan vital. And you can’t predict precisely which configurations of matter will possess “aliveness”.</p>
+<p>Whenever you predict one outcome, the other possible outcomes will falsify your hypothesis.</p>
+<p>Failure to consider the obvious next question: why? If you say A caused B, ask why A came about in the first place. Also, ask how A leads to B - what are the intermediate steps?</p>
+<p>Also, when you don’t know the cause behind some variable, its behaviour will seem chaotic and unpredictable to you. However, once you figure out the cause, it will be absolutely clear.</p>
 <h1 id="collecting-models">Collecting models</h1>
 <h2 id="pgs-inequality-and-risk">PG’s Inequality and Risk</h2>
 <p>Only two ways to reduce economic inequality - give money to the poor or take it from the rich.</p>
@@ -160,7 +196,7 @@
 <p>My analysis: You treat something as private property when it is rival and excludable (why should it be rival?). However, you can enact laws to artificially make something excludable - like in the case of piracy laws - even when the service is no longer intrinsically excludable (music and movies after data transfer became cheap). So, now what? Should you allow artificial exclusion or not? What are the costs and benefits?</p>
 
 <div class="info">Created: August 18, 2015</div>
-<div class="info">Last modified: September 30, 2015</div>
+<div class="info">Last modified: October  1, 2015</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: scientific method</div>
 
