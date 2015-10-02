@@ -51,40 +51,48 @@
 <p>Time: 1 hour</p>
 <p>(Note: A -&gt; B stands for “A causes B”)</p>
 <h1 id="filters-that-fight-back-by-pg">Filters that Fight Back by PG</h1>
-<h2 id="correlations">Correlations</h2>
-<p>follow links in mails, improve accuracy of Bayesian spam filters</p>
-<p>Some guy did it only in borderline cases. “Why only borderline cases?”, asks PG. Also, “why only once?”</p>
-<p>following all mails, amusing side-effect</p>
-<p>popular mail clients do this, spammer’s servers take severe pounding</p>
-<p>attack, very highly targeted (high precision?)</p>
-<p>no other attack, as highly targeted</p>
-<p>punish mode, spider every link n times</p>
+<h2 id="correlations-and-causes">Correlations and Causes</h2>
+<p>follow links in mails -&gt; improve accuracy of Bayesian spam filters</p>
+<p>Some guy did it only in borderline cases. once per borderline case -&gt; improvement; “Why only borderline cases?”, asks PG. Also, “why only once?”</p>
+<p>following all mails -&gt; amusing side-effect (server load of spammer)</p>
+<p>popular mail clients do this (#people who do auto-retrieval) -&gt; spammer’s servers take severe pounding (server load)</p>
+<p>auto-retrieval -&gt; very highly targeted (high precision and high recall? you attack just the spammers)</p>
+<p>other attacks -&gt; not as highly targeted</p>
+<p>punish mode = spider every link n times</p>
 <p>current email system, too passive (?)</p>
-<p>suggestions to fix the problem of passiveness, new protocols; this one, not so</p>
-<p>huge volume of spam, so far worked in favour of spammer (higher chances of clicks); now, work against spammer (higher load on servers)</p>
-<p>auto-retrieving spam filters, drive spammer’s costs up, sales down; bandwidth goes up like hell, servers halt, unavailable to gullible customers</p>
-<p>rebound filters, want it only for suspected spammers (want very low false positives)</p>
-<p>url sent to millions of people, spam url</p>
-<p>submitting every http request in every email, fine nearly all the time (low false positives)</p>
-<p>urls from free email services, not fine (false positive)</p>
-<p>auto-retrieval + blacklists of spamvertized sites, protect legitimate sites (number of times legitimate sites are crawled), prevent abuse (people spam with legitimate sites’ urls to get them DoS’d)</p>
-<p>sites on blacklist, alone crawled (% of crawled sites from blacklist)</p>
-<p>site blacklisted, humans inspection</p>
-<p>lifetime of spam at least several hours, easy to update a list, interfere with promotion of new site (how many people see the spam or visit site)</p>
-<p>high-bandwidth connections (bandwidth), high-volume auto-retrieval only practical for them (cost per mail)</p>
-<p>enough of such people, serious trouble (load on spam servers)</p>
-<p>in order to reach a few gullible people (target %), spam everyone (volume)</p>
-<p>non-gullible people (people with low #clicks on spam), collateral damage (not target, but still paying in time)</p>
-<p>non-gullible people stop (or threaten to stop) gullible from responding (somehow decrease % gullible clicks), non-gullible people stop getting spam (amount of spam received by non-gullible people; what about spam received by gullible people?)</p>
-<p>auto-retrieving spam filters, stop (or threaten to stop) gullible people from responding to spam (decrease #gullible clicks)</p>
-<p>auto-retrieving spam filter, kill spam (#total spam goes to zero)? Not quite</p>
-<p>biggest spammers (highest spam volume times number of mails), protect their servers against auto-retrieving filters (somehow not increase server load due to auto-retrieving filters)</p>
-<p>easiest and cheapest way to protect their servers (cost, ease of implementation and maintenance), working unsubscribe links (boolean)</p>
-<p>working unsubscribe links, necessity for smaller fry (i.e., if they didn’t do that, they would get high server loads)</p>
-<p>auto-retrieving filters become common (#filter users), auto-unsubscribing filters (% of non-unsubscribed spam mails)</p>
-<p>people who don’t use the right software, spam (along with OS crashes, viruses, popups)</p>
+<p>suggestions to fix the problem of passiveness, new protocols; this one, not so. new protocols + changes -&gt; fix some problems with email;</p>
+<p>huge volume of spam, so far worked in favour of spammer (higher chances of clicks); now, work against spammer (higher load on servers). Huge volume -&gt; higher chances of clicks; now, huge volume, high #auto-retrieval clients -&gt; high server loads</p>
+<p>auto-retrieving spam filters, drive spammer’s costs up, sales down; bandwidth goes up like hell, servers halt, unavailable to gullible customers; auto-retrieving spam filters -&gt; #server requests -&gt; bandwidth goes up, you don’t pay extra -&gt; servers halt -&gt; unavailable to gullible customers</p>
+<p>rebound filters, want it only for suspected spammers (want very low false positives). low false positives = legitimate sites not affected</p>
+<p>url sent to millions of people, spam url; spam url -&gt; sent to millions of people</p>
+<p>submitting every http request in every email, fine nearly all the time (low false positives); submit every http request -&gt; low false positives</p>
+<p>urls from free email services, not fine (false positive); false positives -&gt; bad</p>
+<p>auto-retrieval + blacklists of spamvertized sites, protect legitimate sites (number of times legitimate sites are crawled), prevent abuse (people spam with legitimate sites’ urls to get them DoS’d). auto-retrieval, blacklist -&gt; crawl legitimate sites few times, don’t get fooled by spammers sending legitimate urls as a hoax</p>
+<p>sites on blacklist, alone crawled (% of crawled sites from blacklist); blacklist -&gt; % of sites crawled not from blacklist</p>
+<p>site blacklisted, humans inspection; human inspection of url -&gt; url in blacklist</p>
+<p>lifetime of spam at least several hours, easy to update a list, interfere with promotion of new site (how many people see the spam or visit site); lifetime of span -&gt; how many people see spam for newly promoted sites</p>
+<p>high-bandwidth connections (bandwidth), high-volume auto-retrieval only practical for them (cost per mail); bandwidth -&gt; cost of auto-retrieval system</p>
+<p>enough of such people, serious trouble (load on spam servers); #people -&gt; load on spam servers</p>
+<p>in order to reach a few gullible people (target %), spam everyone (volume); volume -&gt; #clicks</p>
+<p>non-gullible people (people with low #clicks on spam), collateral damage (not target, but still paying in time); spam, non-clickers -&gt; no profit to spammers, loss in time to the non-clickers</p>
+<p>non-gullible people stop (or threaten to stop) gullible from responding (somehow decrease % gullible clicks), non-gullible people stop getting spam (amount of spam received by non-gullible people; what about spam received by gullible people?). decrease #clicks on spam -&gt; decrease amount of spam received by non-clickers (how?)</p>
+<p>auto-retrieving spam filters, stop (or threaten to stop) gullible people from responding to spam (decrease #gullible clicks); auto-retrieving spam filters -&gt; decrease #clicks on spam</p>
+<p>auto-retrieving spam filter, kill spam (#total spam goes to zero)? Not quite; auto-retrieving spam filters -&gt; amount of spam (will not go to zero)</p>
+<p>biggest spammers (highest spam volume times number of mails), protect their servers against auto-retrieving filters (somehow not increase server load due to auto-retrieving filters); biggest spammers -&gt; somehow not increase server load despite filters</p>
+<p>easiest and cheapest way to protect their servers (cost, ease of implementation and maintenance), working unsubscribe links (boolean); unsubscribe links -&gt; auto-retrieval filters unsubscribe automatically -&gt; server load is not increased</p>
+<p>working unsubscribe links, necessity for smaller fry (i.e., if they didn’t do that, they would get high server loads); smaller fry, didn’t have working unsubscribe links -&gt; high server loads</p>
+<p>auto-retrieving filters become common (#filter users), auto-unsubscribing filters (% of non-unsubscribed spam mails); #filter users -&gt; decrease #non-unsubscribed spam</p>
+<p>people who don’t use the right software -&gt; spam (along with OS crashes, viruses, popups)</p>
+<h1 id="summary">Summary</h1>
+<p>Key variables: amount of spam for non-clickers, cost to non-clickers</p>
+<p>Counter-attack: number of people with auto-retrieval filters -&gt; server load of spammers, high precision and recall, no new protocols; server load -&gt; bandwidth goes up -&gt; servers halt -&gt; unavailable to gullible customers</p>
+<p>Low false positives: human inspection -&gt; blacklist, plus auto-retrieval -&gt; crawl legitimate sites very few times, prevent abuse;</p>
+<p>Automatic unsubscribing: working unsubscribe links -&gt; auto-retrieval filters unsubscribe automatically -&gt; server load is not increased, unsubscribed from spam</p>
+<p>Freedom for the non-gullible: #clicks by gullible -&gt; spam -&gt; no profit to spammers from non-clickers, loss of time for non-clickers; auto-retrieval filters -&gt; DoS attack on spam servers -&gt; decrease #clicks by gullible -&gt; drive out spammers or become unsubscribed automatically -&gt; decrease spam for non-clickers</p>
 <h1 id="conclusions">Conclusions</h1>
 <p>Ensure that each part of your correlation or cause is a variable. Don’t deal with abstract nonsense. Operationalize, in other words.</p>
+<p>For the causal links you posit, ask how the cause leads to the effect.</p>
+<p>How to test or understand causal structures? Take each causal link in isolation; because of locality of causality, it should be enough to explain the effect. You should need no other information.</p>
 
 <div class="info">Created: October  1, 2015</div>
 <div class="info">Last modified: October  1, 2015</div>

@@ -115,6 +115,13 @@
 <h2 id="whats-next">What’s next?</h2>
 <p>Go through Mysterious Answers to Mysterious Questions and check whether your new understanding covers everything.</p>
 <p>Play around with a bunch of concrete causal models. See what happens when you have a bunch of causes for some variable - how do their conditional probabilities interact? Maybe get software for this (R, perhaps?).</p>
+<h1 id="goals-revisited">Goals, revisited</h1>
+<p>Explain precisely what a causal model is. Show me some examples. Talk about the implications of a causal link from A to B. Specify exactly what evidence you need to posit a causal link.</p>
+<p>Talk about the exact process you need to use to get from zero to a good causal model (whatever that is).</p>
+<p>Also, enumerate domains where you can get feedback about the quality of your causal model. You need to show that your causal model formulation performs better than any other.</p>
+<p>Where does scientific thinking differ from ordinary thinking? Is it mainly in seeking out differing predictions and trusting only the experimental results? Also, how does Bayesian thinking differ from Traditional Rationality? Now, how can we exploit these differences to test our understanding of causal models?</p>
+<p>Most importantly, how is my understanding of the scientific method falsifiable right now? How can I test it so that the world will come out one way if it is correct and another way if it is wrong? This, I think, is the fundamental thought process of a scientist: how can I falsify or test my beliefs? Practice it.</p>
+<p>How do you falsify a causal model? I think you test whether the necessary conditions for each causal link are satisfied.</p>
 <h1 id="scientific-method-v1.0">Scientific Method v1.0</h1>
 <p>Decide on a basic process of learning and use it on a hundred resources. In two days.</p>
 <p>Actually do deliberate practice. Follow its principles.</p>
@@ -132,6 +139,32 @@
 <p>In cases where the resource provides both the causal model and some tests, you can check for yourself if you can generate predictions correctly. In more vague cases, you would need to build the precise causal model yourself based on the evidence provided.</p>
 <p>When you taboo some term (like “causal model”), provide three concrete examples to really drive it in.</p>
 <p>Don’t just ask what something is. Also ask what it is not! Look at what could falsify your hypothesis. If you say “if Y, then X”, think of some Y that doesn’t lead to X.</p>
+<h1 id="future-practice-ideas">Future practice ideas</h1>
+<p>Think only in terms of hypotheses. Every single thing in the world is either a hypothesis, experiment, prediction, or evidence. That’s all. Focus on one particular thing at a time - in one pass, look for hypotheses; in the next, look for experiments; and so on.</p>
+<p>Taboo the major words.</p>
+<p>Instead of trying to come up with “new” causes, try to explain the phenomena using your base model. Compute the consequences of the base model till you can predict what’s happening at this level. If the base model is accurate, then somehow it must be making these outcomes occur. Find out how.</p>
+<p>Come up with sanity checks for your hypotheses, evidence, predictions, etc. Example: is this a hypothesis or just a prediction? In short, look at the hypothesis that says “I have a hypothesis here” and see whether it stands up to your experiments. Also, what would falsify this hypothesis? What does this predict will <em>not</em> happen?</p>
+<p>We get in trouble, I think, when we try to create hypotheses without looking at some concrete evidence. Why? Because it’s easy to just add words that seem like they explain everything but really don’t. Remember, your causal model is only as good as the evidence you have. It’s only the evidence that will make your model precise and let you predict the outcome of different states. In any case, if some part of a hypothesis doesn’t deal with any evidence, then it has no business being there. This is test-driven development, in other words. Get the evidence, show that your current model fails to predict it, and then postulate some extra cause. So, the key is in finding experiments where your current model doesn’t predict correctly.</p>
+<p>Remember that a causal model is a state-transition function. Focus on the states and how they change into one another. Don’t simply deal with meaningful-sounding words. When you ask “why”, don’t answer with a cause. See the prediction made aka the final state B. Now, posit a previous state A and a causal model that narrowly transforms A into B (and transforms the initial state into A).</p>
+<p>Right now, “state-transition function” is just a buzzword. I don’t know what exactly the states are and how you’re supposed to describe the transition. So, I need to look at some concrete causal models and see how they do it. I suspect they will describe the states using certain variables.</p>
+<p>Always remember: science is all about getting highly predictive causal models.</p>
+<p>Give me three concrete domains in which to “practice science” aka build causal models.</p>
+<p>Where do you plan to use the scientific method in the future? What chunks will you be using? Practice those chunks.</p>
+<p>How do I get feedback on my practice? Some measurement - maybe number of reps - number of reps of what?</p>
+<p>It’s not about the number of reps. It’s about the number of <em>reaches</em>. Big difference! You have to actually do something you’re not good at.</p>
+<p>Have Fun Failure. You should fail about 80% of the time.</p>
+<p>Practice noticing confusion and noticing surprise. Also, learn to notice naive realism.</p>
+<p>Much of the time, the scientific thinking you’re doing is parallelizable. So, don’t try to go through to the end before you start the next pass. Stop at some convenient point and go to the next step so that you have a short cycle with quick feedback.</p>
+<h1 id="practice-tips">Practice Tips</h1>
+<p>Grep for <code>\&lt;\(because\|so\|why\|how\|reason\)\&gt;</code>. Also, <code>yet</code>; and <code>since</code>.</p>
+<p>Give explicit criteria for labeling somebody - “take on a utility function”, or “explicit utility function”, or “exactly measures our personal contribution”.</p>
+<p>The hardest part seems to be dealing with the mess of paragraphs and keeping everything straight in my head and rewriting things so that they are neat and succinct. Working around my cognitive limitations, in other words.</p>
+<p>Taboo “often”, “sometimes”, “usually”, “many”, etc. Be precise. Ask for narrow predictions - “you become stupid after hours of work” - exactly how stupid, after how long?</p>
+<p>For each independent variable, ask yourself if you can manipulate it. For each dependent variable, ask yourself it you can measure it. Taboo it, in other words.</p>
+<p>For each independent variable, ask which dependent variables it might affect.</p>
+<p>It’s not that the independent variables “cause” the dependent variables to change. It’s just that they let you <em>predict</em> the values of the dependent variables.</p>
+<p>Every cause is a prediction for the cause before it. You can always ask why to go higher in the causal chain. Basically, you need to go up till you can constrain all the important variables.</p>
+<p>If you have to add a lot of corner-cases and details to your hypotheses, you should probably go a level deeper and find a more powerful, general hypothesis (like with stuff and signalling).</p>
 <h1 id="how-to-learn-a-causal-model">How to learn a causal model</h1>
 <p>Maybe take some resource, maybe a book chapter or essay, and condense it till you have the shortest amount of words that can still make the same predictions as the original.</p>
 <p>Basically, how do we test whether we’ve extracted an accurate causal model? We make sure it can precisely explain all the correlations we observed before. So, make a list up front of the observed correlations in some particular resource. Identify the variables you care about. What can you observe? These are your dependent variables. What can you manipulate? These are your independent variables.</p>
@@ -196,7 +229,7 @@
 <p>My analysis: You treat something as private property when it is rival and excludable (why should it be rival?). However, you can enact laws to artificially make something excludable - like in the case of piracy laws - even when the service is no longer intrinsically excludable (music and movies after data transfer became cheap). So, now what? Should you allow artificial exclusion or not? What are the costs and benefits?</p>
 
 <div class="info">Created: August 18, 2015</div>
-<div class="info">Last modified: October  1, 2015</div>
+<div class="info">Last modified: October  2, 2015</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: scientific method</div>
 
