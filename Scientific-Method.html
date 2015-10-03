@@ -51,13 +51,6 @@
 <p>We are uncertain about the outcomes of various scenarios. We need to predict what will happen, so that we can make good decisions. We have questions we want to answer, problems we want to solve. So, we use a model of the domain to help us answer those questions.</p>
 <p>The better our model, the better our predictions will be. Wait. In what sense will our predictions be better? Well, it is a matter of induction. We humans believe that if we process the evidence we have by using Bayes Theorem, we will get the most accurate predictions overall. Yes, a mythical hypothesis that made exactly the right predictions for everything you see would be great to have, but you don’t know what it is in advance. So, it doesn’t help you make future predictions. The best you can do is use Bayes Theorem constantly.</p>
 <p>So, our one and only aim is to use Bayes Theorem to get a model with high posterior probability.</p>
-<h1 id="goal-of-this-essay">Goal of this essay</h1>
-<p>Right now, the term “causal model” is a black box to me. I don’t understand exactly how it works inside. But I need to. I want to get a complete understanding of how causal models work.</p>
-<p>First, I want to know about causal models (aka hypotheses) and predictions. What does a causal model look like (and what does it not look like)? What do predictions look like (ditto)? How does a model help you make predictions? How can you find out which experiments it talks about? For how many experiments does it make predictions?</p>
-<p>Next, I want to know about alternative hypotheses. How do models differ from one another? How would a model differ from an improved version of it? How do independent and dependent variables enter the picture? What do scientific experiments look like?</p>
-<p>Most importantly, I want to figure out a process by which to get better hypotheses - the scientific method, in other words. Instead of trying to get it right on the first try, I want to refine the process over time using empirical evidence.</p>
-<p>Remember, my aim is not to prove to others that the scientific method can be very useful. It is to test for <em>myself</em> whether the scientific method is as powerful as I think it is. I really don’t know. I get the feeling that it can be very useful as a problem-solving tool, but in the end that’s just a hunch. I need to find out for sure.</p>
-<p>For that, I must learn how to formulate causal models, as taught in the domain of causality, and test my understanding on real-world problems. Only when I can solve real problems as well or better than current standards can I say that the scientific method, as I have understood it, is powerful.</p>
 <h1 id="asking-how-and-why">Asking “how” and “why”</h1>
 <p>When we ask “why” a model makes a certain prediction, we really want to know the values of dependent variables that come between the independent variable and the dependent variable. We want to know how it happens. We want to make the chain of reasoning more detailed.</p>
 <p>To be precise, when we ask why X causes Y, we want to get a detailed chain of reasoning between X and Y. When we ask why X came about, we want to know what caused X in the first place. So, the first question is really “how” and the second one is “why”.</p>
@@ -112,20 +105,65 @@
 <h2 id="remember-this">Remember this</h2>
 <p>See nothing but causal models, experiments, outcomes, and predictions.</p>
 <p>I must obtain precise causal models.</p>
+<p>Think in terms of anticipated consequences. In terms of causes, what that means is look at the current state and ask what effects you expect to see, as per your causal model. You’re not allowed to make predictions about the future without talking about the causes that will take the world from now to then.</p>
 <h2 id="whats-next">What’s next?</h2>
 <p>Go through Mysterious Answers to Mysterious Questions and check whether your new understanding covers everything.</p>
 <p>Play around with a bunch of concrete causal models. See what happens when you have a bunch of causes for some variable - how do their conditional probabilities interact? Maybe get software for this (R, perhaps?).</p>
 <h1 id="goals-revisited">Goals, revisited</h1>
-<p>Explain precisely what a causal model is. Show me some examples. Talk about the implications of a causal link from A to B. Specify exactly what evidence you need to posit a causal link.</p>
-<p>Talk about the exact process you need to use to get from zero to a good causal model (whatever that is).</p>
-<p>Also, enumerate domains where you can get feedback about the quality of your causal model. You need to show that your causal model formulation performs better than any other.</p>
+<p>Explain precisely what a causal model is. Show me some examples. Talk about the implications of a causal link from A to B. Specify exactly what evidence you need to posit a causal link. There’s the causal Markov assumption - A causes B means that, given A, any other X will be uncorrelated with B. You could set A, and then try to set everything else, B should not change.</p>
+<p>How do you falsify a causal model? I think you test whether the necessary conditions for each causal link are satisfied.</p>
+<p>Talk about the exact process you need to use to get from zero to a good causal model (whatever that is). What is the scientific method that I’m supposed to be using here? It’s so vague right now. I need clear step-by-step actions.</p>
+<p>Also, enumerate domains where you can get feedback about the quality of your causal model. You need to show that your causal model formulation performs better than any other. Start with a couple and improve as you go along.</p>
+<p>Talk about alternative hypotheses.</p>
 <p>Where does scientific thinking differ from ordinary thinking? Is it mainly in seeking out differing predictions and trusting only the experimental results? Also, how does Bayesian thinking differ from Traditional Rationality? Now, how can we exploit these differences to test our understanding of causal models?</p>
 <p>Most importantly, how is my understanding of the scientific method falsifiable right now? How can I test it so that the world will come out one way if it is correct and another way if it is wrong? This, I think, is the fundamental thought process of a scientist: how can I falsify or test my beliefs? Practice it.</p>
-<p>How do you falsify a causal model? I think you test whether the necessary conditions for each causal link are satisfied.</p>
-<h1 id="scientific-method-v1.0">Scientific Method v1.0</h1>
-<p>Decide on a basic process of learning and use it on a hundred resources. In two days.</p>
-<p>Actually do deliberate practice. Follow its principles.</p>
-<p>Cure for despondency - fun failure. Work on hard projects rarely ever goes in vain. Plus, you get a powerful sense of agency.</p>
+<p>Remember, my aim is not to prove to others that the scientific method can be very useful. It is to test for <em>myself</em> whether the scientific method is as powerful as I think it is. I really don’t know. I get the feeling that it can be very useful as a problem-solving tool, but in the end that’s just a hunch. I need to find out for sure.</p>
+<p>For that, I must learn how to formulate causal models, as taught in the domain of causality, and test my understanding on real-world problems. Only when I can solve real problems as well or better than current standards can I say that the scientific method, as I have understood it, is powerful.</p>
+<p>If the causal model you get at the end is the best hypothesis among all the others, then every other hypothesis must be wrong somehow. Make a list of all the wrong hypotheses ever and show how you could have done better.</p>
+<h1 id="the-scientific-method">The Scientific Method</h1>
+<p>As I understand it, the way to get a good causal model of a system is to list the variables you care about, and use evidence to arrange them into a good causal structure. To help with that, manipulate some of the independent variables to see which variables get affected by them. Also, test the differing predictions between the alternative models to eliminate some of them. Observe correlations to pin down the structure. These include correlations of time and space to rule out more models (for example, A can’t cause B if A comes after B).</p>
+<p>So, alternative hypotheses are just different causal structures involving the same variables. Also, sometimes you may have models with the same structure but different parameters (say, A makes B more likely vs A makes B less likely).</p>
+<p>Science is all about generating alternative hypotheses and using evidence to narrow down the right ones.</p>
+<h1 id="a-version-1.0">A Version 1.0</h1>
+<p>What’s the bare minimum I can do to use the scientific method?</p>
+<p>The core of science seems to be in testing differing predictions between alternative hypotheses, either by experiment or observation. It’s all about testing or falsifying your hypotheses. So, let’s do just that.</p>
+<p>Let’s try to come up with alternative hypotheses for some system. Later on, we can get evidence to eliminate some of them.</p>
+<h2 id="practice-domains">Practice domains</h2>
+<p>Now, where can I do this? Where will I get feedback about how well I’m doing? I want a domain where I will do well if I generate good alternative hypotheses and where I will fail if I don’t.</p>
+<p>What about problem-solving? I feel I won’t get clear feedback if I try it in programming, because I already have some skills in that area, and so I won’t know if I did well because of the scientific thinking or my existing skills.</p>
+<p>There’s always cooking, you know. You get clear feedback, and you can’t cheat or argue with the dish.</p>
+<p>Name two more concrete domains.</p>
+<h2 id="ignorance-is-bliss">Ignorance is Bliss</h2>
+<p>Well, I want practice in organizing variables in different ways, but I need to make sure I don’t already know what the answer looks like.</p>
+<p>Basically, causal structures about which I’m completely ignorant, variables -&gt; chance to organize variables in truly different structures; if I know about the structure, then I would stick close to the correct answer and thus won’t realize how I would have thought in complete ignorance.</p>
+<p>In short, real-life situations of uncertainty would be like this: I would have no real idea about the actual causes and effects. I would have to guess different possible structures and observe correlations and run experiments to narrow it down. So, I want to learn the skill of generating alternative causal structures and narrowing them down using evidence.</p>
+<h2 id="generating-alternatives">Generating Alternatives</h2>
+<p>So, to learn to generate alternative hypotheses when I’m ignorant, I must practice in domains where I have little or no idea what’s going on. I should give myself just the variables and see what possibilities I come up with.</p>
+<p>How will I know I’m doing well? For one, I should have generated the correct model as one possibility. I may not know it for sure, but I should at least be considering it. Also, I should probably generate all the alternative hypotheses that those in the field have discarded along the way - like the sun going around the earth, in astronomy. They probably had good reasons for believing those alternatives and it wasn’t until they did some definitive experiments that they rejected them.</p>
+<p>Also, remember, it’s not about getting the entire causal model exactly right. It’s about getting the individual causal links correctly. So, the more causal links you guess correctly, the better you’re probably doing. That’s the power of locality of causality: one you know the direct cause, you don’t care about the other things in the system, you know what the effect will be. Therefore, for each causal link in the correct answer, aim to guess it right in at least one of your alternatives. If the anatomy textbook says that your heart will be on the left side of your body, you should have generated at least one hypothesis of the human body with the heart on the right side (er… the left side), even if it’s all over the place in the other models.</p>
+<p>For practice examples, I can take on causal models from unfamiliar sciences (like anatomy or astronomy) and give myself just the variables from their textbooks or science journals. I would have to generate various possibilities and check myself.</p>
+<h2 id="narrowing-it-down">Narrowing it down</h2>
+<p>How do I learn to use evidence to narrow down my hypotheses?</p>
+<p>Well, given the plethora of alternatives I come up with in the previous exercise, I should give myself morsels of evidence from the textbooks or journals with which to locate the right hypotheses.</p>
+<p>How will I know I’m updating correctly on the evidence?</p>
+<h2 id="experimenting">Experimenting</h2>
+<p>Well, one of the most powerful and irreplaceable sources of evidence is the scientific experiment. There is just no other way to discover causal structures without actually intervening in the system and seeing what happens.</p>
+<p>How will I practice that?</p>
+<p>Maybe I can allow myself a peek at the manipulation instruments available in the domain (a knife in anatomy or heat and chemicals in chemistry) and guess at what experiments I could use them to do. Then, I can compare my answers to the experiments actually run in the field to see how close I was. If my experiments are truly informative - if they distinguish between hypotheses that are not ruled out by observational evidence - then they must have been done in the field (else, I’m on track for scientific glory!).</p>
+<h2 id="everyday-trial-and-error">Everyday Trial and Error</h2>
+<p>Does my learning have to be monolithic? Do you have to do all your practicing and experimenting in one domain? Why not do it in bits and pieces in different areas?</p>
+<h2 id="test-it-out">Test it out</h2>
+<p>You think you have a good idea for learning the scientific method.</p>
+<blockquote>
+<p>Now when you’re dealing with a confusing problem and you have no idea what’s going on, the smart thing to do is figure out some really simple tests, things you can look at right away. We need fast tests that distinguish between these hypotheses.</p>
+<p>– Harry Potter to Draco Malfoy, Chapter 22: The Scientific Method, HPMOR</p>
+</blockquote>
+<p>Go test it out right away. Take three concrete unfamiliar examples and generate alternative hypotheses for them.</p>
+<p>Right now, I don’t have another person who can act as an oracle and answer my queries about the domain. I have to get the evidence myself, which compromises my ignorance about the topic. Let’s try to do it anyway, and if I seriously can’t get evidence without peeking at the actual answer, then I’ll just have to employ someone else or wait till I’ve forgotten the data.</p>
+<p>Step one is to collect the instruments available in the domain for observing and manipulating variables. This way I will get to know the obvious variables and the possible values each can take.</p>
+<p>Step two is to organize the variables into different causal structures, as best as I can.</p>
+<p>Step three is to get a little evidence from the domain and eliminate a few of the causal models. What kind of evidence will this be? Observed correlations and experimental evidence. Repeat until you have less than three hypotheses.</p>
+<p>Step four is to check each causal link of your models against the correct model.</p>
 <h1 id="future-ideas">Future ideas</h1>
 <p>What’s the bare minimum we can do to use Bayes Theorem in a domain?</p>
 <p>Guess a model for how things work. Then, think hard to guess another way it could be. Look at their differing predictions and observe the actual outcome. How does this help get a model with high posterior probability? By looking at the differing predictions, we get strong evidence one way or another. We will reject one of the two hypotheses and become more confident in the other.</p>
@@ -229,7 +267,7 @@
 <p>My analysis: You treat something as private property when it is rival and excludable (why should it be rival?). However, you can enact laws to artificially make something excludable - like in the case of piracy laws - even when the service is no longer intrinsically excludable (music and movies after data transfer became cheap). So, now what? Should you allow artificial exclusion or not? What are the costs and benefits?</p>
 
 <div class="info">Created: August 18, 2015</div>
-<div class="info">Last modified: October  2, 2015</div>
+<div class="info">Last modified: October  3, 2015</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: scientific method</div>
 
