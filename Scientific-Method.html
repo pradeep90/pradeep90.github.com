@@ -62,6 +62,7 @@
 <h2 id="minimum-viable-product">Minimum Viable Product</h2>
 <p>What is the bare minimum I can do to start using the scientific method? Generate alternative hypotheses for some given evidence?</p>
 <p>Collect concrete examples of causal models, alternative hypotheses, and experiments so that you can refine your understanding.</p>
+<p>Finally got a good handle on alternative hypotheses (I think). Think locally!</p>
 <h2 id="ideas-for-practice">Ideas for practice</h2>
 <p>Look for surprises. Use the experiments in some domain to test your grasp of the model. Taboo the major words. Think only in terms of models and variables.</p>
 <p>Seek to explain phenomena using the base model of the domain.</p>
@@ -251,6 +252,19 @@
 <h2 id="learning-a-causal-model">Learning a Causal Model</h2>
 <p>How can I learn a precise causal model from some resource? Well, if they’ve provided the causal graph in the resource itself, great! Else, I would have to use the evidence they provide to build a causal model on my own. And, to do it well, I would have to generate alternative causal models and eliminate them using the evidence, till I narrow down the correct model.</p>
 <p>Test this out.</p>
+<h1 id="release-the-scientific-method">Release the Scientific Method</h1>
+<p>The first thing you do with a project is release it. So, let’s release the scientific method. Let’s come up with some dirt-simple version of it and use it on a hundred problems.</p>
+<p>What’s the product supposed to be? Get a causal model that can answer as many questions as you can in a particular domain.</p>
+<p>Aim: Given some evidence, figure out hypotheses that explain it equally well.</p>
+<p>How? For now, just take each observation you have and think of different mini-causal structures that satisfy it. Combine those causal structures into coherent causal models that predict all the evidence. Then, use any experimental evidence to distinguish between the alternatives. This way, you should get to hypotheses with high posterior probabilities.</p>
+<p>Here’s the key difference from before: earlier, I thought in terms of constructing entire giant alternative hypotheses, things that differed at every level. However, now that we have locality of causality, we can <em>think locally</em>. Take up parts of the causal model - maybe just a single causal link, or a triplet of variables - and ask how they might be arranged differently.</p>
+<p>Thinking locally means thinking in terms of nearby causes and shutting out faraway ones. Once you know about the parents of a variable, you don’t need to care about the ancestors. You have all the information you need. So, instead of asking for abstract general causes of things, ask what happened just before this; ask what happened close to this. Think locally and concretely, not globally and generally.</p>
+<p>Go ahead with this informal algorithm and see where you hit roadblocks.</p>
+<p>Mission: Look at 100 correlations or observations and construct alternative hypotheses that satisfy the data.</p>
+<p>Where can I use this “scientific method”? Wherever you get observations or experimental evidence. It’s up to you.</p>
+<p>Time: 1 day.</p>
+<h2 id="notes">Notes</h2>
+<p>What is the hard part in thinking scientifically? What is the thing that we can’t do by thinking ordinarily but which delivers the most information? Computing the consequences of some model can be hard, I feel. You need to keep your eyes peeled to see how some cause-effect relation works in a new domain, more so if there are several causes at play. Also, you will discover observables that aren’t in the model but need to be, so you have to figure out how they fit.</p>
 <h1 id="future-ideas">Future ideas</h1>
 <p>What’s the bare minimum we can do to use Bayes Theorem in a domain?</p>
 <p>Guess a model for how things work. Then, think hard to guess another way it could be. Look at their differing predictions and observe the actual outcome. How does this help get a model with high posterior probability? By looking at the differing predictions, we get strong evidence one way or another. We will reject one of the two hypotheses and become more confident in the other.</p>
@@ -354,7 +368,7 @@
 <p>My analysis: You treat something as private property when it is rival and excludable (why should it be rival?). However, you can enact laws to artificially make something excludable - like in the case of piracy laws - even when the service is no longer intrinsically excludable (music and movies after data transfer became cheap). So, now what? Should you allow artificial exclusion or not? What are the costs and benefits?</p>
 
 <div class="info">Created: August 18, 2015</div>
-<div class="info">Last modified: October  5, 2015</div>
+<div class="info">Last modified: October  6, 2015</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: scientific method</div>
 
