@@ -58,26 +58,60 @@
 <p>Let’s look at the evidence PG presents. We’ll sort it in order of relevance to our key variables - profit, revenue, and number of users - all of which depend on the supply and demand curves.</p>
 <p>Correlation: All the best hackers he knows are switching to Mac. So, a certain demographic of users is switching to a certain product. This shows a sudden high demand. But why are they correlated? Note further that most others are not switching to Mac (it still has only a small market share). So, there’s a strong correlation here.</p>
 <p>This was actually two pieces of evidence: the best hackers didn’t use Mac earlier (and others didn’t either); the best hackers are using Mac now (while the others still don’t). Ok, so that’s <em>four</em> pieces of evidence. More formally: Mac demand from best hackers was low earlier; now it’s high; Mac demand from others was low earlier; now it’s still low. Any causal model you have should explain all four facts.</p>
+<p>Here are the variables that seem correlated: mac demand from best hackers, mac demand from others, beauty of design, power of the OS.</p>
+<pre><code>Joint distribution:
+(time, hacker demand, others' demand, beauty, power rank)
+~1983, high, low, high, top
+soon after 1983, high, high, high, top
+mid 1990s, low, low, high, not top
+2005, high, low, high, top</code></pre>
+<p>Problem: Infer a model from the above data.</p>
+<p>I don’t know how to do that properly. Need to learn that.</p>
+<p>For now, let’s assume that time, beauty, and power rank are not caused by any of the other variables. Their causes are outside the model.</p>
+<p>Let’s try to see if hacker demand and others’ demand are conditionally independent of each other. To test if A and B are conditionally independent given C, we need to check P(AB|C) = P(A|C)P(B|C).</p>
+<p>When beauty, power rank = high, top, the demand values are high-low, high-high, and high-low. Now, P(low-low|high, top) = 0 and P(hacker demand = low|high, top) = 0, but P(others’ demand = low|high, top) = 2/3. So, they’re not conditionally independent given beauty or power.</p>
+<p>I’m really lost in the math here. I don’t know how to get a Bayesian Network from a JPD. Have to figure that out.</p>
+<hr />
+<p>Let’s wing it.</p>
+<p>I think that the change of power of the Mac (by using FreeBSD) is an intervention (??). A change of power changed whether the best hackers used it. So, power of OS is a causal ancestor of whether the best hackers use it. The fact that they switched to Linux on Intel is another example of this.</p>
+<p>hacker demand for OS &lt;- power of OS</p>
 <p>Correlation: Those guys are hardcore hackers. Characteristics of that demographic.</p>
 <p>Correlation: Powerbooks are beautifully designed and run FreeBSD. And presumably beautifully designed things are in demand.</p>
 <p>Correlation: Mac was in its time the canonical hacker’s computer. Hackers had high demand for the Mac when it first came out.</p>
 <p>Correlation: The original Mac was small and powerful and cheap and fabulously well designed. All help to create high demand.</p>
 <p>Correlation: People had never considered a computer could be fabulously well designed.</p>
 <p>Correlation (or intervention - because the Mac was introduced?): In the mid to late 1980s, all the hackers PG knew were either writing software for the Mac or wanted to.</p>
+<p>platform hackers target &lt;- platform they use</p>
 <p>Hypothesis: Hackers follow the most powerful OS wherever it leads. Hackers demand the most powerful OS.</p>
 <p>Intervention (?): Linux and FreeBSD came and hackers switched to Intel boxes.</p>
 <p>Intervention: OS X and the hackers are back.</p>
 <p>Hypothesis: When it comes to computers, what hackers are doing now, everyone will be doing in ten years. People have demand for the things that hackers have demand for now.</p>
 <p>Evidence: Unix to bitmapped displays, etc.</p>
+<p>P(successful with hackers | successful outside) is high doesn’t mean that P(successful outside | successful with hackers) will be high too!</p>
 <p>Correlation: PG thinks his father really wishes he’d listened to PG’s advice of buying Sun stock in 1986. PG could see that hackers had a high demand for Sun and he predicted that everybody else would too.</p>
 <p>Correlation: In 1994, PG’s hacker friend created something that is now a huge and rapidly growing business. People have demand for something that hackers demanded ten years ago.</p>
+<p>However, all this just says that P(success with hackers earlier | success outside) is high. P(success outside | success with hackers earlier) could be miserably low.</p>
 <p>Hypothesis: Software sells hardware. Novel software originates from great hackers. They tend to write novel software first for whatever computer they personally use. So, for software platforms, whatever hackers use now, you’ll be using in ten years.</p>
-<p>That is, people’ demand for software is what creates demand for hardware. Only great hackers supply novel software. They supply software first for whatever computer they personally use.</p>
+<p>That is, people’s demand for software is what creates demand for hardware. Only great hackers supply novel software. They supply software first for whatever computer they personally use.</p>
+<p>people’s demand for platform X &lt;- killer application for platform X</p>
+<p>killer application for platform X &lt;- great hackers target it (possible but not guaranteed)</p>
 <p>Since, people demand great software, and thus the hardware it comes on, they will demand whatever platform the hackers first use.</p>
 <p>Evidence: % of initial sales of Apple II because of VisiCalc. They chose it because they liked it.</p>
 <p>Prediction: To attract hacker to write software for your hardware, you have to make it open and good, so that they themselves use it. Just “open” is not enough. Hackers don’t demand just open platforms. They demand open and good platforms.</p>
 <p>Correlation: Apple is popular at the high end and at the low end, but not in the middle. There is high demand for Apple at the low end and the high end, but not in the middle.</p>
 <p>Prediction: Situation is temporary. They will become a lot more popular. There will be a lot more demand for Apple.</p>
+<h1 id="causal-model">Causal model</h1>
+<ol style="list-style-type: decimal">
+<li>hacker demand for OS &lt;- power of OS</li>
+<li>platform hackers target &lt;- platform they use</li>
+<li>killer application for platform X &lt;- hackers target it</li>
+<li>people’s demand for platform X &lt;- killer application for platform X</li>
+</ol>
+<p>In short, he wants to say people’s eventual demand for a platform is decided by the power of the platform.</p>
+<p>All I want to point out is that (3) is not a guaranteed cause. So, you can’t just pick whatever platform hackers are playing around with and say that will win.</p>
+<p>Or can you? If killer apps come <em>only</em> from hackers, and if they generally target the platform they’re using, and if they all use the same platform (the most powerful one), then you’re guaranteed to get killer apps mostly for that platform. Most individual apps may fail but those that succeed will be for the most powerful platform. You may not be able to pick the winner apps, but you can single out the winner platform.</p>
+<p>The crux of the argument is that they all use the same platform.</p>
+<p>No, actually, the crux is that their applications are found mainly on that first platform they target and therefore it will help sell the hardware. This need not be so at all, especially in the age of commoditized hardware. So, even if hackers use a particular platform and even target it, they might port their applications to other platforms as well, thus eroding the scarcity power of the original platform. So, you would be mistaken in trying to invest in a platform solely because you expect hackers to target it first. Check if it is a commodity.</p>
 <h1 id="variables">Variables</h1>
 <p>Some key variables are Mac demand from hackers (% of that group that wanted Macs), Mac demand in general (% of market), and hackerness (binary variable). Plus time (earlier, now, and also way earlier (1980s)).</p>
 <p>Other variables include beauty of design (binary variable, say) and power of the OS (rank at some time). I think there’s a general variable called demand for a platform (market share).</p>
@@ -86,11 +120,22 @@
 <p>Sort evidence in order of relevance to your key variables (?)</p>
 <p>When you have a correlation between variables A and B, look at whether not-A and not-B happen together too.</p>
 <p>A simple “correlation” is probably several pieces of evidence bundled up. Like “the best hackers have switched to the Mac” works out to two correlations - they didn’t use it earlier and now they do.</p>
+<p>Also, if you’re going to do time-correlations, check if other variables are correlated too.</p>
 <p>TODO: Write out the JPD. It shouldn’t be too big; most of these variables are binary anyway. Be precise about the difference between hacker demand for Mac and general demand for Mac. You can’t just make vague arrows.</p>
 <p>How will you specially denote interventions, though? They have special weight.</p>
+<p>Use time information in correlations, as usual.</p>
+<p>How do you judge whether something is an intervention or not? Maybe in human systems most things are interventions? Each decision you take is an intervention. Hmmm… the original idea of an intervention was that something <em>outside</em> the model <em>intervened</em> on a variable. Basically, it should not be the effect of a cause inside the system. It should not be <em>part of the plan</em>!</p>
+<h1 id="time-is-of-the-essence">Time is of the essence</h1>
+<p>It seems tricky to work time into the variables. Is “Mac demand from hackers” a variable? But what about time? We can’t distinguish between the states high Mac demand in 1980s and high Mac demand in 2000s. So, if we consider those two worlds to be just different states of our system, then the variable can’t distinguish between them.</p>
+<p>More worryingly, what if you marginalize for time? What is P(time = 1990)? Perhaps there is some background knowledge that helps us answer that question (like the fact that the current time is 2015, so that P(time = 1990 | current time = 2015) = 0). Or maybe time isn’t a variable at all since it isn’t something you can directly observe. Or time is a label for a category that holds all the correlated stuff together. Like “1947” is a label for the cluster with <independence of India="true," birthyear of so and so="true," ...>. So, saying “1914” is a pointer to the state of the world where World War I began.</p>
+<p>Lesson: Consider the state of the world at each point to be one part of your JPD. Judge the value of each variable by looking at the state of the world at that time.</p>
+<p>Ah. Each state of the world before now was evidence. We use this evidence to rule out several hypotheses. Also, their order in the sequence - their date and time - is part of the evidence too. (But then, what is P(time = 1947)? Is it just 1/number of years in our model?)</p>
+<p>If there are 40 binary variables, then there are 2^40 possible states of the world, some of which may have already occurred. You want to know which others can happen and with what probability. This way, when you know the value of a few variables, you can predict the values of the others.</p>
+<p>And what does it means when you see a particular state of the world? It’s evidence for that state. You increase the frequency count of that particular state, and therefore increase its fraction in your JPD. Of course, you’re only going to see each point of time at most once, but most possible states will remain at 0 occurrences.</p>
+<p>But that seems to ruin the calculations. You only ever see one data point with, say, time = 1947 so you can’t do proper conditional independence tests. Say you want to check P(AB | time, blah) = P(A | time, blah)P(B | time, blah). For any time, you will see A, B, and AB only once, so it’s always 1/k =/= 1/k * 1/k (I think) meaning they’re not conditionally independent. I’m not at all clear about this.</p>
 
 <div class="info">Created: November 25, 2015</div>
-<div class="info">Last modified: November 25, 2015</div>
+<div class="info">Last modified: November 26, 2015</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: scientific method test</div>
 
