@@ -74,7 +74,7 @@
 <p>What big companies do instead of implementing features is plan them. At Viaweb we sometimes ran into trouble on this account. Investors and analysts would ask us what we had planned for the future. The truthful answer would have been, we didn’t have any plans. We had general ideas about things we wanted to improve, but if we knew how we would have done it already. What were we going to do in the next six months? Whatever looked like the biggest win. I don’t know if I ever dared give this answer, but that was the truth. Plans are just another word for ideas on the shelf. When we thought of good ideas, we implemented them.</p>
 <p>– Paul Graham, <a href="http://www.paulgraham.com/road.html">The Other Road Ahead</a></p>
 </blockquote>
-<p>Another benefit of frequent releases is that your mind is empty. You don’t have to keep a huge context in your head. It’s all in the source code, and it is well-tested! You can go and do what is needed with a minimum of fuss. This provides us with a test for a good deployment people: is your mind empty? Can you go forth with a clear head or do you have to keep lots of things in mind (do this, do that, then do that)?</p>
+<p>Another benefit of frequent releases is that your mind is empty. You don’t have to keep a huge context in your head. It’s all in the source code, and it is well-tested! You can go and do what is needed with a minimum of fuss. This provides us with a test for a good deployment pipeline: is your mind empty? Can you go forth with a clear head or do you have to keep lots of things in mind (do this, do that, then do that)?</p>
 <p>Your cycle time should be so low that when you have a new idea, you should implement it immediately. To-do lists are a deployment smell.</p>
 <h1 id="forbid">Forbid</h1>
 <p>Ok. What <em>can’t</em> a good Deployment Pipeline do?</p>
@@ -87,6 +87,9 @@
 <p>New prediction: If I make the dashboard useful enough and only use it to decide what to do, I will get things done.</p>
 <p>In short, the feedback that the dashboard displays must be something you can actually affect. The shorter the cycle time the better, but it must be something you can affect directly.</p>
 <p>What should feedback do? It should test if your product has the features you want. For an essay, it should test if there are a number of surprising ideas in there, etc.</p>
+<hr />
+<p>Actually, feedback is nothing but evidence. So if your dashboard is to be useful, it should provide evidence about your overall hypothesis. You’re trying to get a good hypothesis about your project domain - aka “what kind of project would get me the result I want?”. So, to get experimental evidence, you need to intervene by changing your project and then observe the result on your dashboard. So, your dashboard stats must ideally display the key variables you’re trying to affect.</p>
+<p>For example, if your project is about implementing eight features in a program, your dashboard should at least display how many of those eight features have been implemented. This way, you get strong evidence about whether your hypothesis is accurate. If you thought your new change would add a feature but it didn’t, then it means your hypothesis was wrong.</p>
 <h1 id="consequentialism">Consequentialism</h1>
 <p>What makes a good pipeline? You should have pressure on you to keep improving the product over time. The quality of the product (the features in a program, the number of ideas in an essay, etc.) is all that matters. And it must go up.</p>
 <p>In fact, in a good pipeline, it will be obvious if you aren’t actually improving the product. For example, in a program, you must increase the number of features over time. Even speeding it up or using less space is a feature. Programmers are in the business of producing features, their clients or bosses demand those features, so they have to keep doing whatever improves the features, nothing else. Similarly, for essay-writing; the number of surprising ideas must go up or the quality of your prose must improve. You cannot let it stagnate - readers will notice.</p>
@@ -216,7 +219,7 @@
 </div>
 
 <div class="info">Created: August  2, 2015</div>
-<div class="info">Last modified: September  7, 2015</div>
+<div class="info">Last modified: November 30, 2015</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: feedback loop, complexity</div>
 
