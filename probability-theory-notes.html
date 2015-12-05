@@ -44,6 +44,20 @@
 
             <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
 
+<h1 id="information-theory">Information Theory</h1>
+<p>Amount of information gained when you receive a message of probability p = log2(1/p)</p>
+<p>Bits can be added because probabilities can be multiplied. Getting a message of probability 1/2 removes half of the probability mass, whatever it was. If you had 1/3 probability mass, you will now have 1/3 x 1/2 = 1/6 probability mass left. If you had 1 probability mass, you will now have 1 x 1/2 = 1/2 probability mass left. Your space has shrunk by half. It is independent of the initial amount of probability mass. So, we call it one bit for convenience. Similarly, a message of probability 1/16 removes 15/16 of the probability mass, whatever it was initially. So, we say that it gives you 4 bits of information. 4 bits of information means reducing your uncertainty by a factor of 4.</p>
+<p>Uncertainty is the same as entropy.</p>
+<p>I still don’t get it. What does “information” really mean?</p>
+<p>You have a bunch of messages. The sum of their probabilities is 1. You get a message of probability p. What now? What changes?</p>
+<p>I think it’s all about the set of hypotheses you have. Take the <code>submarine</code> example. You have 64 hypotheses each saying that the submarine is in one of the 64 cells. Initially, you believe in each hypothesis equally with probability 1/64. Your probability distribution over the hypotheses is what determines your probability distribution over the messages at each point.</p>
+<p>Initially, say you ask whether the submarine is in cell 28. You will get a message saying yes or no. You weight the predictions from each of your hypotheses with your confidence in them. So, initially, all hypotheses except one predict that you will get no. Therefore, you expect yes with probability 1/64 and no with probability 63/64. If the answer is yes, then, as per Bayes Theorem, all the other hypotheses get a posterior probability of 0 and the lone hypothesis predicting that the submarine is in cell 28 gets a posterior probability of 1.</p>
+<p>Each message you receive is strong evidence (really?). It falsifies all hypotheses that predicted the other possible messages. Wait. I don’t think this is right. What actually happens is that your hypotheses together form a probability distribution over the messages. I suspect that information captures how your initial probability distribution changes to your final distribution. But how?</p>
+<p>What does one bit mean? In the case where we have 64 equi-probable hypotheses, we can see that one bit means eliminating half of them. But what happens when we have different levels of confidence in the hypotheses? What “half” does one bit eliminate here? This is my single biggest question about information theory.</p>
+<p>You accumulate information. What does that mean in probability theoretic terms, reductionistically? How could you say that 6 bits would be exactly enough to identify the submarine no matter how you did it?</p>
+<p>In other words, taboo “information” and “bits” and “entropy”, and explain it all in terms of basic probability theory.</p>
+<p>Aside: How much do we forget each day? How much information do we lose? Can we avert that fate by writing a lot? Does writing help us save or maybe even get more information than we would otherwise have? Why focus on writing alone? Locate whatever good hypotheses you can with your information.</p>
+<p>TODO Decomposability of entropy; When can you decompose?</p>
 <h1 id="choosing-vs-sampling">Choosing vs Sampling</h1>
 <p>Here’s an example (from David Mackay’s book Information Theory, Learning, and Inference):</p>
 <p>Say that the frequency of O blood type in a population is around 60% and that of AB blood type is 1%. What is the probability of picking two random people from the population such that, when you take their blood samples, you find the blood types O and AB?</p>
@@ -56,7 +70,7 @@
 <p>The lesson is: don’t ask how you would choose the desired outcome; look at how likely the desired outcome is from the sampling.</p>
 
 <div class="info">Created: December  4, 2015</div>
-<div class="info">Last modified: December  4, 2015</div>
+<div class="info">Last modified: December  5, 2015</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, probability theory</div>
 
