@@ -47,10 +47,42 @@
 <p><strong>Questions</strong>: How can we think scientifically?</p>
 <p>Instead of trying to find the perfect description of the scientific method, let’s start with a simple, inefficient process and improve it based on feedback. Judge each version only using empirical evidence; don’t theorize idly.</p>
 <hr />
+<h1 id="key-insights">Key insights</h1>
+<p>What have I learned that is different from conventional thinking?</p>
+<p>Think in terms of a causal model (as opposed to what? Correlations.). You should be able to answer questions about interventions and counterfactuals.</p>
+<p>Exploit locality of causality. Think locally.</p>
+<p>Come up with alternatives for each local mechanism in your model.</p>
+<h1 id="tasks">Tasks</h1>
+<p>Simplify your tasks so that you can reason about them.</p>
+<p>What is my overall goal? I want to master the techniques of reducing uncertainty.</p>
+<p>Why? So that I can make a lot of money in the future (or maybe just direct utilons).</p>
+<p>What am I uncertain about regarding mastering the scientific method?</p>
+<p>I’m unsure about the domain-independence hypothesis - that some techniques can get you a long way regardless of the domain. I don’t know the ratio of domain-independent and domain-dependent tasks in any field. Plus, cognitive psychology constraints like the number of chunks we can learn and memorize could play a role too.</p>
+<p>I don’t know how to apply the idea of information and entropy. It seems like we should seek out experiments that are high entropy, but how exactly do we do that in practice and how helpful is it?</p>
+<p>But these aren’t the main questions.</p>
+<p>How do I obtain accurate causal models about the systems I care about? How abstract should they be? Do I need to memorize them or can I write them out and refer to them when needed? How much predictive power does one causal model give you? How much information do you need to answer a given set of queries and a source of information?</p>
+<p>How fast can I get information from a source? How much information can I possibly gather in my life? Thus, what is the maximum expected number of utilons I can get from my life?</p>
+<hr />
+<p>My aim is to design a step-by-step algorithm for thinking scientifically: learning, researching, and problem-solving. The next step is to burn that algorithm into my brain.</p>
+<p>So, first, I have to show that the algorithm can actually help you solve problems (which needs me to flesh out the algorithms). Then, I need to show that I can use this algorithm on real-world problems, which are rough and noisy. Then, I need to practice it like hell.</p>
+<p>I suspect that a bare skeleton of a real-world problem will be enough to let me infer what kind of problems my algorithm needs to solve. Right now, I have no empirical examples behind the term “real-world problems”. I need to take up a real-world problem - any real-world problem - and actually look at the problems I need to solve along the way.</p>
+<p>I need a performance measure for scientific thinking. Feedback, in other words. What are the consequences of scientific thinking?</p>
+<p>Think of local alternatives for your algorithm. Don’t consider the thing as a whole. For example, take the skill of judging the value of information for an action before doing it - like checking the use by date of other bread packets before choosing one. You could have just gone with your first choice and assumed that the others would be the same. Life is made up of such moments.</p>
+<p>Similarly, look for local feedback mechanisms. You don’t need a big honking measurement tool to tell you how good a “scientist” you are. Just check if you can taboo well, find differing predictions, and so on.</p>
+<p>One way is to use resources with solved problems involving the same variables, like textbooks. The least your scientific method can do is let you solve all the exercise problems.</p>
 <h1 id="todo-refactor">TODO: Refactor</h1>
 <p>I have to refactor this whole thing because my understanding of the scientific method has advanced far ahead.</p>
 <p>Transcribe the important ideas from my notebooks.</p>
 <p>Finally, release the scientific method! Even if it’s only with one simple technique, do it. Keep the ball rolling.</p>
+<p>Collect the important skills you’ve come up with. Look at each in isolation.</p>
+<h2 id="essays">Essays</h2>
+<p>Write one essay on what you learned from information theory.</p>
+<p>One more on variables and abstractions.</p>
+<p>Open questions about domain independence and how much you can learn in general without going into a specific field.</p>
+<h2 id="practice">Practice</h2>
+<p>Aim: Practice individual scientific techniques a thousand times. Solve useful mini-problems with these techniques. Show that you can outstrip conventional thinking in at least some areas.</p>
+<h2 id="random-notes">Random Notes</h2>
+<p>Even if the mechanisms are complex, the equations might be simple. Like the idea of disproportionate rewards (80/20 Principle) in different fields or just any simple microeconomics model.</p>
 <h1 id="todo-summary">TODO: Summary</h1>
 <h2 id="causal-models">Causal Models</h2>
 <p>I want to get a causal model with high posterior probability. Causal models are causal Bayesian networks. We use locality of causality (temporal and spatial) to factorize and simplify our uncertainty about the world.</p>
@@ -221,6 +253,11 @@
 <p>– Paul Graham, <a href>The Age of the Essay</a></p>
 </blockquote>
 <p>How can we find surprises?</p>
+<h1 id="older-ideas">Older Ideas</h1>
+<p>Major attitude: everything has an explanation! Explain literally everything! Or, rather, anticipation-constrain literally everything! Figure out the cause behind everything. And, of course, when somebody claims that X is the cause, don’t accept it without evidence.</p>
+<p>Don’t accept <em>anything</em> without evidence Somebody: “X is true” You: “So you say. Show me the evidence.”</p>
+<p>Historical Perspective: Curiosity about how things came to be the way they are Why do we have supermarkets instead of ration shops? Why voting / democracy? Why civil service? Why parliament? These aren’t arbitrary facts. They are tightly governed by the true hypothesis about reality. They are superbly entangled. You shouldn’t be accepting it either way without question. “X happened? Oh, ok”. “X didn’t happen? Oh, ok.” – Wrong! Why does USA have Hollywood and why is it so popular around the world? It doesn’t have more people than Europe (I think)</p>
+<p>Maybe take on a project The difficulty I’m having could be because I’m looking for small one-off projects. Maybe the meat is in projects.</p>
 <h1 id="causal-diagram-vs-process-description">Causal Diagram vs Process Description</h1>
 <p>I somehow feel uncomfortable with this idea of causal links between variables. It seems unsatisfactory to me.</p>
 <p>What I really want is a description of the underlying process that reality is using to generate what we see. I want to know the program that reality is running. That is what programs are - descriptions of processes. And that is, I think, what hypotheses are too.</p>
@@ -266,7 +303,7 @@ c = p + q - pq -- (equation 1)
 So, q = (c - p) / (1 - p)</code></pre>
 <p>Therefore, once you know about the collider (C in this case), its previously uncorrelated causes (A and B) become correlated, as per equation 1.</p>
 <p>Generally, C = f(A, B). So, when you know the value of C, the values of A and B become constrained by the equation.</p>
-<p><a href="http://www.theatlantic.com/business/archive/2012/05/when-correlation-is-not-causation-but-something-much-more-screwy/256918/">This article</a> gives a good example. Assume that Hollywood actors have two types of abilities, looks and acting skills. Further assume that casting directors cast those whose total of <em>looks score</em> and <em>acting score</em> crosses a certain threshold. Now, if you observe the pool of actors who have been selected, you will find that their looks and acting are inversely correlated.</p>
+<p><a href="http://www.theatlantic.com/business/archive/2012/05/when-correlation-is-not-causation-but-something-much-more-screwy/256918/">This</a> article gives a good example. Assume that Hollywood actors have two types of abilities, looks and acting skills. Further assume that casting directors cast those whose total of <em>looks score</em> and <em>acting score</em> crosses a certain threshold. Now, if you observe the pool of actors who have been selected, you will find that their looks and acting are inversely correlated.</p>
 <p>Why? Because of the selection pressure: looks-score + acting-score &gt; threshold. I don’t understand why they would be perfectly <em>inversely</em> correlated (that would require looks-score + acting-score <em>equal</em> to threshold). But, they sure would be constrained by the equation above. And if very few have got selected, then the higher the looks-score, the lower their acting-score will be, and vice-versa.</p>
 <h1 id="notes-about-the-scientific-method-sequence">Notes about the Scientific Method Sequence</h1>
 <p>Confusion: when we think that some part of a hypothesis constrains variables, when it actually doesn’t. It doesn’t tell us what will not happen. Anything can happen. It is unfalsifiable and useless. But, the danger is that it feels useful. It feels like it’s paying some rent. So, we don’t feel the need to go out and replace it. Test: We won’t feel surprised by any particular outcome? (examples of confusion?) What causes this? Can that make it go away? Is the answer taboo? (taboo -&gt; confusion -&gt; replacement hypothesis; So, if you’re confused, you won’t seek out alternative hypotheses. You will <em>feel</em> like you have got predictive power in that area; you will feel you understand it (?). At least, you won’t feel like changing your mind.)</p>
@@ -282,7 +319,7 @@ So, q = (c - p) / (1 - p)</code></pre>
 <hr />
 <p>Surprising discovery: Unfalsifiable beliefs get confirmed by every outcome. So, your confidence in them grows over time, no matter what! Take the Fifth Column example. You’ll become more and more confident in a useless belief, and then use that to justify your preferred actions. Conspiracy theories rely on this for their sustenance.</p>
 <p>Notice surprise and confusion: Make advance predictions. Take the Fifth Column example: you can’t have every outcome support your hypothesis. We don’t get to see all the outcomes at once, so it can be hard to spot when somebody is bending the rules to be unfalsifiable. Antidote: make advance predictions. Also, would you have predicted in advance that this would happen? Like, when I felt that my water purifier’s tap was flowing slower than usual. It might well have been nothing, but why did I have that feeling of “something is not quite right”? Would I have predicted that I would get this feeling? If not, then my model is wrong. Something is wrong with the purifier or I have some unspecified problem in my perception or both. (Turned out that I had turned off the purifier’s power switch earlier and that’s why the flow of water was slowing down.) Corollary: Notice your slight feelings of confusion. Did you predict this in advance? No? Then, raise the alarm! PG - faint feeling at first. Eliezer - design flaw in human cognition.</p>
-<p>A more subtle skill is to “pay attention to the sensation of still feels a little forced”. Two weeks ago, during the rainy season here, I saw mould all around my gas stove. I cleaned it up once. But it came back a week later. I was surprised to see that and couldn’t quite figure out why it even sprouted up in that area. From what I had experienced in the past, mould grew where there was high humidity, places where you didn’t have good ventilation. There was a sink right next to my stove but there wasn’t any mould on or around it. I just ignored the fact that I had no idea what was happening.</p>
+<p>A more subtle skill is to “pay attention to the sensation of still feels a little forced”. Two weeks ago, during the rainy season here, I noticed mould all around my gas stove. I cleaned it up once. But it came back a week later. I was surprised to see that and couldn’t quite figure out why it even sprouted up in that area. From what I had experienced in the past, mould grew where there was high humidity, places where you didn’t have good ventilation. There was a sink right next to my stove but there wasn’t any mould on or around it. I just ignored the fact that I had no idea what was happening.</p>
 <p>Then, finally I decided to look around the kitchen to see exactly where the mould had spread. I discovered that it was centered around my washing machine which was in a nook a few feet behind the kitchen platform. Now things fell into place! I had let the drain pipe of the washing machine lie on the ground inside of inserting it into a drain. So, every time I used the machine, water used to spread around the basin near the machine and take a while to evaporate. Of course the mould had come because of the moisture! I had fallen as a rationalist by making up a false explanation: “maybe <em>somehow</em> the gas stove has something to do with it”, even though there was no clear pattern around the gas stove and that mould extended behind the stove too. I was forcing a fake explanation onto the data and I didn’t even realize it. I should have just said told myself “I don’t know what’s happening” and then sought more empirical evidence.</p>
 <hr />
 <p>Another skill to learn: noticing and preventing the conjunction fallacy. Pay attention to every detail added to a story, and add up the absurdity (-log2(p)) of each detail. You should be able to eyeball the absurdity of any given statement or essay.</p>
@@ -325,7 +362,7 @@ So, q = (c - p) / (1 - p)</code></pre>
 <p>How do you formulate variables?</p>
 
 <div class="info">Created: August 18, 2015</div>
-<div class="info">Last modified: December  5, 2015</div>
+<div class="info">Last modified: December 10, 2015</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: scientific method</div>
 
