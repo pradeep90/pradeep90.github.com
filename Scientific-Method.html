@@ -47,7 +47,70 @@
 <p><strong>Questions</strong>: How can we think scientifically?</p>
 <p>Instead of trying to find the perfect description of the scientific method, let’s start with a simple, inefficient process and improve it based on feedback. Judge each version only using empirical evidence; don’t theorize idly.</p>
 <hr />
-<h1 id="key-insights">Key insights</h1>
+<h1 id="summary">Summary</h1>
+<p>Figure out the decoupled pieces. Look at things that are orthogonal to one another.</p>
+<p>Transcribe the important ideas from my notebooks.</p>
+<p>Use each technique several dozen times. Now is the time to push at full speed! Aim: Practice individual scientific techniques a thousand times. Solve useful mini-problems with these techniques. Show that you can outstrip conventional thinking in at least some areas.</p>
+<h2 id="key-insights">Key Insights</h2>
+<p>Causal Bayesian Networks as a bunch of stable, autonomous mechanisms. Locality of causality and factorizing our uncertainty. Being able to talk about interventions. Use observed correlations and experimental evidence to pin down the causal structure. See nothing but causal models and variables. A “hypothesis” is no longer a black box to me. I have a good idea of the pieces inside (be it a full-fledged causal model or a mere JPD).</p>
+<p>In short, how is causal thinking different from conventional thinking? Think of causal thinking as Bayesian networks plus interventions and counterfactuals. For one, you think in terms of probabilities. Then, you factorize your uncertainty using the causal markov condition. You seek simple, naturalistic mechanisms behind the effects you see. You automatically get falsifiable hypotheses with narrow predictions and can thus move quickly to the correct answer. Also, you acquire information at the maximum rate by looking for high entropy situations. We test hypotheses smartly by looking at their differing predictions. This includes always looking for ways to test your beliefs and generating alternative hypotheses given a set of evidence.</p>
+<p>Here’s the key difference from before: earlier, I thought in terms of constructing entire giant alternative hypotheses, things that differed at every level. However, now that we have locality of causality, we can think locally. Take up parts of the causal model - maybe just a single causal link, or a triplet of variables - and ask how they might be arranged differently.</p>
+<p>Thinking locally means thinking in terms of nearby causes and shutting out faraway ones. Once you know about the parents of a variable, you don’t need to care about the ancestors. You have all the information you need. So, instead of asking for abstract general causes of things, ask what happened just before this; ask what happened close to this. Think locally and concretely, not globally and generally.</p>
+<p>I can practice creating causal models from scanty evidence by looking at unfamiliar sciences so that I can’t use my existing knowledge.</p>
+<p>Problem statement: Given evidence, come up with causal models that fit; given sources of information, eliminate hypotheses quickly; given a scenario, predict what will happen.</p>
+<p>However, in learning, you don’t always have to crunch the evidence yourself. Textbooks and other resources may give you the known correct hypothesis. The challenge there is to compress the model while keeping it useful.</p>
+<p>I must be able to express any theory using a causal model.</p>
+<p>How do you test a given causal model efficiently? Look at the tests with maximum entropy.</p>
+<p>Aim: Get a step-by-step algorithm to get to an accurate causal model from zero.</p>
+<p>I don’t want to do original scientific research. I can’t do research in psychology or physics or neuroscience without a lot of capital or resources. I just want to solve problems. And the methods of uncertainty reduction seem to be the best for that. For now, focus mainly on learning well. That should take me a long way towards solving problems. I suspect that I don’t need to do original research - get evidence on my own and crunch it. Much of the information I need is probably already out there.</p>
+<h2 id="essay-topics">Essay topics</h2>
+<p>Write one essay on what you learned from information theory.</p>
+<p>One more on variables and abstractions.</p>
+<p>Open questions about domain independence and how much you can learn in general without going into a specific field.</p>
+<p>Write a commentary on Pearl’s Causality.</p>
+<h2 id="practice-ideas">Practice Ideas</h2>
+<p>Look for surprises. Use the experiments in some domain to test your grasp of the model. Taboo the major words. Think only in terms of models and variables.</p>
+<p>Think in terms of the variables. Don’t deal in abstract concepts. Ask for precise predictions: “A often leads to B” - exactly how often? Specify the exact effect of some cause.</p>
+<p>When positing a cause, check if you can manipulate the supposed cause to get the desired effect.</p>
+<p>Science is about generating alternative hypotheses that explain the existing evidence equally well and using further evidence to distinguish between them. So, let’s design a basic practice plan. Step one is to collect evidence - correlations, experimental evidence, or just plain observations. Step two is to identify the variables. Step three is to come up with alternative models for each piece of evidence. Step four is to note down where they make differing predictions, i.e., variables for which they posit different causes. Step five is to combine the mini-models to get several complete models.</p>
+<p>Get into the habit of solving one problem at a time, no matter how trivial. You can always scale it up. Wrap up each problem before moving to the next.</p>
+<p>Maybe start The Great Scientific Method Project - take up one resource or topic every day and extract the relevant, detailed causal models from it and run experiments, if possible.</p>
+<p>Maybe extract models from technical books.</p>
+<p>Look at the inverse of the variable. Ask what causes X, but then also ask what causes not-X.</p>
+<p>Similarly, ask what happens when the alleged cause is turned off. If you do X, then Y happens. What if you do not-X?</p>
+<p>Think only in terms of hypotheses. Every single thing in the world is either a hypothesis, experiment, prediction, or evidence. That’s all. Focus on one particular thing at a time - in one pass, look for hypotheses; in the next, look for experiments; and so on.</p>
+<p>If some part of a hypothesis doesn’t deal with any evidence, then it has no business being there. This is test-driven development, in other words. Get the evidence, show that your current model fails to predict it, and then postulate some extra cause. So, the key is in finding experiments where your current model doesn’t predict correctly.</p>
+<p>It’s not about the number of reps. It’s about the number of <em>reaches</em>. Big difference! You have to actually do something you’re not good at.</p>
+<p>Have Fun Failure. You should fail about 80% of the time.</p>
+<p>Much of the time, the scientific thinking you’re doing is parallelizable. So, don’t try to go through to the end before you start the next pass. Stop at some convenient point and go to the next step so that you have a short cycle with quick feedback.</p>
+<p>Ask: What would falsify your hypothesis?</p>
+<p>Taboo “often”, “sometimes”, “usually”, “many”, etc. Be precise. Ask for narrow predictions - “you become stupid after hours of work” - exactly how stupid, after how long?</p>
+<p>For each independent variable, ask yourself if you can manipulate it. For each dependent variable, ask yourself it you can measure it. Taboo it, in other words.</p>
+<p>For each independent variable, ask which dependent variables it might affect.</p>
+<p>It’s not that the independent variables “cause” the dependent variables to change. It’s just that they let you <em>predict</em> the values of the dependent variables.</p>
+<p>If you have to add a lot of corner-cases and details to your hypotheses, you should probably go a level deeper and find a more powerful, general hypothesis (like with stuff and signalling).</p>
+<h2 id="surprises">Surprises</h2>
+<p>Look for surprises. They are places where your current model is wrong. Note that this is basically a recipe for doing research.</p>
+<blockquote>
+<p>Surprises are things that you not only didn’t know, but that contradict things you thought you knew. And so they’re the most valuable sort of fact you can get.</p>
+<p>– Paul Graham, <a href>The Age of the Essay</a></p>
+</blockquote>
+<p>How can we find surprises?</p>
+<h2 id="skills-i-need-to-learn">Skills I need to Learn</h2>
+<p>The skill of not flinching away from thoughts. I somehow manage to not-think about inconvenient thoughts - about how I could be going wrong at the moment, or how I could be doing something better. I need to be more aware of my thoughts processes, as Harry Potter suggests.</p>
+<p>Another skill is the game of Follow the Improbability. It’s what Harry Potter used in one of the later chapters of HPMOR. I don’t fully know how to use it, but I suspect that it is very useful.</p>
+<p>How do I get feedback on my practice? Some measurement - maybe number of reps - number of reps of what?</p>
+<p>Practice noticing confusion and noticing surprise. Also, learn to notice naive realism.</p>
+<p>Generating alternative hypotheses for some particular variable, given some evidence. The problem statement becomes: given an amount of evidence, what different causal models can you come up with?</p>
+<p>Also, making predictions using a given causal model, and noticing where they don’t match with reality.</p>
+<p>One more core skill is to use non-experimental evidence to eliminate hypotheses. You don’t always have the luxury of running interventions, let alone randomized controlled trials.</p>
+<p>Next, of course, is the skill of running experiments, hopefully ones that give you maximum information.</p>
+<p>One skill is to list variables of interest - anything that might cause, be caused, or in any other way be correlated with the others.</p>
+<p>Most important of all, connect your models to reality. You form models using experimental evidence, cool. But, now, test it against real life.</p>
+<p>Another skill is to enumerate the instances of a class. You may say that “stress” causes decreased “willpower”, but you should be able to predict that when someone is worried about giving a presentation, they might stuff their face with sugary cookies before the event.</p>
+<p>Better yet, come up with a test that tells you whether some particular instance is part of a class. In short, each variable is just an interface and you calculate its value by asking whether some instance satisfies that interface. But the question remains, what does this “interface” look like? Is it nothing but the causes of that variable? For example, stress may decrease your success at some willpower challenge, but what constitutes a willpower challenge?</p>
+<h2 id="random-notes">Random Notes</h2>
+<p>Programming is different and powerful because you can intervene cheaply. Modifying the source code of a program or even just giving it different inputs is easy. So, the main differences that come about between scientific thinking in the real world and in programming would be because of the ease of intervention in the latter. # Key insights</p>
 <p>What have I learned that is different from conventional thinking?</p>
 <p>Think in terms of a causal model (as opposed to what? Correlations.). You should be able to answer questions about interventions and counterfactuals.</p>
 <p>Exploit locality of causality. Think locally.</p>
@@ -58,7 +121,8 @@
 <p>Plus, I need local feedback mechanisms for those tasks.</p>
 <p>One task is to collect my scientific method ideas from my notebooks. Also, to work through the Causality book with a commentary.</p>
 <p>Domain-independence hypothesis - how much of real-world success is because of information-processing? exactly which parts involve information-processing? what else matters? deliberate practice? Information and entropy. Rate of acquiring information. Limits of a causal model of a given size.</p>
-<p>Central Question: What is so hard about applying the scientific method in real life? Designing good variables (by finding conditional independences), finding their values, getting the causal model, etc. The next complin is that information has a cost. Plus, you have limited cognition.# Tasks</p>
+<p>Central Question: What is so hard about applying the scientific method in real life? Designing good variables (by finding conditional independences), finding their values, getting the causal model, etc. The next complication is that information has a cost. Plus, you have limited cognition.</p>
+<h1 id="tasks">Tasks</h1>
 <p>Simplify your tasks so that you can reason about them.</p>
 <p>What is my overall goal? I want to master the techniques of reducing uncertainty.</p>
 <p>What am I uncertain about regarding mastering the scientific method?</p>
@@ -83,105 +147,8 @@
 <p>Think of local alternatives for your algorithm. Don’t consider the thing as a whole. For example, take the skill of judging the value of information for an action before doing it - like checking the use by date of other bread packets before choosing one. You could have just gone with your first choice and assumed that the others would be the same. Life is made up of such moments. Identify what you want to accomplish but can’t and spot things that can help you. This is analogous to the startup principle of “live in the future and build what’s missing”. Use your algorithm and encompass what’s missing. This could be chaotic, informal stuff like taking up the mantle in an unstructured group discussion, solving math problems, designing your study plan for the next three months, writing an essay, designing a program, etc.</p>
 <p>Similarly, look for local feedback mechanisms. You don’t need a big honking measurement tool to tell you how good a “scientist” you are. Just check if you can taboo well, find differing predictions, and so on.</p>
 <p>One way is to use resources with solved problems involving the same variables, like textbooks. The least your scientific method can do is let you solve all the exercise problems.</p>
-<h1 id="todo-refactor">TODO: Refactor</h1>
-<p>I have to refactor this whole thing because my understanding of the scientific method has advanced far ahead.</p>
-<p>Transcribe the important ideas from my notebooks.</p>
-<p>Finally, release the scientific method! Even if it’s only with one simple technique, do it. Keep the ball rolling.</p>
-<p>Collect the important skills you’ve come up with. Look at each in isolation.</p>
-<h2 id="essays">Essays</h2>
-<p>Write one essay on what you learned from information theory.</p>
-<p>One more on variables and abstractions.</p>
-<p>Open questions about domain independence and how much you can learn in general without going into a specific field.</p>
-<h2 id="practice">Practice</h2>
-<p>Aim: Practice individual scientific techniques a thousand times. Solve useful mini-problems with these techniques. Show that you can outstrip conventional thinking in at least some areas.</p>
-<h2 id="random-notes">Random Notes</h2>
+<h1 id="random-notes-1">Random Notes</h1>
 <p>Even if the mechanisms are complex, the equations might be simple. Like the idea of disproportionate rewards (80/20 Principle) in different fields or just any simple microeconomics model.</p>
-<h1 id="todo-summary">TODO: Summary</h1>
-<h2 id="causal-models">Causal Models</h2>
-<p>I want to get a causal model with high posterior probability. Causal models are causal Bayesian networks. We use locality of causality (temporal and spatial) to factorize and simplify our uncertainty about the world.</p>
-<p>Use observed correlations and experimental evidence to pin down the causal structure. You need to include every observable in your model, else you will be penalized by Bayes Rule. See nothing but causal models, experiments, precise predictions, and outcomes. Think in terms of anticipated consequences - what are the causes and effects? Exercise all the different values of the cause to see what effects you get. Ask how some cause leads to its effect; also ask why the cause came about in the first place.</p>
-<p>Summarizing is about abstracting some important causal links. Controlled experiments help you figure out the active ingredients in some system. However, you need further evidence to know how the ingredients combine. I feel causal models aren’t as expressive as a process description of the system (a program).</p>
-<h2 id="goals">Goals</h2>
-<p>Goals: Explain in your own words precisely what a causal model is. How can you falsify a causal model? By positing alternatives?</p>
-<p>Next, what is the scientific method? How do you get to a good causal model when doing <em>original research</em>? How do you get to a good causal model when you’re <em>learning</em>? In which domains can I get good feedback about the predictive power of my model? How is scientific thinking different from ordinary thinking? Where exactly will you behave distinctly?</p>
-<p>The way I see it, science is all about generating alternative hypotheses that explain the current evidence equally well, and using further evidence to narrow it down. Fundamental belief of a scientist: how can I test or falsify this hypothesis? That is, generate alternative hypotheses that explain the current evidence equally well.</p>
-<p>When I’m completely ignorant about a topic, I would have a chance to guess alternative hypotheses based on very little evidence, which is something I want to train for. Otherwise, I have too much evidence to really come up with alternatives. I think I have trouble coming up with alternative hypotheses when I have too much implicit evidence about the domain. I suspect I can get practice examples containing little evidence from textbooks and journals in unfamiliar sciences. You can test how good your alternative hypotheses are by seeing how many causal links you got right.</p>
-<p>However, we aren’t working in a complete vacuum. We have background knowledge about the domain. We should use them in formulating detailed models.</p>
-<p>Problem statement: Given existing evidence, come up with hypotheses that explain it equally well.</p>
-<h2 id="minimum-viable-product">Minimum Viable Product</h2>
-<p>What is the bare minimum I can do to start using the scientific method? Generate alternative hypotheses for some given evidence?</p>
-<p>Collect concrete examples of causal models, alternative hypotheses, and experiments so that you can refine your understanding.</p>
-<p>Finally got a good handle on alternative hypotheses (I think). Think locally!</p>
-<h2 id="ideas-for-practice">Ideas for practice</h2>
-<p>Look for surprises. Use the experiments in some domain to test your grasp of the model. Taboo the major words. Think only in terms of models and variables.</p>
-<p>Seek to explain phenomena using the base model of the domain.</p>
-<p>Only accept a causal model insofar as your evidence uniquely supports it. Keep the equally supported alternative hypotheses in mind at all times.</p>
-<p>Focus on maximizing the number of <em>reaches</em>, not just mere repetitions.</p>
-<p>Think in terms of the variables. Don’t deal in abstract concepts. Ask for precise predictions: “A often leads to B” - exactly how often? Specify the exact effect of some cause.</p>
-<hr />
-<h1 id="todo-aim-obtain-a-good-model">TODO: Aim: Obtain a good model</h1>
-<p>So, our one and only aim is to use Bayes Theorem to get a model with high posterior probability.</p>
-<h1 id="todo-what-ive-learned-so-far">TODO: What I’ve learned so far</h1>
-<h2 id="diffs">Diffs</h2>
-<p>How has my understanding of the scientific method improved over the last month?</p>
-<p>The main leap so far is the notion of a causal model, in terms of a Causal Bayesian Network. It’s no longer a black box to me. I have a good idea of the pieces inside.</p>
-<p>Also, I no longer talk about the whole state of the world. We assume the temporal and spatial locality of causality, so we can break the world into chunks and deal with the chunks independently. So, exploit your knowledge of which things happen close together to simplify your model.</p>
-<p>One more thing I learned was to identify correlations first, and then posit causal explanations.</p>
-<p>I’m convinced that you need to answer “how” by bringing in as many variables as you can between cause and effect. Otherwise, your model can’t answer questions about those variables and will thus be marked down by Bayes Theorem.</p>
-<p>Ah! You’re not done when you just include a few variables in your model. You need to accommodate every variable that you can observe or manipulate. Also, you must be able to answer low-level questions after tabooing the abstract words.</p>
-<p>Also, you need to answer “why” for every top-level variable - what causes it to be so?</p>
-<h2 id="to-do">To-do</h2>
-<p>What do I still need to do? I need to resume collecting concrete examples of causal models, differing predictions, experiments, etc. so that I can test my understanding. If Causal Bayesian Networks are truly capable of expressing any model, then you should be able to use them to describe all the scientific models around you, big or small.</p>
-<p>How will we get differing predictions if we just build one causal model from the data? Or, maybe we posit alternative causal models, with varying causal structures and parameter values. Test this by looking at alternative hypotheses from the scientific world - do they fit the pattern of different causal structures governing the same variables?</p>
-<p>I don’t fully understand what a causal link actually means. What can’t it be?</p>
-<p>Now that we deal in causal models, I’m not sure what it means to extend a model. If it is about adding new causal links to constrain new variables, that’s fine, I guess.</p>
-<p>Tests that remain: Can a causal model in the above style forbid outcomes and otherwise focus your uncertainty, as required by Mysterious Answers to Mysterious Questions? How does it help you ask questions like “what can’t it be”?</p>
-<p>How would you go about trying to test or falsify a causal model? For example, take my beliefs about the world. How to test them efficaciously? If you posit that A causes B, then if you intervene at A, then B should take the predicted value. Otherwise, if you’re just observing A, then B should be independent of its non-effects given A.</p>
-<p>Also, I need to test the causal model idea on multivalued variables.</p>
-<p>I’m still not sure about latent variables. I suspect that they come in when you’ve not really understood the domain well, because if you’ve captured the system in detail, you won’t need any extraneous variables. Reductionism means that you can explain stuff in terms of smaller stuff. All virtual or latent variables should just be labels for some configuration of stuff.</p>
-<p>I’m uncertain about using causal models to help in designing programs or art or whatever. I don’t know if they scale well to such complex endeavours. Perhaps a formal system (or language) is more suited to the task? How so?</p>
-<h2 id="remember-this">Remember this</h2>
-<p>See nothing but causal models, experiments, outcomes, and predictions.</p>
-<p>I must obtain precise causal models.</p>
-<p>Think in terms of anticipated consequences. In terms of causes, what that means is look at the current state and ask what effects you expect to see, as per your causal model. You’re not allowed to make predictions about the future without talking about the causes that will take the world from now to then.</p>
-<p>Play around with a bunch of concrete causal models. See what happens when you have a bunch of causes for some variable - how do their conditional probabilities interact? Maybe get software for this (R, perhaps?). Check out UNBBayes or SamIAm simulation software.</p>
-<h1 id="todo-goals-revisited">TODO: Goals, revisited</h1>
-<p>Explain precisely what a causal model is. Show me some examples. Talk about the implications of a causal link from A to B. Specify exactly what evidence you need to posit a causal link. There’s the causal Markov assumption - A causes B means that, given A, any other X will be uncorrelated with B. You could set A, and then try to set everything else, B should not change.</p>
-<p>How do you falsify a causal model? I think you test whether the necessary conditions for each causal link are satisfied.</p>
-<p>Talk about the exact process you need to use to get from zero to a good causal model (whatever that is). What is the scientific method that I’m supposed to be using here? It’s so vague right now. I need clear step-by-step actions.</p>
-<p>Where does scientific thinking differ from ordinary thinking? Is it mainly in seeking out differing predictions and trusting only the experimental results? Also, how does Bayesian thinking differ from Traditional Rationality? Now, how can we exploit these differences to test our understanding of causal models?</p>
-<p>Most importantly, how is my understanding of the scientific method falsifiable right now? How can I test it so that the world will come out one way if it is correct and another way if it is wrong? This, I think, is the fundamental thought process of a scientist: how can I falsify or test my beliefs? Practice it.</p>
-<p>Remember, my aim is not to prove to others that the scientific method can be very useful. It is to test for <em>myself</em> whether the scientific method is as powerful as I think it is. I really don’t know. I get the feeling that it can be very useful as a problem-solving tool, but in the end that’s just a hunch. I need to find out for sure.</p>
-<p>For that, I must learn how to formulate causal models, as taught in the domain of causality, and test my understanding on real-world problems. Only when I can solve real problems as well or better than current standards can I say that the scientific method, as I have understood it, is powerful.</p>
-<p>If the causal model you get at the end is the best hypothesis among all the others, then every other hypothesis must be wrong somehow. Make a list of all the wrong hypotheses ever and show how you could have done better.</p>
-<h1 id="release-the-scientific-method">Release the Scientific Method</h1>
-<p>The first thing you do with a project is release it. So, let’s release the scientific method. Let’s come up with some dirt-simple version of it and use it on a hundred problems.</p>
-<p>What’s the product supposed to be? Get a causal model that can answer as many questions as you can in a particular domain.</p>
-<p>Aim: Given some evidence, figure out hypotheses that explain it equally well.</p>
-<p>How? For now, just take each observation you have and think of different mini-causal structures that satisfy it. Combine those causal structures into coherent causal models that predict all the evidence. Then, use any experimental evidence to distinguish between the alternatives. This way, you should get to hypotheses with high posterior probabilities.</p>
-<p>Here’s the key difference from before: earlier, I thought in terms of constructing entire giant alternative hypotheses, things that differed at every level. However, now that we have locality of causality, we can <em>think locally</em>. Take up parts of the causal model - maybe just a single causal link, or a triplet of variables - and ask how they might be arranged differently.</p>
-<p>Thinking locally means thinking in terms of nearby causes and shutting out faraway ones. Once you know about the parents of a variable, you don’t need to care about the ancestors. You have all the information you need. So, instead of asking for abstract general causes of things, ask what happened just before this; ask what happened close to this. Think locally and concretely, not globally and generally.</p>
-<p>Go ahead with this informal algorithm and see where you hit roadblocks.</p>
-<h2 id="notes">Notes</h2>
-<p>Resources I want to use to understand causality: Judea Pearl’s Causality; Targeted Learning; a university web page with lecture slides and lab assignments (link coming soon).</p>
-<p>Why am I finding it hard to “practice the scientific method” right now? Because I don’t have a clear step-by-step plan to follow. I don’t know what exactly I’m supposed to do.</p>
-<p>Ok. Science is about generating alternative hypotheses that explain the existing evidence equally well and using further evidence to distinguish between them. So, let’s design a basic practice plan. Step one is to collect evidence - correlations, experimental evidence, or just plain observations. Step two is to identify the variables. Step three is to come up with alternative models for each piece of evidence. Step four is to note down where they make differing predictions, i.e., variables for which they posit different causes. Step five is to combine the mini-models to get several complete models.</p>
-<p>Enumerate the places where some variable occurs in the real world. For example, exerting self-control deplete willpower - well, list 20 actions that make you exert self-control.</p>
-<p>Keep track of the refuted hypotheses - those are what people believe. You can then easily point out the differing predictions.</p>
-<p>Cut through with every move you make. Your every action should result in either acquiring a new correlation or coming up with a new causal model for some evidence or coming up with a differing prediction between hypotheses. If not, don’t do it.</p>
-<p>When positing a cause, check if you can manipulate the supposed cause to get the desired effect.</p>
-<p>If causal analysis is so powerful, why aren’t more people benefiting? I think it’s because of naive realism. Don’t underestimate how recent and counter-intuitive scientific, empirical thinking is. Because you have to explain the millenia of darkness before then.</p>
-<h2 id="practice-problems">Practice Problems</h2>
-<p>Why am I looking for dozens of small problems for practice? Why not take on one single problem at a time, no matter how trivial it may seem at the start, and analyze it in depth using the scientific method? If it works out well, I can move on to more complex problems. I would have a trail of solved problems behind me, boosting my morale.</p>
-<p>Get into the habit of solving one problem at a time, no matter how trivial. You can always scale it up. Wrap up each problem before moving to the next.</p>
-<p>Maybe start The Great Scientific Method Project - take up one resource or topic every day and extract the relevant, detailed causal models from it and run experiments, if possible.</p>
-<h2 id="refinements-to-the-scientific-method">Refinements to the Scientific Method</h2>
-<p>Look at the other effects of some cause. I don’t know if this will be useful because if we’re interested in some variable it affects, we will investigate the immediate causes anyway. Or maybe I need to look at whether some causal link holds up in other scenarios.</p>
-<h2 id="other-skills-i-need-to-learn">Other Skills I need to Learn</h2>
-<p>The skill of not flinching away from thoughts. I somehow manage to not-think about inconvenient thoughts - about how I could be going wrong at the moment, or how I could be doing something better. I need to be more aware of my thoughts processes, as Harry Potter suggests.</p>
-<p>Another skill is the game of Follow the Improbability. It’s what Harry Potter used in one of the later chapters of HPMOR. I don’t fully know how to use it, but I suspect that it is very useful.</p>
-<p>How do I get feedback on my practice? Some measurement - maybe number of reps - number of reps of what?</p>
-<p>Practice noticing confusion and noticing surprise. Also, learn to notice naive realism.</p>
 <h1 id="lessons-from-locality-of-causality">Lessons from Locality of Causality</h1>
 <p>Always think in terms of the immediate causes. Instead of talking about grand differences between hypotheses, just zoom in on one variable for which they posit different immediate causes. That’s all it takes. Locality of causality says that if some variable comes out differently according to two hypotheses, then the difference must be because of its parents; the rest of the model doesn’t matter. So, exercise the parent causes that are different and you will get evidence one way or another.</p>
 <p>The dual of that is to think in terms of immediate effects. But you can’t really isolate the effects on its direct children, can you? The effects will propagate to all the descendants, which doesn’t simplify your task in any way. Thinking in terms of immediate causes is useful because you can cut the causal graph off at the parents.</p>
@@ -205,72 +172,12 @@
 <p>Another is to work on PG essays and LW posts. Also, I can take up further technical books like those on deliberate practice, cognitive psychology, and neuroscience.</p>
 <p>Instead of asking which problems the scientific method can solve, I need to ask which problems I want solved. It doesn’t have to be a grand unified list of all important problems ever. I can just start with three problems I want solved. Note that these don’t have to be unsolved problems - I can look at old solved problems and ask what methods of thinking would have helped me solve them.</p>
 <p>Now that we know of locality of causality, we no longer need big, honking case studies. We can zoom in on narrow examples to practice the above skills. So, don’t look for large-scale experiments; even just one small experiment here and there can be enough.</p>
-<h2 id="what-skills-do-i-want-to-practice">What skills do I want to practice?</h2>
-<p>Generating alternative hypotheses for some particular variable, given some evidence. The problem statement becomes: given an amount of evidence, what different causal models can you come up with?</p>
-<p>Also, making predictions using a given causal model, and noticing where they don’t match with reality.</p>
-<p>One more core skill is to use non-experimental evidence to eliminate hypotheses. You don’t always have the luxury of running interventions, let alone randomized controlled trials.</p>
-<p>Next, of course, is the skill of running experiments, hopefully ones that give you maximum information.</p>
-<p>One skill is to list variables of interest - anything that might cause, be caused, or in any other way be correlated with the others.</p>
-<p>Most important of all, connect your models to reality. You form models using experimental evidence, cool. But, now, test it against real life.</p>
-<p>Another skill is to enumerate the instances of a class. You may say that “stress” causes decreased “willpower”, but you should be able to predict that when someone is worried about giving a presentation, they might stuff their face with sugary cookies before the event.</p>
-<p>Better yet, come up with a test that tells you whether some particular instance is part of a class. In short, each variable is just an interface and you calculate its value by asking whether some instance satisfies that interface. But the question remains, what does this “interface” look like? Is it nothing but the causes of that variable? For example, stress may decrease your success at some willpower challenge, but what constitutes a willpower challenge?</p>
-<h2 id="truly-confused">Truly Confused</h2>
-<p>Manufactured alternatives somehow seem lame to me because I already have evidence that rules them out. That’s why I feel it’s pointless to construct them. However, in more complicated scenarios, where I don’t have nearly enough evidence, I will need to create fine-grained models.</p>
-<p>I have the luxury of too much evidence. That’s why I don’t see the point in creating alternative models. I will be pushed only when I am lacking evidence. I must <em>genuinely not know</em> what the right answer is. That’s when I will hunt down alternative models with zeal - the answer could be any one of them!</p>
 <h2 id="ignorance-is-bliss">Ignorance is Bliss</h2>
 <p>The key problem is that I need to get as little evidence as possible from the domain, but in general, the main way people present evidence is by showing the correct hypothesis itself. Yes, that encodes within in it all the evidence seen, but it ruins the exercise for me.</p>
-<p>Lack of evidence forces me to generate truly plausible alternatives. So, how do I get some evidence from the domain without peeking at the final answer itself?</p>
-<p>What kind of evidence do you expect to find in real-world scientific research? Mimic it using the final causal model. How?</p>
-<h2 id="reflect-real-world-science">Reflect real-world science</h2>
-<p>I want to practice solving problems similar to those that I would face in the real world. The worth of my training is decided by how well it equips me for real-world problems. I suspected that these problems would require me to think up alternative hypotheses and conduct experiments, so that’s why I was struggling to find out practice exercises for that.</p>
-<p>However, I now wonder, what are these real-world problems that I’m so confident the scientific method will help me with? Why exactly do we need the scientific method? Yes, it’s all very well to say that anywhere you’re uncertain, you need to use science to reduce your ignorance. But, where exactly is that?</p>
-<p>Name three concrete problems you want to solve.</p>
-<p>For one, I want to understand precisely how motivation works - why we procrastinate, what we can do to avoid it, etc. Also, I seek to know exactly how to increase any particular skill. I also want to learn how to write powerful programs without too much trouble.</p>
-<p>Basically, I want to solve various problems in life, for myself and for others. And for that, I believe that I would need to figure out the truth about those things aka get a good causal model of them.</p>
-<p>The thing is, for research problems in psychology or the natural sciences, you need a lot of evidence. In psychology, you need to test your theories on a wide variety of people before you can be reasonably confident. In physics, you usually need heavy equipment to test your ideas. So, I can’t hope to do original research in these areas, not without joining some university. The best I can aim for is to gather the technical resources laid out by the researchers and using it to build an accurate causal model in my head.</p>
-<p>So, there are two kinds of problems: those I must solve by doing original research, and those I can solve by learning from others’ work.</p>
-<p>Ok. Name five concrete problems of each type.</p>
-<p>The problems I mentioned earlier were of the scholarship type - I had to learn a precise model using existing research. Other examples include sleep schedule (how can I wake up early everyday?), writing (how can I write more engagingly?), self-esteem (how can I feel better about myself?), etc.</p>
-<p>Problems where I would have to obtain evidence myself: writing a program, designing a plan for some project, etc. Basically, where can I run experiments or observe things on my own? Social interactions, personal health, programming, writing, math problems, beliefs about the world, etc. As I’m learning a model from some resource and trying to apply it to my life, I need to test how well I’ve understood it.</p>
-<p>How are people solving these problems in the real world? How can the scientific method help me learn or create good models?</p>
-<p>For now, we can assume that I’m going to do a lot more of learning than research. So, let’s focus solely on that for now, and take on research later.</p>
-<h2 id="computing-consequences-is-easy">Computing consequences is easy?</h2>
-<p>I used to think that the hard part of science was computing the consequences of existing ideas. But, now that we think in terms of variables and causal models, does that hold anymore?</p>
-<p>If we believe A causes B, then whenever we see A, we expect to see B. It’s as simple as that. Because of locality of causality, when we’re curious about the value of some variable, all we do is ask about its immediate causes. Nothing else matters.</p>
-<p>In effect, once you know the causal model and can observe the values of each variable, you don’t have to travel across long chains of reasoning to compute some answer. You just have to deal with the immediate causes of some variable. In case some of them are not directly observable, you travel a bit further up the causal chain till you get something you can observe. This means that, if you can observe much of the system, a causal model vastly simplifies the work of reasoning. Each prediction is just a single step of deduction, not some great complicated calculation.</p>
-<p>Still, keep an eye out for this. If reasoning is really as easy as I’ve suggested above, I should be able to solve problems much more rapidly using causal thinking. (The same arguments hold for functional programming too.)</p>
-<p>The main test for this comes, I think, when you’re building a new layer of abstraction, like say chemistry on top of the laws of physics. However, it doesn’t have to be complicated. You still take one variable at a time and ask which variables could have caused it, as per the laws of physics. You still keep thinking in terms of immediate causes.</p>
-<h2 id="todo-lessons-from-the-willpower-study">TODO: Lessons from the Willpower Study</h2>
-<p>Plus, how to go backward from the interesting variables.</p>
-<h2 id="lessons">Lessons</h2>
-<p>Look at the inverse of the variable. Ask what causes X, but then also ask what causes not-X.</p>
-<p>Similarly, ask what happens when the alleged cause is turned off. If you do X, then Y happens. What if you do not-X?</p>
-<h2 id="programming">Programming</h2>
-<p>Programming is different and powerful because you can intervene cheaply. Modifying the source code of a program or even just giving it different inputs is easy. So, the main differences that come about between scientific thinking in the real world and in programming would be because of the ease of intervention in the latter.</p>
-<h1 id="practice-tips">Practice tips</h1>
-<p>Think only in terms of hypotheses. Every single thing in the world is either a hypothesis, experiment, prediction, or evidence. That’s all. Focus on one particular thing at a time - in one pass, look for hypotheses; in the next, look for experiments; and so on.</p>
-<p>If some part of a hypothesis doesn’t deal with any evidence, then it has no business being there. This is test-driven development, in other words. Get the evidence, show that your current model fails to predict it, and then postulate some extra cause. So, the key is in finding experiments where your current model doesn’t predict correctly.</p>
-<p>It’s not about the number of reps. It’s about the number of <em>reaches</em>. Big difference! You have to actually do something you’re not good at.</p>
-<p>Have Fun Failure. You should fail about 80% of the time.</p>
-<p>Much of the time, the scientific thinking you’re doing is parallelizable. So, don’t try to go through to the end before you start the next pass. Stop at some convenient point and go to the next step so that you have a short cycle with quick feedback.</p>
-<p>Ask: What would falsify your hypothesis?</p>
-<p>Taboo “often”, “sometimes”, “usually”, “many”, etc. Be precise. Ask for narrow predictions - “you become stupid after hours of work” - exactly how stupid, after how long?</p>
-<p>For each independent variable, ask yourself if you can manipulate it. For each dependent variable, ask yourself it you can measure it. Taboo it, in other words.</p>
-<p>For each independent variable, ask which dependent variables it might affect.</p>
-<p>It’s not that the independent variables “cause” the dependent variables to change. It’s just that they let you <em>predict</em> the values of the dependent variables.</p>
-<p>If you have to add a lot of corner-cases and details to your hypotheses, you should probably go a level deeper and find a more powerful, general hypothesis (like with stuff and signalling).</p>
-<h2 id="surprises">Surprises</h2>
-<p>Look for surprises. They are places where your current model is wrong. Note that this is basically a recipe for doing research.</p>
-<blockquote>
-<p>Surprises are things that you not only didn’t know, but that contradict things you thought you knew. And so they’re the most valuable sort of fact you can get.</p>
-<p>– Paul Graham, <a href>The Age of the Essay</a></p>
-</blockquote>
-<p>How can we find surprises?</p>
 <h1 id="older-ideas">Older Ideas</h1>
 <p>Major attitude: everything has an explanation! Explain literally everything! Or, rather, anticipation-constrain literally everything! Figure out the cause behind everything. And, of course, when somebody claims that X is the cause, don’t accept it without evidence.</p>
 <p>Don’t accept <em>anything</em> without evidence Somebody: “X is true” You: “So you say. Show me the evidence.”</p>
 <p>Historical Perspective: Curiosity about how things came to be the way they are Why do we have supermarkets instead of ration shops? Why voting / democracy? Why civil service? Why parliament? These aren’t arbitrary facts. They are tightly governed by the true hypothesis about reality. They are superbly entangled. You shouldn’t be accepting it either way without question. “X happened? Oh, ok”. “X didn’t happen? Oh, ok.” – Wrong! Why does USA have Hollywood and why is it so popular around the world? It doesn’t have more people than Europe (I think)</p>
-<p>Maybe take on a project The difficulty I’m having could be because I’m looking for small one-off projects. Maybe the meat is in projects.</p>
 <h1 id="causal-diagram-vs-process-description">Causal Diagram vs Process Description</h1>
 <p>I somehow feel uncomfortable with this idea of causal links between variables. It seems unsatisfactory to me.</p>
 <p>What I really want is a description of the underlying process that reality is using to generate what we see. I want to know the program that reality is running. That is what programs are - descriptions of processes. And that is, I think, what hypotheses are too.</p>
@@ -375,7 +282,7 @@ So, q = (c - p) / (1 - p)</code></pre>
 <p>How do you formulate variables?</p>
 
 <div class="info">Created: August 18, 2015</div>
-<div class="info">Last modified: December 15, 2015</div>
+<div class="info">Last modified: December 16, 2015</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: scientific method</div>
 
