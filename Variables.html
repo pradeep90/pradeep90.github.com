@@ -51,6 +51,10 @@
 <p>Wait. The main benefit categories give you is a short diagnostic key that lets you infer other characteristics for free. However, the idea is still the same as getting a short message to describe this category - the message is just a small set of features instead of some obscure code.</p>
 <p>I think it’s the same idea as that of Bayesian networks - you’re factorizing the uncertainty. Thus, you reduce the number of states the system can be in and have to do less work with your causal model (?).</p>
 <p>Question: Why do you want categorize the world? Yes, you can infer other properties given a small key. So what? What can you do with “categories” that you couldn’t do with raw probabilities?</p>
+<hr />
+<p>I think that certain observables are conditionally independent from each other, given our goals.</p>
+<p>You categorize the possible configurations of a set of observables so that you reduce their entropy. So, with 5 binary variables that are strongly correlated, you only have to deal with 2 possible states instead of 32.</p>
+<p>It helps that certain variables are conditionally independent of others, so you can break up Thingspace into smaller spaces (?). If you have conditional independence information, why not create a Bayesian network with it?</p>
 <h1 id="notes-on-words">Notes on Words</h1>
 <p>(from Eliezer’s sequence on a Human’s Guide to Words)</p>
 <p>Note: Keep in mind that a multi-level model exists only in your map, not in the territory. There is no Boeing 747 by itself, there is a configuration of quarks that meets the observational tests you apply to the 747.</p>
@@ -129,7 +133,7 @@
 <p>How do we figure out the diagnostic key?</p>
 <p>Crucially, how do categories overlap with causal models? If categories are based on mutual information (which is conditional dependence), won’t causal models cover that? If you know A causes B and C, for example, then B and C will be correlated. Isn’t it more parsimonious to let causal models contain that information instead of representing it in your categories too (like having A, B, and C in a category with A as the key)?</p>
 <p>Wait. Now, what does “A causes B” mean, given that A and B are categories?</p>
-<p>Why talk about categories at all? Why not just deal in terms of causal models? Aren’t they richer and more compact? Can’t you do with a causal model everything that a category does? Why do we even have “words”? If it’s about succinctness, why not transmit causal information? Is it that we don’t always have causal information? When would that be? Maybe categories are for places where you still haven’t broken down the causal structure.</p>
+<p>Why talk about categories at all? Why not just deal in terms of causal models? Aren’t they richer and more compact? Can’t you do with a causal model everything that you do with a category? Why do we even have “words”? If it’s about succinctness, why not transmit causal information? Is it that we don’t always have causal information? When would that be? Maybe categories are for places where you still haven’t broken down the causal structure.</p>
 <p>Is the trillion bits analogy valid at all? Don’t we know that the universe runs on the laws of physics? (How uncertain are we about that?) Isn’t it just a matter of logical deduction from there on?! But you have bounded resources, right?</p>
 <p>What is inductive bias? Does Bayes Theorem incorporate inductive bias?</p>
 <p>Doesn’t causal thinking and locality of causality factorize our uncertainty? Won’t that bring down the trillion-bits uncertainty down to something manageable? Put another way, how many bits of information do we need to get a causal model that can predict everything we want? What are the assumptions that help us compress the concept space so much? Is it the causal assumptions like Causal Markov Condition and Faithfulness and such?</p>
@@ -332,7 +336,7 @@ If s' was closed and s is open, or if s' was open and s is open, d = d' + g(u).<
 <p>Look back and take in just how much your campaign was moved forward because you started working on actual empirical evidence instead of just theorizing in your armchair. Look at what the Willpower Instinct experiment taught you. Plus, all the other stuff you tried to summarize. Further, look at what you learned from taking on a simple biology textbook and trying to create a causal model of it. This is what it feels like to <em>actually</em> test your theory. You’re forced to see its limitations in clear daylight. You realize that it can’t even handle the simplest of simple examples. The crucial data point is that of the near-trivial 2 + 2 = 4 example. That kickstarted the landslide of ideas about value of information, the complexity of the world, and how you need goals and <em>cannot</em> do science in a vacuum.</p>
 
 <div class="info">Created: November 12, 2015</div>
-<div class="info">Last modified: December 18, 2015</div>
+<div class="info">Last modified: December 21, 2015</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, variables</div>
 
