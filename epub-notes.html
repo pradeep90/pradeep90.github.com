@@ -53,7 +53,7 @@
 <p>From a look at <a href="http://www.webvivantpress.com/2010/02/zipping-epub-files/">this</a> article, I get the idea that an EPUB file is (roughly) just a bunch of HTML files zipped the right way.</p>
 <p>So let’s do that.</p>
 <p>As per the instructions in that article, this is all you need:</p>
-<pre><code>epub_name=Enjoy-the-Decline.epub
+<pre><code>epub_name=foo.epub
 
 zip -X $epub_name mimetype
 zip -rg $epub_name META-INF
@@ -61,7 +61,7 @@ zip -rg $epub_name * -x \*.epub META-INF mimetype</code></pre>
 <p>Make sure that the file doesn’t exist already, just to be safe. The mimetype file is special. Put it alone first with <code>-X</code>. Then, put the META-INF directory (recursively with <code>-r</code>). Put everything else. The <code>-g</code> tells zip to grow the existing archive instead of creating a new one. The <code>-x</code> tells <code>zip</code> to ignore the files you’ve already put in.</p>
 
 <div class="info">Created: December 29, 2015</div>
-<div class="info">Last modified: December 29, 2015</div>
+<div class="info">Last modified: January  3, 2016</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, epub</div>
 
