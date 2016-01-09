@@ -44,18 +44,87 @@
 
             <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
 
+<p><strong>Note</strong>: I’m not an expert probability theorist, so this could be wrong. But I feel quite confident in it.</p>
 <h1 id="taboo-information">Taboo “information”</h1>
-<p>I never got a handle on information. I could see no reason why it had to be defined the way it was: information content of a message = <code>log2(1/p)</code>.</p>
-<p>I get the feeling you shouldn’t need anything more that probability theory to solve any problems, even those that apparently need “information theory”. So, let’s try to reduce “information theory” to basic probability theory, so that we do away with the concepts of information and entropy. We can still use them afterwards, but only as a convenience, just like we talk about sentences and paragraphs, when in reality there are only the individual English letters underneath.</p>
+<p>I never got a handle on information. I could see no good reason why it had to be defined the way it was: information content of a message = <code>log2(1/p)</code>. I got the feeling you shouldn’t need anything more than probability theory to solve any problems, even those that apparently need “information theory”.</p>
+<p>So, let’s try to reduce “information theory” to basic probability theory, so that we do away with the concepts of information and entropy. We can still use them afterwards, but only as a convenience, just like we talk about sentences and paragraphs, when in reality there are only the individual English letters underneath.</p>
 <p>In short, let’s <a href="./Rationalists-Taboo.html">taboo</a> the word “information”.</p>
-<h1 id="information">Information</h1>
-<p>When do we use the concept of information? I’ll let Shannon put it:</p>
-<blockquote>
-<p>The fundamental problem of communication is that of reproducing at one point, either exactly or approximately, a message selected at another point.</p>
-</blockquote>
+<h1 id="multiplying-our-confidence">Multiplying our confidence</h1>
+<p>What is your aim? You want to find the correct hypothesis and put all your confidence in it. That way you will know exactly which outcome will happen in the future and can exploit that knowledge. And you want to do this quickly.</p>
+<p>What does an outcome (or message) really do? What happens when you see an outcome for which you assigned a probability P(E)? Well, you use it to update the posterior probability of all your hypotheses, using Bayes Theorem:</p>
+<pre><code>P(H|E) = P(H) x P(E|H) / P(E) -- (1)
+
+P(H|E): posterior probability
+P(H): prior probability
+P(E|H): likelihood of E judged by this hypothesis
+P(E): probability of outcome E</code></pre>
+<p>True. But what really does that have to do with your aim? You just want to find the correct hypothesis (call it H0). You couldn’t give less of a damn about the rest. So, the question we really want to answer is, what does this outcome do to your confidence in the correct hypothesis H0? As per Bayes Theorem, P(H0|E) = P(H0) x P(E|H0) / P(E). But this is H0 we’re talking about. It makes perfectly accurate predictions every time. That means P(E|H0) is always 1.</p>
+<p>Therefore, P(H0|E) = P(H0) x 1/P(E).</p>
+<p>So, what an outcome E really does is multiply our confidence in the correct hypothesis by 1/P(E). (Note that increasing our confidence in H0 automatically reduces our confidence in the rest since the sum of all P(H) must be 1.)</p>
+<p>And this, I theorize, is why we define information as log2(1/P(E)). It’s an indirect measure of how much an outcome multiplies our confidence in the correct hypothesis. There’s nothing new or special about “information”. In the past, I kept getting confused by the fact that information seemed like a completely different beast from probability. But, all you’re doing is taking the logarithm. That shouldn’t do anything. That doesn’t add any information (pun intended). It’s just a convenient representation. That’s all.</p>
+<h1 id="rising-to-the-top">Rising to the Top</h1>
+<p>What happens if P(E) is small? Then, 1/P(E) will be large and thus the smug, ever-correct hypothesis H0 will get its confidence multiplied a lot. So, when low-probability outcomes occur, H0 has a bonanza. And since we want to discover H0 as soon as possible (we don’t know which one it is), we want P(E) to be as small as possible each time so that H0 rises to probability 1 very quickly.</p>
+<p>What if there are multiple messages? How do we calculate the confidence-multiplier (aka information)?</p>
+<p>Let’s say you get n messages. The problem here is that your probability distribution will change as your confidence in your hypotheses changes. After the first message, you will update the posterior probabilities of all the hypotheses using Bayes Theorem. Then, you will <em>those</em> probabilities to predict the probability of the next message, and then you’ll update again, and so on. And since we calculate the information content of a message using the probability we assigned it, then it seems that we have to update on the first n-1 messages before we can assign a probability to the nth message and find its information content. Is there a quicker way?</p>
+<p>Well, all we’re interested in is in the amount by which our confidence in H0 is multiplied. That will look like this:</p>
+<pre><code>P(H0|E1,E2,...,En) = P(H0) x 1/P(E1) x 1/P(E2|E1) x ... x 1/P(En|E1,E2,...,En)
+
+where P(E2|E1) means the probability of E2 after we have updated on E1, and so on.</code></pre>
+<p>That looks pretty complicated. However, we can collapse the product on the right side:</p>
+<pre><code>P(H0|E1,E2,...,En) = P(H0) x P(E1,E2,...,En|H0)</code></pre>
+<p>Basically, we just consider the sequence of messages E1, E2, etc. as one giant message E.</p>
+<pre><code>P(H0|E) = P(H0) x P(E|H0)</code></pre>
+<h1 id="wanting-what-you-cannot-have">Wanting what you cannot have</h1>
+<p>However, there’s a tiny problem. You can’t ask for low-probability outcomes to happen. You have assigned low probability to them! You don’t expect them to happen.</p>
+<p>So, we want our confidence in the correct hypothesis to rise very quickly, for which we need low-probability outcomes to happen, but you can’t ask for those outcomes to happen. What do we do then? Are we doomed to taking a long time for the correct hypothesis to beat the others and get to probability 1?</p>
+<h1 id="entropy-to-the-rescue">Entropy to the rescue</h1>
+<p>Essentially, you have two different experiments X1 and X2, and you can choose only one. Which one will you pick? Remember, our aim is to get to H0 as quickly as possible.</p>
+<p>Well, you want the one that will multiply P(H0) the most. But you don’t know which outcome will happen. If you knew somehow that X1 would give an outcome of probability 0.1 and X2 would give an outcome of probability 0.2, then you could tell that P(H0) would get multiplied by 1/0.1 = 10 and 1/0.2 = 5 respectively. And you would choose X1 to get the bigger boost.</p>
+<p>However, the same problem plagues you that you don’t <em>know</em> for sure which outcomes will occur. But you do have probabilistic knowledge.</p>
+<p>Well, take the first experiment X1. You assign probabilities p_i to its various outcomes m_i.</p>
+<p>Now assume you run experiments with similar probability distributions to X1 several times. You expect there to be a distribution of outcomes. If there are n experiments, then you expect n x p_i messages of type m_i. H0 will predict the correct outcome every time. So, they will all multiply your confidence in H0 by the inverse of their probability. So,</p>
+<pre><code>P(H0|o_1,o_2,...) = P(H0) x 1/p_o1 x 1/p_o2 x ...
+
+where o_i is the outcome of the ith experiment and p_oi is its probability.</code></pre>
+<p>Since there are n x p_i messages of type m_i, you get</p>
+<pre><code>P(H0|o_1,o_2,...) = P(H0) x Product( (1/p_i)^(n x p_i) )</code></pre>
+<p>Taking the power n in common:</p>
+<pre><code>P(H0|m_1,m_2,...) = P(H0) x Product( (1/p_i)^p_i )^n</code></pre>
+<p>Let’s call Product( (1/p_i)^p_i ) as A. This “A” is a function of just your probability distribution over the possible messages.</p>
+<pre><code>P(H0|m_1,m_2,...) = P(H0) x A^n</code></pre>
+<p>So, if you get n messages from that probability distribution, for a large enough n, your confidence in the correct hypothesis will be multiplied by A^n.</p>
+<p>This is exactly what we wanted to know! Now, to compare two experiments X1 and X2, just look at their values for A. If A for X1 is greater than X2, then we can expect to get our confidence multiplied more with X1. So, to get the maximum confidence-multiplier, look for the experiment for which you have the highest A.</p>
+<p>What is this mysterious A? Well, it’s nothing but 2^(entropy)!</p>
+<p>Entropy is defined in information theory as</p>
+<pre><code>entropy = Sum(-p_i x log2(p_i))</code></pre>
+<p>Multiplying by a logarithm is the same as raising the power of the value inside. So:</p>
+<pre><code>entropy = Sum(log2(p_i^(-p_i))) = Sum(log2((1/p_i)^p_i))</code></pre>
+<p>Also, sum of logarithms is the same as products of the values inside.</p>
+<pre><code>entropy = log2(Product((1/p_i)^p_i))</code></pre>
+<p>That inner part is nothing but our A. So,</p>
+<pre><code>entropy = log2(A)</code></pre>
+<p>Or,</p>
+<pre><code>A = 2^(entropy)</code></pre>
+<p>So, the way to quickly gain confidence in the correct hypothesis is to pick the experiment with maximum entropy.</p>
+<h1 id="notes">Notes</h1>
+<p>Even the notion that the source can only give you n kinds of messages is information. You can’t just start with that assumption because that means you’re sneaking in information without declaring it. You have to get that indirectly by asking your hypotheses what they predict and ignoring messages that get zero (or extremely low) probability.</p>
+<p>TODO: Now, there exists one correct hypothesis that predicts all the past evidence with perfect accuracy and will predict all future evidence too. Of course, you may have several such candidates and would need more evidence to eliminate the rest. However, if you don’t have <em>any</em> hypothesis at all that has a perfect score so far - assigning a likelihood of 1 to the correct outcome each time - then that means your hypothesis set is lacking.</p>
+<p>As you keep getting new messages (from whichever sources), the correct hypothesis H0 will sit back and assign likelihood 1 every time and thus will keep getting rewarded with higher posterior probability. There will be at least one possible message that will rule out the other hypotheses (otherwise, they would be the correct hypothesis). So, in the fullness of time, everybody else will end up with posterior 0, and H0 will have posterior 1. Note that this situation will never change. None of the others can get back into the game and H0 cannot lose because P(E) will become equal to P(E|H0) and thus it will remain at full confidence P(H0) = 1.</p>
+<h2 id="other-thoughts---todo">Other thoughts - TODO</h2>
+<p>Why can you add bits? This used to be the most mystifying part of information theory. Not only could you <em>add</em> bits, (which seemed very different from probabilities, which only get added or multiplied in certain ways), you could add them in any order. They had no identity saying that this bit came from this probability distribution, and those three bits came that other one. They were just bits. They were like dollars, you could add or subtract them without specifying where they came from - this dollar came from my salary, that one came from selling my bike. It was independent of the source. (Show how a compound message can be broken into several smaller messages. And how you can judge the compound message simply using your prior probability distribution.)</p>
+<p>In fact, this is probably why we use information as the logarithm of 1/P(E) - so that we can add it and don’t have to deal with very small fractions.</p>
+<p>Fractional bits: when does the information-as-length-of-message analogy get really stretched? When 1/P(E) is not a power of two.</p>
+<p>P(H) is your belief level that H is the correct hypothesis.</p>
+<p>For entropy, maybe lead with the ball-weighing example. Or bring it in somehow. Show that you can solve the ball-weighing problem with entropy, and then with pure probability as well.</p>
+<p>In other words, my aim is to show that information and entropy are not essential concepts. Anything you can do with them, you can do with pure probability as well.</p>
+<p>Corollaries that information is subjective, that you have to seek high-entropy situations (with practical examples), and the notion of information and uncertainty for hypotheses.</p>
+<p>Show that change in entropy for the ensemble equals the information you got.</p>
+<p>Why am I writing this? Because information seemed so mystifying. TODO: Give examples of the mystifying definitions of information.</p>
+<p>(My reduction of entropy to probability is not as clean as the one of information. You need to posit a large number of messages. I think that’s true even with the message-length definition of entropy - it only works out in the ideal case, with a large number of messages.</p>
+<p>No, actually, it is pretty simple there. It’s just the expected information content of messages. However, that leaves the question: why do you want to maximize this “entropy” thing? Because you want to maximize “information”? Is that satisfactory? TODO)</p>
 
 <div class="info">Created: January  8, 2016</div>
-<div class="info">Last modified: January  8, 2016</div>
+<div class="info">Last modified: January  9, 2016</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: reduction, information theory</div>
 
