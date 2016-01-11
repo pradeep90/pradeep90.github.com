@@ -44,6 +44,7 @@
 
             <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
 
+<p>(This post is still in progress.)</p>
 <h1 id="ball-weighing">Ball-Weighing</h1>
 <p>Take this example (adapted from David JC MacKay’s wonderful textbook on Information Theory):</p>
 <blockquote>
@@ -56,22 +57,29 @@
 <p>Our job is now to get the correct hypothesis to probability 1 by getting evidence and thus multiplying our confidence. And the fastest way to do that is by seeking high-entropy experiments. We have six possible types of experiments: 6 balls on each side, 5 balls on each side, etc. Right now, it doesn’t matter which balls we choose for the experiment because they are all the same to us.</p>
 <p>What is the entropy of these 6 types of experiments? For that we have to calculate our probability distribution over the 3 possible outcomes: left-heavier, equal, and right-heavier.</p>
 <p>(I could be off with the calculations here; been a while since I’ve done probability theory counting problems.)</p>
-<p>TODO: You’re not thinking about the relative weight of the ball. Factor that in.</p>
-<p>If we took 6 balls on each side, the probability of left-heavier is the probability of the odd ball being on the left pan, which is 6/12 = 1/2. Probability of right-heavier is the same 1/2. Probability of equal is 0 (since one of the balls is different).</p>
-<p>For 5 balls a side, the probability of left-heavier is 5/12, right-heavier is 5/12, and equal is 2/12 = 1/6. The quick way to calculate this is to just see that there are 5 spots for the odd ball on the left, 5 spots on the right, and 2 spots outside. Hence, we get odds of 5:5:2 and thus probabilities of 5/12, 5/12, and 2/12.</p>
-<p>For 4 balls a side, the odds are 4:4:4 and so the probabilities are 1/3, 1/3, and 1/3.</p>
-<p>For 3 balls a side, the odds are 3:3:6 and so the probabilities are 3/12, 3/12, and 6/12.</p>
-<p>For 2 balls a side, the odds are 2:2:8 and so the probabilities are 2/12, 2/12, and 8/12.</p>
-<p>For 1 balls a side, the odds are 1:1:10 and so the probabilities are 1/12, 1/12, and 10/12.</p>
+<p>If we took 6 balls on each side, the probability of left-heavier is the probability of the odd ball being lighter and being on the left pan or the odd ball being heavier and being on the right side, which is 6/12 = 1/2. Probability of right-heavier is the same 1/2. Probability of equal is 0 (since one of the balls is different).</p>
+<p>For 5 balls a side, the probability of left-heavier is 5/12, right-heavier is 5/12, and equal is 2/12 = 1/6. The quick way to calculate this is to just see that there are 5 spots for the odd ball on the left, 5 spots on the right, and 2 spots outside. Also, the ball can be heavier or lighter than the rest. So, there are 24 possibilities. You get left-heavier when the odd ball is on the left and is lighter, or when it is on the right and is heavier. So, there are 10 situations when you get left-heavier. Similarly, for right-heavier. The rest will give you a message of “equal”. Hence, we get odds of 10:10:4 and thus probabilities of 10/24, 10/24, and 4/24.</p>
+<p>For 4 balls a side, the odds are 8:8:8 and so the probabilities are 1/3, 1/3, and 1/3.</p>
+<p>For 3 balls a side, the odds are 6:6:12 and so the probabilities are 3/12, 3/12, and 6/12.</p>
+<p>For 2 balls a side, the odds are 4:4:16 and so the probabilities are 2/12, 2/12, and 8/12.</p>
+<p>For 1 balls a side, the odds are 2:2:20 and so the probabilities are 1/12, 1/12, and 10/12.</p>
 <p>Which experiment will you pick? Well, the one that has highest entropy. Now, you could sit and calculate entropy using the formula Sum( log2((1/p_i)^p_i) ).</p>
 <p>Or you could just note that entropy is maximum when all the probabilities are equal. If there are n outcomes, then they will all have probability 1/n. Then, entropy becomes Sum( log2(n^(1/n))) which is just log2(n). So, the maximum entropy for an experiment of n outcomes is log2(n).</p>
 <p>From the above experiments, the one with 4 balls on each pan has equal probability for all 3 outcomes, and thus the maximum entropy. We will pick that one.</p>
-<p>TODO: information = reduction in entropy of the ensemble; also, information in the case of maximum entropy; how to count number of weighings needed; application to real life.</p>
+<p>Now, you can get the message “left-heavier”, “right-heavier”, or “equal” with equal probability.</p>
+<p>Let’s take the “equal” case. This means that the odd ball is in the 4 balls not kept on the pan. Now, we have to find which one it is and whether it is lighter or heavier. Again, what are our choices? We can put all these 4 balls from the odd group on one pan and the previous 4 balls from the normal group on the other pan. Or, we could put 3 from the odd group and 3 from the normal group. Or 2 odd and 2 normal. Or 2 odd and 2 odd. Or 1 odd and 1 odd.</p>
+<p>The first question is, of course, what is the entropy of these experiments? We want the one with highest entropy, remember. And that is satisfied when the probabilities of the three messages are as uniform as possible.</p>
+<p>For the 4 odd and 4 normal trial, we will get left-heavier if the odd ball is heavy, right-heavier if the odd ball is light, but we will never get “equal” because one ball is odd. This should be our first red flag. We want high entropy, where the probabilities are as nearly equal as we can manage (meaning, they are each close to 1/n). And here, one of the probabilities is zero! Anyway, the entropy is <code>-1/2 x log(1/2) + -1/2 x log(1/2)</code> = 1 bit.</p>
+<p>Let’s see if the other experiments do any better. For 3 odd and 3 normal, again, the probability of equal is zero. This is not good. Again, since left-heavier and right-heavier have equal probability (1/2), the entropy is 1 bit as earlier. Ditto for 2 odd and 2 normal or 1 odd and 1 normal. 1 bit of entropy. Let’s see if the other experiments do any better. Otherwise, we will have to sit and calculate entropy manually.</p>
+<p>For the 2 odd and 2 odd trial, there are 4 possible spots for the odd ball, and 2 possible weights (lighter or heavier). So, 8 possibilities. We will get left-heavier if the odd ball is lighter and is on the left, or if it is heavier and is on the right. So, that is 4 out of 8 possibilities. Right-heavier is the same. There is no chance of equal again, since there is an odd ball. So, this experiment too has two outcomes with probabilities 1/2 and 1/2 and thus entropy of 1 bit.</p>
+<p>For the 1 odd and 1 odd trial, there are 4 possible spots for the odd ball (on the left, on the right, and outside) and 2 possible weights. So, 8 possibilities. We get left-heavier when the odd ball is on the left and is lighter, or when it is on the right and is heavier - so, 2 possibilities. Similarly for right-heavier - 2 possibilities. The rest give “equal”. So, we get odds of 2:2:4 and thus probabilities of 1/4, 1/4, and 1/2 and thus entropy of <code>-1/4log2(1/4) + -1/4log2(1/4) + -1/2log2(1/2)</code> = 1.5 bits. We have a winner!</p>
+<p>We can see how the 1 odd and 1 odd trial was the only trial that allowed the “equal” probability and thus improved its chances of high entropy.</p>
 <h1 id="notes">Notes</h1>
 <p>You want to maximize information gained. Expected information gain is nothing but entropy. And that is maximum when all outcomes are equally likely.</p>
+<p>TODO: information = reduction in entropy of the ensemble; also, information in the case of maximum entropy; how to count number of weighings needed (and how you can always conjure an ideal code that gives you maximum entropy on each turn); application to real life.</p>
 
 <div class="info">Created: January 10, 2016</div>
-<div class="info">Last modified: January 10, 2016</div>
+<div class="info">Last modified: January 11, 2016</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: reduction, information theory</div>
 
