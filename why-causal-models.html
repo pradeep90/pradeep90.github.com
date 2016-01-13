@@ -60,14 +60,14 @@
 | True  | True  | 19%         |
 
 (The numbers are made-up)</code></pre>
-<p>This model says that there’s this giant bingo machine that contains 4 types of balls in the ratio 50:30:1:19 (say, 100 balls with 50, 30, 1, and 19 of each type). It says that reality is the bingo host who picks one ball at random from the above and makes it the state of the world at some time. If it picks up one of the 50 balls of the first type, then it makes the world look (to you) like not Rainy and not Cool. If it picks up one of the 19 balls of the last type, then it makes the world look like Rainy and Cool.</p>
+<p>This model says that it’s like there is a giant bingo machine that contains 4 types of balls in the ratio 50:30:1:19 (say, 100 balls with 50, 30, 1, and 19 of each type). It says that reality is the bingo host who picks one ball at random from the above and makes it the state of the world at some time. If it picks up one of the 50 balls of the first type, then it makes the world look (to you) like not Rainy and not Cool. If it picks up one of the 19 balls of the last type, then it makes the world look like Rainy and Cool.</p>
 <p>Note that this model could be completely wrong. Maybe reality uses some other model where it produces Rainy and Cool with probability 34%, and so on. Your best guess was the model above.</p>
 <p>Reality only picks one ball at a time. However, you don’t know for sure which one it is. So, you have to hedge your bets and say that it is 19% likely that it is Rainy and Cool. A perfectly knowledgeable guy would just say Rainy and Cool whenever reality picked Rainy and Cool and so on. But we aren’t perfectly knowledgeable.</p>
 <p>So, you use your precious JPD to make predictions at every moment. If you check the world 100 times, on 19 occasions, you expect to see both Rainy and Cool. If you see them together 80 times, then that means your JPD was wrong. Thus, a JPD is very strongly falsifiable. It sticks its neck out and makes narrow predictions (19%, not 30% or 10%).</p>
 <h1 id="the-catch">The Catch</h1>
-<p>JPDs seem awesome. Why don’t we use those all the time? Well, here’s the problem. If you have just 10 binary variables, you get 2^10 = ~1000 possible combinations they can be in, just like the two binary variables above - rainy and cool - had 2^2 = 4 possible combinations. And the only constraint is that the sum of the probabilities of these combinations should add to 1.</p>
-<p>Now, you can’t have a JPD over all the variables in the world. Why not?</p>
-<p>There are several hypotheses that fit that JPD. TODO: How many? Which one of them is correct? Which one can you use to make the best predictions?</p>
+<p>JPDs seem awesome. Why don’t we use those all the time? Well, here’s the problem. If you have just 10 binary variables, you get 2^10 = ~1000 possible combinations they can be in, just like the two binary variables above - rainy and cool - had 2^2 = 4 possible combinations.</p>
+<p>So, if you have just 10 binary variables, you get ~1000 possible combinations, with the only constraint that their sum of their probabilities should be 1. This leaves us with 1000 - 1 = 999 degrees of freedom - once you choose the first 999 probabilities, the 1000th one is automatically set (1 minus the remaining total). But you can choose those 999 probabilities to be any combination. Which gives us a lot of possible JPDs.</p>
+<p>And that’s just with 10 binary variables. With a JPD over all the variables in the world, you have way too many possible JPDs. And your job is to pick the right one.</p>
 <h1 id="simplifying-your-work">Simplifying your Work</h1>
 <p>Instead of thinking that one thing can be caused by a hundred other things, near and far, you realize that it can only be directly caused by those that are near to it, in time and space. This is a massive simplifying insight.</p>
 <p>Locality of causality factorizes your uncertainty. This assumption shrinks the hypothesis space to a great extent.</p>
@@ -80,7 +80,7 @@
 <p>I think a real-life JPD would include a variable for time too. So, if you wanted to know your predictions for different variables, you would marginalize over the time variable. But what about a perfect JPD? What is P(time = 7) or something? Is it 1/n?</p>
 
 <div class="info">Created: January 11, 2016</div>
-<div class="info">Last modified: January 12, 2016</div>
+<div class="info">Last modified: January 13, 2016</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: causal models</div>
 
