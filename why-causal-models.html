@@ -68,6 +68,7 @@
 <p>JPDs seem awesome. Why don’t we use those all the time? Well, here’s the problem. If you have just 10 binary variables, you get 2^10 = ~1000 possible combinations they can be in, just like the two binary variables above - rainy and cool - had 2^2 = 4 possible combinations.</p>
 <p>So, if you have just 10 binary variables, you get ~1000 possible combinations, with the only constraint that their sum of their probabilities should be 1. This leaves us with 1000 - 1 = 999 degrees of freedom - once you choose the first 999 probabilities, the 1000th one is automatically set (1 minus the remaining total). But you can choose those 999 probabilities to be any combination. Which gives us a lot of possible JPDs.</p>
 <p>And that’s just with 10 binary variables. With a JPD over all the variables in the world, you have way too many possible JPDs. And your job is to pick the right one.</p>
+<p>TODO: Factorizing your uncertainty.</p>
 <h1 id="simplifying-your-work">Simplifying your Work</h1>
 <p>Instead of thinking that one thing can be caused by a hundred other things, near and far, you realize that it can only be directly caused by those that are near to it, in time and space. This is a massive simplifying insight.</p>
 <p>Locality of causality factorizes your uncertainty. This assumption shrinks the hypothesis space to a great extent.</p>
@@ -80,7 +81,7 @@
 <p>I think a real-life JPD would include a variable for time too. So, if you wanted to know your predictions for different variables, you would marginalize over the time variable. But what about a perfect JPD? What is P(time = 7) or something? Is it 1/n?</p>
 
 <div class="info">Created: January 11, 2016</div>
-<div class="info">Last modified: January 13, 2016</div>
+<div class="info">Last modified: January 14, 2016</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: causal models</div>
 
