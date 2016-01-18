@@ -45,8 +45,13 @@
             <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
 
 <p><strong>Note</strong>: I’m not an expert probability theorist, so this could be wrong. But I feel quite confident in it.</p>
-<h1 id="taboo-information">Taboo “information”</h1>
-<p>I never got a handle on information. I could see no good reason why it had to be defined the way it was: information content of a message = <code>log2(1/p)</code>. I got the feeling you shouldn’t need anything more than probability theory to solve any problems, even those that apparently need “information theory”.</p>
+<h1 id="taboo-information">Taboo information</h1>
+<p>I never got a handle on the concept of information. I could see no good reason why it had to be defined the way it was:</p>
+<pre><code>information content of a message = log2(1/p)</code></pre>
+<p>I got the feeling you shouldn’t need anything more than probability theory to solve any problems, even those that apparently need “information theory”.</p>
+<p>Why did I feel this way? Well, in real life, we know that we want more information. We think more information is better than less information. That seems reasonable. You can take better actions with more information. But, then we come across this term in math called “information” too. And, somehow, without realizing it, we act like it’s like our old information and that more of it is better too.</p>
+<p>That was the source of my confusion. We have these two different (for now) concepts but we treat them the same way without justifying it.</p>
+<p>To make it more explicit, rename the term “information” with some other name that doesn’t clash with our existing concepts.</p>
 <p>So, let’s try to reduce “information theory” to basic probability theory, so that we do away with the concepts of information and entropy. We can still use them afterwards, but only as a convenience, just like we talk about sentences and paragraphs, when in reality there are only the individual English letters underneath.</p>
 <p>In short, let’s <a href="./Rationalists-Taboo.html">taboo</a> the word “information”.</p>
 <h1 id="multiplying-our-confidence">Multiplying our confidence</h1>
@@ -132,9 +137,26 @@ where o_i is the outcome of the ith experiment and p_oi is its probability.</cod
 <p>Fractional bits: when does the information-as-length-of-message analogy get really stretched? When 1/P(E) is not a power of two.</p>
 <p>(My reduction of entropy to probability is not as clean as the one of information. You need to posit a large number of messages. I think that’s true even with the message-length definition of entropy - it only works out in the ideal case, with a large number of messages.</p>
 <p>No, actually, it is pretty simple there. It’s just the expected information content of messages. However, that leaves the question: why do you want to maximize this “entropy” thing? Because you want to maximize “information”? Is that satisfactory? TODO)</p>
+<h1 id="summary">Summary</h1>
+<h2 id="questions-and-surprises">Questions and Surprises</h2>
+<p>Why is information defined the way it is?</p>
+<p>Shouldn’t probability theory be capable of answering all questions? Given the framework of hypotheses and prior probabilities over them (as per my understanding of Bayesian probability).</p>
+<p>What is the general work of thinking? Making correct predictions - put more probability mass on the actual outcome and thus less on the rest. That’s all that matters. How do we do that? By discovering the correct hypothesis. Which means putting more confidence in the right hypothesis. So, our aim is to put as much probability mass on the correct hypothesis (and thus less on the others). Note: we’ll assume that the hypotheses make at least one different prediction or are different in their prior probabilities.</p>
+<p>What happens in Bayesian terms when you see an outcome (or a “message”)? You update the posterior probabilities of your hypotheses using it.</p>
+<p>Ok. Now, switch to Information Theory goggles. Why is information special? Where do we use it? Why don’t we use probability theory there? The general claim seems to be that you need information theory. You can’t just use normal Bayesian updating like above to get your answers.</p>
+<p>How do we calculate the information content in multiple messages?</p>
+<p>Why can we add bits? What’s the deal with bits? If they represent message lengths, why can they be fractional?</p>
+<p>The central question: Why is more information better than less information? This is not as stupid a question as it seems. We defined information in an arbitrary way. Now, why do we want to maximize that apparently arbitrary function?</p>
+<p>How do we maximize information reliably?</p>
+<h2 id="questions-refined">Questions refined</h2>
+<p>You can ideally solve problems by using Bayesian updating.</p>
+<p>In short, taboo the word “information”. It’s just a coincidence (for now) that we call this weird <code>log2(1/p)</code> thing the same thing as we call knowledge or data. Let’s call it something else - say, “vasbezngvba”. Now, why do you want to maximize this vasbezngvba thing? Why create a new field of study called Vasbezngvba Theory? Why on earth should this vasbezngvba thing have so many nice properties?</p>
+<h2 id="surprises">Surprises</h2>
+<p>What’s new now that you’ve reduced information theory to probability theory? What can you do now that you couldn’t do earlier?</p>
+<p>The main answer I provide is what information does and why we need to maximize it.</p>
 
 <div class="info">Created: January  8, 2016</div>
-<div class="info">Last modified: January 10, 2016</div>
+<div class="info">Last modified: January 18, 2016</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: reduction, information theory</div>
 
