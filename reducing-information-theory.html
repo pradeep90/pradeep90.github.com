@@ -47,15 +47,22 @@
 <p><strong>Note</strong>: I’m not an expert probability theorist, so this could be wrong. But I feel quite confident in it.</p>
 <h1 id="taboo-information">Taboo information</h1>
 <p>I never got a handle on the concept of information. I could see no good reason why it had to be defined the way it was:</p>
-<pre><code>information content of a message = log2(1/p)</code></pre>
-<p>I got the feeling you shouldn’t need anything more than probability theory to solve any problems, even those that apparently need “information theory”.</p>
-<p>Why did I feel this way? Well, in real life, we know that we want more information. We think more information is better than less information. That seems reasonable. You can take better actions with more information. But, then we come across this term in math called “information” too. And, somehow, without realizing it, we act like it’s like our old information and that more of it is better too.</p>
-<p>That was the source of my confusion. We have these two different (for now) concepts but we treat them the same way without justifying it.</p>
-<p>To make it more explicit, rename the term “information” with some other name that doesn’t clash with our existing concepts.</p>
-<p>So, let’s try to reduce “information theory” to basic probability theory, so that we do away with the concepts of information and entropy. We can still use them afterwards, but only as a convenience, just like we talk about sentences and paragraphs, when in reality there are only the individual English letters underneath.</p>
+<blockquote>
+<p>Information content of a message = <code>log2(1/p)</code></p>
+</blockquote>
+<p>I got the feeling you shouldn’t need anything more than probability theory to solve problems, even those that apparently need “information theory”.</p>
+<p>Why did I feel this way? Well, in real life, we want more information; it’s better than less information. That seems reasonable. You can take better actions with more information. But, then we come across this term in math called “information” too. And, somehow, without realizing it, we act as if it’s like our old information and as if more of it is better too.</p>
+<p>That was the source of my confusion. We have these two different concepts but we treat them the same way without justifying it. (Yes, I know that it’s going to end up being the same concept as our commonsense “information”, but you have to prove it. You can’t just pull a definition out of nowhere and treat it like the old concept.)</p>
+<p>To make it more explicit, rename the term “information” to something that doesn’t clash with our existing concepts. That shouldn’t change anything. A rose by any other name would smell as sweet and whatnot. For example, let’s call it “bazfoo”.</p>
+<p>So, a stranger comes up to you and says, “hey, I have this new definition: <code>bazfoo = log2(1/p)</code>. Now, we should all try to get more of this value.” Would you accept it at face value and drop everything else to focus on this? I hope not. You would ask what is so special about bazfoo that you should aim to get it above all else when seeking the truth. You would ask him to talk in terms of probability theory, since that seems to be the solid mathematical base-layer in which any mind <a href="http://lesswrong.com/lw/ul/my_bayesian_enlightenment/">must</a> <a href="http://lesswrong.com/lw/o7/searching_for_bayesstructure/">think</a>.</p>
+<p>Therefore, let’s try to reduce <del>Information</del> Bazfoo Theory to basic probability theory, so that we do away with the concepts of information and entropy. We can still use them afterwards, but only as a convenience, just like we talk about sentences and paragraphs, when in reality there are only the individual English letters underneath.</p>
 <p>In short, let’s <a href="./Rationalists-Taboo.html">taboo</a> the word “information”.</p>
 <h1 id="multiplying-our-confidence">Multiplying our confidence</h1>
-<p>What is your aim? You want to find the correct hypothesis and put all your confidence in it. That way you will know exactly which outcome will happen in the future and can exploit that knowledge. And you want to do this quickly.</p>
+<p>What is the general work of thinking? Making correct predictions - putting more probability mass on the actual outcome and thus less on the rest. That’s all that matters. Knowing exactly which outcome will happen lets you exploit that knowledge. And you want to do this quickly.</p>
+<p>How do you do that? You can imagine a whole lot of things that make predictions for any given situation. Call them hypotheses. So, should you just pick one at random and accept whatever predictions it makes? Or maybe take an average over them all? Well, the <a href="http://www.yudkowsky.net/rational/bayes">laws</a> of probability theory dictate that you specify your probability distribution over those hypotheses - how much confidence you have in each of them - and then use their predictions weighted by their probabilities. You have exactly 1.0 of probability mass and you must distribute it among those hypotheses.</p>
+<p>So, if you put too much probability mass on the wrong hypotheses, then their wrong predictions will get more weight and thus your final probability distribution over the</p>
+<p>Which means putting more confidence in the right hypothesis. So, our aim is to put as much probability mass on the correct hypothesis (and thus less on the others). Note: we’ll assume that the hypotheses make at least one different prediction or are different in their prior probabilities.</p>
+<p>What happens in Bayesian terms when you see an outcome (or a “message”)? You update the posterior probabilities of your hypotheses using it.</p>
 <p>What does an outcome (or message) really do? What happens when you see an outcome for which you assigned a probability P(E)? Well, you use it to update the posterior probability of all your hypotheses, using Bayes Theorem:</p>
 <pre><code>P(H|E) = P(H) x P(E|H) / P(E) -- (1)
 
@@ -126,6 +133,8 @@ where o_i is the outcome of the ith experiment and p_oi is its probability.</cod
 <pre><code>A = 2^(entropy)</code></pre>
 <p>So, the way to quickly gain confidence in the correct hypothesis is to pick the experiment with maximum entropy.</p>
 <h1 id="notes">Notes</h1>
+<p><strong>Lesson</strong>: When you come across important terms, rename them with nonsense words so that you don’t confuse them with existing words. Like how we confuse the information from information theory with the information from common sense. This way you can truly reduce it to its core.</p>
+<hr />
 <p>Even the notion that the source can only give you n kinds of messages is information. You can’t just start with that assumption because that means you’re sneaking in information without declaring it. You have to get that indirectly by asking your hypotheses what they predict and ignoring messages that get zero (or extremely low) probability.</p>
 <p>TODO: Now, there exists one correct hypothesis that predicts all the past evidence with perfect accuracy and will predict all future evidence too. Of course, you may have several such candidates and would need more evidence to eliminate the rest. However, if you don’t have <em>any</em> hypothesis at all that has a perfect score so far - assigning a likelihood of 1 to the correct outcome each time - then that means your hypothesis set is lacking.</p>
 <p>As you keep getting new messages (from whichever sources), the correct hypothesis H0 will sit back and assign likelihood 1 every time and thus will keep getting rewarded with higher posterior probability. There will be at least one possible message that will rule out the other hypotheses (otherwise, they would be the correct hypothesis). So, in the fullness of time, everybody else will end up with posterior 0, and H0 will have posterior 1. Note that this situation will never change. None of the others can get back into the game and H0 cannot lose because P(E) will become equal to P(E|H0) and thus it will remain at full confidence P(H0) = 1.</p>
@@ -141,8 +150,6 @@ where o_i is the outcome of the ith experiment and p_oi is its probability.</cod
 <h2 id="questions-and-surprises">Questions and Surprises</h2>
 <p>Why is information defined the way it is?</p>
 <p>Shouldn’t probability theory be capable of answering all questions? Given the framework of hypotheses and prior probabilities over them (as per my understanding of Bayesian probability).</p>
-<p>What is the general work of thinking? Making correct predictions - put more probability mass on the actual outcome and thus less on the rest. That’s all that matters. How do we do that? By discovering the correct hypothesis. Which means putting more confidence in the right hypothesis. So, our aim is to put as much probability mass on the correct hypothesis (and thus less on the others). Note: we’ll assume that the hypotheses make at least one different prediction or are different in their prior probabilities.</p>
-<p>What happens in Bayesian terms when you see an outcome (or a “message”)? You update the posterior probabilities of your hypotheses using it.</p>
 <p>Ok. Now, switch to Information Theory goggles. Why is information special? Where do we use it? Why don’t we use probability theory there? The general claim seems to be that you need information theory. You can’t just use normal Bayesian updating like above to get your answers.</p>
 <p>How do we calculate the information content in multiple messages?</p>
 <p>Why can we add bits? What’s the deal with bits? If they represent message lengths, why can they be fractional?</p>
@@ -156,7 +163,7 @@ where o_i is the outcome of the ith experiment and p_oi is its probability.</cod
 <p>The main answer I provide is what information does and why we need to maximize it.</p>
 
 <div class="info">Created: January  8, 2016</div>
-<div class="info">Last modified: January 18, 2016</div>
+<div class="info">Last modified: January 19, 2016</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: reduction, information theory</div>
 
