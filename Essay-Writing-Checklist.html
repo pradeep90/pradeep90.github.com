@@ -65,11 +65,15 @@
 <p>Read sentences out loud to see what parts are awkward and contrived. Maybe use the <code>diction</code> and <code>style</code> shell utilities.</p>
 <p>I shouldn’t be able to hide poor ideas behind decorative elements. No lists, no <strong>bold words</strong> (sigh), no All-Capitalized Awesome Phrases, and no <em>italicized</em> words. Let your idea speak for itself.</p>
 <h1 id="technical-details">Technical Details</h1>
-<p>I didn’t realize URLs were case-sensitive! A link with caps works but not the lowercase version: <a href="./Spaced-Repetition-My-Principles.html">./Spaced-Repetition-My-Principles.html</a> vs <a href="./spaced-repetition-my-principles.html">./spaced-repetition-my-principles.html</a>.</p>
+<p>URLs are case-sensitive - didn’t know that! A link with caps works but not the lowercase version: <a href="./Spaced-Repetition-My-Principles.html">./Spaced-Repetition-My-Principles.html</a> vs <a href="./spaced-repetition-my-principles.html">./spaced-repetition-my-principles.html</a>.</p>
 <p>I’ll need to make all my URLs lowercase now.</p>
+<h1 id="pandoc-and-mathjax">Pandoc and MathJax</h1>
+<p>MathML apparently works in HTML (in Firefox and Chrome) without my having to include the MathJax script.</p>
+<p>Key idea: Look at the HTML output of your markdown file.</p>
+<p>Pandoc transforms my AsciiMath stuff to poor MathML. I think that’s because it treats the stuff as TEX (<a href="http://pandoc.org/README.html#math">User’s Guide</a>). For now, just use TEX commands within dollar signs for your inline needs (<a href="https://en.wikibooks.org/wiki/LaTeX/Mathematics">Wikibook</a>). For the rest, get and insert their MathML version <a href="https://www1.chapman.edu/~jipsen/mathml/asciimathdemo.html">manually</a>.</p>
 
 <div class="info">Created: August  8, 2015</div>
-<div class="info">Last modified: January 18, 2016</div>
+<div class="info">Last modified: January 19, 2016</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, writing</div>
 
