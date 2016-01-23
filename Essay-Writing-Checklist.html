@@ -67,13 +67,18 @@
 <h1 id="technical-details">Technical Details</h1>
 <p>URLs are case-sensitive - didn’t know that! A link with caps works but not the lowercase version: <a href="./Spaced-Repetition-My-Principles.html">./Spaced-Repetition-My-Principles.html</a> vs <a href="./spaced-repetition-my-principles.html">./spaced-repetition-my-principles.html</a>.</p>
 <p>I’ll need to make all my URLs lowercase now.</p>
-<h1 id="pandoc-and-mathjax">Pandoc and MathJax</h1>
+<h2 id="pandoc-and-mathjax">Pandoc and MathJax</h2>
 <p>MathML apparently works in HTML (in Firefox and Chrome) without my having to include the MathJax script.</p>
 <p>Key idea: Look at the HTML output of your markdown file.</p>
 <p>Pandoc transforms my AsciiMath stuff to poor MathML. I think that’s because it treats the stuff as TEX (<a href="http://pandoc.org/README.html#math">User’s Guide</a>). For now, just use TEX commands within dollar signs for your inline needs (<a href="https://en.wikibooks.org/wiki/LaTeX/Mathematics">Wikibook</a>). For the rest, get and insert their MathML version <a href="https://www1.chapman.edu/~jipsen/mathml/asciimathdemo.html">manually</a>.</p>
+<h2 id="feed">Feed</h2>
+<p>For now, I just want to update the feed whenever I publish a new full essay. I don’t care about updating the feed for smaller changes. I don’t think there’s much value in that information for anyone.</p>
+<p>Given that I only plan to publish a new essay once or twice a week, I don’t think I need an automatic feedmaker. I can update the <code>feed.xml</code> file manually.</p>
+<p>Also, I’ll go with Atom for now, since it seems to be the way of the future. However, I’ll just go with the url as the id (Gwern seems to be doing that too, and he’s generating the feed automatically, so I guess I’m fine).</p>
+<p>To get time for the “updated” element: use <code>date +%Y-%m-%dT%TZ</code></p>
 
 <div class="info">Created: August  8, 2015</div>
-<div class="info">Last modified: January 19, 2016</div>
+<div class="info">Last modified: January 23, 2016</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, writing</div>
 
