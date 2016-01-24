@@ -11,6 +11,7 @@
 
 	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
 	<!-- <script type="text/javascript" src="/js/header-links.js"></script> -->
+	<link href="atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM/RSS Feed" />
 
 	<!-- Google Analytics stuff -->
 	<script>
@@ -32,10 +33,10 @@
             </div>
             <div id="navigation">
                 <a href="./">Home</a>
-                <!-- <a href="/sequences.html">Sequences</a> -->
                 <a href="./notes.html">Notes</a>
                 <!-- <a href="/about.html">About</a> -->
                 <a href="./archive.html">Archive</a>
+		<a href="./atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM/RSS Feed">RSS</a>
             </div>
         </div>
 
@@ -101,7 +102,7 @@
 <p>You should now be able to see a directory called <code>_site</code>. It will contain HTML files, CSS files, etc. This is your website.</p>
 <p>Let’s view your website in the browser. First, you need to tell the <code>site</code> program to run a preview server.</p>
 <pre><code>$ ./site watch</code></pre>
-<p>This will let you to view your pages in the browser. Open <a href="http://localhost:8000/">http://localhost:8000/</a> in Firefox or Chrome or whatever. There you go! You now have a working local website.</p>
+<p>This will let you to view your pages in the browser. Open <a href="http://localhost:8000/" class="uri">http://localhost:8000/</a> in Firefox or Chrome or whatever. There you go! You now have a working local website.</p>
 <h1 id="everyday-usage">Everyday usage</h1>
 <p>To change an existing Markdown page, just go into one of the pre-existing Markdown pages (using Gedit or some other editor). Make your changes. If <code>./site watch</code> is running, you will be able to see the changes in your website by refreshing your browser page. You can change different parts, like the title, etc. and watch the website getting updated.</p>
 <p>To add a new page, just create a new file. Let’s say you want to create <code>Foo.markdown</code>. Just copy an existing page (so that you get the formatting and initial details like title, etc.) and rename it to <code>Foo.markdown</code>. Check the website in your browser. If you can’t see the new page in your browser, then you may have to restart the preview server. Stop it by pressing <code>C-c C-c</code>. Then, run <code>./site watch</code> again.</p>
@@ -139,17 +140,9 @@
 </ul>
 
 <div class="info">Created: September  1, 2015</div>
-<div class="info">Last modified: September  1, 2015</div>
+<div class="info">Last modified: January 24, 2016</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: hakyll</div>
-
-<!-- <div id="sequence-navigation" style="text-align: right"> -->
-<!--   <p>Part of <a href="./sequences.html"><i>No Sequence</i></a> -->
-
-<!--   <p>Previous post: "<a href="">Start of Sequence</a>" -->
-
-<!--   <p>Next post: "<a href="">Head of Sequence</a>" -->
-<!-- </div> -->
 
 <br />
 <div id="disqus_thread"></div>
