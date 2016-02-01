@@ -110,7 +110,7 @@
 <p>Instead of locating the even-plus-two hypothesis right off, start with uniform hypotheses and then update on the initial “2-4-6” example as evidence.</p>
 <h1 id="one-test-information-reduction-in-uncertainty">One test: Information = reduction in uncertainty</h1>
 <p>Look at your uncertainty before and after. Did you <em>really</em> get that much information?</p>
-<h2 id="suitcase">Suitcase</h2>
+<h1 id="suitcase">Suitcase</h1>
 <p>Take the simple case when your hypotheses correspond to that of each possible outcome. For example, suppose your old suitcase has a three-digit number lock. There are a 1000 possible codes - 000 to 999. You can consider each code as a hypothesis - H0 saying that the code is 000, H1 saying that the code is 001, etc.</p>
 <p>Now, you’ve forgotten the code. Fortunately, you’d written it somewhere. However, part of the written code has been erased. All you can see is “-3-”. Even though it doesn’t tell you everything, it does give you some information. This eliminates 900 hypotheses - all those that didn’t have “3” as their second digit.</p>
 <p>In this case, the information given by the partial code equals reduction in uncertainty. Before, you had 1000 hypotheses, each of which was equally likely, giving you log2(1000) = 9.96 bits of entropy. Afterwards, you had 100 hypotheses, again each of which was equally likely, giving you log2(100) = 6.64 bits of entropy. The difference is ~3.32 bits. How many bits of information did you get from that message? Well, information = log2(1/P(E)). How much did you predict that the middle digit would be 3? 1 in 10 hypotheses said so - therefore, a probability of 1/10 and information of ~3.32. It works out.</p>
