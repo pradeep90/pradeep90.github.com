@@ -47,15 +47,82 @@
 
             <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
 
-<h1 id="notes">Notes</h1>
-<h2 id="ideas">Ideas</h2>
-<p>Skills: Look at everything as causal models. Construct and eliminate models using correlational data, since that’s what is available. How to use a causal model (look at the direct causes of each variable). How to come up with alternative causal models. Most importantly, how to come up with ideas aka hypotheses in the first place. How to test and falsify a given hypothesis efficiently. The differences between traditional rationality and Bayesian rationality. Being able to see through absurd hypotheses.</p>
-<p>Locality of causality - in general, the value of a variable may depend on any number of variables. With locality of causality, we believe that it depends only on a few variables. This strong claim means that such a model is easily falsified. If we find that the equality doesn’t hold even for one pair of values for the variables, we reject the conditional independence. Most JPDs will <em>not</em> have such conditional independences. Using causal models shrinks the space of all possible hypotheses to just the space of causal models.</p>
-<p>This is the language in which to express your hypotheses. Earlier, “hypothesis” was a black box to me. Now, it’s fully clear how your hypothesis should be.</p>
-<p>You can now say “A causes B” and know exactly what that means. It’s not just all correlation. (TODO: source on how scientists don’t accept causation - Pearl, LW, other sources.)</p>
-<p>Statistics and causality are fundamentally different. Observational evidence alone is not enough to establish causality. You need more assumptions or interventional data (experiments) to be able to answer causal queries (interventions and counterfactuals).</p>
-<h2 id="writing">Writing</h2>
-<p>Request For Exemplars: Figure out at least ten exemplars for where you can use causal thinking in real life. Without that, you’re just building castles in the air.</p>
+<h1 id="simple-example">Simple example</h1>
+<p>Wait. What is the scientific method? You need to come up with alternative causal models and update your confidence in them using Bayes Theorem. You look at where they make differing predictions and test precisely there, by observation or experiment.</p>
+<p>Ok. So how do we get these causal models in the first place?</p>
+<p>First, you need variables. We’ll assume you have the ability to design variables about the system - like the “speed” of a car, the “price” of a laptop, or the “GDP” of a country. (We’ll go deeper into this skill in the future). We’ll also assume that you have the ability to differentiate the system from the rest of the world (“car” vs everything else - a non-trivial ability), the ability to observe the values of these variables (like the “speed” of the car), and the ability to modify some of the variables (like increase the “speed”).</p>
+<p>Now, a causal model is simply a bunch of “stable, autonomous mechanisms” that fit into a structure. That is you have these lego blocks that fit into a whole, with each lego block working independently of the rest. You can model a computer keyboard as a system with keys that send data through the wire when pressed. You can model a restaurant as the waiter, kitchen, and dining tables. You give your order to the waiter, who goes to the kitchen and gets the food and gives it to you at your table. This model works pretty well for most cases.</p>
+<p>Note however that it is incomplete. The different parts of the model don’t just communicate through the defined interfaces (order shared between you and the waiter, order and food shared between the waiter and the kitchen, and food delivered to you). If there’s a fire in the kitchen, you will smell the smoke at your table. And if you make a loud noise, the guys in the kitchen will hear you.</p>
+<p>We should expect our model to be incomplete. After all, we are uncertain about every single atom in the restaurant. To cover all of their interactions, we would need a massive model. Instead, we talk about only a few high-level variables (“waiter”, “order”, “food”, etc.). This is part of the work done by the human mind. It judiciously ignores things that are irrelevant to the act of eating Italian food tonight. For example, if you care only about the food, you wouldn’t bother to notice the colour of the paint on the wall, or the waiter’s name on his name tag, or the position of atom number 2059825 on the floor.</p>
+<p>These things don’t matter to our decisions right now. All we care about is eating food. You will do whatever it takes to get food on your plate as quickly as possible. For example, if you have modelled, based on past experience, that pizza gets delivered faster than spaghetti, then you will order that first.</p>
+<p>However, if you were planning to start a new Italian restaurant on the other side of town, you would pay closer attention to the decor, the number of waiters, the cutlery, the time taken to deliver food, etc. (though, still not atom number 2059825). Your goals would be different then, and so you would model different aspects of the same system.</p>
+<h1 id="testing-your-model">Testing your model</h1>
+<p>How would your causal model look? Let’s take two variables: dish and time taken to be served. A very simple model might be that the time taken for a given dish is a function of that dish. Say, for a pizza, the time taken is 20 minutes and for spaghetti, the time taken is 35 minutes.</p>
+<p>What to do with this causal model?</p>
+<blockquote>
+<p>A flat metal plate on a door affords pushing, and a handle on a door affords pulling, and the thing to do with a testable hypothesis is to go and test it.</p>
+<p>– <a href="http://hpmor.com/chapter/1">Chapter 1: A Day of Very Low Probability, HPMOR</a></p>
+</blockquote>
+<p>How can we test it? Well, see if it predicts reality correctly. According to this model, the time taken for the dish to be delivered depends <em>only</em> on the dish. So, every pizza you order should arrive in 20 minutes, no matter how many you order or when you order them or how many people there are in the restaurant. If you get pizza in 21 minutes one day, this model is finished.</p>
+<p>How to fix this, then? You decide to throw out this model and get a new one that has a bit of leeway. You say that the time taken for the dish still depends only on the dish, but that you will get it around 20 minutes - say, within 15-25 minutes. Note that this is a weaker, more vague prediction than before. Earlier, you put your full probability mass on the outcome being 20 minutes. Now you’re dividing your 100% probability mass among the 10 minutes between 15 and 25 minutes, essentially putting 10% probability mass that it will be 16 minutes and so on. This means that even if the time taken falls within your range, you will only be awarded a small update in confidence by Bayes Theorem. The narrower your prediction, the more confidence you will gain if you’re right.</p>
+<p>However, you find that even though you get it reasonably right, there are times when you’re way off. On some days, you find that it takes 60 minutes to get a pizza, but your model has no clue why. Finally, you decide to upgrade your model. You add another variable - fullness of the restaurant. Now your model says that, for a pizza ordered when the restaurant is nearly empty, the time taken is 15 minutes; for a pizza when the restaurant is half-full, the time taken is 20 minutes; for a pizza when the restaurant is full, the time taken is 60 minutes, and so on. Ah! Now you’re getting somewhere. Your model starts making more accurate predictions and thus gains your confidence.</p>
+<p>You can take this further to cover other more pertinent variables. Perhaps you can measure the variable number of orders of a particular dish - maybe it takes a while to get a pizza when there are lots of people ordering it - or the competence of the waiter or the experience of the chef.</p>
+<h1 id="alternative-models">Alternative Models</h1>
+<p>Come up with alternative causal models, especially with some variables that screen off others. For example, a variable over the exact orders (and the prices and preparations made by the chefs) would screen off a variable over whether it is a holiday. Decide your variables of interest and permute their direct causes.</p>
+<p>You come up with alternative models roughly in increasing order of complexity, so you favour two direct causes over three.</p>
+<p>Look at the differing predictions of two causal models.</p>
+<h1 id="locality-of-causality">Locality of Causality</h1>
+<p>What is a great help in finding out which variables screen off others?</p>
+<h1 id="goals-dictate-abstractions">Goals dictate Abstractions</h1>
+<p>How do your goals decide the variables you decide to pay attention to?</p>
+<p>How to decide which variables are decoupled from one another, for your purposes? (This is, in fact, the same question as the previous one. Once you know which variables are decoupled, you can safely focus on the ones that bear on your goal variables and ignore the rest.)</p>
+<h1 id="dealing-with-complex-systems">Dealing with Complex Systems</h1>
+<p>How do we simplify our views of a complex system? Can our goals help us simplify things?</p>
+<p>What is the relation between the “complexity” of our goals, the “complexity” of the system, and the “complexity” of our causal model?</p>
+<p>What do we mean by good design? Is it magic?</p>
+<p>What is bad design? Where do we present more information than is valuable? For example, complex technical presentations.</p>
+<h1 id="one-ring-to-rule-them-all">One Ring to Rule Them All</h1>
+<p>This is something that we can apply across domains. This works everywhere. No need to conjure ad hoc methodologies and techniques particular to each domain (“agile” in programming, etc.).</p>
+<p>This is the best way to get to the correct answer. You can’t beat it (is the claim). You will succeed to the extent that your strategy matches this one.</p>
+<p>There is nothing special or unique about your field. From the Bayesian point of view, the names of the labels don’t matter. All that matters is the relative weight of the evidence.</p>
+<p>Corollary: Aim to use this in every field to get to the answer quickly.</p>
+<h1 id="mystery-and-absurdity">Mystery and Absurdity</h1>
+<p>Look at some absurd hypotheses.</p>
+<p>Look at some mysterious explanations. Where do we fall for mysterious explanations?</p>
+<h1 id="learning">Learning</h1>
+<p>How can we learn a causal model from a textbook or blog post? Why don’t they just give it directly? Why so many words? What say information theory?</p>
+<h1 id="research">Research</h1>
+<p>Given some initial correlations, how do we set up our causal models? Which experiment do we run? How does it depend on the cost of the experiments (perhaps this involves expected value of information)?</p>
+<h1 id="problem-solving">Problem-solving</h1>
+<p>Given a causal model we have, how can we solve problems efficiently? Work through some examples.</p>
+<h1 id="efficiency">Efficiency</h1>
+<p>How to make inferences in areas where you have very little information? (examples?)# Notes</p>
+<p>Request For Exemplars: Figure out at least ten exemplars for where you can use causal thinking in real life. Without that, you’re just building castles in the air. It’s ok even if the examples are imperfect.</p>
+<p>Test the theory. Don’t defend it, attack it. Start with small claims - ask what causality promises and test if it really does deliver.</p>
+<h1 id="learning-vs-research-vs-problem-solving">Learning vs Research vs Problem-solving</h1>
+<p>How often do we need to figure out original solutions to our problems? How often is it the case that we need to learn what others have already understood and then apply that knowledge?</p>
+<p>For example, if I want to lose a lot of my excess body fat, I don’t have to experiment to figure out the best workout and diet regimen that will do the job. I just have to learn from the experts in the field and apply their techniques.</p>
+<p>Remember, your goals dictate your abstractions and thus your learning. What you learn matters only so far as it can change your decisions. So, if I am doing some inefficient slow walking for 10 minutes, I can read online that you need to do activities with moderate intensity (like brisk walking or biking or swimming) and change my exercise routine.</p>
+<p>So, the question becomes: how many of my decisions depend on discovering new techniques vs applying existing techniques? For example, my health and fitness needs are well taken care of by the active physical fitness community. Similarly, my programming needs are taken care of by the expert programming community. Ditto for writing or meditation or stress-relief or entertainment.</p>
+<p>Wow. Once I put the question this way, I realize that most of the information I need now is already out there. I don’t need to figure out things on my own in these areas.</p>
+<blockquote>
+<p>The lesson I take from these and a hundred other examples is to employ the rationality virtue of scholarship. Stand on the shoulders of giants. We don’t each need to cut our own path into a subject right from the point of near-total ignorance. That’s silly. Just catch the bus on the road of knowledge paved by hundreds of diligent workers before you, and get off somewhere near where the road finally fades into fresh jungle. Study enough to have a view of the current state of the debate so you don’t waste your time on paths that have already dead-ended, or on arguments that have already been refuted. Catch up before you speak up.</p>
+<p>– <a href="http://lesswrong.com/lw/3m3/the_neglected_virtue_of_scholarship/">The Neglected Virtue of Scholarship</a>, Luke Muehlhauser</p>
+</blockquote>
+<p>Much of the time, I get poor results because I don’t actually learn or apply these techniques. If I’ve learned them, I forget them. The solution is to learn things better and apply them.</p>
+<p>However, in some areas, I need to figure out answers on my own, if only to strengthen my ability to solve problems. Sometimes, I can’t find any solutions by other people. In these cases, my decisions depend on information I have to procure myself. Like deciding what to do with your life - you can ask people till the sun burns out, but you have to make your own conclusions at the end.</p>
+<p>But, for most of my decisions, I suspect I can find enough valuable information from others. If I want to improve my learning process, I need to study what cognitive psychologists have already figured out. If I want to understand information theory better, I need to study what mathematicians have already worked out. Same for causality or empiricism or motivation.</p>
+<p>However, to learn these ideas and solve these problems, I still need to use causal thinking. I need to store the information in a causal model and then use the causal model to solve a given problem.</p>
+<p>So, this decides my current focus: how to use causal models for learning and problem-solving. This also includes making new inferences from existing theories, like using the concept of uncertainty to judge a program’s complexity. Become good at learning and applying ideas. Then you can focus on developing new ones.</p>
+<h2 id="no-original-research">No Original Research</h2>
+<p>My lack of empiricism is probably why I’ve retired most of the essays (nearly a hundred) that I wrote on my website. They all turned out to be done much better by other people. For instance, I wrote essays about willpower, Bayes Theorem, and rigorous self-testing. But each of them was a fledgling attempt compared to what the experts had already written. Kelly McGonigal had written a great book about willpower, covering everything I needed and more. Eliezer Yudkowsky had written about Bayes Theorem and its applications in great detail. Cognitive psychologists (like in the book Make it Stick) had extolled the virtues of testing.</p>
+<p>I had noticed none of that. And when I did, I could see that my essays were worthless in comparison and so took them down.</p>
+<p>Lesson: Don’t try to do original research. Study existing resources first.</p>
+<h2 id="practice">Practice</h2>
+<p>My original aim was to practice important rationality skills for the most part, and figure out some new techniques if needed. I found it difficult to practice those rationality skills because I wasn’t thinking concretely (“where should I apply taboo or empiricism?”). I didn’t actually understand those skills and so I stalled when I tried to apply them.</p>
+<p>Now that I realize how concrete thinking is the only way to go, I can resume my previous mission. I think these techniques, like countering naive realism, taboo, Bayesian updating, and others from cognitive psychology, are very important and I need to become good at using them. As I keep getting better at these, I need to understand how to use causal models so that I can master the skill of causal thinking too.</p>
+<p>So, understand how to learn and apply causal models to the point where you can start practicing them. Become good at the skill of causal thinking. Actually be able to solve tough problems. Then you can start explaining it to others. Till then, you only have vague, empty labels saying “causal thinking is great”; you don’t really understand it.</p>
+<p>Aim: Practice the existing skills on concrete examples. Also learn the skill of causal thinking.</p>
 <h1 id="resources">Resources</h1>
 <p>Eliezer’s <a href="http://lesswrong.com/lw/ev3/causal_diagrams_and_causal_models/">Causal Diagrams and Causal Models</a> introduced me to this topic.</p>
 <p>Judea Pearl’s book Causality contains the mathematical details behind causal models.</p>
@@ -64,9 +131,15 @@
 <blockquote>
 <p>Platt’s message is inspiring to new scientists because he asserts that doing great science is a skill that can be learned, and, contrary to popular mythology, one that does not require superhuman intellectual gifts. He tells us that we can make profound breakthroughs if we simply cultivate the habits of mind of Watson and Crick, and Jacob and Monod, who systematically applied strong inference thinking and solved some of the most difficult problems of their time.</p>
 </blockquote>
+<h1 id="ideas">Ideas</h1>
+<p>Skills: Look at everything as causal models. Construct and eliminate models using correlational data, since that’s what is available. How to use a causal model (look at the direct causes of each variable). How to come up with alternative causal models. Most importantly, how to come up with ideas aka hypotheses in the first place. How to test and falsify a given hypothesis efficiently. The differences between traditional rationality and Bayesian rationality. Being able to see through absurd hypotheses.</p>
+<p>Locality of causality - in general, the value of a variable may depend on any number of variables. With locality of causality, we believe that it depends only on a few variables. This strong claim means that such a model is easily falsified. If we find that the equality doesn’t hold even for one pair of values for the variables, we reject the conditional independence. Most JPDs will <em>not</em> have such conditional independences. Using causal models shrinks the space of all possible hypotheses to just the space of causal models.</p>
+<p>This is the language in which to express your hypotheses. Earlier, “hypothesis” was a black box to me. Now, it’s fully clear how your hypothesis should be.</p>
+<p>You can now say “A causes B” and know exactly what that means. It’s not just all correlation. (TODO: source on how scientists don’t accept causation - Pearl, LW, other sources.)</p>
+<p>Statistics and causality are fundamentally different. Observational evidence alone is not enough to establish causality. You need more assumptions or interventional data (experiments) to be able to answer causal queries (interventions and counterfactuals).</p>
 
 <div class="info">Created: February  8, 2016</div>
-<div class="info">Last modified: February  8, 2016</div>
+<div class="info">Last modified: February  9, 2016</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: causality</div>
 
