@@ -47,11 +47,149 @@
 
             <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
 
-<h1 id="stack">Stack</h1>
-<p>I installed <code>stack</code> on my 32-bit Ubuntu by following the instructions <a href="https://github.com/commercialhaskell/stack/wiki/Downloads#linux">here</a>.</p>
+<h1 id="how-to-merge-pipelines-using-monoids">How to Merge Pipelines using Monoids</h1>
+<p>(This are some rough notes from Gabriel Gonzalez’s talk on <a href>How to prove large software projects correct</a> at 34:43)</p>
+<p>Say you have a task pipeline, where each task (aka job) goes through five stages:</p>
+<pre><code>generate -&gt; package -&gt; upload -&gt; deploy -&gt; log</code></pre>
+<p>Let’s say <code>generate</code> generates a bunch of files, <code>package</code> puts them together into one package, <code>upload</code> uploads that package to a server, <code>deploy</code> runs that package on the server, and <code>log</code> writes some log information.</p>
+<p>Now, you want to get some output from each stage, like “Packaging job #4” from job #4 when it goes through the packaging stage.</p>
+<p>So, it would make sense to have a function <code>package</code> of the type <code>Int -&gt; IO ()</code>. However, the function for each stage might depend on the outputs from previous stages, not just the overall input.</p>
+<p>So then, we could have something like <code>generate :: Int -&gt; IO a</code> and <code>package :: a -&gt; IO b</code> and so on.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import </span><span class="dt">Data.Monoid</span> ((&lt;&gt;))
+<span class="kw">import </span><span class="dt">Control.Monad</span>
+
+<span class="kw">instance</span> <span class="dt">Monoid</span> b <span class="ot">=&gt;</span> <span class="dt">Monoid</span> (<span class="dt">IO</span> b) <span class="kw">where</span>
+    mempty <span class="fu">=</span> return mempty
+    mappend <span class="fu">=</span> liftM2 mappend
+
+<span class="ot">generate1 ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> <span class="dt">Int</span>
+generate1 n <span class="fu">=</span> <span class="kw">do</span>
+  putStrLn (<span class="st">&quot;Generating job #&quot;</span> <span class="fu">&lt;&gt;</span> show n)
+  return n
+
+<span class="ot">package1 ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> <span class="dt">Int</span>
+package1 n <span class="fu">=</span> <span class="kw">do</span>
+  putStrLn (<span class="st">&quot;Packaging job #&quot;</span> <span class="fu">&lt;&gt;</span> show n)
+  return n
+
+<span class="ot">upload1 ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> <span class="dt">Int</span>
+upload1 n <span class="fu">=</span> <span class="kw">do</span>
+  putStrLn (<span class="st">&quot;Uploading job #&quot;</span> <span class="fu">&lt;&gt;</span> show n)
+  return n
+
+<span class="ot">deploy1 ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> <span class="dt">Int</span>
+deploy1 n <span class="fu">=</span> <span class="kw">do</span>
+  putStrLn (<span class="st">&quot;Deploying job #&quot;</span> <span class="fu">&lt;&gt;</span> show n)
+  return n
+
+<span class="ot">log1 ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> <span class="dt">Int</span>
+log1 n <span class="fu">=</span> <span class="kw">do</span>
+  putStrLn (<span class="st">&quot;Logging job #&quot;</span> <span class="fu">&lt;&gt;</span> show n)
+  return n
+
+<span class="ot">job1 ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> <span class="dt">Int</span>
+job1 <span class="fu">=</span> generate1 <span class="fu">&gt;=&gt;</span> package1 <span class="fu">&gt;=&gt;</span> upload1 <span class="fu">&gt;=&gt;</span> deploy1 <span class="fu">&gt;=&gt;</span> log1
+
+main <span class="fu">=</span> job1 <span class="dv">1</span></code></pre></div>
+<p>To run the whole job (as in <code>job1</code>), you thread each stage’s output into the next stage’s input using the fish operator <code>&gt;=&gt;</code>.</p>
+<p>Here’s the output:</p>
+<pre><code>Generating job #1
+Packaging job #1
+Uploading job #1
+Deploying job #1
+Logging job #1</code></pre>
+<p>Now, if you had another batch job, you’d write its version of the pipeline, with different functions for generate, package, etc.:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">job2 ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> <span class="dt">Int</span>
+job2 <span class="fu">=</span> generate2 <span class="fu">&gt;=&gt;</span> package2 <span class="fu">&gt;=&gt;</span> upload2 <span class="fu">&gt;=&gt;</span> deploy2 <span class="fu">&gt;=&gt;</span> log2</code></pre></div>
+<p>How to run them together? Simple, just do them one after the other in main:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">main <span class="fu">=</span> <span class="kw">do</span> job1 <span class="dv">1</span>; job2 <span class="dv">2</span></code></pre></div>
+<p>You will get the output:</p>
+<pre><code>Generating job #1
+Packaging job #1
+Uploading job #1
+Deploying job #1
+Logging job #1
+Generating job #2
+Packaging job #2
+Uploading job #2
+Deploying job #2
+Logging job #2</code></pre>
+<p>They are done separately and the messages they print are collected separately. But you want the similar stages of the pipeline to be done together. You want all the <code>generate</code> stages of the jobs to be done together, and then the <code>package</code> stages, and so on. How to do that?</p>
+<p>One way is to have a messy Job data structure which stores the functions representing each stage of this job’s pipeline (<code>generate2</code>, etc.) along with this job’s input data.</p>
+<p>So, you will get n Job objects for all the different jobs. You will now have to map over the objects and run all of their different <code>generate</code> stages and store the outputs. Then, you have to map over them and run their different <code>package</code> stages with the stored result output as input and store this output, and so on through all the stages. Messy.</p>
+<p>You have to do quite a bit of book-keeping to thread each job’s information to its next stage. This is nuts. You already specified the pipeline perfectly well once. All you want to do extra is group different pipelines so that they move through the stages together. But you have to repeat the information all over again.</p>
+<p>What if your pipeline knew how to add itself to other pipelines?</p>
+<p>Enter the Monoid.</p>
+<p>Use the same functions for each job’s pipeline (<code>generate2</code>, etc.) but put them together in a different way.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">job2 ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> (<span class="dt">IO</span> (<span class="dt">IO</span> (<span class="dt">IO</span> (<span class="dt">IO</span> <span class="dt">Int</span>))))
+job2 a <span class="fu">=</span> <span class="kw">do</span>
+  b <span class="ot">&lt;-</span> generate2 a
+  return (<span class="kw">do</span> c <span class="ot">&lt;-</span> package2 b
+             return (<span class="kw">do</span> d <span class="ot">&lt;-</span> upload2 c
+                        return (<span class="kw">do</span> e <span class="ot">&lt;-</span> deploy2 d
+                                   return (log2 e))))</code></pre></div>
+<p>Now all you need is a deployment function that takes that nested IO subroutine and turns it into a flat IO subroutine.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">deploy' ::</span> <span class="dt">IO</span> (<span class="dt">IO</span> (<span class="dt">IO</span> (<span class="dt">IO</span> (<span class="dt">IO</span> ())))) <span class="ot">-&gt;</span> <span class="dt">IO</span> ()
+deploy' <span class="fu">=</span> join <span class="fu">.</span> join <span class="fu">.</span> join <span class="fu">.</span> join</code></pre></div>
+<p>Finally, add all the job pipelines together to create a unified job pipeline and deploy it.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">job <span class="fu">=</span> job1 <span class="dv">1</span> <span class="fu">&lt;&gt;</span> job2 <span class="dv">2</span> <span class="fu">&lt;&gt;</span> job3 <span class="dv">3</span>
+main <span class="fu">=</span> deploy' job</code></pre></div>
+<p>Now all the jobs run their stages together:</p>
+<pre><code>Generating job #1
+Generating job #2
+Generating job #3
+Packaging job #1
+Packaging job #2
+Packaging job #3
+Uploading job #1
+Uploading job #2
+Uploading job #3
+Deploying job #1
+Deploying job #2
+Deploying job #3
+Logging job #1
+Logging job #2
+Logging job #3</code></pre>
+<p>Why was that? How come we didn’t have to struggle to merge all their respective stages?</p>
+<p>Well, that funky nested type <code>IO (IO (IO (IO (IO ()))))</code> is a monoid. Why? Because <em>its</em> inner funky nested type <code>IO (IO (IO (IO ())))</code> is a monoid, and so on all the way down to the unit type <code>()</code>.</p>
+<p>And we had made the <code>IO</code> monad a monoid by getting the results of the two subroutines and then calling <code>mappend</code> on those two.</p>
+<p>So, the way execution will proceed is by computing the first stage of the pipeline (<code>generate1</code>, etc.) for all the jobs. That will give us the inner subroutines. Then, by way of doing <code>mappend</code> on all those subroutines, we will compute the next stage of the pipeline (<code>package1</code>, etc.), and so on till we reach the end of the pipeline for all the jobs.</p>
+<p>Thus, by making our job pipeline a Monoid, we were able to merge different job pipelines so that they went through each stage together.</p>
+<p>As Gabriel says, you get a staged deploy system in two lines of code (just the <code>deploy</code> function and the <code>job</code> concatenation) without doing any other work. Plus, you can prove the correctness of interleaving the jobs by looking at their type <code>IO(IO(IO(IO(IO()))))</code>, which is a monoid.</p>
+<p>The key insight here is that <code>IO a</code> is a monoid such that <code>mappend</code> on two <code>IO a</code> values will perform their two computations together (respecting the order in which they were <code>mappend</code>-ed). And it will then handle their nested values together. So, naturally, <code>mappend</code> on two <code>IO (IO a)</code> values will do the outer computations first in order, and then the inner computations.</p>
+<hr />
+<p><strong>Note</strong>: <code>instance Monoid b =&gt; Monoid (IO b)</code> doesn’t seem to be part of Haskell by default and I don’t know if it’s good style to add an instance here (I believe it’s called an orphan instance). But I think it is fine for the current purpose.</p>
+<hr />
+<p>Basically, the main advantage of monoids is when you have complex data structures (or even functions and mixed up stuff). Then you don’t have to worry about how they go together or what operators they use.</p>
+<p>For a function monoid, it’s simple - you can just get the outputs and append them yourself. Big deal. For a unit test monoid, instead of <code>mappend</code>ing fifteen tests, you can just put them in a list and do a fold using the correct function.</p>
+<p>But what if you have a tree of tests (five tests that go together here, seven there, etc.)? How will you fold them? You have to define the tree and make it <code>Foldable</code> then use foldMap and such to collapse it into one test. With a monoid, though, your job is simplified. And the test runner only has to know how to run one test, that’s all. It doesn’t have to know anything more about the tree structure or anything.</p>
+<p>Basically, instead of dealing with complex structures by hand (yes, you can do it, but why?!), you just deal with one simple value at each point - one monoid. If you get one more, you <code>mappend</code> that with this sucker and end up with… still one monoid. The complexity of your code thus never gets out of hand.</p>
+<p>Sometimes it can be hard to get at the “inside” of a monad to extract the value and then do stuff with it. For example, you have three <code>Maybe (String, String)</code> values and want to concat the strings (if any). Normally, you’d have to use <code>catMaybes :: [Maybe a] -&gt; [a]</code> to get the existent pairs and then maybe split the pairs and then concatenate the results.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">foo <span class="fu">=</span> [<span class="dt">Just</span> (<span class="st">&quot;foo&quot;</span>, <span class="st">&quot;boyz&quot;</span>), <span class="dt">Nothing</span>, <span class="dt">Just</span> (<span class="st">&quot;ounht&quot;</span>, <span class="st">&quot;boeut&quot;</span>)]
+bar <span class="fu">=</span> catMaybes foo
+
+result <span class="fu">=</span> (concat (map fst bar), concat (map snd bar)
+
+<span class="co">-- (&quot;fooounht&quot;,&quot;boyzboeut&quot;)</span></code></pre></div>
+<p>But if you realize that all you want to do with the inner values is <code>mappend</code> them (like any monoid), then you can see that Maybe m is a monoid when m is a monoid. Now your answer simply becomes:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">mconcat foo
+<span class="co">-- Just (&quot;fooounht&quot;,&quot;boyzboeut&quot;)</span></code></pre></div>
+<p>The same goes for functions that have a common input. No need to extract their values and do complicated stuff, because you know that all you want to do is <code>mappend</code> their results. So, just treat the function like a monoid.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">greeting s <span class="fu">=</span> <span class="st">&quot;Hello, Mr. &quot;</span> <span class="fu">++</span> s <span class="fu">++</span> <span class="st">&quot;, welcome to our store.\n&quot;</span>
+offer s <span class="fu">=</span> <span class="st">&quot;Here are some great offers we have for you, Mr. &quot;</span> <span class="fu">++</span> s <span class="fu">++</span> <span class="st">&quot;.\n&quot;</span>
+sendoff s <span class="fu">=</span> <span class="st">&quot;It was a pleasure meeting you, Mr. &quot;</span> <span class="fu">++</span> s
+
+putStr <span class="fu">$</span> greeting <span class="fu">&lt;&gt;</span> offer <span class="fu">&lt;&gt;</span> sendoff <span class="fu">$</span> <span class="st">&quot;Yoboyz&quot;</span>
+<span class="co">-- Hello, Mr. Yoboyz, welcome to our store.</span>
+<span class="co">-- Here are some great offers we have for you.</span>
+<span class="co">-- It was a pleasure meeting you, Mr. Yoboyz</span></code></pre></div>
+<hr />
+<h1 id="admin-notes">Admin notes</h1>
+<h2 id="stack">Stack</h2>
+<p>I installed <code>stack</code> on my 32-bit Ubuntu by following the instructions <a href="https://github">here</a>.com/commercialhaskell/stack/wiki/Downloads#linux).</p>
 
 <div class="info">Created: September 10, 2015</div>
-<div class="info">Last modified: September 10, 2015</div>
+<div class="info">Last modified: February 14, 2016</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, haskell</div>
 

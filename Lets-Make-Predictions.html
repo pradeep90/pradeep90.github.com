@@ -267,6 +267,17 @@ Sample Size
 </table>
 <p><img src="http://chart.apis.google.com/chart?cht=s&amp;chg=20,20&amp;chds=50,100,0,100,0,60&amp;chm=o,AAAAFF,0,-1,25,1|r,44FF44,0,0.49,0.51|D,FFCCCC,0,0,0.5,-1&amp;chxt=x,x,y,y&amp;chxr=0,50,100|1,0,100&amp;chd=t:50,60,70,80,90,100|30,51,67,73,85,0|23,43,55,37,60,0&amp;chs=355x200&amp;chxl=1:|Confidence  (%)|3:|Accuracy&amp;chxp=1,50|3,50" alt="Chart?cht=s&amp;chg=20,20&amp;chds=50,100,0,100,0,60&amp;chm=o,aaaaff,0,-1,25,1|r,44ff44,0,0.49,0.51|d,ffcccc,0,0,0"></p>
 </div>
+<h1 id="making-better-predictions">Making Better Predictions</h1>
+<p>Enumerate all the possibilities before you make your prediction. Right now, I feel like I’m focussing only on the outcomes I like, for example whether India loses one wicket or zero in the first ten overs. It doesn’t feel real to me that India could lose four wickets in the first ten overs. Or that it might rain! I don’t even push my mind to that extreme.</p>
+<p>So, list all the outcomes and ask yourself what probabilities you put on each of them. Thinking in terms of binary predictions might be a problem. You tend to focus on one outcome (“India will lose one wicket”) and lump everything else under “other outcomes”. You thus fail to consider certain outcomes and their probabilities (a good spell by a bowler, great batting, or even just rain). Don’t make a prediction without listing all the outcomes (or at least three exclusive events).</p>
+<h1 id="fallacy-of-even-odds">Fallacy of Even Odds</h1>
+<p>A big related problem is that I look at the “two” outcomes (say, biotech company X will create a vaccine and it won’t) and decide that I don’t know much about biotech vaccines and so give it fair odds - 50% probability.</p>
+<p>But that’s a false model! Framing it as “company X succeeds vs fails” makes me try to distribute 100% probability among these two outcomes, and thinking that I don’t know anything makes me distribute it evenly. But I <strong>do</strong> know something, which is that there are several biotech companies in the world, many of whom are trying to create that vaccine. So, to truly distribute my probability mass evenly, I must look at the number of biotech companies (say 8) and give them all equal probability (12.5%).</p>
+<p>This, I think, is one of the biggest problems in becoming calibrated: we start with the wrong probability estimates! We put too much confidence in some hypotheses. It’s hard to recover from that because you don’t expect to be proven wrong (you’re confident) and so you don’t go looking at the experiments that you would (ideally) expect to surprise you.</p>
+<p>I’m reminded of the 2-4-6 task in HPMOR. Hermione (and I and many others) were doomed right from the beginning simply by focussing too much on the “even plus two” rule. We didn’t ask about weird triplets like (-2432, 34, 3.34) because we fully expected them to be invalid and so didn’t want to waste a question. But we should. We’re just starting out - we haven’t got enough information to <a href="http://lesswrong.com/lw/19m/privileging_the_hypothesis/">locate the right hypothesis</a>. But to no avail. We’re doomed.</p>
+<p>Prediction: If you get yourself accurate prior probabilities, then you can update your way to decent calibrated estimates.</p>
+<h1 id="test">Test</h1>
+<p>Does your prediction change after you get more information? For example, I made my prediction about the match without knowing who won the toss or what changes they made to the team. How can my prediction remain exactly the same afterwards?</p>
 <h1 id="resources-for-making-predictions">Resources for Making Predictions</h1>
 <h2 id="gwerns-advice-on-making-predictions">Gwern’s advice on Making Predictions</h2>
 <p>He <a href="http://www.gwern.net/Prediction%20markets#how-i-make-predictions">talks</a> about 3 parts of making predictions: specifying the prediction, deciding the due-date, and assigning a probability to the prediction.</p>
@@ -286,7 +297,7 @@ Sample Size
 </ul>
 
 <div class="info">Created: November  3, 2014</div>
-<div class="info">Last modified: February 13, 2016</div>
+<div class="info">Last modified: February 14, 2016</div>
 <div class="info">Status: finished</div>
 <div class="info"><b>Tags</b>: prediction</div>
 
