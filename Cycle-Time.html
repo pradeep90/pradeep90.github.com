@@ -61,10 +61,12 @@
 <p>In short, you have a Deployment Pipeline from Change to Product. You need to ensure that whenever you make a Change, the Pipeline quickly gets triggered and starts rebuilding the Product. You want to make sure you get high quality - that each Change really is reflected in the Product. Next, you want to minimize the cycle time - the time it takes for Changes to propagate through the Pipeline.</p>
 <p>The question is now: how do we minimize cycle time and get high quality?</p>
 <p>The answer from Continuous Delivery: Make frequent, automated releases and have visible feedback.</p>
-<p>By making frequent releases, at each point, you make small changes and so you have lower risk. You always have the confidence of a working release behind you, and can experiment boldly. You get faster feedback about the Product and can “benefit from the most useful source of information available: the experience of implementing it”<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>. The more often you release, the more you get feedback and the more you can improve your Product.</p>
+<p>By making frequent releases, at each point, you make small changes and so you have lower risk. You always have the confidence of a working release behind you, and can experiment boldly. You get faster feedback about the Product and can “benefit from the most useful source of information available: the experience of implementing it” <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>. The more often you release, the more you get feedback and the more you can improve your Product.</p>
 <p>By automating the release process, you have control over the way each Change affects the Product. Because computers work more reliably, you’re guaranteed that each step you take is fruitful and is actually having an impact.</p>
 <p>Why do we need feedback? Because we don’t have an accurate model of reality. The model we have in our head is nowhere near as informative as the actual Product. We simply can’t consider all the variables and possibilities. You should be surprised if the final Product is <em>exactly</em> as you dreamed it would be.</p>
 <p>So, design your feedback mechanism to tell you where you’re <em>wrong</em>. Feedback should change your path. If you aren’t where you want to be, you must change to get there.</p>
+<hr />
+<p>So, frequent releases give you lower uncertainty about your next change (you don’t have to worry about the rest of the program), a working product at each point, and faster feedback. What is this “feedback”? It’s nothing but our friend “information”. Frequent releases thus give you faster information, which is what we want.</p>
 <h1 id="continuous-delivery-and-motivation">Continuous Delivery and Motivation</h1>
 <p>Short cycle time leads to low delay. As per the Motivation Equation, you feel high motivation for actions with low delay. So, you will probably <em>only</em> do things for which you have low cycle time. (Examples? Counter-examples?) Conversely, you won’t do things that have high cycle time. This leads to a reinforcing feedback loop - they have high cycle time, so you don’t do them frequently, which leads to even higher cycle time (because things pile up) and so on, until it goes into oblivion.</p>
 <p>Lower risk means you feel higher value. The Continuous Delivery authors mention that by releasing frequently you lower the risk of any new change. If anything goes wrong, you can always rollback to a working state. You can thus experiment with no downside. Actions that were earlier daunting now seem attractive.</p>
@@ -222,7 +224,7 @@
 </div>
 
 <div class="info">Created: August  2, 2015</div>
-<div class="info">Last modified: November 30, 2015</div>
+<div class="info">Last modified: February 25, 2016</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: feedback loop, complexity</div>
 
