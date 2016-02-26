@@ -373,11 +373,23 @@ Sample Size
 <h1 id="current-pb-statistics">Current PB Statistics</h1>
 <p>As it stands, the current PB stats don’t distinguish at all between a 70% prediction and a 79% prediction. They both fall in the 70% band and add the same amount to your accuracy if they come out right.</p>
 <p>This is not good, because <a href="http://slatestarcodex.com/2016/02/04/book-review-superforecasting/">apparently</a> rounding the predictions of good forecasters to the nearest 5% or 10% removes a lot of their advantage.</p>
-<h1 id="multiple-outcomes">Multiple Outcomes</h1>
+<h1 id="multiple-outcomes-are-okay">Multiple Outcomes are Okay</h1>
 <p>I’m afraid to make a 20% prediction for one of five outcomes, even though that’s the uniform prior. This is because if I only register this one prediction, then I feel will be penalized. Is that true?</p>
 <p>Remember that you’re testing your calibration, not discrimination. So, it’s ok if you just book one 20% prediction. If you really are well-calibrated, then for every ten such 20% predictions, eight will come wrong and your stats will be good. Have faith even if it goes wrong once in a while. This is the challenge - to be able to withstand temporary setbacks and trust the numbers.</p>
-<p>who will win - 100 matches - very low uncertainty</p>
-<p>what will happen - ball by ball - 100 matches - overall very low uncertainty However, remember locality of causality.</p>
+<h1 id="uncertainty---take-on-a-little-not-a-lot">Uncertainty - Take on a little, not a lot</h1>
+<p>It’s easier to predict the winners for a series of cricket matches than to predict the exact outcome of each ball of a match. Why? Because you have lower uncertainty in the former.</p>
+<p>Take 10 matches. Say there can only be two outcomes - win or loss. Your maximum uncertainty about those matches is 1 bit per match x 10 matches = 10 bits of uncertainty. This is because each match can have only two outcomes and so a maximum of 1 bit of uncertainty (when you put 50-50 on win and loss).</p>
+<p>However, take just 10 balls in a single match. Now, there are several possible outcomes for each ball - the batsman could get out, hit a four, take a single, leave it alone, etc. This is excluding the finer details like how fast the ball was, where it pitched, where he hit the ball, who fielded, etc. Even if we just restrict it to 16 possible outcomes per ball, that gives us a maximum of 4 bits of uncertainty, and so 40 bits of uncertainty total about those 10 balls.</p>
+<p>So, you have to do strictly more work in the second challenge than in the first (40 bits of uncertainty vs 10 bits) to get to the correct answer. And that was for just 10 balls! A full T20 match has 40 overs x 6 balls = 240 balls. With even just 16 possible outcomes per ball, you get a maximum of 960 bits of uncertainty. That is orders of magnitude more than the 10-match scenario. It’s the difference between looking for a diamond in a set of 2^10 = ~10^3 closed boxes and looking for a diamond in a set of 2^960 = ~10^288 closed boxes. Good luck trying to locate the diamond within the latter.</p>
+<p>For example, if India plays Bangladesh in a cricket match, it’s hard to predict the outcome from ball to ball (like Raina getting out in the 9th over), but quite easy to predict that India is going to win the match. Don’t beat yourself up if you get unexpected outcomes in between - it’s too hard.</p>
+<p>Lesson: If you want to make correct predictions, stay away from high-uncertainty situations. The deck is stacked against you there.</p>
+<p>If you want to remain <em>calibrated</em> in such situations, stick to the uniform prior predictions, otherwise you’ll be surprised very often.</p>
+<p>What if you want to make correct predictions? Go for places where you have low maximum uncertainty, like who will win the match (just two possible outcomes) or who will be the man of the match (only a few stand-out players) or what the run rate will be in the last five overs (there are only a few options - 5-6, 6-7, 7-8, etc.). But <em>not</em> how many runs India will score to a precision of 5 runs - there are lots of options and a lot can go wrong.</p>
+<p>In short, don’t trust yourself to reduce a lot of uncertainty. Stick to small, manageable problems.</p>
+<blockquote>
+<p>I thought I could get away with thinking complicated thoughts myself, in the literary style of the complicated thoughts I read in science books, not realizing that correct complexity is only possible when every step is pinned down overwhelmingly. Today, one of the chief pieces of advice I give to aspiring young rationalists is “Do not attempt long chains of reasoning or complicated plans.”</p>
+<p>– Eliezer Yudkowsky, <a href="http://lesswrong.com/lw/iy/my_wild_and_reckless_youth/">My Wild and Reckless Youth</a></p>
+</blockquote>
 <h1 id="resources-for-making-predictions">Resources for Making Predictions</h1>
 <h2 id="gwerns-advice-on-making-predictions">Gwern’s advice on Making Predictions</h2>
 <p>He <a href="http://www.gwern.net/Prediction%20markets#how-i-make-predictions">talks</a> about 3 parts of making predictions: specifying the prediction, deciding the due-date, and assigning a probability to the prediction.</p>
