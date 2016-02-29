@@ -75,9 +75,12 @@
 <p>I suspect that backward inference is harder than forward inference. The question “what will happen if your boundaries are violated?” is easy to answer - you will feel resentful towards the violator. But what if you’re feeling resentful right now? It feels hard to go back to the cause.</p>
 <p>Further, I suspect that this is because, in our mind, we encode causal models in the forward direction, but fail to do so in the backward direction. “Boundary violation” causes “resentment” is straightforward - it’s what you do when you study the area. But to go from “resentment” to “boundary violation” takes some doing. You have to encode it explicitly.</p>
 <p>So, for every variable, you must know its direct causes. Maybe that’s too general. Maybe you should know what happens for every possible outcome of that variable - if you’re feeling relaxed and in control, you must not have any boundary violations; if you’re feeling resentful, you must have boundary violations.</p>
+<h1 id="general-thoughts">General Thoughts</h1>
+<p>One way even a randomized controlled trial can go wrong: side causes. If you manipulate A and look at B, you may deduce that A is a causal ancestor of B. However, you can’t say that whenever A is set to a value, B will always change the way it did. It could have another direct cause apart from A. I’m not a medical guy, but maybe doing an RCT on patients who are <em>old</em> may not allow you to infer the correct behaviour for the same intervention on patients who are <em>young</em> - their age could be a significant factor. (I don’t know of a short name for this concept. Note that this isn’t anything wrong with the RCT itself, it’s our unjustified inferences.)</p>
+<p>Another example: you do an A/B test on your clothing website where, during the same time of the day, people are randomly either shown a t-shirt in blue or a t-shirt in red, and you measure how many of them bought it. If the red shirt sold more than the blue one, you can’t infer that red shirts will always sell more, even though you did a randomized controlled trial. That’s because there could be other factors - like it was Valentine’s Day and so people bought red more. In a couple of months, it might be the cricket World Cup and people in India would want to support their team in blue and so would buy the blue t-shirt over the red one. Or it could be that the customers you got on the day of the experiment weren’t like your usual customers, and your usual customers like blue more.</p>
 
 <div class="info">Created: February 15, 2016</div>
-<div class="info">Last modified: February 25, 2016</div>
+<div class="info">Last modified: February 26, 2016</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: causality</div>
 
