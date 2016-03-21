@@ -51,7 +51,7 @@
 <p>I want to start with very crude version 1 of a causal thinking algorithm and then iterate on it till it’s really good. Simultaneously, I want to burn the steps of the algorithm into my mind as skills via deliberate practice.</p>
 <h1 id="bare-minimum-of-the-scientific-method">Bare Minimum of the Scientific Method</h1>
 <p>What is the minimum you need to solve problems?</p>
-<p>You need to be able to translate the real-world situations into good variables (for some definition of “good”). Then, you need to work with the (hopefully empirical) data expressed using those variables (correlations and interventions) and come up with a correct causal model and make the necessary inferences. Then, you need to translate that back to the real world. Of course, you need to be thinking in terms of decisions the whole time.</p>
+<p>You need to be able to translate the real-world situations into good variables (for some definition of “good”). Then, you need to work with the (hopefully empirical) data expressed using those variables (viz. correlations and interventions) and come up with a correct causal model and make the necessary inferences. Then, you need to translate that back to the real world. Of course, you need to be thinking in terms of decisions and value of information the whole time.</p>
 <p>What are the problems to which I can apply this algorithm? What problems can it solve? What can’t it solve yet? Why not?</p>
 <p>For example, boundary violations cause resentment in you, and boundary conformance causes calmness and lack of worry. So, if you see worry, you should be able to infer that you’ve broken a boundary somewhere.</p>
 <p>So, for each problem, recall or obtain the causal models that pertain to it (like the theory of boundaries for the problem above, cognitive psychology for memory, or exemplars for when you’re stuck on a problem) and then use them to make the right inferences. Also, identify the decision you’re trying to make (how to spend the next one hour, how to remember this idea more often, or which example to think about in order to progress on this problem).</p>
@@ -60,14 +60,17 @@
 <h1 id="chunk-it-up">Chunk It Up</h1>
 <p>Identify <em>when</em> you will need each of the skills below and train yourself on that particular cue. For example, whenever you ask what caused an event, you need to look at the most local causes. However, that is precisely where I forget to use it. I remember that locality of causality is great whenever I talk about causality in the abstract, but fail to apply it when I need it most. So, train yourself to remember locality of causality whenever you want to discover the causes, especially when you’re reading something. In other words, store the skill routine on the cue of the decision it helps you make.</p>
 <h1 id="key-skills">Key Skills</h1>
+<p>Meta: Specify the cue situation and the response, i.e., the “where” and the “what”.</p>
 <p>Think only in terms of causal models. And decisions. And value of information. And exemplars. And cues.</p>
 <p>Taboo - explain ideas in terms of canonical primitives like probability theory, decision theory, economics, etc. Like boundaries in terms of property rights.</p>
 <p>Empiricism - focus on the empirical evidence.</p>
 <p>Ask for differing predictions between alternative hypotheses.</p>
 <p>Start from the evidence list. Don’t pull hypotheses out of thin air.</p>
-<p>Corollary: No unemployment, just like there’s no unemployment in the world of Warcraft. Always have some satisfying work to do. You shouldn’t have to guess about what to do or make some complex decisions. Just reach into the bag, pick up a task, and do it! Always have some next actions you can execute.</p>
-<p>Measurement: #exemplars used today (+1) - your mind is starving for exemplars, remember.</p>
 <p>PB, of course.</p>
+<h1 id="satisfying-work">Satisfying Work</h1>
+<p>Aim: No unemployment, just like there’s no unemployment in the world of Warcraft. Always have some satisfying work to do. You shouldn’t have to guess about what to do or make some complex decisions. Just reach into the bag, pick up a task, and do it! Always have some next actions you can execute.</p>
+<p>Come up with three exemplars for every concept or category you hold. Like for the concept of treason, the category of the best songs by your favourite musician, or the concept of an all-out war. I suppose it would help to know the other useful categories in that space (like ho-hum songs by your favourite musician). This should help you figure out discriminating features.</p>
+<p>Measurement: #exemplars used today (+1) - your mind is starving for exemplars, remember.</p>
 <p>Make a list of tests where you know you will fail. (Like the unit tests that are red. Red, green, refactor.) Knowing what you don’t know - for which decisions will you make poor choices, etc.</p>
 <p>Make a list of decisions you might make in the future. You want valuable information <em>about</em> these decisions. example: how to exercise, how long to sleep, what business to start, what research to do, what books to read (?), etc.</p>
 <h1 id="practice-notes">Practice notes</h1>
@@ -118,7 +121,7 @@
 <p>Initially, I thought that each mechanism should be a causal model. Get some evidence for some variables and use it to build a causal model of those variables. However, this doesn’t scale because of the risk-tolerance factor above. Sometimes, you need a very precise answer and other times you can get away with sloppiness.</p>
 <p>So, you can’t go with a one-size-fits-all causal model. You need something more. You need a causal model that can account for different value functions.</p>
 <p>In essence, you will ask this black box about a decision with different value functions and it will spit out the correct recommendation. How would you design such a black box? Well, it depends on the range of value functions you expect to encounter. If you get asked “which house do I buy” by a guy with a $100k budget and a guy with a $20 million dollar budget, you will need widely different causal models. In the first case, you can get by with simple variables like size, condition, proximity to railway station or bus stand, etc. Whether the house is in a “beautiful locality” or not will not matter much to the first buyer - he won’t be willing to pay extra for it. For the latter, however, things like the class of the locality, the famous people living nearby, the quality of private schools, etc. all enter the picture.</p>
-<p>I suspect you need a whole lot more valuable information in the latter situation. Rather, in the first case, you needed only a little more information before further information was too costly to obtain. In the second case, because you were dealing with such a large sum and different choices gave vastly different values (just one loud, tacky neighbour would ruin even a classy mansion), you could gather a lot of information before it became too costly to go forward.</p>
+<p>I suspect you need a whole lot more valuable information in the latter situation. Rather, in the first case, you needed only a little more information before further information was too costly to be worth it. In the second case, because you were dealing with such a large sum and different choices gave vastly different values (just one loud, tacky neighbour would ruin even a classy mansion), you could gather a lot of information before it became too costly to go forward.</p>
 <p>So, there’s the cost of gathering information. If your decision suddenly matters a lot more to you - if different choices lead to different values - then you need to actually pay to go and get more information (maybe by spending time researching on the web or meeting people or running experiments).</p>
 <p>But if you’ve already gathered the information, you can store it and just use it the next time somebody asks you the same question (what programmers call “memoization”). So, we can do that for the most frequently asked questions.</p>
 <p>So, there’s the decision, with its different choices, and the expected value of different levels of information - perfect or partial information. (I’m not fully clear about this.)</p>
@@ -126,9 +129,34 @@
 <p>Of course, when you get new information, you need to update the black box. Or maybe you just look at the value of information calculation inside it and see if getting new information has become cheap enough that it’s worth it now.</p>
 <h1 id="tests">Tests</h1>
 <p>Why not test your ideas about decision-oriented thinking, causality, categories, and information theory by writing a basic AI? If you believe that causality and decision-oriented thinking are the <em>optimal</em> ways of solving problems, then show it. Work your way up simple AI problems and solve them optimally (maximizing the entropy of the message at each stage and so on).</p>
+<h1 id="weekly-report---march-14---20-2016">Weekly Report - March 14 - 20, 2016</h1>
+<p>Didn’t use the #reaches counter at all, so my growth rate for this week is zero. I wrote a thousand words on abstracting ideas with decisions as the interface. Didn’t do much practice for the rest of the week.</p>
+<p>Total hours of practice: <strong>21</strong> hours in 7 days.</p>
+<h2 id="ideas-generated-this-week">Ideas generated this week</h2>
+<p>Don’t talk about valuable information without the decisions you care about; why we go into (particular) fantasies - because each medium make the other aspects of life seem boring and ridiculous. editing = remove all the boring bits. Monopoly vs competitive market meme-makers (cult vs ads).</p>
+<p>When summarizing, make an initial one just to force you to release.</p>
+<p>Summarized the Talent Code chapters on deliberate practice: sweet spot = important cues where your answer is not strong or not correct; so, practice <em>only</em> with desirable difficulties; unique predictions of myelin theory - the more you fire, the better you get, the older you are, the harder it is, and breaks diminish your skill.</p>
+<p>Chunk = hierarchy of linked memories that you’re able to abstract or decompose or both. Holy Shit Effect = being able to abstract a “complex” situation and respond with a “complex”, coordinated solution. How situation-response might work - abstract situation, trigger on the high-level cue, decompose the high-level memory into actions, and check using feedback.</p>
+<p>Nature vs nurture: we think “genetic component” in variations means that there’s no point in doing anything. No. If you practice or have better nutrition or whatever, you <em>will</em> get better absolute results.</p>
+<p>Modularity of your chunks means you can adapt to situations and fix errors. How to get modular chunks? Build alternative chunks for each variable by slowing it down and strengthen the cue for “alternatives”.</p>
+<p>How to guarantee you’ll only think about X? Make that the <em>only</em> cue you see. Your thoughts are caused by internal and external cues; so, to control you memeplex, control the external cues that reach you. Make the important cues (like empiricism, causality, etc.) be the only ones that enter your mind. Similarly, if you want to think an important thought right now, then remove crap cues right now and leave just the one right cue. Internet bombards you with attractive cues, btw, thus making you think thoughts you don’t really want (reddit, Youtube, etc.).</p>
+<p>Your cue-response is not “good enough” -&gt; change your model vs not. (Suresh Raina not needing to improve his technique in the IPL, Kohli changing his stance after the England series) All you use in your model is valuable information. So only seek valuable areas where you can fail. Also, I think we build models by ignoring variables that are conditionally independent of the expected value given the other variables.</p>
+<h1 id="weekly-plan---march-20-2016">Weekly Plan - March 20, 2016</h1>
+<p>Read for an hour each day. This week: summarize the rest of Talent Code; summarize the apprentice section of Mastery; summarize the practice instructions in Talent is Overrated.</p>
+<p>Have fun for around three hours each day.</p>
+<p>Take one hour everyday to run drills and create new ones based on old important ideas.</p>
+<p>Write an AAR in the evening.</p>
+<p>Practice domain-independent causal decision-oriented thinking for five hours everyday. Three hours of intense practice and two hours of light work.</p>
+<p>The question now remains: which cues and which responses should I practice?</p>
+<p>Remember, I don’t want to answer that question now for all eternity. I just want to know what to practice this week. So, here’s a list: for now, just summarize the books you read.</p>
+<p>As for work, gather three exemplars each for important concepts. Also, collect important cues and skill responses for next week (like for empiricism and taboo).</p>
+<h1 id="next-week">Next Week</h1>
+<p>Write essays for an hour each day.</p>
+<p>Read and summarize some of The Sequences.</p>
+<p>Add some more gamification. Also, look at your mental model of concepts and your reference card for more ideas for improvement.</p>
 
 <div class="info">Created: February 15, 2016</div>
-<div class="info">Last modified: March 19, 2016</div>
+<div class="info">Last modified: March 20, 2016</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: causality</div>
 
