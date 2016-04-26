@@ -130,9 +130,19 @@
 <p>For example, was defendant X guilty of “gross incompetence”? Well, you can argue all day in circles. Or you can cite old cases and show that this current case is very similar (or not) to them. The second method is far more tractable for the human mind. We have lots of details and thus a lot of variables on which we can compare the two cases - the profession, the amount of damage done, the reliability of witnesses, etc.</p>
 <p>We can combine the old cases (along with the wording of the law itself) and come up with a decent way to categorize - like, all the successful cases had features A and B and all the unsuccessful cases had feature ~A or ~B (though more detailed, of course). We can use them to make future judgments. And if we see a truly unusual case, we think about it a lot and set a precedent, which will be used by judges in the future. Whereas if you just have an abstract rule saying that the person “should have screwed up a lot” (paraphrasing), you’re going to have a useless debate.</p>
 <p>Also, why would we want to have different allegations mentioned separately? So that the defendant can argue, for each allegation, about how similar that particular aspect of his case is to that of previous cases. If you don’t mention the particular variable you’re concerned about, then he doesn’t get this chance and so is probably given short shrift.</p>
+<h1 id="language-design-mode-and-reductionism">Language Design Mode and Reductionism</h1>
+<p>This is one of my favourite Steve Yegge quotes:</p>
+<blockquote>
+<p>After you write a compiler, … for weeks afterwards, you can’t look at your code without seeing right through it, with exactly the same sensation you get when you stare long enough at a random-dot stereogram: you see your code unfold into a beautiful parse tree, with scopes winding like vines through its branches, the leaves flowering into assembly language or bytecode.</p>
+<p>– <a href="https://sites.google.com/site/steveyegge2/ancient-languages-perl">Steve Yegge</a></p>
+</blockquote>
+<p>I’ve had that happen myself when I was writing some language tools (compilers, type inference program, etc.). Why would that happen?</p>
+<p>I suspect it’s because you’ve been strengthening the categories of the parse trees and their effects. When you normally write a program, you just see the things you’ve put together to do something you want. But, when you’re in language-design mode, you categorize it differently from usual. You see how the design choices are helping or hindering your work (can add new fields to an object (like in Python) or not (like in Java)), and what the high-level instructions actually get turned into (like the do-notation in Haskell turning into a bind-ed chain of lambdas).</p>
+<p>Hmmm… language design work makes you think reductionistically. You start getting a technical understanding of what a high-level language element <em>actually</em> means. And this is the purest form of reductionism because the high-level element gets turned into low-level elements (IR or assembly language) that you can easily examine (unlike atoms).</p>
+<p>Corollary: When you use a language without knowing how the expressions actually get translated, you don’t fully understand it. You may not know its performance tradeoffs (for example, between a <code>foldl</code> and a <code>foldr</code> in Haskell).</p>
 
 <div class="info">Created: January 23, 2016</div>
-<div class="info">Last modified: April 20, 2016</div>
+<div class="info">Last modified: April 25, 2016</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: memory</div>
 
