@@ -58,9 +58,11 @@
 <p>Q on marked buffers seems to crash Emacs at the end. It has happened five times now (in my website directory).</p>
 <h1 id="emacs-lisp-hacking">Emacs Lisp Hacking</h1>
 <p>Check out <code>testcover</code> or <code>edebug</code> for test coverage.</p>
+<h1 id="dired-1">Dired</h1>
+<p>wdired: When doing <code>query-replace-regexp</code> on the file names, you have to be careful not to match anything other than the filename. Otherwise, you match some of the permission data or the owner data, which are read only. And since <code>query-replace-skip-read-only</code> is on, <code>query-replace-regexp</code> skips those matches.</p>
 
 <div class="info">Created: August  6, 2015</div>
-<div class="info">Last modified: August 26, 2015</div>
+<div class="info">Last modified: May  2, 2016</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, emacs</div>
 
