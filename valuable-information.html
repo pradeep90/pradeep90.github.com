@@ -80,7 +80,6 @@
 <h1 id="what-is-the-expected-value-of-information">What is the Expected Value of Information?</h1>
 <p>Take an information source like a news article. What is the expected value of that information?</p>
 <p>It depends on the decisions to which that information matters. If you don’t expect it to change any decision, then that information is useless.</p>
-<p>TODO: How do we figure out EVI given one decision? What if there are several decisions?</p>
 <p>Take the exemplar of making the ad. Figure it out for that.</p>
 <h1 id="why-think-in-terms-of-decisions">Why Think In Terms Of Decisions?</h1>
 <p>What will happen if you don’t think in terms of decisions?</p>
@@ -90,16 +89,76 @@
 <h1 id="notes">Notes</h1>
 <p>Get categories for decision-oriented thinking vs the alternatives. Get exemplars for each. Then, get a causal model for their effects.</p>
 <p>Finally, show how this changes some important decisions.</p>
+<p>Another way: categorize something as useless or not; categorize some information source as the most important; figure out how much time to spend on some information source; design good queries.</p>
+<p>In all of those cases, doing this will get you better decisions than otherwise.</p>
 <hr />
 <p>Questions: When to stop studying a system? That is, when is information no longer useful?</p>
 <p>Key category: What is the value of this information? How much should I pay for it (considering my opportunity costs)? Which information source has more expected value of information?</p>
 <p>Basically, look at any message (book) or information source (book store) and immediately form the category: what is the (expected) value of this information?</p>
 <p>Do that even for questions you ask yourself, like “how do I fix this mess?”. Recognize that you want information about “fixing this mess”. Ask yourself for the relevant decisions, your current options, the expected value of that information, and its costs.</p>
 <p>You don’t want to know <em>how</em> to do X. What you really want to know is which choice you must make regarding X.</p>
+<h1 id="meta-level-decision-oriented-thinking">Meta-level Decision-Oriented Thinking</h1>
+<p>Can we choose between information sources without the arduous EVI calculation? Remember, what we want is to pick the most valuable source, not calculate each one’s EVI to the second decimal. This is decision-oriented thinking at one level meta. If I’m going to pick the same information source regardless, then the EVI calculation was a waste of time. I just need enough from the EVI calculation to tell me which information source to pick (and how much time and money to invest in it). Similarly, if all I want to know is whether this information source is useless or not (like a random news article or a book on outer space), then I may not need a full EVI calculation. Thus I have to suit my algorithms to my particular decision needs.</p>
+<p>So what kind of decisions do I expect to make? One is deciding whether a source is useless or not. Another is picking the best out of several information sources, like deciding which book to read tonight. Yet another is deciding how much time to spend on a source - should I spend six hours going through each page of this book or skip some sections and finish it in a couple of hours? Perhaps another is designing a query that will produce the most expected value. This happens when you want to ask a question to another person, run a test on a buggy program, or otherwise design a plan of attack on a problem you want to solve (which variable should I measure regarding my fitness routine? how to stop procrastinating?).</p>
+<p>Don’t worry about getting a clean causal model. That’s not the point. Your aim is to get better decisions, by hook or by crook. Remember, how deep your causal model is depends on the expected value of that information. You don’t understand your laptop at the level of individual transistors and you don’t need to. It’s not worth it.</p>
+<p>In short, horses for courses. When all you care about is a useless-or-not decision, you need a simple causal model built on general categories. When you want a more detailed EVI calculation, you need a more elaborate causal model built on specific, informative categories. It’s like how we treat <code>[String]</code> as <code>[a]</code> when we just want to calculate <code>length</code> - it becomes a simple general function. But when we want to convert the strings to uppercase, suddenly we lean on the inner details of the String data type.</p>
+<p>Don’t expect the same system to give you the same categories all the time. Your models would become unusable for even the simplest tasks. When you deal with your friend, your category includes all kinds of details like “he is a good dancer”, “he loves horror movies”, “he hates romcoms” and so on. You need those details because they affect what you do with him (watch horror movies but not romcoms). But when you’re dealing with a customer at your coffee shop, you just need to remember “he ordered a cappucino” - that’s it. Any model significantly more detailed than that is probably not worth it (there are lots of customers and it’s just a cup of coffee).</p>
+<h1 id="how-to-make-decisions-about-information">How to make Decisions about Information</h1>
+<p>Is this information source useless?</p>
+<p>check if any decision depends on it -&gt; ignore it vs don’t</p>
+<p>Which information source is best?</p>
+<p>compare them on EVI -&gt; pick the best one vs pick an inferior one</p>
+<p>How much to invest in this source?</p>
+<p>calculate EVI -&gt; invest that much vs invest more or less</p>
+<p>How to design this query?</p>
+<p>figure out where you would get the most EVI -&gt; design that one vs get a poor query</p>
+<p>The idea is that the only factor deciding whether you ignore an information source or not should be its EVI (or a quick heuristic in lieu of it). If you decide based on the glossiness of the book cover or your current mood or on the impressiveness of its scientific data, then you’re going to do worse. Similarly, the only thing that decides how much time you spend on one information source should be its EVI (and, of course, its opportunity cost). Nothing else has a say. Not even how much fun you’re having (unless that was your goal).</p>
+<h1 id="horse-for-courses-no-unified-model">Horse for Courses: No Unified Model</h1>
+<p><strong>Corollary</strong>: You won’t get a single, neat, unified model of any system.</p>
+<p>It all depends on your decisions. You can get a single abstract model for a group of decisions, like deep, focussed thinking gives you better results than shallow, distracted thinking - so turn off your internet, work in long, uninterrupted stretches, and don’t check email every half an hour. Why? Because the end result you cared about in each case was the same: the quality of your solutions. If you cared more about returning emails in less than thirty seconds, then your decision there would change.</p>
+<p>But if you care about different results in different decisions (the way you want happiness from your personal life, money and fulfillment from your professional life), you won’t be able to capture them under the same model. You will have to emphasize different things in the different categories - you don’t ask about the prior relevant work experience of your friends (I hope), and you don’t care about your business client’s favourite movie stars.</p>
+<p>Put another way, the only unified model that will answer all possible decisions is the atom-by-atom model (or quark-by-quark one). Which is, of course, infeasible.</p>
+<p>What does this say about finding a unified model of human psychology? However, Herbert Simon theorizes that the algorithm behind human cognition is pretty simple and that it is our complex social and natural environment that causes the complexity of our thoughts. (I feel the same way about GoodReads, Facebook, and other CRUD apps - the logic behind them may be simple enough, but the real value lies in the information that people add)</p>
+<p>So, our bounded resources force us to have different models about the same system.</p>
+<p>This holds even at the meta level. I want a neat and clean model of decision-oriented thinking that would be the same across domains. Why can’t I have that? Because I want to make different decisions (is this source useless or not? how much time should I spend studying this book?) and I’m not willing to pay a high price. I would be wasting my precious time and energy by running a full EVI calculation on every single information source I come across. So, it’s more cost-effective for me to have different models for the most common different <em>use-cases</em>.</p>
+<p>What are the implications for programming, writing, planning, engineering design, and all other areas where you model some system? What about artificial intelligence?</p>
+<p>I suppose you will have different models for different kinds of decisions you take.</p>
+<h1 id="further-thoughts">Further thoughts</h1>
 <p>How is this the Epiphany Equation? How can we exploit it to get epiphanies on demand? (h/t Douglas Hubbard)</p>
 <p>smoke alarm for fire - EVI</p>
 <p>Consider thinking about value of information using causal models. Maybe have a causal link from the information source to your decision (as per the PGM book).</p>
 <p>Also, what are some corollaries? Is it necessary that you change your decision? What if the decision table changes?</p>
+<p>Corollary: Take on harsh tests.</p>
+<p>They are the ones that will actually improve your performance, not tests where you already sail through. Give me examples. How exactly does this work?</p>
+<p>When you summarize information sources, show how it changed your concrete decisions. Sure, it may have a general causal model that covers all kinds of decisions (like deep work -&gt; great results vs poor results), but if your actions are going to be the same as before, it was of no use. So, have a before and after for concrete decisions.</p>
+<h1 id="experiment">Experiment!</h1>
+<p>How should you approach experimentation and discovery? With a playful nature. Instead of looking for grand experiments, go for small ones that give you valuable information.</p>
+<blockquote>
+<p>Find some simple, easy way of doing a basic check and do it right away. Don’t worry about designing an elaborate course of experiments that would make a grant proposal look impressive to a funding agency. Just check as fast as possible whether your ideas are false before you start investing huge amounts of effort in them.</p>
+<p>– <a href="http://hpmor.com/chapter/22">Chapter 22, HPMOR</a></p>
+</blockquote>
+<p>For example, I suspect Haskell can do pretty much everything that Lisp macros can do. To test this, I wanted to go through PG’s book on Lisp macros and translate the examples to Haskell. This, of course, would be a mammoth task. And a pretty useless one. I don’t really need to go through every little example in that book.</p>
+<p>I can get a lot of valuable information about whether Haskell can do advanced macro stuff by testing strategically. Say, by taking the most complex example at the end of a chapter and seeing if I can do it in Haskell. If it can’t, then my question is answered. If it can, again, my question is answered.</p>
+<p>Or, if I don’t have enough time to take on a complex example, maybe I can just start with the simplest macro I can find. If I struggle to handle even this one, then it’s a sign that (my understanding of) Haskell isn’t good enough to handle macro stuff.</p>
+<p>Like, for example, the macro <code>fn</code>. The examples I see at the beginning are:</p>
+<pre><code>(fn (and integerp oddp))</code></pre>
+<p>which would normally be</p>
+<pre><code>(lambda (x) (and (integerp x) (oddp x)))</code></pre>
+<p>and then</p>
+<pre><code>(mapcar (fn (list 1- identity 1+)) '(1 2 3))</code></pre>
+<p>where the inner function would normally be</p>
+<pre><code>(lambda (x) (list (1- x) (identity x) (1+ x)))</code></pre>
+<p>How can I write these in Haskell?</p>
+<p>The <code>integerp</code> is redundant because Haskell has static types. So, let’s take <code>isPrime</code> instead.</p>
+<p>I would just do:</p>
+<pre><code>fmap (&amp;&amp;) odd isPrime</code></pre>
+<p>That’s it. No need for macros. Similarly, for the list function:</p>
+<pre><code>let f = sequence [(subtract 1), id, (1+)]
+map f [1..3]</code></pre>
+<p>Anyway, these two examples turned to be handled easily with some mild monad magic. This gives me a lot of confidence for the rest of the journey.</p>
+<p><strong>Lesson</strong>: Don’t go for the formal, heavy-handed approach unless it’s warranted. A little goes a long way.</p>
+<p>I think hackers are well-known for this kind of playful nature. They like to tinker around with systems. Yet another reason to embrace The Hacker Way.</p>
+<p>This applies to experimenting with new domains too. Don’t wait for the perfect opportunity to learn how to dance, play golf, or speak a new language. Just dive in and pick up some valuable information.</p>
 <h1 id="what-is-the-voi-of-academic-research">What is the VoI of academic research?</h1>
 <p>I suspect it’s not very high.</p>
 <h1 id="how-to-compare-mediums">How to compare mediums?</h1>
@@ -117,7 +176,7 @@
 <p>Gwern’s application of expected value of information to his sleep experiments - <a href="http://www.gwern.net/Zeo#value-of-information-voi">Zeo sleep experiments</a></p>
 
 <div class="info">Created: May 14, 2016</div>
-<div class="info">Last modified: May 15, 2016</div>
+<div class="info">Last modified: May 16, 2016</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: decision-oriented thinking, valuable information</div>
 
