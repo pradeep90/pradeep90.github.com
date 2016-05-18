@@ -57,7 +57,7 @@
 <p>It all depends on the decision you want to make based on your research.</p>
 <p>If all you want to know about the viral disease is whether or not you should quarantine people who have it, then you need to study just enough to find out what will happen if you quarantine and what will happen if you don’t. You don’t need to sequence the virus’ DNA before you end the study. You don’t need to run a ten-month randomized control trial on mice, monkeys, and men. Something to the effect of “it transmits itself to other people very quickly and kills them in a month” - that is all you need to know before you decide to quarantine the carriers.</p>
 <p>All the other information you get is in vain. Information is useless if it cannot change your decisions.</p>
-<p>This key idea impacts every single decision we make about learning and research. How much time and effort should you spend studying your gigantic economics textbook? Well, it depends on the decisions you plan to make based on it. If all you want to know is how much money your cooking-recipe startup will make (and thus, whether you should go ahead with it or not), then you just need the first two chapters on micro-economics (short answer: too much supply, too little demand). Any further time spent on the further chapters is a waste from the viewpoint of this decision because it doesn’t change your decision at all.</p>
+<p>This key idea impacts every single decision we make about learning and research. How much time and effort should you spend studying your gigantic economics textbook? Well, it depends on the decisions you plan to make based on it. If all you want to know is how much money your cooking-recipe startup will make (and thus, whether you should go ahead with it or not), then you just need the first two chapters on micro-economics (short answer: too much supply, too little demand). Any further time spent on the later chapters is a waste from the viewpoint of this decision because it doesn’t change your decision at all.</p>
 <p>Should you read entire books? It takes time and effort to read books to the end. But is it worth it? Well, ask what decisions depend on this book. If you’re reading the book for some practical benefit, not for the entertainment, then the whole book doesn’t affect your decisions.</p>
 <h1 id="key-areas">Key areas</h1>
 <p>To what extent should you study a system, like the economy, human psychology, a programming language, or space?</p>
@@ -68,9 +68,6 @@
 <p>You have two books you’re interested in, but you only have enough money to purchase one. Which one should you purchase? Similarly, when you only have time to study one book or website, which one should you choose?</p>
 <p>You’re meeting up with an expert in a field. You only have time for a few questions. Which questions should you ask him?</p>
 <p>All this comes down to the question: which information source is better?</p>
-<h1 id="evi">EVI</h1>
-<p>Answer: The one with the most Expected Value of Information (EVI).</p>
-<pre><code>EVI = Expected Value (after) - Expected Value (before)</code></pre>
 <h1 id="decision-oriented-thinking">Decision-Oriented Thinking</h1>
 <p>You <em>cannot</em> talk about a model without the decisions it informs. Else, you will be stuck studying a leaf because you will have no idea when to stop.</p>
 <p>“How do we fix a complex-looking mess (like in war or a tough business project)?”</p>
@@ -97,6 +94,8 @@
 <p>Basically, look at any message (book) or information source (book store) and immediately form the category: what is the (expected) value of this information?</p>
 <p>Do that even for questions you ask yourself, like “how do I fix this mess?”. Recognize that you want information about “fixing this mess”. Ask yourself for the relevant decisions, your current options, the expected value of that information, and its costs.</p>
 <p>You don’t want to know <em>how</em> to do X. What you really want to know is which choice you must make regarding X.</p>
+<h1 id="test-exemplars">Test Exemplars</h1>
+<p>How do you explain narrow AI like self-driving car or auto-translate using the idea of valuable information? Previously, I thought of them as reducing uncertainty within a reduced hypothesis space. What is it now?</p>
 <h1 id="meta-level-decision-oriented-thinking">Meta-level Decision-Oriented Thinking</h1>
 <p>Can we choose between information sources without the arduous EVI calculation? Remember, what we want is to pick the most valuable source, not calculate each one’s EVI to the second decimal. This is decision-oriented thinking at one level meta. If I’m going to pick the same information source regardless, then the EVI calculation was a waste of time. I just need enough from the EVI calculation to tell me which information source to pick (and how much time and money to invest in it). Similarly, if all I want to know is whether this information source is useless or not (like a random news article or a book on outer space), then I may not need a full EVI calculation. Thus I have to suit my algorithms to my particular decision needs.</p>
 <p>So what kind of decisions do I expect to make? One is deciding whether a source is useless or not. Another is picking the best out of several information sources, like deciding which book to read tonight. Yet another is deciding how much time to spend on a source - should I spend six hours going through each page of this book or skip some sections and finish it in a couple of hours? Perhaps another is designing a query that will produce the most expected value. This happens when you want to ask a question to another person, run a test on a buggy program, or otherwise design a plan of attack on a problem you want to solve (which variable should I measure regarding my fitness routine? how to stop procrastinating?).</p>
@@ -113,6 +112,7 @@
 <p>How to design this query?</p>
 <p>figure out where you would get the most EVI -&gt; design that one vs get a poor query</p>
 <p>The idea is that the only factor deciding whether you ignore an information source or not should be its EVI (or a quick heuristic in lieu of it). If you decide based on the glossiness of the book cover or your current mood or on the impressiveness of its scientific data, then you’re going to do worse. Similarly, the only thing that decides how much time you spend on one information source should be its EVI (and, of course, its opportunity cost). Nothing else has a say. Not even how much fun you’re having (unless that was your goal).</p>
+<p>Question: How do we distinguish <em>between</em> these decision situations? When should we try to decide whether a source is useless and when should we go for a full EVI calculation?</p>
 <h1 id="horse-for-courses-no-unified-model">Horse for Courses: No Unified Model</h1>
 <p><strong>Corollary</strong>: You won’t get a single, neat, unified model of any system.</p>
 <p>It all depends on your decisions. You can get a single abstract model for a group of decisions, like deep, focussed thinking gives you better results than shallow, distracted thinking - so turn off your internet, work in long, uninterrupted stretches, and don’t check email every half an hour. Why? Because the end result you cared about in each case was the same: the quality of your solutions. If you cared more about returning emails in less than thirty seconds, then your decision there would change.</p>
@@ -123,14 +123,39 @@
 <p>This holds even at the meta level. I want a neat and clean model of decision-oriented thinking that would be the same across domains. Why can’t I have that? Because I want to make different decisions (is this source useless or not? how much time should I spend studying this book?) and I’m not willing to pay a high price. I would be wasting my precious time and energy by running a full EVI calculation on every single information source I come across. So, it’s more cost-effective for me to have different models for the most common different <em>use-cases</em>.</p>
 <p>What are the implications for programming, writing, planning, engineering design, and all other areas where you model some system? What about artificial intelligence?</p>
 <p>I suppose you will have different models for different kinds of decisions you take.</p>
-<h1 id="further-thoughts">Further thoughts</h1>
-<p>How is this the Epiphany Equation? How can we exploit it to get epiphanies on demand? (h/t Douglas Hubbard)</p>
-<p>smoke alarm for fire - EVI</p>
-<p>Consider thinking about value of information using causal models. Maybe have a causal link from the information source to your decision (as per the PGM book).</p>
-<p>Also, what are some corollaries? Is it necessary that you change your decision? What if the decision table changes?</p>
-<p>Corollary: Take on harsh tests.</p>
-<p>They are the ones that will actually improve your performance, not tests where you already sail through. Give me examples. How exactly does this work?</p>
-<p>When you summarize information sources, show how it changed your concrete decisions. Sure, it may have a general causal model that covers all kinds of decisions (like deep work -&gt; great results vs poor results), but if your actions are going to be the same as before, it was of no use. So, have a before and after for concrete decisions.</p>
+<h1 id="message-length-and-evi">Message Length and EVI</h1>
+<p>How can you use EVI to decide the length of messages? For example, imagine you have a interactive command system, like a Linux shell prompt. How long should the command be? You wouldn’t want a frequent command to be 25 characters long, and you wouldn’t want a rare one to take up one of the two-character commands. If we don’t consider value at all, the problem is completely solved by letting the length of the command (aka our message to the computer) reflect the information it conveys to the computer. Thus, the average length of our commands will be equal to the entropy the computer has about our command, and there is no better message set design (not fully clear how).</p>
+<p>But now, we want to take into account the value of the message. Earlier, we wanted to minimize the average length of the messages, or rather the amount of information per unit effort, which is one character. What if we want to maximize the average <em>value</em> per unit effort?</p>
+<p>In languages like C, we can’t drop the type signature in <code>int i = 0;</code> each time even though the compiler may be able to infer the type of the variable by looking at the operations we run on it. Wait. This is not even information, forget about valuable information. The compiler can predict this correctly each time.</p>
+<p>We need to design our possible inputs so that the computer gets the most EVI. Separate the user and the programmer. We are the programmer here. We will consider the end user to be part of the external world, someone over whom we have no control. Now, our program has to make certain decisions - like display a list of bank statements from this month or from the previous year, or show t-shirts or televisions. Whose utility function are we trying to maximize? The user’s.</p>
+<p>Basically, the program has a few decisions it can take. Now, it should only take as much information as necessary from the user to pick out their decision. Anything else is useless effort.</p>
+<p>Hypothesis: I suspect we would need to transmit the most amount of <em>valuable</em> information (on average) per unit effort.</p>
+<hr />
+<p>What we ultimately want is to distinguish between decisions. But the only thing allowed to do that is EVI.</p>
+<p>If you normally wanted to pick out one message out of an ensemble, you would use tests with maximum entropy to reduce uncertainty at full speed. You would want (on average) <code>uncertainty</code> bits of information.</p>
+<p>Why can’t you do the same thing with the decision? Why do we need EVI and all? Maybe that’s all it is in the end. Remember, there’s no such thing as <em>the</em> causal model of the system. There are only different views onto the system.</p>
+<p>Maybe EVI boils down to what you would do if you had a bunch of similar decisions and wanted to reduce uncertainty about them simultaneously. Maybe EVI is the most efficient way to reduce uncertainty about a bunch of decisions.</p>
+<p>No, not really. Some decisions matter more than others. A single million-dollar decision can overshadow a hundred everyday decisions.</p>
+<h1 id="evi-expected-increase-in-maximum-expected-value">EVI = Expected Increase in Maximum Expected Value</h1>
+<p>Ok. Let’s try another angle. What we use entropy for is to reduce our uncertainty about our hypotheses. Entropy = expected reduction in uncertainty (I suspect). The less uncertainty, the better, and the higher the entropy of an information source, the more we expect it to reduce our uncertainty.</p>
+<p>EVI is our analogue of entropy. The higher the EVI of an information source, the better. So what is our analogue of “expected reduction in uncertainty”? Does EVI reduce something on average the way entropy reduces uncertainty on average?</p>
+<blockquote>
+<p>All measurements that have value must reduce the uncertainty of some quantity that affects some decision with economic consequences. The bigger the reduction in EOL, the higher the value of a measurement. The difference between the EOL before a measurement and the EOL after a measurement is called the “Expected Value of Information” (EVI). In other words, the value of information is equal to the value of the reduction in risk.</p>
+<p>– <a href>How To Measure Anything</a></p>
+</blockquote>
+<p>Subtle point: what you expect to have after a measurement is not EOL, but rather <em>expected</em> EOL. The measurement can give you different possible worlds and you will have different EOLs in those different worlds.</p>
+<p>Is EOL the decision-theoretic analogue of uncertainty? Is this what we want to reduce? Well, this “EOL” is nothing but the <em>Minimum</em> Expected Opportunity Loss. This picks out the same decision as the one with <em>Maximum</em> Expected Value. So, what we care about is maximizing our expected utility (as you would imagine). So, there’s nothing magical about minimum EOL. It’s just the mirror image of maximum Expected Value. Therefore, reducing minimum EOL is the same as increasing the maximum Expected Value, which is of course what we want to do.</p>
+<p>So, all this fancy EVI calculation adds up to the same normal reality: we want to do that which maximizes Expected Value. Choosing the information source with maximum EVI just means that we will expected to end up with more Expected Value.</p>
+<pre><code>EVI = Expected increase in Maximum Expected Value</code></pre>
+<p>Consider each of the possible worlds that you could learn about from the message and ask how much your Expected Value will rise in each world. Take Douglas Hubbard’s ad example. You believe that an ad designed by your ad team has a 60% chance of succeeding and that it will cost $5 million to make but bring in $40 million in profits. You need to make the call on whether to invest in the ad or not. What is the expected value of knowing <em>exactly</em> whether your ad will succeed (what they call expected value of <em>perfect</em> information)?</p>
+<p>Well, let’s apply the formula above. We want expected increase in expected value, over each of the possible worlds.</p>
+<p>What is your current maximum expected value? You get that when you make the ad: 60% x $40 million (in profits) + 40% x -$5 million = $22 million.</p>
+<p>The first world is where an ad, if made, will be successful. What will you do if you knew you were in this world? You would make the ad because the profits of making the ad ($45 million - $5 million = $40 million) are greater than the profits of not making it ($0 million). Your maximum expected value in this world is when you make the ad and is $40 million, which is an increase of $18 million from your earlier maximum of $22 million.</p>
+<p>The second world is where an ad will be a failure. What will you do if you knew you were in this world? You would not make the ad because you don’t want to lose $5 million. So, you fall $22 million from your earlier maximum.</p>
+<p>So, what is your expected increase in maximum expected value? 60% x $18 million + 40% x -$22 million = $2 million.</p>
+<p>Which is exactly the same answer Hubbard got in his book using the EOL approach. So, you can look at EVI through the lens of either expected reduction in minimum EOL or expected increase in maximum expected value.</p>
+<p><strong>Note</strong>: This assumes risk-neutrality because it multiplies probabilities with raw dollar amounts. To get the most accurate picture, we need to use utilities (like 60% x U($40 million) not 60% x $40 million). See: Allais “Paradox”.</p>
+<p>Also, I don’t think this handles the case where the information changes your idea of the payoffs. What if you find out from an information source that a successful ad will give you only $20 million in profits, not $40 million? How does this handle that case?</p>
 <h1 id="experiment">Experiment!</h1>
 <p>How should you approach experimentation and discovery? With a playful nature. Instead of looking for grand experiments, go for small ones that give you valuable information.</p>
 <blockquote>
@@ -151,7 +176,7 @@
 <p>How can I write these in Haskell?</p>
 <p>The <code>integerp</code> is redundant because Haskell has static types. So, let’s take <code>isPrime</code> instead.</p>
 <p>I would just do:</p>
-<pre><code>fmap (&amp;&amp;) odd isPrime</code></pre>
+<pre><code>liftM2 (&amp;&amp;) odd isPrime</code></pre>
 <p>That’s it. No need for macros. Similarly, for the list function:</p>
 <pre><code>let f = sequence [(subtract 1), id, (1+)]
 map f [1..3]</code></pre>
@@ -169,14 +194,50 @@ map f [1..3]</code></pre>
 <p>Organize the information by decisions. The information you get from a particular blog posts has to improve one or more decisions. If it doesn’t, throw it away. If it does, then file it away under those decisions.</p>
 <h1 id="random-examples">Random examples</h1>
 <p>How to find out if a Youtube video is worth watching? My answer: click at the middle of the time bar. And maybe some other points too. These probes will give you valuable information (I feel). Formalize this.</p>
+<h1 id="notice-the-cost-and-the-benefits">Notice the Cost AND the Benefits</h1>
+<p>I consider dishwashing to be a huge chore. I grudge the five minutes it takes me to go through a normal load. It feels like a high cost for little return. But is it really?</p>
+<p>I think I notice the cost of something (in time or money) particularly when I don’t like it - washing the dishes, doing the laundry, cleaning the house, sleeping on time, focussing on work instead of surfing the web, etc.</p>
+<p>I can <em>feel</em> the cost of these tasks and I grudge that expenditure.</p>
+<p>The problem is that I don’t feel the cost when I’m doing painless things. It hardly feels like I’m spending any of my resources when I surf the web, eat junk food, or avoid writing essays. I see the benefits there, but not the costs. But the truth is that I’m spending the same scarce resources on all of these - my time, money, attention, health, etc.</p>
+<p>I need to stop being unwilling to incur the necessary cost for doing something worthwhile (like washing the dishes or focussing on work), whether it is five minutes of mildly boring work or half an hour of internet-withdrawal. In the same vein, I need to respect the benefits I’m getting from these tasks. There are benefits, otherwise I wouldn’t need to do them. Sleeping on time keeps dark circles away and generally lets me keep my diet and schedule in control. Focussing on work instead of Youtube videos adds genuine, measurable value to my life and gets me to my goals faster. The same goes for eating carrots and a healthy, protein-rich meal and resisting the urge to stuff my face with tasty junk food - I end up maintaining good health for the future and have a fitter body right now.</p>
+<p>These benefits aren’t real to me right now. That’s why I procrastinate. The benefits of important work get lost in the siren song of temptations, while the costs of those side-journeys escape my attention. Conversely, the costs of important work are all too real to me - writing an essay really can feel like pulling a tooth, washing the dishes can seem like the least important thing in the world - while the benefits of temptations get blown out of proportion - “a pizza right now would taste like heaven” or “these videos are so funny; I must watch more”.</p>
+<p>Lesson: Don’t begrudge the cost of something important like exercising everyday. It will pay for itself soon.</p>
+<p>Notice how much you’re paying for crap activities like watching videos or eating junk food. Also notice how little they really benefit you.</p>
+<p>In general, for every activity, notice its cost and benefit. Never do anything without a (rough) cost-benefit analysis.</p>
+<p>I need to fix my categories.</p>
+<h1 id="summary">Summary</h1>
+<p>Keep your decisions firmly in mind.</p>
+<p>For any situation, ask if the information source is useless, and then if it is better than other non-useless information sources, and finally how much time and money you should invest in it.</p>
+<p>No clean, unified model. You will abstract systems in different ways based on your desired results.</p>
+<p>EVI = Expected Increase in Maximum Expected Value</p>
+<h2 id="concepts-and-exemplars">Concepts and Exemplars</h2>
+<p>Basically, what are the concepts I’m using in this essay? I need exemplars for them all.</p>
+<h2 id="todo">TODO</h2>
+<p>Give me concrete examples for each of those categories. How do I choose between them?</p>
+<p>Solve some practical problem using just the idea of valuable information. Start with some trivial ones and move your way up to self-driving car (in theory). Remember, this is for a human reasoner, with all our existing cognitive powers, not some random agent.</p>
+<p>How deeply should you study a system? Give me examples.</p>
+<p>How do you come up with your set of “decisions”?</p>
+<p>What is the most valuable information source about decision-oriented thinking for the average reader? What will change their decisions in a big way?</p>
+<p>Get a causal model of the effects of using these meta-categories (like checking whether a source is useless or not). What do you gain? What do humans do by default?</p>
+<p>How does decision-oriented thinking work when you have information sources and you want to build <em>causal models</em>? Is it that decisions just matter for shaping your categories but have no effect on your causal models?</p>
+<p>How can we use this idea of EVI in optimizing communication (and thus scientific discovery)?</p>
+<h2 id="further-thoughts">Further thoughts</h2>
+<p>How is this the Epiphany Equation? How can we exploit it to get epiphanies on demand? (h/t Douglas Hubbard)</p>
+<p>smoke alarm for fire - EVI</p>
+<p>Consider thinking about value of information using causal models. Maybe have a causal link from the information source to your decision (as per the PGM book).</p>
+<p>Also, what are some corollaries? Is it necessary that you change your decision? What if the decision table changes?</p>
+<p>Corollary: Take on harsh tests.</p>
+<p>They are the ones that will actually improve your performance, not tests where you already sail through. Give me examples. How exactly does this work?</p>
+<p>When you summarize information sources, show how it changed your concrete decisions. Sure, it may have a general causal model that covers all kinds of decisions (like deep work -&gt; great results vs poor results), but if your actions are going to be the same as before, it was of no use. So, have a before and after for concrete decisions.</p>
 <h1 id="references">References</h1>
 <p>Many thanks to Douglas Hubbard for his wonderful book “How to Measure Anything”. I read it in 2013 and felt it was obviously important, but didn’t realize that it practically contained all the answers I needed. If there’s one thing you should get out of that book (apart from the fact that everything is “measurable”), it is that valuable information is all that matters.</p>
 <p>“More research is needed” - Really? <a href="http://ije.oxfordjournals.org/content/30/4/771.full">Journal Paper</a></p>
 <p>Expected value on LessWrong - <a href="http://lesswrong.com/lw/85x/value_of_information_four_examples/">Value of Information: Four Examples</a></p>
 <p>Gwern’s application of expected value of information to his sleep experiments - <a href="http://www.gwern.net/Zeo#value-of-information-voi">Zeo sleep experiments</a></p>
+<p>Maybe look at the <a href="http://www.iep.utm.edu/re-bo-ag/">Internet Encyclopedia of Philosophy</a> on bounded rationality.</p>
 
 <div class="info">Created: May 14, 2016</div>
-<div class="info">Last modified: May 16, 2016</div>
+<div class="info">Last modified: May 18, 2016</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: decision-oriented thinking, valuable information</div>
 
