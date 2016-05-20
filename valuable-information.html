@@ -186,6 +186,13 @@ map f [1..3]</code></pre>
 <p>This applies to experimenting with new domains too. Don’t wait for the perfect opportunity to learn how to dance, play golf, or speak a new language. Just dive in and pick up some valuable information.</p>
 <h1 id="what-is-the-voi-of-academic-research">What is the VoI of academic research?</h1>
 <p>I suspect it’s not very high.</p>
+<h1 id="data-information-valuable-information">Data &lt; Information &lt; Valuable Information</h1>
+<p>Corollary: Statistical models are necessarily inefficient.</p>
+<p>If you don’t take decisions and valuable information into account, you will end up paying for information that isn’t worth it.</p>
+<p>For example, just getting a bunch of features about an email and trying to run a machine learning algorithm through the data set will not be as effective as finding out the decision you’re trying to make (spam vs not spam) and looking at the expected value of information of different features. Importantly, beyond some point, there’s no use looking at features. You’ve already made the decision of spam or not spam. Investing more processor cycles is a waste.</p>
+<p>Already, spam-filter designers have to “weight” the filter in such a way that false positives are very rare (you don’t want a genuine mail from your bank to land in the spam folder). All such considerations are effortlessly taken care of (I think) if you use EVI.</p>
+<p>Corollary: You won’t get Artificial General Intelligence by just looking at information.</p>
+<p>Right now, I suspect it is humans who are judging the value of information and guiding their narrow AI. But, if you want a program to learn for itself, you need it to be able to judge the cost and value of information. Just siccing a Bayesian tree on a bunch of data isn’t going to work. Information has a price.</p>
 <h1 id="how-to-compare-mediums">How to compare mediums?</h1>
 <p>How do we judge the relative quality and importance of mediums like essays, journal papers, news articles, books, speeches, classroom lectures, etc.?</p>
 <p>Look at the decisions they’ve improved. For example, an essay on the scientific method could clear your understanding of a “scientific hypothesis” from a black box to a clear causal model. That’s it. Job done. You don’t need anything else.</p>
@@ -214,30 +221,36 @@ map f [1..3]</code></pre>
 <p>Basically, what are the concepts I’m using in this essay? I need exemplars for them all.</p>
 <h2 id="todo">TODO</h2>
 <p>Give me concrete examples for each of those categories. How do I choose between them?</p>
+<p>Make a list of concrete information sources (like blogs, books, blokes, etc.). Then judge whether they are useless, figure out their priority rank, and decide how much to invest in them.</p>
 <p>Solve some practical problem using just the idea of valuable information. Start with some trivial ones and move your way up to self-driving car (in theory). Remember, this is for a human reasoner, with all our existing cognitive powers, not some random agent.</p>
 <p>How deeply should you study a system? Give me examples.</p>
 <p>How do you come up with your set of “decisions”?</p>
-<p>What is the most valuable information source about decision-oriented thinking for the average reader? What will change their decisions in a big way?</p>
+<p>What is the most valuable information source about decision-oriented thinking for the average reader? What will change their decisions in a big way? Forget about the average reader; what about me?</p>
 <p>Get a causal model of the effects of using these meta-categories (like checking whether a source is useless or not). What do you gain? What do humans do by default?</p>
 <p>How does decision-oriented thinking work when you have information sources and you want to build <em>causal models</em>? Is it that decisions just matter for shaping your categories but have no effect on your causal models?</p>
-<p>How can we use this idea of EVI in optimizing communication (and thus scientific discovery)?</p>
+<p>How can we use this idea of EVI in optimizing communication (and thus scientific discovery)? Treat this as the analogue of entropy and show how it is the quickest way to maximum expected value.</p>
 <h2 id="further-thoughts">Further thoughts</h2>
 <p>How is this the Epiphany Equation? How can we exploit it to get epiphanies on demand? (h/t Douglas Hubbard)</p>
+<p>Look at some variables that you’re not measuring at all. Ask for their EVI and check if measuring them gives you any epiphanies.</p>
 <p>smoke alarm for fire - EVI</p>
-<p>Consider thinking about value of information using causal models. Maybe have a causal link from the information source to your decision (as per the PGM book).</p>
+<p>Consider thinking about value of information using causal models. Maybe have a causal link from the information source to your decision (as per the PGM book). What does that change? Maybe it tells you what the direct causes are. If some source is useless, then it won’t be a cause of your decision.</p>
 <p>Also, what are some corollaries? Is it necessary that you change your decision? What if the decision table changes?</p>
+<hr />
+<p>Consider even your tests as information sources. You tried to go write an essay within two hours, but failed. That’s information. Is that valuable information? Will it change your decisions in the future? Yes. You’ll budget more time for similar essays. But if you do things you can already do well (like writing unpublished essays or reading the same books over and over), then what valuable information are you getting? It’s not going to change too much in the future.</p>
 <p>Corollary: Take on harsh tests.</p>
 <p>They are the ones that will actually improve your performance, not tests where you already sail through. Give me examples. How exactly does this work?</p>
+<p>They should have value either way. Neutral tests won’t do, I fear.</p>
+<hr />
 <p>When you summarize information sources, show how it changed your concrete decisions. Sure, it may have a general causal model that covers all kinds of decisions (like deep work -&gt; great results vs poor results), but if your actions are going to be the same as before, it was of no use. So, have a before and after for concrete decisions.</p>
 <h1 id="references">References</h1>
-<p>Many thanks to Douglas Hubbard for his wonderful book “How to Measure Anything”. I read it in 2013 and felt it was obviously important, but didn’t realize that it practically contained all the answers I needed. If there’s one thing you should get out of that book (apart from the fact that everything is “measurable”), it is that valuable information is all that matters.</p>
+<p>Many thanks to Douglas Hubbard for his wonderful book “How to Measure Anything”. I read it in 2013 and felt it was obviously important, but didn’t realize that it contained practically all the answers I needed. If there’s one thing you should get out of that book (apart from the fact that everything is “measurable”), it is that valuable information is all that matters.</p>
 <p>“More research is needed” - Really? <a href="http://ije.oxfordjournals.org/content/30/4/771.full">Journal Paper</a></p>
 <p>Expected value on LessWrong - <a href="http://lesswrong.com/lw/85x/value_of_information_four_examples/">Value of Information: Four Examples</a></p>
 <p>Gwern’s application of expected value of information to his sleep experiments - <a href="http://www.gwern.net/Zeo#value-of-information-voi">Zeo sleep experiments</a></p>
 <p>Maybe look at the <a href="http://www.iep.utm.edu/re-bo-ag/">Internet Encyclopedia of Philosophy</a> on bounded rationality.</p>
 
 <div class="info">Created: May 14, 2016</div>
-<div class="info">Last modified: May 18, 2016</div>
+<div class="info">Last modified: May 20, 2016</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: decision-oriented thinking, valuable information</div>
 
