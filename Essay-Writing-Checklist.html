@@ -79,7 +79,7 @@
 <p>He doesn’t say “but once I go running again” or “but once I try to get out”. He just says “but once I do”, which seems so much smaller and sweeter than the previous two. I suppose it’s because small chunks fit easily within our working memory. Similarly for “hard enough to stretch, but only just” - he leaves out the pointless “but only just hard enough to stretch you” and ends on a strong note. Again with “If one blows up in your face, start another.” Look at how short that second branch is: “start another” - that’s all. Not even “start another one”. Just “start another”.</p>
 <p>I don’t fully understand this and I’m sure people have already analyzed this before. Anyway, that’s the level I need to aspire to.</p>
 <h1 id="technical-details">Technical Details</h1>
-<p>URLs are case-sensitive - didn’t know that! A link with caps works but not the lowercase version: <a href="./Spaced-Repetition-My-Principles.html" class="uri">./Spaced-Repetition-My-Principles.html</a> vs <a href="./spaced-repetition-my-principles.html" class="uri">./spaced-repetition-my-principles.html</a>.</p>
+<p>URLs are case-sensitive - didn’t know that! A link with caps works but not the lowercase version: <code>./Spaced-Repetition-My-Principles.html</code> vs <code>./spaced-repetition-my-principles</code>.html.</p>
 <p>I’ll need to make all my URLs lowercase now.</p>
 <h2 id="pandoc-and-mathjax">Pandoc and MathJax</h2>
 <p>MathML apparently works in HTML (in Firefox and Chrome) without my having to include the MathJax script.</p>
@@ -90,11 +90,17 @@
 <p>Given that I only plan to publish a new essay once or twice a week, I don’t think I need an automatic feedmaker. I can update the <code>feed.xml</code> file manually.</p>
 <p>Also, I’ll go with Atom for now, since it seems to be the way of the future. However, I’ll just go with the url as the id (Gwern seems to be doing that too, and he’s generating the feed automatically, so I guess I’m fine).</p>
 <p>To get time for the “updated” element: use <code>date +%Y-%m-%dT%TZ</code></p>
+<h2 id="error-404-pages-on-google-webmaster">Error 404 pages on Google Webmaster</h2>
+<blockquote>
+<p>Q: Most of my 404s are for bizarro URLs that never existed on my site. What’s up with that? Where did they come from?</p>
+<p>A: If Google finds a link somewhere on the web that points to a URL on your domain, it may try to crawl that link, whether any content actually exists there or not; and when it does, your server should return a 404 if there’s nothing there to find. These links could be caused by someone making a typo when linking to you, some type of misconfiguration (if the links are automatically generated, e.g. by a CMS), or by Google’s increased efforts to recognize and crawl links embedded in JavaScript or other embedded content; or they may be part of a quick check from our side to see how your server handles unknown URLs, to name just a few. If you see 404s reported in Webmaster Tools for URLs that don’t exist on your site, you can safely ignore them. We don’t know which URLs are important to you vs. which are supposed to 404, so we show you all the 404s we found on your site and let you decide which, if any, require your attention.</p>
+<p>– <a href="https://webmasters.googleblog.com/2011/05/do-404s-hurt-my-site.html">Google Webmasters</a></p>
+</blockquote>
 <h1 id="markdown">Markdown</h1>
-<p>To give a hover hint for a link, enter the hint after the <a href="foo.com/bar.html" title="Bar is not about Foo">link</a> like <code>[link] (foo.com/bar.html &quot;Bar is not about Foo&quot;)</code>.</p>
+<p>To give a hover hint for a link, enter the hint after the <a href="example.com/bar.html" title="Bar is not about Foo">link</a> like <code>[link] (example.com/bar.html &quot;Bar is not about Foo&quot;)</code>.</p>
 
 <div class="info">Created: August  8, 2015</div>
-<div class="info">Last modified: April 16, 2016</div>
+<div class="info">Last modified: May 23, 2016</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, writing</div>
 
