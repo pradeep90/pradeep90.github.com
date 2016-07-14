@@ -174,7 +174,7 @@ result <span class="fu">=</span> (concat (map fst bar), concat (map snd bar)
 <p>But if you realize that all you want to do with the inner values is <code>mappend</code> them (like any monoid), then you can see that Maybe m is a monoid when m is a monoid. Now your answer simply becomes:</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">mconcat foo
 <span class="co">-- Just (&quot;fooounht&quot;,&quot;boyzboeut&quot;)</span></code></pre></div>
-<p>The same goes for functions that have a common input. No need to extract their values and do complicated stuff, because you know that all you want to do is <code>mappend</code> their results. So, just treat the function like a monoid.</p>
+<p>The same goes for functions that have a common input and a monoid output. No need to extract their values and do complicated stuff, because you know that all you want to do is <code>mappend</code> their results. So, just treat the function like a monoid.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">greeting s <span class="fu">=</span> <span class="st">&quot;Hello, Mr. &quot;</span> <span class="fu">++</span> s <span class="fu">++</span> <span class="st">&quot;, welcome to our store.\n&quot;</span>
 offer s <span class="fu">=</span> <span class="st">&quot;Here are some great offers we have for you, Mr. &quot;</span> <span class="fu">++</span> s <span class="fu">++</span> <span class="st">&quot;.\n&quot;</span>
 sendoff s <span class="fu">=</span> <span class="st">&quot;It was a pleasure meeting you, Mr. &quot;</span> <span class="fu">++</span> s
@@ -189,7 +189,7 @@ putStr <span class="fu">$</span> greeting <span class="fu">&lt;&gt;</span> offer
 <p>I installed <code>stack</code> on my 32-bit Ubuntu by following the instructions <a href="https://github.com/commercialhaskell/stack/wiki/Downloads#linux">here</a>.</p>
 
 <div class="info">Created: September 10, 2015</div>
-<div class="info">Last modified: May 23, 2016</div>
+<div class="info">Last modified: July 13, 2016</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, haskell</div>
 
