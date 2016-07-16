@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="icon" type="image/png" href="./images/favicon-32x32.png" sizes="32x32" />
 	<link rel="icon" type="image/png" href="./images/favicon-16x16.png" sizes="16x16" />
-        <title>Programming Design Problems - SPK's Rationality Essays</title>
+        <title>Program Design - SPK's Rationality Essays</title>
         <link rel="stylesheet" type="text/css" href="./css/default.css" />
         <link rel="stylesheet" type="text/css" href="./css/highlight.css" />
 
@@ -43,7 +43,7 @@
         </div>
 
         <div id="content">
-          <h1 id="post-title">Programming Design Problems</h1>
+          <h1 id="post-title">Program Design</h1>
 
             <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
 
@@ -177,19 +177,36 @@
 <p>example: in calculating rental charges, print HTML doesn’t depend on the database once given the rental amount. So, it is in its own function.</p>
 <p>How to use this?</p>
 <p>I think this makes functions very small, because very few things depend on all the information in a function, due to locality of causality.</p>
+<h1 id="when-polymorphism-fails-by-steve-yegge">When Polymorphism Fails by Steve Yegge</h1>
+<p>How would I handle that problem in Haskell?</p>
+<p>Take a simple case. You have two types of monsters: Orcs and Elves. You initially want one type of action from them: <code>printRaceName</code> (“Orc” and “Elf”, respectively). Later, you want to add one more action: <code>doesOpinionatedElfLikeYou</code> (“no” and “yes”, respectively).</p>
+<h2 id="same-interface-different-classes">Same Interface, Different Classes</h2>
+<p>You want two properties: the ability to have a collection of many objects satisfying the same interface (like a list of monsters - a mixture of Orcs and Elves), and the ability to add one more action to their common interface (like <code>doesOpinionatedElfLikeYou</code>).</p>
+<p>In OOP (specifically Java), subclassing lets you do the first. You can just have a list of type <code>Monster</code> and it will be able to hold both Orcs and Elves. However, you lose information about their specific race and you cannot safely cast them back. Similarly, subclassing allows you to add a new method to the superclass so that all the subclasses have to implement it.</p>
+<p>In Haskell, you can collect objects satisfying the same interface only by making them part of the same algebraic data type. Otherwise, you would need dynamic dispatch to decide which function to use, which Haskell doesn’t allow. Adding a new action, however, is easy enough. You just make that data type an instance of the new type class (or you extend the old type class).</p>
+<h2 id="add-a-new-action-without-modifying-classes">Add a New Action without Modifying Classes</h2>
+<p>In Haskell, you can create a new type class and instantiate it for existing data types. In Java, you can’t. You have to go and modify each of the subclasses.</p>
+<h2 id="add-a-new-class-without-modifying-actions">Add a New Class without Modifying Actions</h2>
+<p>In Java, you can add a new subclass and implement all of the superclass methods without touching any of the other classes. However, in Haskell, if you add a new type to the original data type, you will have to change the pattern-matching code in every single function that uses that type.</p>
+<h2 id="tradeoffs-new-actions-vs-new-data-types">Tradeoffs: New Actions vs New Data Types</h2>
+<p>I guess Haskell takes the approach that your data types are fixed, but your actions keep changing. You may have the same game tree type, but you can evaluate it, pretty print it, transform it, and so on.</p>
+<p>Java takes the approach that your actions are fixed but your data types keep changing. You can add new types of Monsters later in the game without touching the existing Monsters.</p>
+<h2 id="stand-alone-table">Stand-Alone Table</h2>
+<p>Why not have a table of Monster vs Action and simply add entries to it as necessary? If you want to add a new Monster (Troll), then add it and implement the existing Actions. If you want to add a new Action (attack), then add it and implement it for the existing Monsters.</p>
+<p>Though it looks tempting, the problem here is that you’re not guaranteed about the behaviour of the collection anymore. Earlier, you could say for sure that all the Monsters would implement all the same actions. What if someone just implemented only a few of the actions for Troll? Maybe we can have type checks for that.</p>
 
 <div class="info">Created: July 13, 2016</div>
 <div class="info">Last modified: July 16, 2016</div>
 <div class="info">Status: in-progress notes</div>
-<div class="info"><b>Tags</b>: notes, programming</div>
+<div class="info"><b>Tags</b>: notes, design</div>
 
 <br />
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'spkrationalitytrainingground'; // required: replace example with your forum shortname
-    var disqus_identifier = '/java-design-problems.html';
-    var disqus_title = 'Programming Design Problems';
+    var disqus_identifier = '/program-design.html';
+    var disqus_title = 'Program Design';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
