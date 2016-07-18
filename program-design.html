@@ -194,9 +194,12 @@
 <h2 id="stand-alone-table">Stand-Alone Table</h2>
 <p>Why not have a table of Monster vs Action and simply add entries to it as necessary? If you want to add a new Monster (Troll), then add it and implement the existing Actions. If you want to add a new Action (attack), then add it and implement it for the existing Monsters.</p>
 <p>Though it looks tempting, the problem here is that you’re not guaranteed about the behaviour of the collection anymore. Earlier, you could say for sure that all the Monsters would implement all the same actions. What if someone just implemented only a few of the actions for Troll? Maybe we can have type checks for that.</p>
+<h1 id="code-smell-concrete-types-instead-of-abstract-types">Code Smell: Concrete Types instead of Abstract Types</h1>
+<p>If most of your functions have concrete types, you’re probably doing something wrong. Surely your code isn’t so specific that you need all the details of the data type for every function?</p>
+<p>When all of your parameters are concrete, your code can’t handle new data types.</p>
 
 <div class="info">Created: July 13, 2016</div>
-<div class="info">Last modified: July 16, 2016</div>
+<div class="info">Last modified: July 17, 2016</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, design</div>
 
