@@ -178,8 +178,58 @@
 <p>So, good calibration can help you set more realistic expectations. Instead of aiming to bang out a finished program within an hour, expect it to take a whole day. Realize that tasks take a finite, non-zero amount of time - brushing and flossing takes me around 10 minutes, washing the dishes takes around 10 minutes, and so on. When I make plans, I see only the big items (writing, studying, exercising) and fail to budget for the small fry.</p>
 <p>Sadly, some inaccurate estimates cost me weeks and months and years instead of a few extra hours. This is nothing but the <a href="http://lesswrong.com/lw/jg/planning_fallacy/">planning fallacy</a> and it can be <a href="http://lesswrong.com/lw/jh/kahnemans_planning_anecdote/">very costly</a> indeed.</p>
 <p>Lesson: Make predictions about all your planning estimates (hourly, daily, and weekly). If you plan to do three tasks, you’re implicitly estimating that you can fit them within your work hours. So, predict it on PB and see how you fare.</p>
+<h1 id="making-better-predictions">Making Better Predictions</h1>
+<p>Enumerate all the possibilities before you make your prediction. Right now, I feel like I’m focussing only on the outcomes I like, for example whether India loses one wicket or zero in the first ten overs. It doesn’t feel real to me that India could lose four wickets in the first ten overs. Or that it might rain! I don’t even push my mind to that extreme.</p>
+<p>So, list all the outcomes and ask yourself what probabilities you put on each of them. Thinking in terms of binary predictions might be a problem. You tend to focus on one outcome (“India will lose one wicket”) and lump everything else under “other outcomes”. You thus fail to consider certain outcomes and their probabilities (a good spell by a bowler, great batting, or even just rain). Don’t make a prediction without listing all the outcomes (or at least three exclusive events).</p>
+<h1 id="fallacy-of-even-odds">Fallacy of Even Odds</h1>
+<p>A big related problem is that I look at the “two” outcomes (say, biotech company X will create a vaccine and it won’t) and decide that I don’t know much about biotech vaccines and so give it fair odds - 50% probability.</p>
+<p>But that’s a false model! Framing it as “company X succeeds vs fails” makes me try to distribute 100% probability among these two outcomes, and thinking that I don’t know anything makes me distribute it evenly. But I <strong>do</strong> know something, which is that there are several biotech companies in the world, many of whom are trying to create that vaccine. So, to truly distribute my probability mass evenly, I must look at the number of biotech companies (say 8) and give them all equal probability (12.5%).</p>
+<p>This, I think, is one of the biggest problems in becoming calibrated: we start with the wrong probability estimates! We put too much confidence in some hypotheses. It’s hard to recover from that because you don’t expect to be proven wrong (you’re confident) and so you don’t go looking at the experiments that you would (ideally) expect to surprise you.</p>
+<p>I’m reminded of the 2-4-6 task in HPMOR. Hermione (and I and many others) were doomed right from the beginning simply by focussing too much on the “even plus two” rule. We didn’t ask about weird triplets like (-2432, 34, 3.34) because we fully expected them to be invalid and so didn’t want to waste a question. But we should. We’re just starting out - we haven’t got enough information to <a href="http://lesswrong.com/lw/19m/privileging_the_hypothesis/">locate the right hypothesis</a>. But to no avail. We’re doomed.</p>
+<p>Prediction: If you get yourself accurate prior probabilities, then you can update your way to decent calibrated estimates.</p>
+<h1 id="test-does-new-information-change-your-predictions">Test: Does new information change your predictions?</h1>
+<p>Does your prediction change after you get more information? For example, I made my prediction about a cricket match without knowing who won the toss or what changes they made to the team. How can my prediction remain exactly the same after I find out? That would mean that India batting first had exactly the same odds of winning for me as India bowling first. Or that the opposition’s main bowler getting injured didn’t change their chances at all.</p>
+<h1 id="features-i-would-like">Features I Would Like</h1>
+<p>When I’m making a 60% prediction, it would be cool to see the last 20 predictions where I made 60% predictions. This way I can see what 60% felt like and what it should have felt like (perhaps more like 55% in some cases). Seeing the stats table for all my 60% predictions ever isn’t as helpful because many of them are from prehistoric times when I was prediction-illiterate. Also they don’t give me concrete instances to reflect on (“remember how uncertain you were about getting that refund?”) so I can’t make analogies using the past.</p>
+<h1 id="current-pb-statistics">Current PB Statistics</h1>
+<p>As it stands, the current PB stats don’t distinguish at all between a 70% prediction and a 79% prediction. They both fall in the 70% band and add the same amount to your accuracy if they come out right.</p>
+<p>This is not good, because <a href="http://slatestarcodex.com/2016/02/04/book-review-superforecasting/">apparently</a> rounding the predictions of good forecasters to the nearest 5% or 10% removes a lot of their advantage.</p>
+<h1 id="multiple-outcomes-are-okay">Multiple Outcomes are Okay</h1>
+<p>I’m afraid to make a 20% prediction for one of five outcomes, even though that’s the uniform prior. This is because if I only register this one prediction, then I feel will be penalized. Is that true?</p>
+<p>Remember that you’re testing your calibration, not discrimination. So, it’s ok if you just book one 20% prediction. If you really are well-calibrated, then for every ten such 20% predictions, eight will come wrong and your stats will be good. Have faith even if it goes wrong once in a while. This is the challenge - to be able to withstand temporary setbacks and trust the numbers.</p>
+<h1 id="uncertainty---take-on-a-little-not-a-lot">Uncertainty - Take on a little, not a lot</h1>
+<p>It’s easier to predict the winners for a series of cricket matches than to predict the exact outcome of each ball of a match. Why? Because you have lower uncertainty in the former.</p>
+<p>Take 10 matches. Say there can only be two outcomes - win or loss. Your maximum uncertainty about those matches is 1 bit per match x 10 matches = 10 bits of uncertainty. This is because each match can have only two outcomes and so a maximum of 1 bit of uncertainty (when you put 50-50 on win and loss).</p>
+<p>However, take just 10 balls in a single match. Now, there are several possible outcomes for each ball - the batsman could get out, hit a four, take a single, leave it alone, etc. This is excluding the finer details like how fast the ball was, where it pitched, where he hit the ball, who fielded, etc. Even if we just restrict it to 16 possible outcomes per ball, that gives us a maximum of 4 bits of uncertainty, and so 40 bits of uncertainty total about those 10 balls.</p>
+<p>So, you have to do strictly more work in the second challenge than in the first (40 bits of uncertainty vs 10 bits) to get to the correct answer. And that was for just 10 balls! A full T20 match has 40 overs x 6 balls = 240 balls. With even just 16 possible outcomes per ball, you get a maximum of 960 bits of uncertainty. That is orders of magnitude more than the 10-match scenario. It’s the difference between looking for a diamond in a set of 2^10 = ~10^3 closed boxes and looking for a diamond in a set of 2^960 = ~10^288 closed boxes. Good luck trying to locate the diamond within the latter.</p>
+<p>For example, if India plays Bangladesh in a cricket match, it’s hard to predict the outcome from ball to ball (like Raina getting out in the 9th over), but quite easy to predict that India is going to win the match. Don’t beat yourself up if you get unexpected outcomes in between - it’s too hard.</p>
+<p>Lesson: If you want to make correct predictions, stay away from high-uncertainty situations. The deck is stacked against you there.</p>
+<p>If you want to remain <em>calibrated</em> in such situations, stick to the uniform prior predictions, otherwise you’ll be surprised very often.</p>
+<p>What if you want to make correct predictions? Go for places where you have low maximum uncertainty, like who will win the match (just two possible outcomes) or who will be the man of the match (only a few stand-out players) or what the run rate will be in the last five overs (there are only a few options - 5-6, 6-7, 7-8, etc.). But <em>not</em> how many runs India will score to a precision of 5 runs - there are lots of options and a lot can go wrong.</p>
+<p>In short, don’t trust yourself to reduce a lot of uncertainty. Stick to small, manageable problems.</p>
+<blockquote>
+<p>I thought I could get away with thinking complicated thoughts myself, in the literary style of the complicated thoughts I read in science books, not realizing that correct complexity is only possible when every step is pinned down overwhelmingly. Today, one of the chief pieces of advice I give to aspiring young rationalists is “Do not attempt long chains of reasoning or complicated plans.”</p>
+<p>– Eliezer Yudkowsky, <a href="http://lesswrong.com/lw/iy/my_wild_and_reckless_youth/">My Wild and Reckless Youth</a></p>
+</blockquote>
+<h1 id="resources-for-making-predictions">Resources for Making Predictions</h1>
+<h2 id="gwerns-advice-on-making-predictions">Gwern’s advice on Making Predictions</h2>
+<p>He <a href="http://www.gwern.net/Prediction%20markets#how-i-make-predictions">talks</a> about 3 parts of making predictions: specifying the prediction, deciding the due-date, and assigning a probability to the prediction.</p>
+<p>The prediction should be “a statement on an objective and easily checkable fact”, so that even an arch-enemy trying to poke holes would <em>have</em> to agree when you claim that your prediction was right (or wrong).</p>
+<p>He goes into great detail on how to make calibrated probability estimates. Will delve into those after some time. I just want to get started now.</p>
+<h2 id="douglas-hubbard---how-to-measure-anything">Douglas Hubbard - How to Measure Anything</h2>
+<p>He gives lots of brilliant techniques for making calibrated predictions. Will go into all of them soon.</p>
+<h2 id="calibration-1">Calibration</h2>
+<ul>
+<li><a href="http://lesswrong.com/r/lesswrong/lw/1f8/test_your_calibration/">Test your Calibration!</a></li>
+</ul>
+<h2 id="philip-tetlock">Philip Tetlock</h2>
+<p>Main way to become better at predicting: keep score.</p>
+<h1 id="ps-ideas">PS: Ideas</h1>
+<ul>
+<li>Wrong beliefs vs Wrong translation</li>
+</ul>
 <h1 id="my-pb-calibration-scores">My PB Calibration Scores</h1>
-<p>February 13, 2015:</p>
+<p>February 13, 2016:</p>
 <div class="statistics">
 <table>
 <thead>
@@ -267,6 +317,7 @@ Sample Size
 </table>
 <p><img src="http://chart.apis.google.com/chart?cht=s&amp;chg=20,20&amp;chds=50,100,0,100,0,60&amp;chm=o,AAAAFF,0,-1,25,1|r,44FF44,0,0.49,0.51|D,FFCCCC,0,0,0.5,-1&amp;chxt=x,x,y,y&amp;chxr=0,50,100|1,0,100&amp;chd=t:50,60,70,80,90,100|30,51,67,73,85,0|23,43,55,37,60,0&amp;chs=355x200&amp;chxl=1:|Confidence  (%)|3:|Accuracy&amp;chxp=1,50|3,50" alt="Chart?cht=s&amp;chg=20,20&amp;chds=50,100,0,100,0,60&amp;chm=o,aaaaff,0,-1,25,1|r,44ff44,0,0.49,0.51|d,ffcccc,0,0,0"></p>
 </div>
+<p>Feb 23, 2016:</p>
 <div class="statistics">
 <h2>
 Statistics
@@ -357,59 +408,100 @@ Sample Size
 </table>
 <img src="http://chart.apis.google.com/chart?cht=s&amp;chg=20,20&amp;chds=50,100,0,100,0,66&amp;chm=o,AAAAFF,0,-1,25,1|r,44FF44,0,0.49,0.51|D,FFCCCC,0,0,0.5,-1&amp;chxt=x,x,y,y&amp;chxr=0,50,100|1,0,100&amp;chd=t:50,60,70,80,90,100|36,60,67,77,86,100|28,57,63,53,66,1&amp;chs=355x200&amp;chxl=1:|Confidence  (%)|3:|Accuracy&amp;chxp=1,50|3,50" alt="Chart?cht=s&amp;chg=20,20&amp;chds=50,100,0,100,0,66&amp;chm=o,aaaaff,0,-1,25,1|r,44ff44,0,0.49,0.51|d,ffcccc,0,0,0">
 </div>
-<h1 id="making-better-predictions">Making Better Predictions</h1>
-<p>Enumerate all the possibilities before you make your prediction. Right now, I feel like I’m focussing only on the outcomes I like, for example whether India loses one wicket or zero in the first ten overs. It doesn’t feel real to me that India could lose four wickets in the first ten overs. Or that it might rain! I don’t even push my mind to that extreme.</p>
-<p>So, list all the outcomes and ask yourself what probabilities you put on each of them. Thinking in terms of binary predictions might be a problem. You tend to focus on one outcome (“India will lose one wicket”) and lump everything else under “other outcomes”. You thus fail to consider certain outcomes and their probabilities (a good spell by a bowler, great batting, or even just rain). Don’t make a prediction without listing all the outcomes (or at least three exclusive events).</p>
-<h1 id="fallacy-of-even-odds">Fallacy of Even Odds</h1>
-<p>A big related problem is that I look at the “two” outcomes (say, biotech company X will create a vaccine and it won’t) and decide that I don’t know much about biotech vaccines and so give it fair odds - 50% probability.</p>
-<p>But that’s a false model! Framing it as “company X succeeds vs fails” makes me try to distribute 100% probability among these two outcomes, and thinking that I don’t know anything makes me distribute it evenly. But I <strong>do</strong> know something, which is that there are several biotech companies in the world, many of whom are trying to create that vaccine. So, to truly distribute my probability mass evenly, I must look at the number of biotech companies (say 8) and give them all equal probability (12.5%).</p>
-<p>This, I think, is one of the biggest problems in becoming calibrated: we start with the wrong probability estimates! We put too much confidence in some hypotheses. It’s hard to recover from that because you don’t expect to be proven wrong (you’re confident) and so you don’t go looking at the experiments that you would (ideally) expect to surprise you.</p>
-<p>I’m reminded of the 2-4-6 task in HPMOR. Hermione (and I and many others) were doomed right from the beginning simply by focussing too much on the “even plus two” rule. We didn’t ask about weird triplets like (-2432, 34, 3.34) because we fully expected them to be invalid and so didn’t want to waste a question. But we should. We’re just starting out - we haven’t got enough information to <a href="http://lesswrong.com/lw/19m/privileging_the_hypothesis/">locate the right hypothesis</a>. But to no avail. We’re doomed.</p>
-<p>Prediction: If you get yourself accurate prior probabilities, then you can update your way to decent calibrated estimates.</p>
-<h1 id="test-does-new-information-change-your-predictions">Test: Does new information change your predictions?</h1>
-<p>Does your prediction change after you get more information? For example, I made my prediction about a cricket match without knowing who won the toss or what changes they made to the team. How can my prediction remain exactly the same after I find out? That would mean that India batting first had exactly the same odds of winning for me as India bowling first. Or that the opposition’s main bowler getting injured didn’t change their chances at all.</p>
-<h1 id="features-i-would-like">Features I Would Like</h1>
-<p>When I’m making a 60% prediction, it would be cool to see the last 20 predictions where I made 60% predictions. This way I can see what 60% felt like and what it should have felt like (perhaps more like 55% in some cases). Seeing the stats table for all my 60% predictions ever isn’t as helpful because many of them are from prehistoric times when I was prediction-illiterate. Also they don’t give me concrete instances to reflect on (“remember how uncertain you were about getting that refund?”) so I can’t make analogies using the past.</p>
-<h1 id="current-pb-statistics">Current PB Statistics</h1>
-<p>As it stands, the current PB stats don’t distinguish at all between a 70% prediction and a 79% prediction. They both fall in the 70% band and add the same amount to your accuracy if they come out right.</p>
-<p>This is not good, because <a href="http://slatestarcodex.com/2016/02/04/book-review-superforecasting/">apparently</a> rounding the predictions of good forecasters to the nearest 5% or 10% removes a lot of their advantage.</p>
-<h1 id="multiple-outcomes-are-okay">Multiple Outcomes are Okay</h1>
-<p>I’m afraid to make a 20% prediction for one of five outcomes, even though that’s the uniform prior. This is because if I only register this one prediction, then I feel will be penalized. Is that true?</p>
-<p>Remember that you’re testing your calibration, not discrimination. So, it’s ok if you just book one 20% prediction. If you really are well-calibrated, then for every ten such 20% predictions, eight will come wrong and your stats will be good. Have faith even if it goes wrong once in a while. This is the challenge - to be able to withstand temporary setbacks and trust the numbers.</p>
-<h1 id="uncertainty---take-on-a-little-not-a-lot">Uncertainty - Take on a little, not a lot</h1>
-<p>It’s easier to predict the winners for a series of cricket matches than to predict the exact outcome of each ball of a match. Why? Because you have lower uncertainty in the former.</p>
-<p>Take 10 matches. Say there can only be two outcomes - win or loss. Your maximum uncertainty about those matches is 1 bit per match x 10 matches = 10 bits of uncertainty. This is because each match can have only two outcomes and so a maximum of 1 bit of uncertainty (when you put 50-50 on win and loss).</p>
-<p>However, take just 10 balls in a single match. Now, there are several possible outcomes for each ball - the batsman could get out, hit a four, take a single, leave it alone, etc. This is excluding the finer details like how fast the ball was, where it pitched, where he hit the ball, who fielded, etc. Even if we just restrict it to 16 possible outcomes per ball, that gives us a maximum of 4 bits of uncertainty, and so 40 bits of uncertainty total about those 10 balls.</p>
-<p>So, you have to do strictly more work in the second challenge than in the first (40 bits of uncertainty vs 10 bits) to get to the correct answer. And that was for just 10 balls! A full T20 match has 40 overs x 6 balls = 240 balls. With even just 16 possible outcomes per ball, you get a maximum of 960 bits of uncertainty. That is orders of magnitude more than the 10-match scenario. It’s the difference between looking for a diamond in a set of 2^10 = ~10^3 closed boxes and looking for a diamond in a set of 2^960 = ~10^288 closed boxes. Good luck trying to locate the diamond within the latter.</p>
-<p>For example, if India plays Bangladesh in a cricket match, it’s hard to predict the outcome from ball to ball (like Raina getting out in the 9th over), but quite easy to predict that India is going to win the match. Don’t beat yourself up if you get unexpected outcomes in between - it’s too hard.</p>
-<p>Lesson: If you want to make correct predictions, stay away from high-uncertainty situations. The deck is stacked against you there.</p>
-<p>If you want to remain <em>calibrated</em> in such situations, stick to the uniform prior predictions, otherwise you’ll be surprised very often.</p>
-<p>What if you want to make correct predictions? Go for places where you have low maximum uncertainty, like who will win the match (just two possible outcomes) or who will be the man of the match (only a few stand-out players) or what the run rate will be in the last five overs (there are only a few options - 5-6, 6-7, 7-8, etc.). But <em>not</em> how many runs India will score to a precision of 5 runs - there are lots of options and a lot can go wrong.</p>
-<p>In short, don’t trust yourself to reduce a lot of uncertainty. Stick to small, manageable problems.</p>
-<blockquote>
-<p>I thought I could get away with thinking complicated thoughts myself, in the literary style of the complicated thoughts I read in science books, not realizing that correct complexity is only possible when every step is pinned down overwhelmingly. Today, one of the chief pieces of advice I give to aspiring young rationalists is “Do not attempt long chains of reasoning or complicated plans.”</p>
-<p>– Eliezer Yudkowsky, <a href="http://lesswrong.com/lw/iy/my_wild_and_reckless_youth/">My Wild and Reckless Youth</a></p>
-</blockquote>
-<h1 id="resources-for-making-predictions">Resources for Making Predictions</h1>
-<h2 id="gwerns-advice-on-making-predictions">Gwern’s advice on Making Predictions</h2>
-<p>He <a href="http://www.gwern.net/Prediction%20markets#how-i-make-predictions">talks</a> about 3 parts of making predictions: specifying the prediction, deciding the due-date, and assigning a probability to the prediction.</p>
-<p>The prediction should be “a statement on an objective and easily checkable fact”, so that even an arch-enemy trying to poke holes would <em>have</em> to agree when you claim that your prediction was right (or wrong).</p>
-<p>He goes into great detail on how to make calibrated probability estimates. Will delve into those after some time. I just want to get started now.</p>
-<h2 id="douglas-hubbard---how-to-measure-anything">Douglas Hubbard - How to Measure Anything</h2>
-<p>He gives lots of brilliant techniques for making calibrated predictions. Will go into all of them soon.</p>
-<h2 id="calibration-1">Calibration</h2>
-<ul>
-<li><a href="http://lesswrong.com/r/lesswrong/lw/1f8/test_your_calibration/">Test your Calibration!</a></li>
-</ul>
-<h2 id="philip-tetlock">Philip Tetlock</h2>
-<p>Main way to become better at predicting: keep score.</p>
-<h1 id="ps-ideas">PS: Ideas</h1>
-<ul>
-<li>Wrong beliefs vs Wrong translation</li>
-</ul>
+<p>July 19, 2016:</p>
+<div class="statistics">
+<h2>
+Statistics
+</h2>
+<table>
+<thead>
+<tr>
+<th class="narrow">
+Confidence
+</th>
+<th>
+50%
+</th>
+<th>
+60%
+</th>
+<th>
+70%
+</th>
+<th>
+80%
+</th>
+<th>
+90%
+</th>
+<th>
+100%
+</th>
+<th>
+Total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="narrow">
+Accuracy
+</th>
+<td>
+48%
+</td>
+<td>
+66%
+</td>
+<td>
+66%
+</td>
+<td>
+75%
+</td>
+<td>
+86%
+</td>
+<td>
+100%
+</td>
+<td>
+ 
+</td>
+</tr>
+<tr>
+<th class="narrow">
+Sample Size
+</th>
+<td>
+44
+</td>
+<td>
+79
+</td>
+<td>
+77
+</td>
+<td>
+61
+</td>
+<td>
+79
+</td>
+<td>
+1
+</td>
+<td>
+341
+</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Chart?cht=s&amp;chg=20,20&amp;chds=50,100,0,100,0,79&amp;chm=o,aaaaff,0, 1,25,1|r,44ff44,0,0.49,0.51|d,ffcccc,0,0,0" src="http://chart.apis.google.com/chart?cht=s&amp;chg=20,20&amp;chds=50,100,0,100,0,79&amp;chm=o,AAAAFF,0,-1,25,1|r,44FF44,0,0.49,0.51|D,FFCCCC,0,0,0.5,-1&amp;chxt=x,x,y,y&amp;chxr=0,50,100|1,0,100&amp;chd=t:50,60,70,80,90,100|48,66,66,75,86,100|44,79,77,61,79,1&amp;chs=355x200&amp;chxl=1:|Confidence  (%)|3:|Accuracy&amp;chxp=1,50|3,50"></p>
+</div>
 
 <div class="info">Created: November  3, 2014</div>
-<div class="info">Last modified: February 25, 2016</div>
+<div class="info">Last modified: July 19, 2016</div>
 <div class="info">Status: finished</div>
 <div class="info"><b>Tags</b>: prediction</div>
 
