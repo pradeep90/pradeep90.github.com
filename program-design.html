@@ -53,6 +53,7 @@
 <p>I think most Java programs violate the Law of Demeter: use only one dot in a method call. For example, just printing “Hello World” requires that you use two dots:</p>
 <pre><code>System.out.println(&quot;Hello World&quot;);</code></pre>
 <p>This seems to be the case with most programs.</p>
+<p>Hypothesis: The problem here is that you’re programming to an implementation, not an interface. You’re depending on the methods of a class instead of an inference. Once you have an interface, you’re forced to generalize your code. Otherwise, you use class-specific methods that you cannot reuse.</p>
 <h1 id="too-specific">Too Specific</h1>
 <p>The key problem is that you end up writing functions and classes that are not general enough. This means you can’t reuse them elsewhere.</p>
 <p>Here’s some n00b Java code I wrote four years ago:</p>
@@ -199,7 +200,7 @@
 <p>When all of your parameters are concrete, your code can’t handle new data types.</p>
 
 <div class="info">Created: July 13, 2016</div>
-<div class="info">Last modified: July 17, 2016</div>
+<div class="info">Last modified: July 20, 2016</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, design</div>
 
