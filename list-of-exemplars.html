@@ -56,9 +56,9 @@
 <h1 id="concepts">Concepts</h1>
 <p><strong>Causal models</strong>: a = F/m. depression &lt;- rumination about pessimistic explanations vs not. willpower &lt;- energy available in your brain for self-control, your self-control habits.</p>
 <p>What are not causal models? Prose explanations are not explicitly causal models. “This could explain the disconnect over cubicles. Maybe the people in charge of facilities, not having any concentration to shatter, have no idea that working in a cubicle feels to a hacker like having one’s brain in a blender.” (PG, <a href="http://www.paulgraham.com/gh.html">Great Hackers</a>) Maybe after reading that, you have a causal model in your head: no concentration to shatter -&gt; no model that [cubicle -&gt; brain in a blender vs not]. And, people in charge of facilities (have no concentration to shatter) -&gt; feel cubicles are good; hackers (have concentration to shatter) -&gt; feel cubicles are bad; hence, a disconnect over cubicles. (Wow, he packed all that in two sentences.)</p>
-<p>Similarly, correlations are not causal models. “Obesity is <em>associated</em> with heart disease” is not good enough. You need to build and test the causal model. Similarly for graphs and other representations of correlations.</p>
+<p>Similarly, correlations are not causal models. “Obesity is <em>associated</em> with heart disease” is not good enough. You need to build and test the causal model. The same holds for graphs and other representations of correlations.</p>
 <p><strong>JPD</strong>: Look at all the possible states of the world (or paths of the world, if you’re modelling it over time).</p>
-<pre><code>| RAIny | Cool  | Probability |
+<pre><code>| Rainy | Cool  | Probability |
 |-----------------------------|
 | False | False | 50%         |
 | False | True  | 30%         |
@@ -82,7 +82,7 @@
 <p>Take the message “left pan lighter than right pan” - you’ve now eliminated the hypotheses where the odd ball was outside the pans, or where a heavier ball was on the left side or a lighter ball on the right side. So, that’s 8 + 4 + 4 = 16 hypotheses eliminated, leaving 8 hypotheses. Your uncertainty now is -log2(1/8) = 3 bits. Similarly, for the message “left pan heavier than right pan”, you eliminate 16 hypotheses and are left with 8 hypotheses for an uncertainty of 3 bits. Now for the message “both pans are equal” - you eliminate the hypotheses that say the odd ball is on one of the pans, leaving the 8 hypotheses about the balls outside, for an uncertainty of 3 bits. Thus, after getting the first message, you expect an uncertainty of 3 bits no matter the message. So, expected uncertainty = 3 x 1/3 x 3 = 3 bits.</p>
 <p>Well, in the extreme case, you expect that N messages of entropy U/N will reduce a total of uncertainty of U to zero. So, entropy seems like it is <em>expected</em> uncertainty reduction. You have to consider the different messages and your uncertainty in those possible worlds. My only problem is that I’m not able to derive this mathematically.</p>
 <p><strong>Categories</strong>: Robins and crows seem like prototypical birds; ostriches don’t. But they still seem more bird-y than Abraham Lincoln. In baseball, we have different categories for curve balls and fast pitches. We have movie genres like comedy, action, biopic, and drama. When I write an essay, I’m not reading a book or taking a walk.</p>
-<p><strong>Empiricism and naive realism</strong>: You think there’s no chilli powder left in the cupboard. But you go and check anyway, and what do you find? You think you’ve been using some technique a lot, but then you start actually keeping count… and the results are not pleasing. You fight with somebody else over how likely it <em>is</em> that some politician will get elected, but you don’t realize that probability exists in the mind, not in reality. You think some problem is really hard to solve, but it is just that <em>you</em> think it is complex and hard to solve. It may not actually be so.</p>
+<p><strong>Empiricism and naive realism</strong>: You think there’s no chilli powder left in the cupboard. But you go and check anyway, and what do you find? You think you’ve been using some technique a lot, but then you start actually keeping count… and the results are not pleasant. You fight with somebody else over how likely it <em>is</em> that some politician will get elected, but you don’t realize that probability exists in the mind, not in reality. You think some problem is really hard to solve, but it is just that <em>you</em> think it is complex and hard to solve. It may not actually be so.</p>
 <p><strong>Taboo</strong>: “boundaries” = property rights = things for which only you can say yes or no, because you’re willing to pay the price to make it happen; things whose value to you exceeds their opportunity cost. “information” = amount by which this message multiplies your confidence in the correct hypothesis. “falsifiability” = being able to recognize this value or its alternatives in the real world, by expressing the abstract concept in terms of concrete sub-concepts (example: “that was a marvellous cover drive” - what isn’t a marvellous cover drive?).</p>
 <p><strong>Look only at the differing predictions</strong>: Laptop keeps crashing because of overheating due to dust or overheating due to graphics card problem - well, if it crashes even after cleaning the dust, it can’t be because of the dust. Between the spontaneous generation of life theory and life generates life theory: Pasteur prevented living things from coming in contact with the broth and showed that maggots wouldn’t form on its surface. Differing prediction between biochemistry theory of panic attacks and cognitive theory of panic attacks: can you prevent a panic attack even in the presence of sodium lactate?</p>
 <p><strong>What would falsify your hypothesis</strong>: If you predicted that stocks would go up, then if they go down, your theory is wrong. “The Dark Knight is the best movie ever” - what would falsify this? What if it isn’t at #1 on the IMDB list? What if you’ve watched it fewer times than movies you say you like less, for example, The Terminator? If you say Dhoni is the best finisher in the world right now, but he has a T20 strike rate of only about 120, then is your theory wrong? What would you have predicted? Seriously? You’re not surprised that his strike rate is lower than that of Kohli or just about any other half-decent T20 batsman?</p>
@@ -214,6 +214,8 @@
 <p>– <a href="https://www.reddit.com/r/Anki/comments/3odyjr/using_anki_for_things_other_than_language_learning/cw3ttbk">sgtoox on r/anki</a></p>
 </blockquote>
 <p><a href="https://www.reddit.com/r/Anki/comments/2w1mgm/does_anki_really_work/comxq2h">Jae_t</a> is a “med student with over <strong>30000</strong> cards”.</p>
+<p><a href="http://rs.io/anki-tips/">Robert Seaton</a> made 10k cards in over a year.</p>
+<p>Dysgraphic Musings of a Busy Medical Student (<a href="http://www.dysgraphicmusings.com/2014/03/anki-q.html">blog</a>): “20-50 cards per lecture”; “1-1.5 hours to make cards for an hour-long lecture”; “2-3 hours” for making cards every day</p>
 <p><strong>epic scale</strong>: Wikipedia; WoW wiki (as Jane McGonigal says); Anki - huge number of flashcards created (This <a href>list</a>)</p>
 <p><strong>actually trying</strong>: Whiplash</p>
 <blockquote>
@@ -221,6 +223,26 @@
 <p>– Terence Fletcher</p>
 </blockquote>
 <p><strong>low delay</strong>: Trying to work on “boundary violations” with no feedback at all - I got stuck. I had very high delay for the feedback.</p>
+<p><strong>constant vigilance</strong>: The files on my external hard drive would have been locked had I not thought to check individual files and thus notice the permissions.</p>
+<p><strong>pain</strong>: … This isn’t some metaphorical pain. It’s actual, real, mundane pain. The kind that makes you want to drink away your pain, or binge-watch some TV show to take your mind off it. It can be quite pointless and petty (like the one at the supermarket) yet all-consuming.</p>
+<blockquote>
+<p>“That was just a taster!” said Bellatrix, raising her wand so that Neville’s screams stopped and he lay sobbing at her feet.</p>
+<p>– Harry Potter and the Order of the Phoenix</p>
+</blockquote>
+<blockquote>
+<p>Doctor: You wanna see pain? Swing by First Methodist Tuesday nights. See the guys with testicular cancer. That’s pain.</p>
+<p>– Fight Club</p>
+</blockquote>
+<p><strong>experts redefine what is possible</strong>: memory - you can memorize it! Expert memorists have dealt with <em>way</em> worse (for example, they routinely memorize whole decks of cards, hundreds of names, thousands of meaningless digits of pi). A hundred new items from a textbook chapter is nothing!</p>
+<p>Corollary: They also redefine what is “impossible”.</p>
+<p>A month ago, I would have considered it “impossible” for anyone to memorize whole decks of cards or for me to memorize all the flags of the world or all the elements in the periodic table.</p>
+<p>Corollary: They also deny you your excuses.</p>
+<p>awk - of course you can use awk to concatenate several lines that match a pattern or to get the text from within non-nested html tags. They’ve done far greater things than this.</p>
+<blockquote>
+<p>It was his dark side that would have <strong>laughed scornfully</strong> at the very concept of giving up just because [shit had hit the fan].</p>
+<p>– <a href="http://hpmor.com/chapter/55">Chapter 55, HPMOR</a></p>
+</blockquote>
+<p><strong>scholarship, not original research</strong>: spaced repetition (SuperMemo), perfectionism and shame (Brene Brown), rapid prototyping (PG, founders, continuous delivery guys), causality (Pearl), categories (Eliezer’s <a href="https://wiki.lesswrong.com/wiki/A_Human%27s_Guide_to_Words">sequence</a>), memory (world champions have long known how to memorize vast chunks of data at speed).</p>
 <h1 id="false-categories">False Categories</h1>
 <p>Meta: Show why they’re not real categories. Check whether they do have discriminating cues (“magic” doesn’t, for example) and, if so, check whether they match reality (“I will die if she leaves me” doesn’t).</p>
 <p>true romantic love</p>
@@ -291,7 +313,7 @@
 <p>fear: “I’m afraid to write the essay” - fear of the event or fear of the outcome? Test your predictions against reality. Build accurate categories.</p>
 
 <div class="info">Created: March 28, 2016</div>
-<div class="info">Last modified: August  4, 2016</div>
+<div class="info">Last modified: August 31, 2016</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: exemplars</div>
 

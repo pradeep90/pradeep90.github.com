@@ -211,6 +211,12 @@
 <p>I thought I could get away with thinking complicated thoughts myself, in the literary style of the complicated thoughts I read in science books, not realizing that correct complexity is only possible when every step is pinned down overwhelmingly. Today, one of the chief pieces of advice I give to aspiring young rationalists is “Do not attempt long chains of reasoning or complicated plans.”</p>
 <p>– Eliezer Yudkowsky, <a href="http://lesswrong.com/lw/iy/my_wild_and_reckless_youth/">My Wild and Reckless Youth</a></p>
 </blockquote>
+<h1 id="how-to-judge-a-confidence-interval">How to Judge a Confidence Interval</h1>
+<p>Let’s say you estimated that you would wake up tomorrow between 5am and 8am with probability 81%. When would you feel more confident in your prediction ability: if you woke up at 6:30am or 7:59am?</p>
+<p>Somehow, you would feel that you barely got it right in the second case. Two more minutes and your whole 81% prediction would have gone wrong, whereas in the first case, you’d still be comfortably within range.</p>
+<p>So, not all outcomes within a confidence interval are equal. Ideally, 81% probability mass distributed between 5am and 8am would give 81%/180 = 0.45% probability mass to each minute. Then, a wake-up time of 7:59am would count for just as much Bayesian evidence as 6:30am. But we treat them differently. It’s like we have an implicit bell curve within the confidence interval, with central points like 6:30am counting for more than peripheral points like 7:59am.</p>
+<p>For a strong prediction, an outcome that barely falls within your confidence interval suggests that you were overconfident. For a weak prediction, an outcome that falls near the centre of your confidence interval suggests that you were overconfident.</p>
+<p>(I think this holds even if you didn’t create an explicit confidence interval. Not sure how.)</p>
 <h1 id="resources-for-making-predictions">Resources for Making Predictions</h1>
 <h2 id="gwerns-advice-on-making-predictions">Gwern’s advice on Making Predictions</h2>
 <p>He <a href="http://www.gwern.net/Prediction%20markets#how-i-make-predictions">talks</a> about 3 parts of making predictions: specifying the prediction, deciding the due-date, and assigning a probability to the prediction.</p>
@@ -501,7 +507,7 @@ Sample Size
 </div>
 
 <div class="info">Created: November  3, 2014</div>
-<div class="info">Last modified: July 19, 2016</div>
+<div class="info">Last modified: August 21, 2016</div>
 <div class="info">Status: finished</div>
 <div class="info"><b>Tags</b>: prediction</div>
 

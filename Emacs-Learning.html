@@ -60,9 +60,15 @@
 <p>Check out <code>testcover</code> or <code>edebug</code> for test coverage.</p>
 <h1 id="dired-1">Dired</h1>
 <p>wdired: When doing <code>query-replace-regexp</code> on the file names, you have to be careful not to match anything other than the filename. Otherwise, you match some of the permission data or the owner data, which are read only. And since <code>query-replace-skip-read-only</code> is on, <code>query-replace-regexp</code> skips those matches.</p>
+<h1 id="dot-emacs">Dot Emacs</h1>
+<p>“Never use load or require” - <a href="http://a-nickels-worth.blogspot.in/2007/11/effective-emacs.html">Effective .emacs</a>. He recommends using <code>autoload</code> and <code>eval-after-load</code> instead.</p>
+<h1 id="magit">Magit</h1>
+<blockquote>
+<p>Almost all the actions you can carry out in Magit is done through a one-key system that opens up a “command console” window at the bottom, letting you further refine your command before you carry it out. This is a fantastically well-done interface and is probably the killer feature that makes Magit so great. I like it so much that I have copied the underlying interface code for use in some of my own Emacs hackery. It’s really, really nice.</p>
+</blockquote>
 
 <div class="info">Created: August  6, 2015</div>
-<div class="info">Last modified: July 25, 2016</div>
+<div class="info">Last modified: September  2, 2016</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, emacs</div>
 

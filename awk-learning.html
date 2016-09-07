@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="icon" type="image/png" href="./images/favicon-32x32.png" sizes="32x32" />
 	<link rel="icon" type="image/png" href="./images/favicon-16x16.png" sizes="16x16" />
-        <title>Computer Usage Notes - SPK's Rationality Essays</title>
+        <title>Awk Learning - SPK's Rationality Essays</title>
         <link rel="stylesheet" type="text/css" href="./css/default.css" />
         <link rel="stylesheet" type="text/css" href="./css/highlight.css" />
 
@@ -43,34 +43,46 @@
         </div>
 
         <div id="content">
-          <h1 id="post-title">Computer Usage Notes</h1>
+          <h1 id="post-title">Awk Learning</h1>
 
             <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
 
-<h1 id="pdf-and-epub-notes">pdf and epub notes</h1>
-<p>The Adobe Acrobat tablet app writes my notes and underlinings to the PDF file itself. So, my notes persist when I copy the PDF file elsewhere.</p>
-<p>Not so with the notes I make in the Google Play Reader. The changes aren’t saved to the file itself. It must be stored as metadata in the reader app (and synced with the cloud).</p>
-<h1 id="manually-install-a-deb-package">Manually install a deb package</h1>
-<p>To install foo.deb:</p>
-<pre><code>sudo dpkg -i foo.deb</code></pre>
-<p>If it fails due to dependency problems:</p>
-<pre><code>sudo apt-get install -f</code></pre>
-<p>(Thanks to <a href="http://askubuntu.com/questions/40779/how-do-i-install-a-deb-file-via-the-command-line">AskUbuntu</a>)</p>
-<h1 id="install-a-font-like-inconsolata">Install a font (like Inconsolata)</h1>
-<pre><code>sudo apt install fonts-inconsolata</code></pre>
+<h1 id="questions">Questions</h1>
+<p>How to markup text for a particular delimiter, when its contents can span lines? (Example thanks to <a href="http://www.catonmat.net/blog/ten-awk-tips-tricks-and-pitfalls/">catonmat</a>)</p>
+<p>input:</p>
+<pre><code>Yesterday I was walking in =the street=, when I saw =a
+black dog=. There was also =a cat= hidden around there. =The sun= was shining, and =the sky= was blue.
+I entered =the
+music
+shop= and I bought two CDs. Then I went to =the cinema= and watched =a very nice movie=.
+End of the story.</code></pre>
+<p>desired output:</p>
+<pre><code>Yesterday I was walking in &lt;tag&gt;the street&lt;/tag&gt;, when I saw &lt;tag&gt;a
+black dog&lt;/tag&gt;. There was also &lt;tag&gt;a cat&lt;/tag&gt; hidden around there. &lt;tag&gt;The sun&lt;/tag&gt; was shining, and &lt;tag&gt;the sky&lt;/tag&gt; was blue.
+I entered &lt;tag&gt;the
+music
+shop&lt;/tag&gt; and I bought two CDs. Then I went to &lt;tag&gt;the cinema&lt;/tag&gt; and watched &lt;tag&gt;a very nice movie&lt;/tag&gt;.
+End of the story.</code></pre>
+<p>I can do this in Emacs with <code>query-replace-regexp</code>: <code>=</code> to <code>\,(if (evenp \#) &quot;&lt;tag&gt;&quot; &quot;&lt;/tag&gt;&quot;)</code>.</p>
+<p>With Awk, if I try to use:</p>
+<pre><code>awk -v RS='=' 'ORS=NR%2?&quot;&lt;tag&gt;&quot;:&quot;&lt;/tag&gt;&quot;' markup-file.txt</code></pre>
+<p>Then I get a trailing <code>&lt;tag&gt;</code> because it outputs an ORS after the last record (from the last <code>=</code> to EOF).</p>
+<pre><code>End of the story.
+&lt;tag&gt;</code></pre>
+<p>How can I avoid that?</p>
 
-<div class="info">Created: August 19, 2015</div>
-<div class="info">Last modified: August 13, 2016</div>
+<div class="info">Created: August 26, 2016</div>
+<div class="info">Last modified: August 26, 2016</div>
 <div class="info">Status: in-progress notes</div>
-<div class="info"><b>Tags</b>: notes</div>
+<div class="info"><b>Tags</b>: notes, awk</div>
 
 <br />
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'spkrationalitytrainingground'; // required: replace example with your forum shortname
-    var disqus_identifier = '/Computer-Usage-Notes.html';
-    var disqus_title = 'Computer Usage Notes';
+    var disqus_identifier = '/awk-learning.html';
+    var disqus_title = 'Awk Learning';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
