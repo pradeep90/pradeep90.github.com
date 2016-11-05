@@ -47,15 +47,12 @@
 
             <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
 
-<p><strong>Question</strong>: Given a <code>children</code> function, how will you write a <code>greatgrandchildren</code> function?</p>
+<p><strong>Question</strong>: Given the function <code>children</code>, how will you write <code>greatGrandChildren</code>?</p>
 <hr />
-<h1 id="composing-simple-functions">Composing Simple Functions</h1>
-<p>You can obviously compose functions to get functions. Composing <code>a -&gt; b</code> and <code>b -&gt; c</code> will give you <code>a -&gt; c</code>.</p>
+<h1 id="composition-is-not-just-for-simple-functions">Composition is Not Just for Simple Functions</h1>
 <p>Assume <code>square</code> is of type <code>Int -&gt; Int</code> and <code>cube</code> is of type <code>Int -&gt; Int</code>, then you can write:</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">	power6 <span class="fu">=</span> cube <span class="fu">.</span> square</code></pre></div>
 <p>Neat and simple. Couldn’t have put it better. The “.” there is the compose operator. It put square and cube together to get a new function.</p>
-<p>Similarly, <code>a -&gt; b</code> and <code>b -&gt; c</code> and … <code>y -&gt; z</code> give you <code>a -&gt; z</code>.</p>
-<h1 id="composition-is-not-just-for-simple-functions">Composition is Not Just for Simple Functions</h1>
 <p>But say you have a function <code>children</code> of type <code>Human -&gt; [Human]</code>?</p>
 <p>How will you write a function that gives a person’s grandchildren? You have to go through all kinds of trouble just to say what you would have said in three words in English - children of children.</p>
 <p>Even in a good functional language like Scheme, you would have to say:</p>
@@ -69,7 +66,8 @@
 <div class="sourceCode"><pre class="sourceCode scheme"><code class="sourceCode scheme">	(<span class="kw">define</span><span class="fu"> great-grandchildren </span>(x)
 		(concat (map children (grandchildren x))))</code></pre></div>
 <p>We desperately want to say grandchildren are just children of children, but Scheme is not letting us. Can’t we compose children with children? Nope. The types don’t match. <code>children</code> takes a Human and returns a <strong>list</strong> of Humans, so you can’t pass that on to <code>children</code>.</p>
-<p>Monads to the rescue.</p>
+<h1 id="monads-to-the-rescue">Monads to the Rescue</h1>
+<p>Here’s how you would write it in Haskell:</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">	grandChildren <span class="fu">=</span> children <span class="fu">&lt;=&lt;</span> children
 
 	greatGrandChildren <span class="fu">=</span> children <span class="fu">&lt;=&lt;</span> children <span class="fu">&lt;=&lt;</span> children</code></pre></div>
@@ -141,7 +139,7 @@
 <p>You decide to add one more - HR Department. So, you write a function <code>getHRSearchResult</code> of type <code>Search -&gt; SearchResult</code>. And, in your main function, you first call <code>getSWEnggSearchResult</code> and insert its HTML output into your page. Then, you call <code>getHRSearchResult</code> and insert its HTML output into your page.</p>
 <p>That works too! Then, you go ahead and do this for every single other goddamn department in your company. The main function balloons up with all kinds of <code>getFooSearchResults</code>.</p>
 <p>Then, next month, the company merges with another company. You get 10 more departments whose search backends you have to support. Then, at the end of the year, that company is sold off to some other company - so you now need to split off your application into two - one that supports your company’s backends and one that supports theirs. You hand that over to them. And, so it goes on.</p>
-<hr />
+<h1 id="keeping-the-complexity-low">Keeping the Complexity Low</h1>
 <p>What could you have done differently?</p>
 <p>You say that the type of <code>Backend</code> is <code>Search -&gt; SearchResult</code>. If <code>SearchResult</code> is a Monoid (which it seems to be), then <code>Search -&gt; SearchResult</code> will automatically be a Monoid. We can easily compose all these Backends together.</p>
 <p>I will use the <code>&lt;&gt;</code> sign to show appending of two Monoids.</p>
@@ -160,10 +158,10 @@ backend = ourBackend &lt;&gt; theirBackend</code></pre>
 <p>No part of your program has to change with all the other changes. You don’t have to add the complexity of having a list of backends and then processing them manually. In fact, each of those backends could themselves encompass several other backends about which you need know nothing.</p>
 <p>To your program, there is just one backend. At each point, you’re dealing with just <strong>one</strong> composite backend. The code complexity of your program stays constant no matter how many backends you add.</p>
 <hr />
-<p>This is just the tip of the iceberg with category theory. There’s still free monads, coyoneda (free functor), monad transformers, adjoints, and all this other neat stuff.</p>
+<p>This is just the tip of the iceberg with category theory. There’s still free monads, coyoneda (free functor), monad transformers, adjoints, and all this other neat stuff that helps you tame the complexity of your code.</p>
 <h1 id="notes">Notes</h1>
 <ul>
-<li><p>Thanks to <a href>Gabriel Gonsalez</a>’s brilliant blog posts for getting me fired up about Category Theory. All I know about Compositional Programming, I learnt from him.</p></li>
+<li><p>Thanks to <a href="http://www.haskellforall.com/">Gabriel Gonsalez</a>’s brilliant blog posts for getting me fired up about Category Theory. All I know about Compositional Programming, I learnt from him.</p></li>
 <li><p>The <code>greatGrandChildren</code> example is from Gabriel’s <a href="http://www.haskellforall.com/2012/08/the-category-design-pattern.html">Category Design Pattern</a> post.</p></li>
 <li><p>Learn You A Haskell has a <a href="http://learnyouahaskell.com/a-fistful-of-monads">great example</a> of the common Knight-Move interview problem, where they give you <code>knightMove</code> and ask for <code>knightMoveThrice</code>. (Hint: It’s the exact problem as <code>greatGrandChildren</code>)</p></li>
 </ul>
