@@ -113,6 +113,8 @@
 <p><strong>Lesson</strong>: Make your function as general as possible. Don’t accept input information that you don’t need.</p>
 <p>This is just another way of saying “make your function as <em>simple</em> as possible”.</p>
 <p>The same idea sustains the maxim “design to an interface, not an implementation”. When you design to an implementation, you get too much information, and when that information changes, you will have to change too. More to the point, your function will get more complicated, less reusable, and less readable.</p>
+<h1 id="this-is-what-refactoring-is-all-about">This is what Refactoring is all about</h1>
+<p>I think I’ve <em>finally</em> hit on what it means to write <em>better</em> essays. This is what people mean by “rewriting” an essay or “refactoring” code - make it more simple, general, and reusable.</p>
 <h1 id="other-notes-from-steve-yegges-scheming-is-believing">Other Notes from Steve Yegge’s Scheming is Believing</h1>
 <p>(Notes on his essay: <a href="https://sites.google.com/site/steveyegge2/scheming-is-believing">“Scheming is Believing”</a>)</p>
 <blockquote>
@@ -198,9 +200,40 @@
 <h1 id="code-smell-concrete-types-instead-of-abstract-types">Code Smell: Concrete Types instead of Abstract Types</h1>
 <p>If most of your functions have concrete types, you’re probably doing something wrong. Surely your code isn’t so specific that you need all the details of the data type for every function?</p>
 <p>When all of your parameters are concrete, your code can’t handle new data types.</p>
+<h1 id="top-down-vs-bottom-up-programming">Top-down vs Bottom-up Programming</h1>
+<p>I think the difference between the two is that, in the latter, your functions end up being more general. Instead of just trying to implement each branch of the top-down tree in isolation, you find common patterns and then write abstract functions to handle them.</p>
+<h1 id="type-abstraction-vs-unbound-variables">Type Abstraction vs Unbound Variables</h1>
+<p>For type abstraction, all you need is the Hindley-Milner algorithm. It will tell you that <code>show x</code> can be just <code>x :: Show a =&gt; a</code>, instead of something concrete like <code>x :: Int</code>.</p>
+<p>But for function abstraction, you need to know unbound variables. H-M will work for <code>(sum (+ 4 5)) :: Int -&gt; a</code> but not for <code>(sum (+ 1 x))</code>. That value still has the type <code>Int -&gt; a</code>, but x is unbound, so it’s actually <code>Int -&gt; Int -&gt; a</code>.</p>
+<p><strong>Hypothesis</strong>: Non-functional programmers only need to check for unbound variables when refactoring. Functional programmers have to check for type abstraction also, because they’ve got better types.</p>
+<p>How far can you get with function extraction alone? Well, you can make provably-correct extractions.</p>
+<p>Why not just use lambda calculus, then? Hmmm… our aim is to minimize our uncertainty about the code, not to have one-parameter functions.</p>
+<p>What exactly is your aim? Here’s a declarative version: (a) for each term t, variables in scope = variables unbound in t; (b) each term should have the most general type possible; <code>show x ++ &quot;yo&quot;</code> should be <code>Show a =&gt; a -&gt; String</code>, not <code>Int -&gt; String</code>.</p>
+<ol style="list-style-type: lower-alpha">
+<li>reduces uncertainty and makes your code more reusable. (b) reduces uncertainty (?) and makes code more reusable too. The reason (a) works is because it turns <code>P(a, b)P(c|a,b)</code> into <code>P(a, b)P(c|a)</code>, about which we have lower uncertainty.</li>
+</ol>
+<p>Why does (b) reduce uncertainty?</p>
+<p>What about ease of change? I don’t yet have a mathematical way to measure “ease of change”. Is it just the “size” of interfaces? Hmmm… it’s the number of other modules you have to change when you change one module.</p>
+<h1 id="uncertainty-about-a-function">Uncertainty about a Function</h1>
+<p>Hypothesis: A function’s type doesn’t fully capture your uncertainty about it.</p>
+<p>What about the functions that it depends on?</p>
+<p>For example, in <code>sum = foldr (+) 0</code>, sum depends on foldr, (+), and 0, but the external type is just <code>sum :: Num a =&gt; [a] -&gt; a</code>.</p>
+<p>We care about our uncertainty about the function, its reusability, and its modifiability.</p>
+<p>Now, obviously, a function f is more likely to change if it depends on another function g than if it doesn’t. In the former case, when g changes, then we have to change f, which increases the cost of changing g. Whereas in the latter case, when g changes, we don’t have to change f at all.</p>
+<p>Similarly, it’s harder to reuse a function when it depends on other functions, because we have to make sure those are available too.</p>
+<p>How uncertain are we about the function, though?</p>
+<p>Well, when do you care about the function’s details? When you want to use it directly, like in (a) <code>sum . map getScore</code>, but not in (b) when you just take it as a parameter. In the latter case, all you need to know is its type.</p>
+<p>For example, <code>foldr :: (a -&gt; b -&gt; b) -&gt; b -&gt; [a] -&gt; b</code>. It doesn’t care about the specifics of the folding function. All it wants is something that it can use to fold the list.</p>
+<p>So, your uncertainty about the function as a value depends only its most general type (like <code>a -&gt; b -&gt; b</code> above).</p>
+<p>To rephrase, your uncertainty about the behaviour of a function g that takes a function f as a parameter is independent of the implementation of the function f given its type.</p>
+<p>So, the “behaviour” of a value is independent of its definition given its type. Look at foldr which needs to know only <code>a -&gt; b -&gt; b</code> about its parameter function.</p>
+<hr />
+<p>However, your uncertainty about the function as something to use in a definition depends on all the other functions it includes.</p>
+<p>This could be why I’ve had so much trouble translating textbook passages. They may depend on very little by way of parameters (example?) but they depend on a lot by way of requisites.</p>
+<p>I’m not sure about this. But there’s more to our uncertainty about a function than just its type.</p>
 
 <div class="info">Created: July 13, 2016</div>
-<div class="info">Last modified: July 20, 2016</div>
+<div class="info">Last modified: October 14, 2016</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, design</div>
 

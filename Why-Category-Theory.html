@@ -106,7 +106,7 @@
 	(concat (map children (concat (map children (children x))))))</code></pre>
 <p>or, if you cheat and use grandchildren:</p>
 <pre><code>(define great-grandchildren (x)
-	(concat (map children (great-grandchildren x))))</code></pre>
+	(concat (map children (grandchildren x))))</code></pre>
 <p>We desperately want to say grandchildren are just children of children, but Scheme is not letting us. Can’t we compose children with children? Nope. The types don’t match. <code>children</code> takes a Human and returns a <strong>list</strong> of Humans, so you can’t pass that on to <code>children</code>.</p>
 <p>Monads to the rescue.</p>
 <pre><code>grandChildren = children &lt;=&lt; children
@@ -222,7 +222,7 @@ backend = ourBackend &lt;&gt; theirBackend</code></pre>
 </ul>
 
 <div class="info">Created: December 20, 2014</div>
-<div class="info">Last modified: January 22, 2015</div>
+<div class="info">Last modified: October 13, 2016</div>
 <div class="info">Status: finished</div>
 <div class="info"><b>Tags</b>: category theory, thinking</div>
 
