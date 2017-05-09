@@ -76,9 +76,13 @@
 <pre><code>hGetContents =&lt;&lt; openFile [cursor]&quot;dictionary.txt&quot; ReadMode</code></pre>
 <p>to</p>
 <pre><code>&quot;dictionary.txt&quot;</code></pre>
+<h1 id="screen-lag-in-large-markdown-buffers">Screen Lag in Large Markdown Buffers</h1>
+<p>The screen definitely lags when I type in a Markdown buffer with ~24k words, but not when I narrow the buffer to just one small section of 34 words.</p>
+<p>Could be because I have large paragraphs (which look to Emacs like large lines). Or it could just be the size of the buffer.</p>
+<p>(I think a similar effect occurs even in smaller Markdown buffers.)</p>
 
 <div class="info">Created: August  6, 2015</div>
-<div class="info">Last modified: October 17, 2016</div>
+<div class="info">Last modified: April  8, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, emacs</div>
 

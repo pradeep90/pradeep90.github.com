@@ -119,32 +119,38 @@
 <p>Woah! It’s not just that you get a very high rate of expected information. You get a very high rate of expected <em>valuable</em> information!</p>
 <p>That means having a low cycle time is the most efficient way to do things! That is how you maximize expected value of information and who doesn’t want that. That is how you should run a business. (I note that startups, especially from YC, seem to already be running on these principles. Who said the world is irrational?)</p>
 <p>This means that the idea of rapid prototyping, with fast iterations and thus low cycle time, is really the optimal way to do things. Of course, people may not be following it perfectly, but every step you take along that direction will pay dividends. Note that each iteration must give you valuable information, i.e., something that can change your decisions in a major way. Otherwise, there’s no point in iterating rapidly.</p>
-<h1 id="website">Website</h1>
+<h1 id="what-does-it-mean-to-release">What does it mean to “release”?</h1>
+<p>Releasing your product means to run your tests. A successful release means either that your failing tests now pass or that your existing tests still pass but your code is better designed.</p>
+<p>So, it’s not necessary to keep “releasing” your product again and again. If you haven’t made any changes in a while, you’re sure that your tests still pass and therefore you gain no information by “releasing” aka running your tests.</p>
+<p>In the case of an essay, the tests are run in the mind of the reader. Does he find the lead tempting? Does he get confused by your explanation of a concept? This is why you need to physically release your essay to others.</p>
+<p>In the case of a program, however, the tests are run on your own computer. You basically add a test for every feature you want your program to have and then write code till the tests run (and then refactor in the next cycle).</p>
+<h1 id="old-ideas">Old Ideas</h1>
+<h2 id="website">Website</h2>
 <p>The Product here is a collection of surprising, informative essays on my website. My website should reflect the ideas in my head, and thus reflect their Changes. I get ideas by writing notes in my diary, Org files, phone (when I’m on the go), reading books (whether or not I make notes), and discussing with friends.</p>
 <p>Now, I release my website every night through a script. So, I do in fact have frequent, automated releases here. However, the problem isn’t with releasing the essays I’ve written up inside my website directory. It’s with the ideas I haven’t written down, the drafts I haven’t cleaned up, and the old essays I haven’t updated yet. <em>That</em> is where my cycle time skyrockets.</p>
 <p>When was the last time I released an idea from my diaries? A long time ago. I’m routinely surprised when I flip through the pages - I’ve forgotten much of it. Similarly, I can’t remember the last draft I turned into an essay, or the last essay I updated. Worst of all, I have this file called “Website-Notes.org” burgeoning with all kinds of “great” ideas. None of them have seen the light of day.</p>
 <p>I need feedback about the ideas I haven’t implemented (perhaps by looking at the index of my diaries), about the number of drafts (should ideally be zero), and about essays that are out of date. I need to calculate some of them manually - for example, going through my essays regularly and seeing which ones need updating.</p>
-<h2 id="delay-times">Delay Times?</h2>
+<h3 id="delay-times">Delay Times?</h3>
 <p>To reduce cycle time from idea to website, I have to eliminate my Org notes. Right now, they’re an intermediary, a buffer. Hence, a delay between an idea and its explanation. Maybe Next-Actions can stay. But everything else would have to go on the website.</p>
 <p>Plus, now that we have nightly builds, we can just add stuff to the various Notes pages and get them reflected to the website automatically. No extra hassle. No more excuses. <strong>That’s</strong> what you get with automation!</p>
 <p>Hmmm… One way to keep my Website synced with my Notes is to use <em>only</em> the Website as my View. No direct viewing of the notes files. That way, I lengthen the cycle time of mere “notes” lying around on my computer And shorten the cycle time of stuff that is part of my website.</p>
 <p>No reading of Org notes. No reading of Diary notes. No reading of Phone notes. They are all just <em>inputs</em>, not outputs. The Model to my website’s View.</p>
-<h2 id="release-frequently">Release Frequently</h2>
+<h3 id="release-frequently">Release Frequently</h3>
 <p>For each essay, when was the last time I polished or updated it?</p>
 <p>For feedback, I should look at the website from the eyes of a smart reader who’s never seen it before. It should make sense. Just having a bunch of essays, up there somewhere, is not good enough.</p>
-<h2 id="principles">Principles</h2>
+<h3 id="principles">Principles</h3>
 <p>Every time you change an Org notes file, create a Website notes page instead.</p>
 <p>Website Notes - Avoid a “Notes” section. That’s just a loophole for disorganized crap.</p>
 <p>Also, eliminate the Notes directory. You have essentially created another development branch, which violates the continuous delivery principle of having one master branch and always checking into that. The Notes directory simply won’t get as much TLC as the main branch (my main essays) because I won’t expect anybody to read them. They will rot over time, is what I’m saying.</p>
 <p>Your essays are going to be with you forever. No hurry. Don’t create crap just because you have to “get it done” soon. Get it right. Focus on a few essays and really optimize them. Expect to collect evidence over time. Design for it: your thoughts will change. Keep your essays open to change.</p>
 <hr />
-<h1 id="writing-an-essay">Writing an Essay</h1>
+<h2 id="writing-an-essay">Writing an Essay</h2>
 <p>The Product here is a surprising and well-written essay. The ideas in my head are the Changes that can affect the final Product.</p>
 <p>For each idea, I need to ask when I last released it. More generally, how frequently do I release it? I haven’t even released a bare-bones version of any of them. No wonder it’s daunting to think of adding them.</p>
 <p>Feedback for an essay could be a bunch of tests. For example, does it flow from premises to conclusions for a neutral, smart reader? Have you specified everything needed? This is not trivial. Most of the time, the change I make before releasing an essay is to make sure it flows, i.e., it doesn’t quite flow before that. So, each time you want to release, actually read the essay from start to finish and change what doesn’t flow.</p>
 <p>For each section of an essay, ask yourself: when was the last time you released it? It’s ok if it isn’t perfect yet, just release it and keep iterating. Take it one section at a time.</p>
 <p>Don’t expect to set aside time for improving essays. That will probably never happen. Go through your essays once in a while, and if you see something that can be improved, just do it. That’s how things get done, one little bit here and there. Aim to improve at least one section each day or so, for some essay on your website. It adds up.</p>
-<h1 id="rationality-techniques">Rationality Techniques</h1>
+<h2 id="rationality-techniques">Rationality Techniques</h2>
 <p>Product: <em>Actually</em> benefiting from those techniques</p>
 <p>Changes: Acquiring, Learning, and Applying them (as per the <a href="./The-Technique-Trap.html">Technique Trap</a>).</p>
 <p>Feedback: How will I know that I have got the Product (i.e., benefited from the techniques)?</p>
@@ -158,7 +164,7 @@
 <li>Bayes Theorem - Generating hypotheses, looking at Differing Predictions, running hypothesis tests, and updating on evidence.</li>
 </ul>
 <p>To reduce cycle time and get high quality, we need to have frequent, automated releases.</p>
-<h2 id="empiricism">Empiricism</h2>
+<h3 id="empiricism">Empiricism</h3>
 <p>What would it mean to have frequent, automated releases of the technique of Empiricism?</p>
 <p>We need to release frequently to get quicker feedback and reduce the risk of new actions. If anything goes wrong, we can always rollback to a version that worked.</p>
 <p>So, right now, I’m trying to be empirical in my essays. I plan to go through my old essays and add citations and such for the important assertions.</p>
@@ -182,38 +188,38 @@
 <p>For learning techniques, I can do frequent releases by keeping track of the components of each technique on my website. If one of them changes, say I discover some more scenarios for a technique, I can immediately practice handling them. To this end, I can maintain a <a href="./The-Counter.html">Counter</a> list of how many times I’ve practiced each scenario.</p>
 <p>For applying techniques, I can again maintain a Counter for how many times I’ve applied a technique.</p>
 <p>The common idea is that I need to reduce the cycle time by whatever means, and releasing frequently forces me to do so. I will start finding all kinds of ways to get it done. The key to making the pipeline nearly automatic might be to forbid myself from using a belief or technique unless I’ve updated it through the pipeline.</p>
-<h1 id="worthiness-and-embracing-vulnerability">Worthiness and Embracing Vulnerability</h1>
-<h1 id="fat-loss-and-muscle-gain">Fat loss and muscle gain</h1>
+<h2 id="worthiness-and-embracing-vulnerability">Worthiness and Embracing Vulnerability</h2>
+<h2 id="fat-loss-and-muscle-gain">Fat loss and muscle gain</h2>
 <p>Changes Healthy or unhealthy food Cardio Weight-lifting Sleep Supplements Feedback Weight Body Fat level Muscles Delay Times?</p>
-<h1 id="eye-sight">Eye sight</h1>
+<h2 id="eye-sight">Eye sight</h2>
 <p>Changes Wearing or not wearing glasses Looking outside frequently</p>
-<h1 id="sleep">Sleep</h1>
-<h1 id="stress">Stress</h1>
-<h1 id="my-coding-projects">My coding projects</h1>
+<h2 id="sleep">Sleep</h2>
+<h2 id="stress">Stress</h2>
+<h2 id="my-coding-projects">My coding projects</h2>
 <p>Maintaining them</p>
-<h1 id="worthiness-and-embracing-vulnerability-practice">Worthiness and Embracing Vulnerability Practice</h1>
-<h1 id="skills">Skills</h1>
+<h2 id="worthiness-and-embracing-vulnerability-practice">Worthiness and Embracing Vulnerability Practice</h2>
+<h2 id="skills">Skills</h2>
 <p>My skill is the product here, and the my understanding of the technique is the change that it should reflect. Over time, my skill should reflect the technique. When I find a new technique or update my knowledge of an existing one, I should practice it and burn it immediately into my brain. Even if it just means practicing for five minutes.</p>
 <p>Right now, I haven’t practiced my existing techniques at all. Their cycle time is infinity. I should do them at least a little bit. Instead of trying to do the state-of-the-art technique in a perfect manner, do some of the rudimentary ones in a quick and dirty way. Be ridiculously inefficient at first and take it from there.</p>
-<h1 id="prediction-book">Prediction Book</h1>
+<h2 id="prediction-book">Prediction Book</h2>
 <p>When was the last time you added a prediction there? Just do one prediction, for now. Just release.</p>
-<h1 id="long-projects">Long Projects</h1>
+<h2 id="long-projects">Long Projects</h2>
 <p>Need to crack upon my list of long-term projects and start releasing them frequently.</p>
-<h1 id="possessions---cleaning-and-maintenance">Possessions - Cleaning and Maintenance</h1>
+<h2 id="possessions---cleaning-and-maintenance">Possessions - Cleaning and Maintenance</h2>
 <p>Cycle: Dirt on the floor -&gt; Clean floor</p>
-<h1 id="drills">Drills</h1>
+<h2 id="drills">Drills</h2>
 <p>When was the last time you added to your drills? Do it more frequently, even if it is just a couple of drills at a time. It adds up.</p>
-<h1 id="friends">Friends?</h1>
+<h2 id="friends">Friends?</h2>
 <p>When was the last time you spoke to a particular friend? Perhaps you should reduce the time between contact.</p>
-<h1 id="washing-the-dishes">Washing the Dishes</h1>
+<h2 id="washing-the-dishes">Washing the Dishes</h2>
 <p>When was the last time I washed the dishes? A day ago. The cycle time for dishes seems to be on the order of days, when I want it to be exactly one day. I still don’t know if I can do that everyday, though.</p>
-<h1 id="waking-up-early">Waking up early</h1>
+<h2 id="waking-up-early">Waking up early</h2>
 <p>When was the last time I woke up early? Blank. When was the last time I went to bed by 11pm? Blank. When was the last time I didn’t watch Youtube videos on my tablet for hours before falling asleep? Blank.</p>
 <p>I need to release at least one version - i.e., wake up early once, by whatever means. After that, I can continue doing so more easily.</p>
-<h1 id="book-list">Book List</h1>
+<h2 id="book-list">Book List</h2>
 <p>When was the last time I read each book (or marked them as “no longer interesting”)?</p>
 <p>The same goes for my movie list or song list or TV show list.</p>
-<h1 id="science">Science</h1>
+<h2 id="science">Science</h2>
 <p>In science, the deployment pipeline is from evidence to hypotheses. Whenever you see new evidence (change), you need to update your hypotheses (product). We want to minimize the cycle time between seeing new evidence and updating on it. We never update on much of what we see, making the cycle time infinity by default.</p>
 <p>Actually, the product is the predictive power of your causal model. And it should increase over time, else all your effort is in vain. So, there’s constant pressure on you to keep improving your model and make it handle more states more accurately.</p>
 <div class="footnotes">
@@ -229,7 +235,7 @@
 </div>
 
 <div class="info">Created: August  2, 2015</div>
-<div class="info">Last modified: June 30, 2016</div>
+<div class="info">Last modified: April 13, 2017</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: feedback loop, complexity</div>
 

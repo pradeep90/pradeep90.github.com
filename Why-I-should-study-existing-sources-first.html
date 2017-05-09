@@ -76,7 +76,20 @@
 </blockquote>
 <p>Yup, that’s me. Unskilled person with illusory superiority, especially in areas where I don’t get strong feedback about my own skill level.</p>
 <p>I naively believe that other people aren’t very smart (unlike me, in my mind’s view). So, they must not have really achieved too much. I mean, if they aren’t really too powerful, they can’t have achieved much, right? And to support this illusion, I ask myself why they haven’t got great results, if they really are so skilled. (Note how I completely fail to apply this very high standard to myself.)</p>
-<hr />
+<h1 id="no-shame-in-learning-existing-ideas">No Shame in Learning Existing Ideas</h1>
+<p>Why don’t I learn from others by reading and implementing techniques from as many books as possible? Why do I have this blind spot? It’s not just that I think I’m clever and others really aren’t. Beyond that ridiculous belief, I hold another one: you are a worthy thinker only if you discover important ideas on your own.</p>
+<p>For example, I feel compelled to discover important programming ideas by myself. I did that for the Y-combinator function, sitting by myself for a couple of hours till I got the answer. It felt good, make no mistake. But it’s just not scalable.</p>
+<p>Your problems don’t care where you get the solution from. All that matters is that you solve them.</p>
+<p>So, don’t waste your time trying to derive the answer to <em>every</em> theorem in your math book by yourself (yes, I was stupid enough to hope to do that). That’s never going to happen. It probably took several years between the discovery of each theorem - check the Discussion section of the chapter to find out. That’s how hard we find math.</p>
+<p>There’s no shame in going through all the math problems and solutions, analyzing them to figure out how the authors got from the problem to the solution, and then deploying those techniques on the problems you come across. All that matters is that you reduce the time taken for you to solve future problems. Yes, you should of course try to derive those theorems after closing the book to make sure you really have got it. That’s what it takes to load ideas into your memory. But don’t try to produce all your knowledge from some basic seeds.</p>
+<p>Hmm… I seem to have this ideal of an all-powerful superintelligence that needs just a few seeds of knowledge from which it can then derive all human knowledge so far. That’s possible, sure, but I just can’t afford that much time. Given the raw data from all the experiments so far - all the X-rays ever taken, looked through, the questionnaires answered - you can definitely process the information and come to the most likely hypotheses. But it would take a supercomputer to do that.</p>
+<p>Swallow your pride and just learn the final answers from the experts who have achieved at levels far beyond yours. For example, look at how adroitly Richard Bird solved the Sudoku problem. I couldn’t believe how succinct his boxes function was for getting the 9 boxes from a Sudoku matrix.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">boxs ::</span> <span class="dt">Matrix</span> a <span class="ot">-&gt;</span> <span class="dt">Matrix</span> a
+boxs <span class="fu">=</span> map ungroup <span class="fu">.</span> ungroup <span class="fu">.</span> map cols <span class="fu">.</span> group3 <span class="fu">.</span> map group3</code></pre></div>
+<p>I would never have come up with that, not unless I’d sat and thought about such problems for days and weeks on end. I was sure that you had to use index-based code to solve a Sudoku puzzle. Now, I could bumble my way through dozens of failed attempts and blow off all the other projects in my life before I reach one with the diamond clarity of the one above or… you know, I could just read his excellent book Thinking Functionally with Haskell and gain all of his decades of wisdom in a few hours!</p>
+<p>I’ve been a fool.</p>
+<p><strong>Lesson</strong>: You can’t derive all the answers yourself. Learn the answers from the experts instead.</p>
+<h1 id="no-more">No More</h1>
 <p>Enough. No more stupid damn mistakes like these. Let me list out the earlier evidence so that I can see just how wrong I have been and so that I notice in the future when I have that curious feeling of illusory superiority.</p>
 <h1 id="spaced-repetition">Spaced Repetition</h1>
 <p>In around 2012, I had thought of the idea of a bunch of review questions that would cover all the important points in a textbook chapter. They were like the unit tests that cover all the important logic in a program.</p>
@@ -103,9 +116,11 @@
 <p>I was struggling to formalize the notion of causation that scientists seemed to use. I found it hard to accept the informal scientific method because I couldn’t see how to explain it to a computer. Plus, it didn’t jibe with Bayesian inference, which I had heard was the basic rule behind correct thinking. Bayesian theory was all about probabilities and such, whereas scientific models seemed to make forthright predictions. Then I found that computer scientists like Pearl had already figured it out. As he himself <a href="http://bayes.cs.ucla.edu/BOOK-2K/pref.html">says</a>: “Put simply, causality has been mathematized.”</p>
 <h1 id="categories">Categories</h1>
 <p>I was trying to figure out how humans reduced the space of possible hypotheses over atoms to a space that only contained high-level variables like GDP or car or friendship. After a long struggle, I found that Eliezer had essentially answered the question of “where do variables come from?” in his <a href="http://wiki.lesswrong.com/wiki/A_Human%27s_Guide_to_Words">sequence</a> on words and categories.</p>
+<h1 id="haskell-techniques">Haskell Techniques</h1>
+<p>People have already figured out how to use functors, applicatives, monads, monoids, lenses, etc. to abstract their code to ridiculous levels. You need to get to their level of skill before you start trying to “invent” some “epic awesome” technique.</p>
 
 <div class="info">Created: August  6, 2015</div>
-<div class="info">Last modified: August 29, 2016</div>
+<div class="info">Last modified: March 22, 2017</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: scholarship, empiricism, intellectual humility</div>
 
