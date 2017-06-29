@@ -80,9 +80,32 @@
 <p>The screen definitely lags when I type in a Markdown buffer with ~24k words, but not when I narrow the buffer to just one small section of 34 words.</p>
 <p>Could be because I have large paragraphs (which look to Emacs like large lines). Or it could just be the size of the buffer.</p>
 <p>(I think a similar effect occurs even in smaller Markdown buffers.)</p>
+<h1 id="markdown-forward-paragraph-leading-spaces-hang">Markdown + forward-paragraph + leading spaces = Hang</h1>
+<p><strong>Experiment</strong>: Took a new markdown buffer. Wrote “foo”.</p>
+<ul>
+<li><p>Added 20 spaces in front of it. Significant lag, especially when moving point. But I’m able to type afterwards.</p></li>
+<li><p>Added 35 spaces. Hung.</p></li>
+</ul>
+<p><strong>Observation</strong>: The word count indicator in the mode line was absent when I pressed C-g to stop Emacs hanging.</p>
+<p><strong>Hypothesis</strong>: Could it be because of <code>wc-mode</code>?</p>
+<p><strong>Experiment</strong>: You bet!</p>
+<ul>
+<li>Turned it off. Added 100 spaces. No problem.</li>
+</ul>
+<p><code>wc-mode</code> calls <code>count-words-in-paragraph</code>. Is it because of that function? Yup.</p>
+<p>It hangs when I say <code>(count-words-in-paragraph)</code> near the line with leading spaces.</p>
+<p>It’s mark-paragraph that hangs!</p>
+<p>Digging further: it’s forward-paragraph that hangs!</p>
+<p>All this because of one observation - the word count stat in the mode-line was missing!</p>
+<p><strong>Experiment</strong>: The above doesn’t happen with a <code>text-mode</code> buffer with <code>wc-mode</code> turned on.</p>
+<p>So, the problem is with <code>forward-paragraph</code> in Markdown.</p>
+<p><strong>Experiment</strong>: A long sequence of spaces <em>anywhere</em> is a problem.</p>
+<ul>
+<li>23 spaces between “fo” and “o” hangs Markdown.</li>
+</ul>
 
 <div class="info">Created: August  6, 2015</div>
-<div class="info">Last modified: April  8, 2017</div>
+<div class="info">Last modified: June 20, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, emacs</div>
 
