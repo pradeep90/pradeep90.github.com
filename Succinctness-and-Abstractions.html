@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="icon" type="image/png" href="./images/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="./images/favicon-16x16.png" sizes="16x16" />
+        <title>Succinctness and Abstractions - SPK's Rationality Essays</title>
+        <link rel="stylesheet" type="text/css" href="./css/default.css" />
+        <link rel="stylesheet" type="text/css" href="./css/highlight.css" />
+
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+	<!-- <script type="text/javascript" src="/js/header-links.js"></script> -->
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+	<link href="atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM/RSS Feed" />
+
+	<!-- Google Analytics stuff -->
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-51321929-1', 'pradeep90.github.io');
+	  ga('send', 'pageview');
+
+	</script>
+
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="./">Rationality Essays</a>
+            </div>
+            <div id="navigation">
+                <a href="./">Home</a>
+                <a href="./notes.html">Notes</a>
+                <!-- <a href="/about.html">About</a> -->
+                <a href="./archive.html">Archive</a>
+		<a href="./atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM/RSS Feed">RSS</a>
+            </div>
+        </div>
+
+        <div id="content">
+          <h1 id="post-title">Succinctness and Abstractions</h1>
+
+            <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
+
+<h1 id="how-do-programmers-deal-with-change">How do programmers deal with change?</h1>
+<p>They look for hot spots - parts that can change - and then encapsulate the change to minimize the work needed to change it. For example, you’re printing five variables into a report. You know that you may change whether the fourth and fifth variable occur. So, you will either have the first three or you will have all five, rarely anything else. Now, given that we want one-button changes, the best way to go forward is to encapsulate the fourth and fifth variables into one variable and allow yourself to toggle them with just one change.</p>
+<p>In short, you want to handle the most changes with the least effort. The only trouble is that you don’t <em>know</em> which changes you’re going to make. If you knew that some circumstance of fate would make you change the sixth, thirteenth, and fourty-fourth variables, you would set up a single button that would let you do exactly that change and nothing else.</p>
+<p>So, the length of your program should reflect, I think, the number of bits of uncertainty you have about what you will want from your program in the future. It’s about minimizing the number of bits the future-you would have to transmit to the program you write. If there are four types of changes, all of which you expect to be equally likely, then you need two on-off buttons. Off-off will refer to the first change, off-on will refer to the second, on-off to the third, and on-on to the fourth.</p>
+<p>The actual changes you need to make don’t matter. They’re baked in: you’re not uncertain about them and you can’t do anything about them. If in the future you need to make change X, you need to do all that X entails, no getting around it. You’re just uncertain about which change you would need to make.</p>
+<h1 id="unlikely-changes">Unlikely changes</h1>
+<p>Now we’ll take the case where some changes are more likely than others. Say you have just two types of changes, but you expect the first one to occur three times as often as the second one. That is, you expect the first one with 0.75 probability and the second one with 0.25 probability. The future-you knows this about you. So, how long a message does he need to send to inform the program about the change that he needs to make?</p>
+<p>From information theory, we know the number of bits needed to represent an outcome of probability p is -log2(p). So, he needs -log2(0.75) = ~0.42 bits to represent the first case and -log2(0.25) = 2 bits to represent the second case.</p>
+<p>(Note, there is also the case where no change is needed and we need to represent that default message too.)</p>
+<p>A corollary is that if you knew exactly what you would need a program to do in the future, then you wouldn’t need any buttons for change at all. You could just hardcode the program and use it forever. Similarly, if you knew very little about what would change, you would have to have lots and lots of buttons for change. You couldn’t hardcode anything. You would have to make everything abstract, in case it changed value; like extracting variables instead of using magic numbers, extracting functions in case you need to either change the logic or re-use the same logic elsewhere, etc.</p>
+<p>Why do we encapsulate change (by extracting functions and such)? To minimize the work needed to change the logic in the future. If you’ve repeated the same logic in N places, you need to change N locations or risk having a wrong program. By extracting a function with that logic, you save work on the order of N, which is usually just two or three.</p>
+<h1 id="the-upshot">The Upshot</h1>
+<p>What can we conclude? I think the size of a program represents how uncertain you are about its future changes. Programmers want to minimize the amount of work to make any change needed in the future, so they design their programs to make likely changes easy and unlikely changes hard. (You can’t make both types of change easy.) And since the ease of a change is generally about the number of lines of code changed, this means that you would need to modify only a few lines for an expected change, and a lot of lines for an unexpected change.</p>
+<p>So, experienced programmers will probably write code that is easy to change over time, because they know exactly what changes to expect in the future.</p>
+<h1 id="abstractions">Abstractions</h1>
+<p>I suspect that we decouple parts of a system when we’re confident that they won’t affect each other in the future. When designing a car, you think about the colour scheme independently of the design of the engine, because you expect that they have little or nothing to do with each other.</p>
+<p>Abstraction means that we don’t care about what’s inside a box as long as it behaves a certain way on the outside. And for our abstraction not to leak, the inside of the box must be independent of the other parts of the system. Otherwise, our inferences will go wrong. We can justifiably believe that pressing the brakes will make our car slow down because there’s nothing interfering in the connection between the pedal and the engine. However, if someone comes and cuts the brake wires, our above assumption will be wrong and the car won’t behave the way we want it to.</p>
+<p>So, we can decide on a level of abstraction for a problem by thinking about what parts of the system don’t interact with each other. That is the first higher-level assumption we have to make in our hypothesis. Everything else follows from our choice of abstractions.</p>
+<p>We get powerful abstractions when we choose as big an aspect of the system that is independent of the other aspects most of the time. Should it be completely independent? How do we decide on abstractions for a particular system?</p>
+<p>In short, an abstraction says that the inside of a box is independent of the rest of the system, given that it satisfies the interface. That is, P(Inside | Any Other Part, Satisfies Interface) = P(Inside | Satisfies Interface). Knowing about any other part of the system gives you no more information about the inside of this part, once you know that it satisfies some interface. How can we discover such parts of the system?</p>
+<h1 id="the-need-to-know-principle">The Need-to-Know Principle</h1>
+<p>How do we decide on our abstractions?</p>
+<p>Here’s one idea: look at exactly what the other parts of the system need to know about this part. In programming, the GUI only needs to know about the data it needs to present, not the intricacies of the database behind the scenes. All the GUI needs to know about the rest of the program is that it can send data in a particular format, nothing else. This way, you can change the entire backend tomorrow and still be able to use the same GUI so long as you maintain the agreed data format. Your program is more modular and versatile when parts only know so much about each other as they need to know.</p>
+<p>I suppose they call this the Minimum Information principle. The idea is that you can change everything else about this part except for its interface, and things should work just fine.</p>
+<p>Key question between two parts of the system: What do you need to know about me? If nothing, then we are completely orthogonal.</p>
+<p>So, the causal model isn’t about concrete “variables”. It’s about abstract interfaces. For example, anything that satisfies the interface of “providing a force F” on anything that satisfies the interface of “mass m” will make it satisfy the interface of “acceleration F/m”.</p>
+<h1 id="black-boxes">Black Boxes</h1>
+<p>Now, we have figured out that a causal model is about relationships between interfaces. What sort of relationships are these?</p>
+<p>How can we ensure that these interfaces are valid? How can we make sure our abstractions are airtight? (I get reminded of the functor law that says <code>fmap id_x = id_y</code>, ensuring that no unnecessary effects take place. Basically, it keeps your abstraction from leaking.) Importantly, how can we leverage the idea of locality of causality?</p>
+<p>But, firstly, what exactly is an “interface”? How do you start creating interfaces? Give me concrete examples.</p>
+<p>One thing it does is tell you whether some collection of matter satisfies the interface or not.</p>
+<p>Let’s take Newton’s Second Law of Motion: a = F/m. How do we decide whether something satisfies the interfaces of force, mass, or acceleration? The only thing that matters for “acceleration” is that your velocity should change over time (which in turn talks about your displacement).</p>
+<h1 id="limiting-access-to-information">Limiting access to information</h1>
+<p>The inside should be independent of the rest. That is, the rest of the system must depend only on the interface. This is physically impossible because as a chunk of matter you are in contact with the rest of the system and thus can be acted upon in several ways. I think it means that no matter what the rest of your characteristics are, the effects we care about in this causal model will depend only on your interface. If you added further tests, then your abstractions may not hold.</p>
+<p>Programming abstractions are unique, I think, in the way they can limit the amount of information shared between modules. You can truly ensure that the only thing another module knows about you is what is passed through your interface.</p>
+<p>Actually, is that true? At the level of a programming language, yes, we can’t distinguish between two concrete modules that have the same interface. However, they will certainly differ in their low-level implementations. If you are expert enough to inspect and interpret the binary code, you can differentiate between them.</p>
+<p>So, the safety of programming abstractions comes about because it is hard to observe and manipulate raw binary code to do what you want (though crackers feel it’s worth it). High-level programming languages restrict what you can see or do, thereby protecting your abstractions from your own meddling and thus increasing your power. Otherwise, a module A can use hacks to access the innards of another module B (for efficiency, maybe) and break when you change B’s implementation.</p>
+<p>Therefore, abstraction is about limiting access to information. You’re in trouble when you assume that modules can access less information than they actually can.</p>
+<p>And this is probably where locality of causality helps us. It says that one part of the world can only access information from (i.e., cause or be affected by) the parts that are close to it in time and space. You have no way of accessing information from far away or from the distant past.</p>
+<p>Still, if you could observe the part of the system precisely, you could find out more than the interface tells you.</p>
+<p>Basically, our job becomes easier if certain effects depend only on particular characteristics, not on others. The speed of a car is not affected too much by the colour of the paint on the outside.</p>
+<p>How can we find out what an effect doesn’t depend on? The same way as we know everything else: using the scientific method. Hypothesize things it might depend on, and vary them until you get to a level of abstraction that does change it. So, you first assert that the engine speed depends on the colour of the paint. Then, you change the paint colour several ways, and find that it doesn’t change the engine speed. So, you realize that they are probably independent.</p>
+
+<div class="info">Created: November 12, 2015</div>
+<div class="info">Last modified: November 26, 2015</div>
+<div class="info">Status: in-progress notes</div>
+<div class="info"><b>Tags</b>: notes, programming</div>
+
+<br />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'spkrationalitytrainingground'; // required: replace example with your forum shortname
+    var disqus_identifier = '/Succinctness-and-Abstractions.html';
+    var disqus_title = 'Succinctness and Abstractions';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+        </div>
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>

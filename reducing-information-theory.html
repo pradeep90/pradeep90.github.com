@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="icon" type="image/png" href="./images/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="./images/favicon-16x16.png" sizes="16x16" />
+        <title>Reducing Information Theory to Probability Theory - SPK's Rationality Essays</title>
+        <link rel="stylesheet" type="text/css" href="./css/default.css" />
+        <link rel="stylesheet" type="text/css" href="./css/highlight.css" />
+
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+	<!-- <script type="text/javascript" src="/js/header-links.js"></script> -->
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+	<link href="atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM/RSS Feed" />
+
+	<!-- Google Analytics stuff -->
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-51321929-1', 'pradeep90.github.io');
+	  ga('send', 'pageview');
+
+	</script>
+
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="./">Rationality Essays</a>
+            </div>
+            <div id="navigation">
+                <a href="./">Home</a>
+                <a href="./notes.html">Notes</a>
+                <!-- <a href="/about.html">About</a> -->
+                <a href="./archive.html">Archive</a>
+		<a href="./atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM/RSS Feed">RSS</a>
+            </div>
+        </div>
+
+        <div id="content">
+          <h1 id="post-title">Reducing Information Theory to Probability Theory</h1>
+
+            <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
+
+<p><strong>Note</strong>: I’m not an expert probability theorist, so this could be wrong. But I feel quite confident in it.</p>
+<h1 id="taboo-information">Taboo Information</h1>
+<p>I never got a handle on the concept of information. I could see no good reason why it had to be defined the way it was:</p>
+<blockquote>
+<p>Information content of a message = <math title="log_2(1/p)"><mstyle displaystyle="true"><msub><mo>log</mo><mn>2</mn></msub><mrow><mo>(</mo><mfrac><mn>1</mn><mi>p</mi></mfrac><mo>)</mo></mrow></mstyle></math></p>
+</blockquote>
+<p>I got the feeling you shouldn’t need anything more than probability theory to solve problems, even those that apparently need “information theory”.</p>
+<p>Why did I feel this way? Well, in real life, we want more information; it’s better than less information. That seems reasonable. You can take better actions with more information. But, then we come across this term in math called “information” too. And, somehow, without realizing it, we act as if it’s like our old information and as if more of it is better too.</p>
+<p>That was the source of my confusion. We have these two different concepts but we treat them the same way without justifying it. (Yes, I know that it’s going to end up being the same concept as our commonsense “information”, but you have to prove it. You can’t just pull a definition out of nowhere and treat it like the old concept.)</p>
+<p>To make it more explicit, rename the term “information” to something that doesn’t clash with our existing concepts. That shouldn’t change anything. A rose by any other name would smell as sweet and whatnot. For example, let’s call it “bazfoo”.</p>
+<p>So, a stranger comes up to you and says, “hey, I have this new definition: bazfoo = <math title="log_2(1/p)"><mstyle displaystyle="true"><msub><mo>log</mo><mn>2</mn></msub><mrow><mo>(</mo><mfrac><mn>1</mn><mi>p</mi></mfrac><mo>)</mo></mrow></mstyle></math>. Now, we should all try to get more of this value.” Would you accept it at face value and drop everything else to focus on this? I hope not. You would ask what is so special about bazfoo that you should aim to get it above all else when seeking the truth. You would ask him to talk in terms of probability theory, since that seems to be the solid mathematical base-layer in which any mind <a href="http://lesswrong.com/lw/ul/my_bayesian_enlightenment/">must</a> <a href="http://lesswrong.com/lw/o7/searching_for_bayesstructure/">think</a>.</p>
+<p>Therefore, let’s try to reduce <del>Information Theory</del> Bazfoo Theory to basic probability theory, so that we do away with the concepts of information and entropy. We can still use them afterwards, but only as a convenience, just like we talk about sentences and paragraphs, when in reality there are only the individual English letters underneath.</p>
+<p>In short, let’s <a href="./Rationalists-Taboo.html">taboo</a> the word “information”.</p>
+<h1 id="bayesian-inference">Bayesian Inference</h1>
+<p>What is the general work of thinking? Making correct predictions - putting more probability mass on the actual outcome and thus less on the rest. That’s all that matters. Knowing exactly which outcome will happen lets you exploit that knowledge. And you want to do this quickly.</p>
+<p>How do you do that? You can imagine a whole lot of things that make predictions for any given situation. Call them hypotheses. So, should you just pick one at random and accept whatever predictions it makes? Or maybe take an average over them all? Well, the <a href="http://www.yudkowsky.net/rational/technical">laws</a> of probability theory dictate that you specify your probability distribution over those hypotheses - how much confidence you have in each of them - and then use their predictions weighted by their probabilities. You have exactly 1.0 of probability mass and you must distribute it among those hypotheses.</p>
+<p>So, if you put too much probability mass on the wrong hypotheses, then their wrong predictions will get more weight and thus your final probability distribution - your prediction - will be poor.</p>
+<p>Therefore, our aim is to put maximum probability mass on the correct hypothesis (call it <span class="math inline">\(H_0\)</span>) and thus less on the others. Of course, we don’t know which one is the correct hypothesis. How then do we get to high probability mass on the correct hypothesis?</p>
+<p>We get evidence from the world and update the posterior probabilities of our hypotheses using it. Say you see an outcome for which you assigned probability P(E). You now use <a href="http://www.yudkowsky.net/rational/bayes">Bayes Theorem</a>:</p>
+<p><math title="P(H|E) = P(H) x ((P(E|H)) / (P(E)))"><mstyle displaystyle="true"><mi>P</mi><mrow><mo>(</mo><mi>H</mi><mrow><mo>|</mo></mrow><mi>E</mi><mo>)</mo></mrow><mo>=</mo><mi>P</mi><mrow><mo>(</mo><mi>H</mi><mo>)</mo></mrow><mi>x</mi><mrow><mo>(</mo><mfrac><mrow><mi>P</mi><mrow><mo>(</mo><mi>E</mi><mrow><mo>|</mo></mrow><mi>H</mi><mo>)</mo></mrow></mrow><mrow><mi>P</mi><mrow><mo>(</mo><mi>E</mi><mo>)</mo></mrow></mrow></mfrac><mo>)</mo></mrow></mstyle></math></p>
+<p>where</p>
+<pre><code>P(H): prior probability of hypothesis H
+P(H|E): posterior probability of hypothesis H
+P(E|H): likelihood of E judged by this hypothesis
+P(E): probability of outcome E</code></pre>
+<p>You thus rearrange your confidence in your hypotheses after each piece of evidence. If a hypothesis makes a correct prediction aka assigns high likelihood for the correct outcome, it will find its confidence level rising. If it made a wrong or imprecise prediction, it will find its confidence level falling. So, the correct hypothesis will find its confidence level rising inexorably because it always makes correct predictions. So, in the fullness of time, with enough evidence, all others will end up with posterior 0, and <span class="math inline">\(H_0\)</span> will have posterior 1, which is exactly what we want.</p>
+<p>So, we use Bayes Theorem to succeed in our quest to get full confidence in the correct hypothesis. (For more, look at Eliezer’s excellent <a href="http://www.yudkowsky.net/rational/bayes">explanation of Bayes Theorem</a>.)</p>
+<h1 id="multiplying-your-confidence">Multiplying your Confidence</h1>
+<p>Now, where does “information” fit in here? What is the “information content” of an outcome? What do you get from one particular outcome or message?</p>
+<p>Remember, you just want to find the correct hypothesis <span class="math inline">\(H_0\)</span>. You couldn’t give less of a damn about the rest. For everything, ask how it affects your confidence in <span class="math inline">\(H_0\)</span>.</p>
+<p>Now, you see an outcome E of probability P(E). How does <em>that</em> affect your confidence in <span class="math inline">\(H_0\)</span>?</p>
+<p>As per Bayes Theorem, <math title="P(H|E) = P(H) x ((P(E|H)) / (P(E)))"><mstyle displaystyle="true"><mi>P</mi><mrow><mo>(</mo><mi>H</mi><mrow><mo>|</mo></mrow><mi>E</mi><mo>)</mo></mrow><mo>=</mo><mi>P</mi><mrow><mo>(</mo><mi>H</mi><mo>)</mo></mrow><mi>x</mi><mrow><mo>(</mo><mfrac><mrow><mi>P</mi><mrow><mo>(</mo><mi>E</mi><mrow><mo>|</mo></mrow><mi>H</mi><mo>)</mo></mrow></mrow><mrow><mi>P</mi><mrow><mo>(</mo><mi>E</mi><mo>)</mo></mrow></mrow></mfrac><mo>)</mo></mrow></mstyle></math></p>
+<p>But this is <span class="math inline">\(H_0\)</span> we’re talking about. It makes perfectly accurate predictions every time. That means P(E|<span class="math inline">\(H_0\)</span>) is always 1.</p>
+<p>Therefore, <math title="P($H_0$|E) = P($H_0$) x (1/(P(E))) "><mstyle displaystyle="true"><mi>P</mi><mrow><mo>(</mo><msub><mi>H</mi><mn>0</mn></msub><mrow><mo>|</mo></mrow><mi>E</mi><mo>)</mo></mrow><mo>=</mo><mi>P</mi><mrow><mo>(</mo><msub><mi>H</mi><mn>0</mn></msub><mo>)</mo></mrow><mi>x</mi><mrow><mo>(</mo><mfrac><mn>1</mn><mrow><mi>P</mi><mrow><mo>(</mo><mi>E</mi><mo>)</mo></mrow></mrow></mfrac><mo>)</mo></mrow></mstyle></math>.</p>
+<p>So, what an outcome E really does is multiply our confidence in the correct hypothesis by <math title="1/(P(E)) "><mstyle displaystyle="true"><mfrac><mn>1</mn><mrow><mi>P</mi><mrow><mo>(</mo><mi>E</mi><mo>)</mo></mrow></mrow></mfrac></mstyle></math>.</p>
+<p>(Note that increasing our confidence in <span class="math inline">\(H_0\)</span> automatically decreases our confidence in the rest since the sum of all P(H) must be 1.)</p>
+<p>And this is why, I think, we define information as <math title="log_2(1/p)"><mstyle displaystyle="true"><msub><mo>log</mo><mn>2</mn></msub><mrow><mo>(</mo><mfrac><mn>1</mn><mi>p</mi></mfrac><mo>)</mo></mrow></mstyle></math>. It’s an indirect measure of how much an outcome multiplies our confidence in the correct hypothesis. There’s nothing new or special about “information”. In the past, I kept getting confused by the fact that information seemed like a completely different beast from probability. But, all you’re doing is taking the logarithm. That shouldn’t do anything. That doesn’t add any information, if you will pardon the phrase. It’s just a convenient representation. That’s all.</p>
+<h1 id="asking-for-the-improbable">Asking for the Improbable</h1>
+<p>So, why is more information better?</p>
+<p>Well, consider what happens if P(E) is small. Then, <math title="1/(P(E)) "><mstyle displaystyle="true"><mfrac><mn>1</mn><mrow><mi>P</mi><mrow><mo>(</mo><mi>E</mi><mo>)</mo></mrow></mrow></mfrac></mstyle></math> will be large and thus the smug, ever-correct hypothesis <span class="math inline">\(H_0\)</span> will get its confidence multiplied a lot. So, when low-probability outcomes occur, <span class="math inline">\(H_0\)</span> has a bonanza. And since we want to discover <span class="math inline">\(H_0\)</span> as soon as possible (we don’t know which one it is), we want P(E) to be as small as possible each time so that <span class="math inline">\(H_0\)</span> rises to probability 1 very quickly.</p>
+<p>That’s why more “information” is better than less: it multiplies your confidence in the correct hypothesis by a larger amount. Put differently, it tells you more about the subject, which is exactly in line with our intuitions. This is how the seemingly alien mathematical concept of information matches our everyday notion. The more information you have, the fewer mistakes you will make and the more accurate your predictions will be (since you will listen more to the correct hypothesis).</p>
+<hr />
+<p>However, there’s a tiny problem. You can’t ask for low-probability outcomes to happen. You have assigned low probability to them! You don’t expect them to happen.</p>
+<p>So, we want our confidence in the correct hypothesis to rise very quickly, for which we need low-probability outcomes to happen, but you can’t ask for those outcomes to happen. What do we do then? Are we doomed to taking a long time for the correct hypothesis to beat the others and get to probability 1?</p>
+<h1 id="entropy-is-your-friend">Entropy is your Friend</h1>
+<p>It’s essentially a question of choice. You have two different experiments <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>, and you can choose only one. Which one will you pick? Remember, our aim is to get high confidence in <span class="math inline">\(H_0\)</span> as quickly as possible.</p>
+<p>Well, you want the one that will multiply P(<span class="math inline">\(H_0\)</span>) the most. But you don’t know which outcome will happen. If you knew somehow that <span class="math inline">\(X_1\)</span> would give an outcome of probability 0.1 and <span class="math inline">\(X_2\)</span> would give an outcome of probability 0.2, then you could tell that P(<span class="math inline">\(H_0\)</span>) would get multiplied by 1/0.1 = 10 and 1/0.2 = 5 respectively. And you would choose <span class="math inline">\(X_1\)</span> to get the bigger boost.</p>
+<p>However, the same problem plagues you that you don’t <em>know</em> for sure which outcomes will occur. But you do have probabilistic knowledge.</p>
+<p>Well, take the first experiment <span class="math inline">\(X_1\)</span>. You assign probabilities <span class="math inline">\(p_i\)</span> to its various outcomes <span class="math inline">\(m_i\)</span>.</p>
+<p>Now assume you run experiments with similar probability distributions to <span class="math inline">\(X_1\)</span> several times. If there are n experiments, then you expect n x <span class="math inline">\(p_i\)</span> messages of type <span class="math inline">\(m_i\)</span>. For example, if you have a biased coin where you expect heads with probability 0.8, then in 100 tosses, you expect to see around 80 heads and 20 tails.</p>
+<p><span class="math inline">\(H_0\)</span>, of course, will predict the correct outcome every time. So, the outcomes will all multiply your confidence in <span class="math inline">\(H_0\)</span> by the inverse of their probability. So,</p>
+<p><math title="P(H_0|o_1,o_2,...) = P(H_0) x 1/(p_(o1)) x 1/p_(o2) x ... "><mstyle displaystyle="true"><mi>P</mi><mrow><mo>(</mo><msub><mi>H</mi><mn>0</mn></msub><mrow><mo>|</mo></mrow><msub><mi>o</mi><mn>1</mn></msub><mo>,</mo><msub><mi>o</mi><mn>2</mn></msub><mo>,</mo><mo>…</mo><mo>)</mo></mrow><mo>=</mo><mi>P</mi><mrow><mo>(</mo><msub><mi>H</mi><mn>0</mn></msub><mo>)</mo></mrow><mi>x</mi><mfrac><mn>1</mn><mrow><msub><mi>p</mi><mrow><mi>o</mi><mn>1</mn></mrow></msub></mrow></mfrac><mi>x</mi><mfrac><mn>1</mn><msub><mi>p</mi><mrow><mi>o</mi><mn>2</mn></mrow></msub></mfrac><mi>x</mi><mo>…</mo></mstyle></math></p>
+<p>where <span class="math inline">\(o_i\)</span> is the outcome of the ith experiment and <span class="math inline">\(p_{oi}\)</span> is its probability.</p>
+<p>Since there are n x <span class="math inline">\(p_i\)</span> messages of type <span class="math inline">\(m_i\)</span>, you get</p>
+<p><math title="P(H_0|o_1,o_2,...) = P(H_0) x prod_i (1/p_i)^(n x p_i) "><mstyle displaystyle="true"><mi>P</mi><mrow><mo>(</mo><msub><mi>H</mi><mn>0</mn></msub><mrow><mo>|</mo></mrow><msub><mi>o</mi><mn>1</mn></msub><mo>,</mo><msub><mi>o</mi><mn>2</mn></msub><mo>,</mo><mo>…</mo><mo>)</mo></mrow><mo>=</mo><mi>P</mi><mrow><mo>(</mo><msub><mi>H</mi><mn>0</mn></msub><mo>)</mo></mrow><mi>x</mi><munder><mo>∏</mo><mi>i</mi></munder><msup><mrow><mo>(</mo><mfrac><mn>1</mn><msub><mi>p</mi><mi>i</mi></msub></mfrac><mo>)</mo></mrow><mrow><mi>n</mi><mi>x</mi><msub><mi>p</mi><mi>i</mi></msub></mrow></msup></mstyle></math></p>
+<p>For example, if you expected heads with probability 0.8, then with 100 trials you would get 80 heads and 20 tails. So, your confidence in <span class="math inline">\(H_0\)</span> would be multiplied by 1/0.8 on 80 occasions and multiplied by 1/0.2 on 20 occasions, for a total of <span class="math inline">\((1/0.8)^{80} x (1/0.2)^{20}\)</span>.</p>
+<p>Taking the power n in common:</p>
+<p><math title="P(H_0|o_1,o_2,...) = P(H_0) x (prod_i(1/p_i)^(p_i))^n "><mstyle displaystyle="true"><mi>P</mi><mrow><mo>(</mo><msub><mi>H</mi><mn>0</mn></msub><mrow><mo>|</mo></mrow><msub><mi>o</mi><mn>1</mn></msub><mo>,</mo><msub><mi>o</mi><mn>2</mn></msub><mo>,</mo><mo>…</mo><mo>)</mo></mrow><mo>=</mo><mi>P</mi><mrow><mo>(</mo><msub><mi>H</mi><mn>0</mn></msub><mo>)</mo></mrow><mi>x</mi><msup><mrow><mo>(</mo><munder><mo>∏</mo><mi>i</mi></munder><msup><mrow><mo>(</mo><mfrac><mn>1</mn><msub><mi>p</mi><mi>i</mi></msub></mfrac><mo>)</mo></mrow><mrow><msub><mi>p</mi><mi>i</mi></msub></mrow></msup><mo>)</mo></mrow><mi>n</mi></msup></mstyle></math></p>
+<p>Let’s call <math title="prod_i(1/p_i)^(p_i) "><mstyle displaystyle="true"><munder><mo>∏</mo><mi>i</mi></munder><msup><mrow><mo>(</mo><mfrac><mn>1</mn><msub><mi>p</mi><mi>i</mi></msub></mfrac><mo>)</mo></mrow><mrow><msub><mi>p</mi><mi>i</mi></msub></mrow></msup></mstyle></math> as A. This “A” is a function of just your probability distribution <span class="math inline">\(p_i\)</span> over the possible messages.</p>
+<p><math title="P(H_0|o_1,o_2,...) = P(H_0) x (A)^n "><mstyle displaystyle="true"><mi>P</mi><mrow><mo>(</mo><msub><mi>H</mi><mn>0</mn></msub><mrow><mo>|</mo></mrow><msub><mi>o</mi><mn>1</mn></msub><mo>,</mo><msub><mi>o</mi><mn>2</mn></msub><mo>,</mo><mo>…</mo><mo>)</mo></mrow><mo>=</mo><mi>P</mi><mrow><mo>(</mo><msub><mi>H</mi><mn>0</mn></msub><mo>)</mo></mrow><mi>x</mi><msup><mrow><mo>(</mo><mi>A</mi><mo>)</mo></mrow><mi>n</mi></msup></mstyle></math></p>
+<p>So, if you get n messages from that probability distribution, for a large enough n, your confidence in the correct hypothesis will be multiplied by <span class="math inline">\(A^n\)</span>.</p>
+<p>This is exactly what we wanted to know! To compare two experiments <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>, just look at their values for A. If A for <span class="math inline">\(X_1\)</span> is greater than A for <span class="math inline">\(X_2\)</span>, then we can expect to get our confidence multiplied more with <span class="math inline">\(X_1\)</span>. So, to get the maximum confidence-multiplier, look for the experiment for which you have the highest A.</p>
+<h1 id="entropy-in-disguise">Entropy in Disguise</h1>
+<p>What is this mysterious A? Well, it’s nothing but <span class="math inline">\(2^{entropy}\)</span>!</p>
+<p>Entropy is defined in information theory as</p>
+<p>entropy = <math title="sum_i p_i log_2(1/p_i) "><mstyle displaystyle="true"><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>p</mi><mi>i</mi></msub><msub><mo>log</mo><mn>2</mn></msub><mrow><mo>(</mo><mfrac><mn>1</mn><msub><mi>p</mi><mi>i</mi></msub></mfrac><mo>)</mo></mrow></mstyle></math></p>
+<p>Multiplying by a logarithm is the same as raising the power of the value inside. So:</p>
+<p>entropy = <math title="sum_i(log_2(1/p_i)^(p_i)) "><mstyle displaystyle="true"><munder><mo>∑</mo><mi>i</mi></munder><mrow><mo>(</mo><msub><mo>log</mo><mn>2</mn></msub><msup><mrow><mo>(</mo><mfrac><mn>1</mn><msub><mi>p</mi><mi>i</mi></msub></mfrac><mo>)</mo></mrow><mrow><msub><mi>p</mi><mi>i</mi></msub></mrow></msup><mo>)</mo></mrow></mstyle></math></p>
+<p>Also, sum of logarithms is the same as the logarithm of the product of the values inside.</p>
+<p>entropy = <math title="log_2(prod_i(1/p_i)^(p_i)) "><mstyle displaystyle="true"><msub><mo>log</mo><mn>2</mn></msub><mrow><mo>(</mo><munder><mo>∏</mo><mi>i</mi></munder><msup><mrow><mo>(</mo><mfrac><mn>1</mn><msub><mi>p</mi><mi>i</mi></msub></mfrac><mo>)</mo></mrow><mrow><msub><mi>p</mi><mi>i</mi></msub></mrow></msup><mo>)</mo></mrow></mstyle></math></p>
+<p>That inner part is nothing but our A. So,</p>
+<p>entropy = <math title="log_2(A) "><mstyle displaystyle="true"><msub><mo>log</mo><mn>2</mn></msub><mrow><mo>(</mo><mi>A</mi><mo>)</mo></mrow></mstyle></math></p>
+<p>Equivalently, A = <span class="math inline">\(2^{entropy}\)</span></p>
+<p>Just like information was the logarithm of the confidence-multiplier, entropy is simply the logarithm of the expected confidence-multiplier.</p>
+<p>So, the way to quickly gain confidence in the correct hypothesis is to pick the experiment with maximum entropy. In other words, the fastest way to learn is by asking questions with the largest entropy. More on this coming soon.</p>
+<h1 id="not-indispensable">Not Indispensable</h1>
+<p>Previously, information and entropy were black boxes to me. I never really got why we chose such a weird definition for “information”. And the entropy formula was even more incomprehensible (<math title="sum_i p_i log_2(1/p_i) "><mstyle displaystyle="true"><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>p</mi><mi>i</mi></msub><msub><mo>log</mo><mn>2</mn></msub><mrow><mo>(</mo><mfrac><mn>1</mn><msub><mi>p</mi><mi>i</mi></msub></mfrac><mo>)</mo></mrow></mstyle></math>, seriously?).</p>
+<p>Now I realize there’s nothing essential about the concepts of information and entropy. It simply boils down to multiplying our confidence in the correct hypothesis, which has always been our goal. The more an outcome multiplies our confidence, the more informative we consider it. And the more an experiment multiplies our confidence on average, the more entropy we say it has.</p>
+<h1 id="notes">Notes</h1>
+<p>There exists one correct hypothesis that predicts all the past evidence with perfect accuracy and will predict all future evidence too. Of course, you may have several candidates at present that have perfect scores and would need more evidence to eliminate the rest. However, if you don’t have <em>any</em> hypothesis at all that has a perfect score so far - assigning a likelihood of 1 to the correct outcome each time - then that means your hypothesis set is lacking.</p>
+<p><strong>Lesson</strong>: When you come across important terms, rename them with nonsense words so that you don’t confuse them with existing words. Like how we confuse the information from information theory with the information from common sense. This way you can truly reduce it to its core.</p>
+<p>Information-processing - a buzzword I always avoided - is nothing but Bayesian updating. In Bayesian terms, you take an outcome (aka message) and update on it to change your probability distribution over your hypotheses. In information theory terms, you take a message and then use its information content to multiply your confidence in the correct hypothesis.</p>
+
+<div class="info">Created: January  8, 2016</div>
+<div class="info">Last modified: September 18, 2016</div>
+<div class="info">Status: in-progress</div>
+<div class="info"><b>Tags</b>: reduction, information theory</div>
+
+<br />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'spkrationalitytrainingground'; // required: replace example with your forum shortname
+    var disqus_identifier = '/reducing-information-theory.html';
+    var disqus_title = 'Reducing Information Theory to Probability Theory';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+        </div>
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>
