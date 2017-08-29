@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>SPK Rationality Website</title>
+    <link href="http://pradeep90.github.io//atom.xml" rel="self" />
+    <link href="http://pradeep90.github.io/" />
+    <id>http://pradeep90.github.io//atom.xml</id>
+    <author>
+        <name>S Pradeep Kumar</name>
+        <email>none@ofyourbiz.com</email>
+    </author>
+    <updated>2017-07-31T00:00:00Z</updated>
+    <entry>
+    <title>Identity: Case Studies</title>
+    <link href="http://pradeep90.github.io//identity-case-studies.html" />
+    <id>http://pradeep90.github.io//identity-case-studies.html</id>
+    <published>2017-07-31T00:00:00Z</published>
+    <updated>2017-07-31T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Praise as reinforcement.]]></summary>
+</entry>
+<entry>
+    <title>Losing your Identity</title>
+    <link href="http://pradeep90.github.io//losing-your-identity.html" />
+    <id>http://pradeep90.github.io//losing-your-identity.html</id>
+    <published>2017-07-30T00:00:00Z</published>
+    <updated>2017-07-30T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Losing your identity.]]></summary>
+</entry>
+<entry>
+    <title>Reframing</title>
+    <link href="http://pradeep90.github.io//reframing.html" />
+    <id>http://pradeep90.github.io//reframing.html</id>
+    <published>2017-07-29T00:00:00Z</published>
+    <updated>2017-07-29T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Reframing]]></summary>
+</entry>
+<entry>
+    <title>Praise</title>
+    <link href="http://pradeep90.github.io//praise.html" />
+    <id>http://pradeep90.github.io//praise.html</id>
+    <published>2017-07-28T00:00:00Z</published>
+    <updated>2017-07-28T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Praise as reinforcement.]]></summary>
+</entry>
+<entry>
+    <title>Ridicule</title>
+    <link href="http://pradeep90.github.io//ridicule.html" />
+    <id>http://pradeep90.github.io//ridicule.html</id>
+    <published>2017-07-27T00:00:00Z</published>
+    <updated>2017-07-27T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Ridicule as punishment.]]></summary>
+</entry>
+<entry>
+    <title>Reinforcing your Identity</title>
+    <link href="http://pradeep90.github.io//identity-reinforcement.html" />
+    <id>http://pradeep90.github.io//identity-reinforcement.html</id>
+    <published>2017-07-26T00:00:00Z</published>
+    <updated>2017-07-26T00:00:00Z</updated>
+    <summary type="html"><![CDATA[How does an identity get strengthened?]]></summary>
+</entry>
+<entry>
+    <title>Identity</title>
+    <link href="http://pradeep90.github.io//identity.html" />
+    <id>http://pradeep90.github.io//identity.html</id>
+    <published>2017-07-25T00:00:00Z</published>
+    <updated>2017-07-25T00:00:00Z</updated>
+    <summary type="html"><![CDATA[What is an identity?]]></summary>
+</entry>
+<entry>
+    <title>Turn Off the Internet</title>
+    <link href="http://pradeep90.github.io//turn-off-the-internet.html" />
+    <id>http://pradeep90.github.io//turn-off-the-internet.html</id>
+    <published>2017-07-19T00:00:00Z</published>
+    <updated>2017-07-19T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Why you should turn off the internet when trying to do deep work.]]></summary>
+</entry>
+<entry>
+    <title>The Shallows: Thinking in the Age of the Web</title>
+    <link href="http://pradeep90.github.io//The-Shallows-Thinking-in-the-Age-of-the-Web.html" />
+    <id>http://pradeep90.github.io//The-Shallows-Thinking-in-the-Age-of-the-Web.html</id>
+    <published>2017-05-09T00:00:00Z</published>
+    <updated>2017-05-09T00:00:00Z</updated>
+    <summary type="html"><![CDATA[This is the post description]]></summary>
+</entry>
+<entry>
+    <title>Reducing Information Theory to Probability Theory</title>
+    <link href="http://pradeep90.github.io//reducing-information-theory.html" />
+    <id>http://pradeep90.github.io//reducing-information-theory.html</id>
+    <published>2016-01-08T00:00:00Z</published>
+    <updated>2016-01-08T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Information and entropy are not essential concepts. They can be reduced to probability theory.]]></summary>
+</entry>
+
+</feed>
