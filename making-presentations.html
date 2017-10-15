@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="icon" type="image/png" href="./images/favicon-32x32.png" sizes="32x32" />
 	<link rel="icon" type="image/png" href="./images/favicon-16x16.png" sizes="16x16" />
-        <title>Computer Usage Notes - SPK's Rationality Essays</title>
+        <title>Making Presentations - SPK's Rationality Essays</title>
         <link rel="stylesheet" type="text/css" href="./css/default.css" />
         <link rel="stylesheet" type="text/css" href="./css/highlight.css" />
 
@@ -43,44 +43,34 @@
         </div>
 
         <div id="content">
-          <h1 id="post-title">Computer Usage Notes</h1>
+          <h1 id="post-title">Making Presentations</h1>
 
             <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
 
-<h1 id="pdf-and-epub-notes">pdf and epub notes</h1>
-<p>The Adobe Acrobat tablet app writes my notes and underlinings to the PDF file itself. So, my notes persist when I copy the PDF file elsewhere.</p>
-<p>Not so with the notes I make in the Google Play Reader. The changes aren’t saved to the file itself. It must be stored as metadata in the reader app (and synced with the cloud).</p>
-<h1 id="manually-install-a-deb-package">Manually install a deb package</h1>
-<p>To install foo.deb:</p>
-<pre><code>sudo dpkg -i foo.deb</code></pre>
-<p>If it fails due to dependency problems:</p>
-<pre><code>sudo apt-get install -f</code></pre>
-<p>(Thanks to <a href="http://askubuntu.com/questions/40779/how-do-i-install-a-deb-file-via-the-command-line">AskUbuntu</a>)</p>
-<h1 id="install-a-font-like-inconsolata">Install a font (like Inconsolata)</h1>
-<pre><code>sudo apt install fonts-inconsolata</code></pre>
-<h1 id="number-of-pages-in-pdfs">Number of Pages in PDFs</h1>
-<p>Useful when trying to calculate the number of slides in a bunch of lectures:</p>
-<pre><code>ls -1 *.pdf | xargs -n 1 pdfinfo | awknum '/Pages/{print $1}' | awksum
+<h1 id="points-to-hit">Points to Hit</h1>
+<blockquote>
+<ul>
+<li>what questions you addressed</li>
+<li>why those questions are important</li>
+<li>what methods you used</li>
+<li>what your main results were</li>
+<li>why those results are interesting</li>
+</ul>
+<p>– <a href="https://chi2016.acm.org/wp/guide-to-a-successful-presentation/">CHI 2016 guide</a></p>
+</blockquote>
 
-# Aliases for awknum and awksum
-
-alias -g awknum=&quot;awk -v FPAT='[0-9]+(\\\\.[0-9]+)?'&quot;
-
-# Sum of the first number on each line.
-alias -g awksum=&quot;awknum '{sum+=\$1}END{print sum}'&quot;</code></pre>
-
-<div class="info">Created: August 19, 2015</div>
-<div class="info">Last modified: October 15, 2017</div>
+<div class="info">Created: October  3, 2017</div>
+<div class="info">Last modified: October  4, 2017</div>
 <div class="info">Status: in-progress notes</div>
-<div class="info"><b>Tags</b>: notes</div>
+<div class="info"><b>Tags</b>: notes, presentation</div>
 
 <br />
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'spkrationalitytrainingground'; // required: replace example with your forum shortname
-    var disqus_identifier = '/Computer-Usage-Notes.html';
-    var disqus_title = 'Computer Usage Notes';
+    var disqus_identifier = '/making-presentations.html';
+    var disqus_title = 'Making Presentations';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
