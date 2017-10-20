@@ -298,19 +298,19 @@ x-&gt;z-&gt;y</code></pre>
 <p><strong>Hypothesis</strong>: Assume P(A) = P*(A) &lt;- empirical information.</p>
 <p>For example, in X -&gt; Z -&gt; Y, P(y|do(x), z) = P(y|z) in the causal graph; so it holds for both P and P*. Then, if we are given that <code>P(y|z) = P*(y|z)</code>, we can remove the star.</p>
 <h2 id="data-fusion">Data Fusion</h2>
-<p>Hypothesis: Type of dataset = <population (?), experimental vs observation, sampling, measured></p>
+<p>Hypothesis: Type of dataset = (population (?), experimental vs observation, sampling, measured)</p>
 <p><strong>Hypothesis</strong>: Data fusion problem :: heterogeneous datasets -&gt; Maybe target dataset of some type.</p>
-<p>Observation: Causal inference :: dataset of type <population a, observational, sampling s, measured v> -&gt; dataset of type <population a, experimental, sampling s, measured v>.</p>
-<p>For example, P(y|do(x)) is of the type <population a, experimental, sampling s (whatever it may be), {x,y}>.</p>
+<p>Observation: Causal inference :: dataset of type (population a, observational, sampling s, measured v) -&gt; dataset of type (population a, experimental, sampling s, measured v).</p>
+<p>For example, P(y|do(x)) is of the type (population a, experimental, sampling s (whatever it may be), {x,y}).</p>
 <p><strong>Hypothesis</strong>: It is a dataset. You could use it to infer P(y,z|do(x)) (depending on the graph).</p>
-<p>Observation: Z-identifiability :: dataset of type <population a, experimental, sampling s, measured z> -&gt; dataset of type <population a, experimental, sampling s, measured x></p>
-<p>Observation: Transportability :: dataset of type <population a, experimental regime e, sampling s, measured v> -&gt; dataset of type <population b, experimental regime e, sampling s, measured v>.</p>
-<p>Observation: Sampling selection bias :: dataset of type <population a, experimental regime e, sampling s, measured v> -&gt; dataset of type <population a, experimental regime e, {}, measured v>.</p>
-<p><strong>Hypothesis</strong>: Type of dataset = <population (?), experimental vs observation, sampling, measured, *causal graph*, mechanisms>.</p>
+<p>Observation: Z-identifiability :: dataset of type (population a, experimental, sampling s, measured z) -&gt; dataset of type (population a, experimental, sampling s, measured x)</p>
+<p>Observation: Transportability :: dataset of type (population a, experimental regime e, sampling s, measured v) -&gt; dataset of type (population b, experimental regime e, sampling s, measured v).</p>
+<p>Observation: Sampling selection bias :: dataset of type (population a, experimental regime e, sampling s, measured v) -&gt; dataset of type (population a, experimental regime e, {}, measured v).</p>
+<p><strong>Hypothesis</strong>: Type of dataset = (population (?), experimental vs observation, sampling, measured, <em>causal graph</em>, mechanisms).</p>
 <p>Question: What about selector diagrams? How do you handle the fact that you have multiple models (but with the same graph)?</p>
 <h2 id="bayesian-inference-vs-data-fusion">Bayesian Inference vs Data Fusion</h2>
 <p>Question: What about general inference?</p>
-<p>Hypothesis: Probabilistic inference :: dataset of type <population a, observational, sampling s, measured v> -&gt; dataset of type <population a, observational, sampling s, measured v + y>.</p>
+<p>Hypothesis: Probabilistic inference :: dataset of type (population a, observational, sampling s, measured v) -&gt; dataset of type (population a, observational, sampling s, measured v + y).</p>
 <p>Observation: Bayesian inference :: prior distribution over hypotheses, evidence -&gt; posterior distribution over hypotheses.</p>
 <p><strong>Question</strong>: What is the difference between Bayesian inference and data fusion?</p>
 <h2 id="potential-tests">Potential Tests</h2>
@@ -327,7 +327,7 @@ x-&gt;z-&gt;y</code></pre>
 <p>http://blogs.sciencemag.org/pipeline/archives/2017/10/13/a-painful-unacceptable-lack-of-data</p>
 
 <div class="info">Created: June 22, 2017</div>
-<div class="info">Last modified: October 18, 2017</div>
+<div class="info">Last modified: October 20, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, eb</div>
 
