@@ -85,7 +85,7 @@ x-&gt;z-&gt;y</code></pre>
 <p>Locality of causality</p>
 <p>Expected value of information</p>
 <p>Entropy</p>
-<h1 id="past-project-ideas-and-papers">Past Project Ideas and Papers</h1>
+<h1 id="eb-cs590-past-project-ideas-and-papers">EB CS590 Past Project Ideas and Papers</h1>
 <h2 id="my-own-research-interests">My Own Research Interests</h2>
 <p>Scientific discovery.</p>
 <p>Programming.</p>
@@ -93,6 +93,7 @@ x-&gt;z-&gt;y</code></pre>
 <p><strong>Hypothesis</strong>: I’m interested in how to scale models from the micro-level to the macro-level. How do we form higher-level concepts?</p>
 <p>For example, climate science (as in the thesis). Or going from our understanding of individual functions in a program to the overall properties of the program. Ditto for a car.</p>
 <p>Hypothesis: I believe that we shouldn’t limit ourselves to the variables given in the data (as you keep mentioning, there could be millions of such low-level variables). How do we get to the high-level variables we care about? How would an automated program identify high-level “variables”?</p>
+<p>Feature extraction: Instead of just feature selection, I want category creation. Build high level abstractions out of low level variables. I believe that will reduce our uncertainty about the joint distribution and make it cheaper to calculate the queries we are interested in. We are interested in high level variables.</p>
 <p>Hypothesis: I think that is related to the decisions that we face - what interventions are we uncertain about? Also depends on the granularity of our tools. (example: macro-economics works with things like interest rates and tax rates, not individual firms.)</p>
 <h2 id="inference-data-fusion">Inference / Data-fusion</h2>
 <p>Causal inference and the data-fusion problem.</p>
@@ -258,6 +259,64 @@ x-&gt;z-&gt;y</code></pre>
 <p>Observation: The current transportability formula uses a mixture of data from the source and target population.</p>
 <p>Hypothesis: Maybe you could use a mixture of data using the exact transformation solution by using the commutativity diagram and working in the original model or target model as desired.</p>
 <p>Hypothesis: Maybe it will help you consider multiple heterogeneous conditions at the same time.</p>
+<h1 id="transportability-across-studies-a-formal-approach-2011">Transportability across studies: A formal approach (2011)</h1>
+<h2 id="motivating-examples">Motivating Examples</h2>
+<p>Hypothesis: “Selection diagram” :: differences and commonalities between populations of interest</p>
+<p>Hypothesis: Transportability problem :: causal effect in different environment -&gt; Maybe causal effect in target environment</p>
+<p>Hypothesis: Question - When can we assume that age-specific effects are invariant across cities (but not the age distribution itself)?</p>
+<p>Observation: This seems to be transportable.</p>
+<p>Now, toggle variables to see when the effect stops being transportable.</p>
+<p>Problems:</p>
+<ul>
+<li><p>Z = age.</p></li>
+<li><p>What if Z weren’t age, but some proxy like language proficiency?</p></li>
+<li><p>What if Z were an exposure-dependent variable like hypertension level? (motivating example for surrogate endpoint)</p></li>
+</ul>
+<p>Question: In the hypertension example, is the change in P(Z) due to differences in P(X) or due to differences in the way Z is affected by X? (RCT would distinguish between the two.)</p>
+<p>Hypothesis: Transportable effect = if the <strong>mechanism</strong> is the same but it’s just the observational probabilities that are different.</p>
+<p>i.e., P(z|x) vs P(z|do(x)).</p>
+<p>Corollary: You can’t use statistics because they don’t distinguish between the two. Only interventions can distinguish between observational probabilities and mechanisms.</p>
+<p>Corollary: Transportability is a causal notion, not a statistical notion.</p>
+<p>Hypothesis: Transportability &lt;- same mechanisms, but potentially different probabilities.</p>
+<p>Hypothesis: Population differences = difference in probabilities, but not mechanisms.</p>
+<p>Hypothesis: Key variable - What causes the difference between P(z) and P*(z)?</p>
+<p>Observation: Language proficiency - distribution in age could be the same in LA and NY, but language proficiency could be caused differently by age in the two cities (maybe LA teaches Spanish in school). Since age distribution is the same, causal effects are just the same in both cities.</p>
+<p>Observation: Language proficiency - if proficiency is caused the same way in both cities (P(z|age) = P*(z|age)), then the difference in P(z) was caused by difference in P(age) and so the causal effect won’t be the z-specific effect.</p>
+<p>Observation: We assumed that P(y|do(x), z) = P*(y|do(x), z)! We’re assuming that the mechanism is the same.</p>
+<p>Hypothesis: Transportability &lt;- causal mechanisms between X and Y are the same, auxiliary mechanisms may be different, probabilities may be different.</p>
+<p>Observation: They’re considering cases where some auxiliary variable Z is different in two populations.</p>
+<p>Question: What if Z is the same? Do you assume that the causal effect is transportable?</p>
+<p><strong>Hypothesis</strong>: Assumption - the causal graph is the same in both populations.</p>
+<p><strong>Corollary</strong>: Difference in some auxiliary variable &lt;- difference in mechanism or difference in probabilities.</p>
+<p>Corollary: Same mechanism &lt;- auxiliary variable has same probability in both populations, same causal graph, stability assumption</p>
+<p>Hypothesis: Transportability &lt;- same causal graph, causal mechanisms between X and Y are the same, auxiliary mechanisms may be different, probabilities may be different.</p>
+<p>Basically, do they differ in f or U?</p>
+<p>Observation: X -&gt; Z -&gt; Y; the mechanism from X -&gt; Z could be different in the two populations, but you can adjust for that with P*(Z|X). The mechanism in P(y|do(x),z) is assumed to be the same.</p>
+<p><strong>Hypothesis</strong>: Transportability &lt;- same causal graph, effects of mechanisms that are different can be identified or experimentally measured, some probabilities may be different.</p>
+<p>Question: Why did they assume that P(y|do(x), z) is the same as P*(y|do(x), z) in the Markov chain example above?</p>
+<p><strong>Hypothesis</strong>: Use do-calculus on causal effects &lt;- common causal graph.</p>
+<p><strong>Hypothesis</strong>: Assume P(A) = P*(A) &lt;- empirical information.</p>
+<p>For example, in X -&gt; Z -&gt; Y, P(y|do(x), z) = P(y|z) in the causal graph; so it holds for both P and P*. Then, if we are given that <code>P(y|z) = P*(y|z)</code>, we can remove the star.</p>
+<h2 id="data-fusion">Data Fusion</h2>
+<p>Hypothesis: Type of dataset = <population (?), experimental vs observation, sampling, measured></p>
+<p><strong>Hypothesis</strong>: Data fusion problem :: heterogeneous datasets -&gt; Maybe target dataset of some type.</p>
+<p>Observation: Causal inference :: dataset of type <population a, observational, sampling s, measured v> -&gt; dataset of type <population a, experimental, sampling s, measured v>.</p>
+<p>For example, P(y|do(x)) is of the type <population a, experimental, sampling s (whatever it may be), {x,y}>.</p>
+<p><strong>Hypothesis</strong>: It is a dataset. You could use it to infer P(y,z|do(x)) (depending on the graph).</p>
+<p>Observation: Z-identifiability :: dataset of type <population a, experimental, sampling s, measured z> -&gt; dataset of type <population a, experimental, sampling s, measured x></p>
+<p>Observation: Transportability :: dataset of type <population a, experimental regime e, sampling s, measured v> -&gt; dataset of type <population b, experimental regime e, sampling s, measured v>.</p>
+<p>Observation: Sampling selection bias :: dataset of type <population a, experimental regime e, sampling s, measured v> -&gt; dataset of type <population a, experimental regime e, {}, measured v>.</p>
+<p><strong>Hypothesis</strong>: Type of dataset = <population (?), experimental vs observation, sampling, measured, *causal graph*, mechanisms>.</p>
+<p>Question: What about selector diagrams? How do you handle the fact that you have multiple models (but with the same graph)?</p>
+<h2 id="bayesian-inference-vs-data-fusion">Bayesian Inference vs Data Fusion</h2>
+<p>Question: What about general inference?</p>
+<p>Hypothesis: Probabilistic inference :: dataset of type <population a, observational, sampling s, measured v> -&gt; dataset of type <population a, observational, sampling s, measured v + y>.</p>
+<p>Observation: Bayesian inference :: prior distribution over hypotheses, evidence -&gt; posterior distribution over hypotheses.</p>
+<p><strong>Question</strong>: What is the difference between Bayesian inference and data fusion?</p>
+<h2 id="potential-tests">Potential Tests</h2>
+<p>Hypothesis: Assumptions &lt;- areas where they jumped from P to P*.</p>
+<p><strong>Question</strong>: From where do you get feedback for your transportability formula?</p>
+<p><strong>Test</strong>: Can you handle the age and skill examples using your idea of two partially-equivalent models?</p>
 <h1 id="surrogate-endpoints">Surrogate Endpoints</h1>
 <h2 id="understand">Understand</h2>
 <p>Question: What were some proposed definitions so far? Where did they break down?</p>
@@ -268,7 +327,7 @@ x-&gt;z-&gt;y</code></pre>
 <p>http://blogs.sciencemag.org/pipeline/archives/2017/10/13/a-painful-unacceptable-lack-of-data</p>
 
 <div class="info">Created: June 22, 2017</div>
-<div class="info">Last modified: October 17, 2017</div>
+<div class="info">Last modified: October 18, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, eb</div>
 

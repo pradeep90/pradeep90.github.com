@@ -179,9 +179,48 @@ find . -type f -name &quot;*.c&quot; | xargs wc -l
 <p>Observation: NQENT is the problem!</p>
 <p>Observation: Fucked up a get max element in linked list because I didn’t update the curr pointer. Infinite loop.</p>
 <p>Lesson: Clean and build when you change header files or <code>#define</code>s.</p>
+<h1 id="hw2">HW2</h1>
+<h2 id="understanding-the-instructions-interface-for-every-function">Understanding the Instructions: Interface for Every Function</h2>
+<p>In a separate shellutils.c and piputils.c file:</p>
+<p>shell - interpret command: bunch of tokens -&gt; Maybe tokens for processes in pipe order</p>
+<p>shell - make processes: tokens for processes in pipe order -&gt; Maybe processes in pipe order</p>
+<p>piputil - pipe together a bunch of processes: processes in pipe order -&gt; Maybe processes piped together</p>
+<p>syscall - set stdout for process: process, stdout file descriptor -&gt; Maybe set stdout</p>
+<p>syscall - set stdin for process: process, stdin file descriptor -&gt; Maybe set stdin</p>
+<p>shell - clean up a command: kill all processes and their pipes -&gt; Maybe ok.</p>
+<p>Test: overall - command with no pipes (see if you can programmatically run this from main); one pipe between different types of commands (producer blocks, consumer blocks, both block, some die or sleep or don’t get scheduled); multiple pipes</p>
+<p>Refactor shell to make it use the above interface even for non-pipe commands. Make sure it works for the default case.</p>
+<hr />
+<p>pipinit: pipid [, Maybe pipe_t] -&gt; initialized pipe</p>
+<p>pipglobalinit: globals {table} -&gt; initialized globals {table with everything set to free}</p>
+<p>pipcreate: () [table] -&gt; Maybe did32, owner (then pipinit that pipe); table should have an active pipe at did32</p>
+<p>pipdelete: pipe [, table] -&gt; ok; reset pipe state (maybe via pipinit or some pipreset they both call that clears the buffer and resets semaphores, etc.); check for owner; basically pipdisconnect.</p>
+<p>pipconnect: pipe [, pipe struct], writer, reader -&gt; Maybe A and B piped; reader and writer should not be the same</p>
+<p>pipdisconnect: pipe [, table, pipe struct] -&gt; Maybe ok (call set stdout with console); last one -&gt; “clean the pipe”; writer calls -&gt; do something; reader calls -&gt; do something.</p>
+<p>pipputc: pipe [, pipe struct], char -&gt; Blocking ok</p>
+<p>pipwrite: pipe [, pipe struct], buf, length -&gt; Blocking (number of characters or SYSERR); if pipe not in connected state or if this is not writer, return SYSERR; full -&gt; block; some space -&gt; write and block;</p>
+<p><strong>TODO</strong>: Question: pipwrite - suppose reader doesn’t accept any more characters - return SYSERR or number of characters written?</p>
+<p>pipgetc: pipe [, pipe struct] -&gt; Blocking (character or SYSERR)</p>
+<p>pipread: pipe [, pipe struct], buf, length -&gt; Blocking (number of bytes read or SYSERR)</p>
+<p><strong>TODO</strong>: Question: pipread - if no data, block; if only some data, read some bytes and block; if writer stops writing, return number of bytes read or SYSERR?</p>
+<p>kill: process [, pipe struct] -&gt; delete pipes that you own; disconnect from any pipes</p>
+<hr />
+<p>Question: How to go for refactor-red-green-refactor?</p>
+<p><strong>Hypothesis</strong>: Get an interface for each function and then minimize it. Be strict - don’t touch anything outside the interface. Then test your implementation against it.</p>
+<p>Test the different states of the pipe, producer, consumer, and owner (such as current, ready, sleeping, waiting, or free).</p>
+<h2 id="implementation">Implementation</h2>
+<p><strong>Hypothesis</strong>: Assert preconditions and postconditions. Argument testing - null, etc.</p>
+<h2 id="information-from-interpreter">Information from Interpreter</h2>
+<p>Observation: Added the pip32 &lt;-&gt; did32 utility functions</p>
+<p>Observation: Don’t know which functions will call pipreset. Confused about how it should really behave.</p>
+<p>Hypothesis: Go with separate functions and then merge them during refactor.</p>
+<p>Observation: I don’t have any tests right now, red or green.</p>
+<p>Hypothesis: Test all branches of your function.</p>
+<p>Observation: <strong>RED</strong>! I hadn’t even run my test function.</p>
+<p>Hypothesis: Unit tests (that failed and now pass) tell you that you’re making progress.</p>
 
 <div class="info">Created: September  9, 2017</div>
-<div class="info">Last modified: September 28, 2017</div>
+<div class="info">Last modified: October 20, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, os</div>
 
