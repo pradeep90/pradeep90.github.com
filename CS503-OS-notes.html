@@ -218,9 +218,18 @@ find . -type f -name &quot;*.c&quot; | xargs wc -l
 <p>Hypothesis: Test all branches of your function.</p>
 <p>Observation: <strong>RED</strong>! I hadn’t even run my test function.</p>
 <p>Hypothesis: Unit tests (that failed and now pass) tell you that you’re making progress.</p>
+<p><strong>Observation</strong>: I couldn’t run multiple tests on pipes because I hadn’t implemented pipdelete.</p>
+<p>Observation: Bug - pipcreate returned did not pipid.</p>
+<p>Observation: Ditto for pipinit.</p>
+<p>Hypothesis: Need to add assertions everywhere I receive pipid. (You can say that again.)</p>
+<p>Observation: pipdelete test passes without any implementation! Colour me shocked!</p>
+<p><strong>Hypothesis</strong>: When refactoring before adding a feature, I need to assert preconditions and postconditions (or add unit tests) for everything the feature changes. Worst case, I need to catch those after adding the feature.</p>
+<p>Hypothesis: Bug due to did32 vs pipid32 &lt;- my confusion about the two types.</p>
+<p>Hypothesis: That feels like duplication of code. Wait. It is! Why do you have two different types for the same value! One should be a view of the other - a simple function somewhere.</p>
+<p>Observation: All my time so far was spent debugging because of a simple type confusion.</p>
 
 <div class="info">Created: September  9, 2017</div>
-<div class="info">Last modified: October 20, 2017</div>
+<div class="info">Last modified: October 21, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, os</div>
 

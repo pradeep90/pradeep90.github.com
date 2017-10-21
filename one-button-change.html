@@ -51,26 +51,76 @@
 <p>Hypothesis: We get evidence about our program by running it on some input or by type-checking it.</p>
 <p>Hypothesis: We can process evidence about one variable at a time. Beyond that, we get confused.</p>
 <p>(Yes, we can get lucky with multiple changes, but that won’t pay off on average.)</p>
-<p><strong>Hypothesis</strong>: One key factor in programming efficiently - aka processing evidence about our program - is to make one high-level change at a time.</p>
-<p>This means that you should be able to choose between your two design choices, say process scheduler A and process scheduler B with just one small change. No changing variable assignments in three different places, no tweaking of multiple configuration files - just one button press.</p>
+<p><strong>Hypothesis</strong>: One key factor in programming efficiently - aka processing evidence about our program - is to make one high-level change at a time before you get evidence.</p>
+<p>This means that you should be able to choose between your two design choices, say process scheduler A and process scheduler B with just one small change. No changing variable assignments in three different places, not hasty commenting of 15 lines of code, no tweaking of multiple configuration files - just one button press.</p>
 <p>(Why would this weird condition help write programs faster? We’ll see.)</p>
 <h1 id="how-to-program-with-one-button-changes">How to Program with One-Button Changes</h1>
-<p>How will this affect your the way you code?</p>
+<p>How will this affect the way you code?</p>
 <p>For one, you can’t change multiple lines of code within some other function. Because then, if you wanted to roll back those changes, you would have to edit multiple lines.</p>
-<p><strong>Corollary</strong>: Any change you make must be encapsulated within a function.</p>
-<p>Now, what if you wanted to switch from scheduler A to scheduler B? Sure, A is within a function that you can comment (or in a class method that you can change at runtime via polymorphism). But B could be a bunch of lines of code strewn across your project. So, to switch to B, you would have to uncomment all those lines. Not allowed.</p>
-<p><strong>Corollary</strong>: Any alternatives must be easily switchable.</p>
+<p><strong>Corollary</strong>: Any change you make must be encapsulated within a new function before you run the program.</p>
+<p>Now, what if you wanted to switch from scheduler A to scheduler B? Sure, A is within a function that you can comment out (or in a class method that you can change at runtime via polymorphism). But B could be a bunch of lines of code strewn across your project. So, to switch to B, you would have to uncomment all those lines. Not allowed.</p>
+<p><strong>Corollary</strong>: Any alternatives must be easily switchable (when you run the program).</p>
 <p>In OOP, you would do this via interfaces or inheritance, where you simply switch the class that is implementing the interface, and the caller code is none the wiser. In functional programming, you simply switch to another value of the same type or type class.</p>
 <p>What happens when you’re starting out with a new feature, like pipes in an operating system (completely hypothetical example; not related to my coursework at all)? If you press the button, you will switch to your neatly encapsulated function or class that implements pipes. But what if you want to go back to a pipe-less operating system, just to check for correctness or performance? You may not be able to, if you have pipe initialization and destruction code lying around, and if processes have information about pipes they may own.</p>
-<p><strong>Corollary</strong>: You must have a default alternative for every choice.</p>
+<p><strong>Corollary</strong>: You must have a default alternative for every choice (when you run the program).</p>
 <p>For example, if you implemented pipes, your default would be the non-piped version. (Again, you should be able to switch between these two in one button-press.) If you implemented a new time-share scheduler for the operating system, you must encapsulate the original scheduler as a default alternative.</p>
 <p>Likewise, if you’re setting out on a “complex” change, you should have a default stub of it that does nothing.</p>
+<h1 id="empty-inside">Empty Inside</h1>
+<p>Question: What if you’re not creating alternatives, like two types of schedulers, but rather just one algorithm, like pipes for an operating system?</p>
+<p>Question: What kind of change are you making at each point? What was the program like earlier and what is it like after the change?</p>
+<p><strong>Hypothesis</strong>: You should have a default stub that has the <em>same type</em> as your final code, but doesn’t affect the behaviour of the system. Then, you should have a one-button change that allows you to switch to the final code.</p>
+<p><strong>Corollary</strong>: Your unit test for a feature should <em>fail</em> when you switch to the default implementation and <em>pass</em> when you switch to the feature-filled implementation. As usual, it should be a one-button change.</p>
+<p><strong>Hypothesis</strong>: Add unit tests (or assert contracts) for everything that your new feature changes.</p>
+<p>Hypothesis: Having a one-button change between feature and no-feature allows you to roll it back quickly to see what was caused by the feature itself as opposed to the earlier code.</p>
+<p>For example, my test for pipe deletion passed even though my <code>pipdelete</code> function was empty! I’d mixed up types in other places, which meant that my desired pipes were not getting initialized in the first place. So, the test passed whether or not I implemented my <code>pipdelete</code> feature. Good to know. Otherwise, I’d be scratching my head wondering which of my seven changes in different parts of the system had caused the bug.</p>
 <h1 id="upshot">Upshot</h1>
 <p>What do all those straitjackets get you? I’m not fully sure. We’ll find out the usual way: good ol’ fashioned experimentation.</p>
+<p><strong>Hypothesis</strong>: Single, easily-reversible change -&gt; any behaviour that is in the program with the feature on and not in the program with the feature off must be caused (at least partly) by the feature.</p>
+<p>Contrast that to shotgun change, where you aren’t sure which change broke your code.</p>
+<p>Hypothesis: First-class objects -&gt; make it easier to switch.</p>
+<p>For example, a value or function or object of the same type.</p>
+<p>Question: Do you really need to rollback that often? Yes, you will want to toggle a new feature while implementing it. But after implementing A, B, and C in sequence, will you need to check out AB’C? Or will you treat the existing program as correct and indivisible?</p>
+<p><strong>Observation</strong>: Will need to rollback if you think of a test or find a bug after the implementation.</p>
+<p>Hypothesis: Hard to come up with good tests or properties in advance.</p>
+<p>Hypothesis: If you come up with a test or property in the future, you need to toggle back through your features to see when it stops passing.</p>
+<h1 id="multiple-possible-causes-are-hard-to-reason-about">Multiple Possible Causes are Hard to Reason About</h1>
+<h2 id="intermediate-states-are-hard-to-reason-about">Intermediate States are Hard to Reason about</h2>
+<p>Observation: Suppose you had to do a number of things to reset a system. You could miss a step or two and land up with “weird” behaviour.</p>
+<p><strong>Hypothesis</strong>: Multiple changes when trying to go to a desired state -&gt; could leave the system in a state that is hard to reason about.</p>
+<p>For example, you need electricity, intact wires, a working bulb, and a switch in the ON state to make a light bulb glow. If however, there’s a problem with the bulb or if you forgot to pay your electricity bills, the bulb won’t glow.</p>
+<h2 id="minimize-number-of-possible-causes">Minimize Number of Possible Causes</h2>
+<p>Observation: The problem is that you can’t <em>identify</em> the possible causes. You become highly uncertain.</p>
+<p><strong>Hypothesis</strong>: “Processing evidence” = figuring out which states of the system could have caused the given output.</p>
+<p>This is what Bayes theorem talks about.</p>
+<p><strong>Hypothesis</strong>: Humans can’t handle a bunch of possible causes leading to the same output.</p>
+<p>(That’s why they lump them in the same category.)</p>
+<p>Hypothesis: Humans like to toggle one variable at a time because they can’t handle it if one of several things could have caused the output.</p>
+<p>Observation: When there’s a lot of stuff that we’ve changed about a system and the output is not anything we can normally explain, we consider the system “messy” or “chaotic”.</p>
+<p>Hypothesis: “Chaotic mess” = can’t tell which state caused the given output (because there are too many of them).</p>
+<p><strong>Hypothesis</strong>: Aim of category design = <em>minimize</em> the number of possible causes of any outcome.</p>
+<p>For example, test if there’s electricity at the bulb socket. Then, try to plug in the bulb. If there was no electricity initially, then the earlier part of the system is broken. If there is electricity and if the bulb works, then there’s no problem. If it doesn’t, then we know that the bulb is what is broken.</p>
+<h2 id="debugging">Debugging</h2>
+<p>Hypothesis: Aim of programming: Fix undesirable output.</p>
+<p>Fixing undesirable output would involve figuring out its cause and then changing it. The problem arises when you can’t figure out the cause of some undesirable behaviour.</p>
+<p><strong>Hypothesis</strong>: Debugging = figuring out the <em>cause</em> of some undesirable behaviour.</p>
+<p><strong>Hypothesis</strong>: We spent a lot of time, maybe most of our time, in debugging.</p>
+<p>Observation: Why do I feel low in confidence sometimes? Don’t quite know. Is it mostly because I haven’t exercised or because I’m not focusing on the topics I care about or don’t have a “great” social life? Don’t know.</p>
+<h1 id="types">Types</h1>
+<p>Hypothesis: Ensure that your existing functions satisfy their exact interface (through type-checking and contracts and unit tests) and minimize their interface -&gt; don’t need to worry them anymore.</p>
+<p>Hypothesis: One-button change &lt;- two things of the same type.</p>
+<p>Hypothesis: Then, your actions would be: extend the current type, add an alternative of the same type, and minimize interface via type abstraction (and function abstraction if needed).</p>
+<h1 id="alternatives-have-the-same-interface">Alternatives have the Same Interface</h1>
+<p><strong>Hypothesis</strong>: Alternatives must have the same interface, or else you can’t switch between them without the user knowing the difference.</p>
 <p>Question: Why, if at all, would this lead to functions with minimal interfaces?</p>
+<p>Question: What would the overall code look like?</p>
+<p><strong>Test</strong>: Try to reorganize an existing program like this, so you can compare the differences.</p>
+<p>Hypothesis: At each point, the program will look like a hierarchical bunch of alternatives.</p>
+<p>Hypothesis: Or, it will look like a bunch of overall alternatives.</p>
+<h1 id="minimize-interface">Minimize Interface</h1>
+<p>Question: Should you minimize interfaces during the refactor step?</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: October 20, 2017</div>
+<div class="info">Last modified: October 21, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
