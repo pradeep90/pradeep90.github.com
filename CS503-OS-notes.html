@@ -196,14 +196,14 @@ find . -type f -name &quot;*.c&quot; | xargs wc -l
 <p>pipcreate: () [table] -&gt; Maybe did32, owner (then pipinit that pipe); table should have an active pipe at did32</p>
 <p>pipdelete: pipe [, table] -&gt; ok; reset pipe state (maybe via pipinit or some pipreset they both call that clears the buffer and resets semaphores, etc.); check for owner; basically pipdisconnect.</p>
 <p>pipconnect: pipe [, pipe struct], writer, reader -&gt; Maybe A and B piped; reader and writer should not be the same</p>
-<p>pipdisconnect: pipe [, table, pipe struct] -&gt; Maybe ok (call set stdout with console); last one -&gt; “clean the pipe”; writer calls -&gt; do something; reader calls -&gt; do something.</p>
+<p>pipdisconnect: pipe [, table, pipe struct] -&gt; Maybe ok (call set stdout with console);</p>
 <p>pipputc: pipe [, pipe struct], char -&gt; Blocking ok</p>
 <p>pipwrite: pipe [, pipe struct], buf, length -&gt; Blocking (number of characters or SYSERR); if pipe not in connected state or if this is not writer, return SYSERR; full -&gt; block; some space -&gt; write and block;</p>
 <p><strong>TODO</strong>: Question: pipwrite - suppose reader doesn’t accept any more characters - return SYSERR or number of characters written?</p>
 <p>pipgetc: pipe [, pipe struct] -&gt; Blocking (character or SYSERR)</p>
 <p>pipread: pipe [, pipe struct], buf, length -&gt; Blocking (number of bytes read or SYSERR)</p>
 <p><strong>TODO</strong>: Question: pipread - if no data, block; if only some data, read some bytes and block; if writer stops writing, return number of bytes read or SYSERR?</p>
-<p>kill: process [, pipe struct] -&gt; delete pipes that you own; disconnect from any pipes</p>
+<p>kill: process [, pipe struct] -&gt; delete pipes that you own; disconnect from any pipes (and disconnect the other process too)</p>
 <hr />
 <p>Question: How to go for refactor-red-green-refactor?</p>
 <p><strong>Hypothesis</strong>: Get an interface for each function and then minimize it. Be strict - don’t touch anything outside the interface. Then test your implementation against it.</p>
@@ -227,9 +227,10 @@ find . -type f -name &quot;*.c&quot; | xargs wc -l
 <p>Hypothesis: Bug due to did32 vs pipid32 &lt;- my confusion about the two types.</p>
 <p>Hypothesis: That feels like duplication of code. Wait. It is! Why do you have two different types for the same value! One should be a view of the other - a simple function somewhere.</p>
 <p>Observation: All my time so far was spent debugging because of a simple type confusion.</p>
+<p><strong>Observation</strong>: Always, always, always make a test fail before you make it pass.</p>
 
 <div class="info">Created: September  9, 2017</div>
-<div class="info">Last modified: October 21, 2017</div>
+<div class="info">Last modified: October 22, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, os</div>
 

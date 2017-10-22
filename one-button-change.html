@@ -86,8 +86,8 @@
 <h1 id="multiple-possible-causes-are-hard-to-reason-about">Multiple Possible Causes are Hard to Reason About</h1>
 <h2 id="intermediate-states-are-hard-to-reason-about">Intermediate States are Hard to Reason about</h2>
 <p>Observation: Suppose you had to do a number of things to reset a system. You could miss a step or two and land up with “weird” behaviour.</p>
-<p><strong>Hypothesis</strong>: Multiple changes when trying to go to a desired state -&gt; could leave the system in a state that is hard to reason about.</p>
-<p>For example, you need electricity, intact wires, a working bulb, and a switch in the ON state to make a light bulb glow. If however, there’s a problem with the bulb or if you forgot to pay your electricity bills, the bulb won’t glow.</p>
+<p><strong>Hypothesis</strong>: Multiple changes when trying to go to a desired state -&gt; could leave the system in a state that is “hard to reason about”.</p>
+<p>For example, you need electricity, intact wires, a working bulb, and a switch in the ON state to make a light bulb glow. If however, there’s a problem with the bulb or if you forgot to pay your electricity bills, the bulb won’t glow. But you don’t know exactly what caused the problem.</p>
 <h2 id="minimize-number-of-possible-causes">Minimize Number of Possible Causes</h2>
 <p>Observation: The problem is that you can’t <em>identify</em> the possible causes. You become highly uncertain.</p>
 <p><strong>Hypothesis</strong>: “Processing evidence” = figuring out which states of the system could have caused the given output.</p>
@@ -96,7 +96,8 @@
 <p>(That’s why they lump them in the same category.)</p>
 <p>Hypothesis: Humans like to toggle one variable at a time because they can’t handle it if one of several things could have caused the output.</p>
 <p>Observation: When there’s a lot of stuff that we’ve changed about a system and the output is not anything we can normally explain, we consider the system “messy” or “chaotic”.</p>
-<p>Hypothesis: “Chaotic mess” = can’t tell which state caused the given output (because there are too many of them).</p>
+<p><strong>Hypothesis</strong>: “Chaotic mess” = can’t tell which state caused the given output (because there are too many of them).</p>
+<p>Classic example: when I changed a bunch of scheduler code and couldn’t tell where the bug was.</p>
 <p><strong>Hypothesis</strong>: Aim of category design = <em>minimize</em> the number of possible causes of any outcome.</p>
 <p>For example, test if there’s electricity at the bulb socket. Then, try to plug in the bulb. If there was no electricity initially, then the earlier part of the system is broken. If there is electricity and if the bulb works, then there’s no problem. If it doesn’t, then we know that the bulb is what is broken.</p>
 <h2 id="debugging">Debugging</h2>
@@ -104,7 +105,75 @@
 <p>Fixing undesirable output would involve figuring out its cause and then changing it. The problem arises when you can’t figure out the cause of some undesirable behaviour.</p>
 <p><strong>Hypothesis</strong>: Debugging = figuring out the <em>cause</em> of some undesirable behaviour.</p>
 <p><strong>Hypothesis</strong>: We spent a lot of time, maybe most of our time, in debugging.</p>
-<p>Observation: Why do I feel low in confidence sometimes? Don’t quite know. Is it mostly because I haven’t exercised or because I’m not focusing on the topics I care about or don’t have a “great” social life? Don’t know.</p>
+<p>Observation: Why do I feel low in confidence sometimes? Don’t quite know. Is it mostly because I haven’t exercised or because I’m not focusing on the topics I care about or don’t have a “great” social life? Don’t know. I’m not able to do backward inference on my social performance.</p>
+<h2 id="break-the-output-into-pieces">Break the Output into Pieces</h2>
+<p>Hypothesis: To find out the cause of some output, break it into pieces according to known causes and thus narrow down the culprits.</p>
+<p>For example, if you know that the output list was mapped from some input list, then an error in the 5th element must have been due to the 5th element of the input list.</p>
+<h2 id="backward-inference">Backward Inference</h2>
+<p><strong>Hypothesis</strong>: This is backward inference.</p>
+<p>And it’s hardest when you have made a lot of changes before observing some understandable output. For example, when working on my OS assignment, I changed the scheduling code in a lot of places and then ran my test case. The OS hung after the initial output. Why? I had no clue.</p>
+<p>Observation: This is what House does. He look at symptoms and infers the diseases that could have caused them. (Fictional evidence, but representative of doctors who do, in fact, diagnose patients.)</p>
+<p>Laymen or even his fellow doctors are often puzzled by the same observations. (Fictional evidence.)</p>
+<p>Observation: Mystery-solving (a la Hercule Poirot or Sherlock) is all about backward inference.</p>
+<h2 id="strong-evidence">Strong Evidence</h2>
+<p>Hypothesis: Strong evidence = something that tells you the cause is in <em>this</em> part of the system, not that one.</p>
+<p>This is what we desire. We want to narrow down the suspects.</p>
+<p><strong>Hypothesis</strong>: If you can switch easily (and reliably) between two alternatives, you can observe the difference in output, and thus figure out where the cause lies.</p>
+<p>Question: What if you could run the program only once? How could you design your program to minimize the number of possible causes?</p>
+<p><strong>Question</strong>: What sort of test cases should you design so that you get discerning output?</p>
+<h2 id="how-do-we-build-a-system-forward-backward-inference">How do we Build a System? Forward + Backward Inference</h2>
+<p><strong>Hypothesis</strong>: We want our system to have some target property. So, we change some variables in the hope of hitting the target property. Then, we observe the actual output and infer which variables we should have changed differently. And so it goes.</p>
+<p>It’s forward inference to compute the actual output (which the computer automates for us, in the case of programming) and backward inference to figure out which variables we need to change further.</p>
+<p>Hypothesis: The problem, of course, is when you have a lot of other variables in between.</p>
+<p>For example, I just wanted to change the scheduling algorithm of the XINU OS. It was a simple enough conceptual change, but because my change affected a lot of other variables (like whether interrupts were disabled or enabled, polled I/O vs blocking I/O, null pointer errors, etc.) I couldn’t tell exactly which of my changes had caused what.</p>
+<h2 id="unit-tests-minimize-number-of-causes">Unit Tests minimize Number of Causes</h2>
+<p>Hypothesis: Unit tests minimize number of causes because their output depends only on one function or class.</p>
+<h1 id="big-functions-are-hard-to-reason-about-too">Big Functions are Hard to Reason about too</h1>
+<p>Observation: Bunch of journal notes and essays. Don’t know exactly what they contain or what they advise for some problem I face. Clearly, a “chaotic mess”.</p>
+<p>Observation: Unfamiliar function - can’t tell what it does.</p>
+<p>Observation: If I have a variable that I can change to switch the scheduler from a time-share scheduling algorithm to a proportional-share algorithm, then I can kind of tell the difference in behaviour between the two.</p>
+<p>Observation: But if I have three hundred lines of code spread over four files that are different between time-share and proportional-share scheduling algorithms, I find it much harder to predict the differences in behaviour.</p>
+<p><strong>Hypothesis</strong>: Lots of possible input states and thus lots of possible output states -&gt; hard to infer forward or backward.</p>
+<p>Why? Not quite sure. But if it’s an arbitrary function, then you have a lot of input-output mappings to remember. You’re liable to give up.</p>
+<h1 id="restricting-yourself-to-one-button-changes-simplifies-your-model">Restricting yourself to One-Button Changes simplifies your Model</h1>
+<p>Hypothesis: One-button change between alternatives -&gt; simpler type signature (A vs B -&gt; X vs Y).</p>
+<p>Corollary: You won’t be able to make low-level predictions about, say, the exact priority of each process at each point of time, but you would be able to predict the high-level properties (such as, I/O-bound processes will go first in a time-share scheduler).</p>
+<p>Corollary: One-button change between small set of high-level alternatives -&gt; <strong>cannot</strong> choose some arbitrary intermediate state.</p>
+<p>Corollary: So, the output will always be that corresponding to one of the high-level alternatives. Much easier to infer forward or backward.</p>
+<p><strong>Hypothesis</strong>: Allow yourself only one-button changes vs can change anything anywhere -&gt; far simpler model of the system vs lots of possible inputs and lots of possible outputs.</p>
+<p>You’re restricting your set of possible interventions. Because you know you haven’t changed anything else anywhere, the only possible inputs are those defined by your high-level categories.</p>
+<p>Hypothesis: Allow yourself only one-button changes -&gt; fewer possible interventions and thus fewer possible input states.</p>
+<p><strong>Hypothesis</strong>: Number of possible interventions -&gt; number of categories.</p>
+<p><strong>Hypothesis</strong>: Number of categories -&gt; number of possible input-output mappings -&gt; number of possible causes for any output and number of possible outputs for any cause.</p>
+<h1 id="evidence">Evidence</h1>
+<h2 id="os">OS</h2>
+<p>When killing a process, trying to delete all pipes it owns. But the pipes don’t seem to be deleted. Don’t know why.</p>
+<h1 id="tests">Tests</h1>
+<p>Observation: I have one test for each condition mentioned in the spec.</p>
+<p>For example, “In any case, if the arguments are invalid, the pipe was already connected to other processes, or the state of the pipe does not permit connection, the system call returns SYSERR.” I have a test for each of them.</p>
+<p><strong>Observation</strong>: Red-green saves my ass. I keep forgetting to add my new test case to the test list, and so it seems like the test has passed. Only when I make it <em>fail</em> do I realize my mistake.</p>
+<p><strong>Hypothesis</strong>: To be sure that some output property is caused by your feature, toggle it and see whether the property toggles too.</p>
+<p><strong>Observation</strong>: Tests bring out bugs that I would never have inferred.</p>
+<p>For example, deleting a pipe caused a pipe to be in a non-active state when calling disconnect on the writer. Who knew?</p>
+<p><strong>Hypothesis</strong>: How to write tests - look at the interface alone and analyze the different possible inputs.</p>
+<p>For example, <code>pipe_disconnect_reader</code> cares only about the different states of the pipe (free, used, connected, writer disconnected, etc.), not about the rest of the system.</p>
+<h1 id="handle-all-possible-high-level-inputs">Handle all possible High-level Inputs</h1>
+<p><strong>Hypothesis</strong>: To be confident that you’ve written your function correctly, handle all the high-level categories of your input.</p>
+<p>Corollary: Errors crop up when you omit some cases.</p>
+<p>The most obvious case is forgetting to check for NULL. Another case is to handle all possible states of your input argument, like a pipe that is not connected to anything or a pipe that has been freed.</p>
+<p>Corollary: Static type-checking helps you by making sure you handle all the possible input values, especially in the case of sum types like in Haskell.</p>
+<p><strong>Corollary</strong>: You must yourself know what must happen for each input configuration.</p>
+<p><strong>Lesson</strong>: Write your code one branch at a time. Write a unit test up-front to make sure you’re actually adding a feature.</p>
+<p>You should change code only within one of the possible input categories. If you want to do something for input A, you must do something (maybe a dummy default action) for inputs B and C.</p>
+<p>Corollary: That way, at each point, you can tell which value was caused by the branch for A and which one by the branch for B.</p>
+<h1 id="work-needed-is-proportional-to-number-of-test-cases">Work Needed is proportional to number of Test Cases</h1>
+<p>Corollary: The total work you need to do depends on the number of branches you need to implement and the time it takes you to code and test each branch.</p>
+<p>Observation: I didn’t even <em>know</em> how many branches I had to deal with. I couldn’t see them in my head when I thought about the problem of “implementing pipes for XINU”.</p>
+<p>Corollary: Number of branches you had to implement = number of test cases.</p>
+<p>So, use the test cases to determine the total work you had to do.</p>
+<p>Corollary: Number of test cases is determined by the number of branches you need to implement. Make sure you have that many.</p>
+<p>Hypothesis: If we assume that the time needed to make one unit test pass is constant, then the estimated time for the whole project should be proportional to the number of branches in each function (i.e., the number of test cases).</p>
+<p>We can use that to estimate time needed.</p>
 <h1 id="types">Types</h1>
 <p>Hypothesis: Ensure that your existing functions satisfy their exact interface (through type-checking and contracts and unit tests) and minimize their interface -&gt; don’t need to worry them anymore.</p>
 <p>Hypothesis: One-button change &lt;- two things of the same type.</p>
@@ -120,7 +189,7 @@
 <p>Question: Should you minimize interfaces during the refactor step?</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: October 21, 2017</div>
+<div class="info">Last modified: October 22, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 

@@ -317,6 +317,57 @@ x-&gt;z-&gt;y</code></pre>
 <p>Hypothesis: Assumptions &lt;- areas where they jumped from P to P*.</p>
 <p><strong>Question</strong>: From where do you get feedback for your transportability formula?</p>
 <p><strong>Test</strong>: Can you handle the age and skill examples using your idea of two partially-equivalent models?</p>
+<h1 id="surrogate-endpoints-book-2005">Surrogate Endpoints Book (2005)</h1>
+<h2 id="introduction">Introduction</h2>
+<p>“True” endpoint can be costly, difficult, or time-consuming to measure.</p>
+<p>Question: Difference between surrogate markers and surrogate endpoints?</p>
+<p>If you can measure stress through urine samples, why not just use that?</p>
+<p>Hypothesis: Could take too long (like in cancer survival).</p>
+<p>Hypothesis: Surrogate endpoint is for a clinical study.</p>
+<p>Hypothesis: You can also use surrogate endpoints in clinical trials to screen out unpromising treatments.</p>
+<p>Hypothesis: Shorter trials also limit non-compliance and missing data.</p>
+<p>Hypothesis: Surrogate endpoints can help detect rare or adverse late effects of treatment, which a clinical trial might not do.</p>
+<p>Why not the true endpoints? In cancer, survival “may lack sensitivity to true therapeutic advances, it may be confounded with competing risks and second-line treatments, and it is observed late”.</p>
+<h2 id="motivating-example">Motivating Example</h2>
+<p>The FDA approached two drugs - encainide and flecainide - believing that they would reduce the death rate due to cardiac-complication-related death. However, a clinical trial showed that the death rate was more than twice that of placebo. (Another drug - moricizine - also increased risk.)</p>
+<p>Successful surrogate endpoints - HIV - CD4 blood count, HAART, and viral load.</p>
+<h2 id="evaluation-of-surrogate-endpoints">Evaluation of Surrogate Endpoints</h2>
+<p>evaluation :: true endpoints, surrogate endpoints -&gt; Bool</p>
+<p>Accelerated approval - for diseases where no effective therapies exist</p>
+<p>example: cancer - “If the achievement of a complete remission has indeed a major impact on prognosis in hematological ma- lignancies (Armitage 1993, The International Non-Hodgkin’s Lymphoma Prognostic Factors Project 1993, Kantarjian et al. 1995), the relationship between tumor response and survival duration is far less clear in solid tu- mors, even though the shrinkage of metastatic measurable masses has long been the cornerstone of the development of cytotoxic therapies”</p>
+<p>Idea: “proportional explained” - proportion of treatment effect “mediated” by the surrogate.</p>
+<p>Hypothesis: Use surrogate endpoint along with eventual measurement of true endpoint.</p>
+<p>Hypothesis: Look at joint distribution of surrogate endpoint and clinical endpoint.</p>
+<p>Types of surrogate endpoints: binary, categorical, continuous, censored continuous, longitudinal, multiple longitudinal.</p>
+<h2 id="surrogate-markers-statistics">Surrogate Markers: Statistics</h2>
+<p>Support for surrogate endpoints: biological plausibility, success in clinical trials (how well it can predict), risk-benefit and public health considerations. (Has to have all three.)</p>
+<blockquote>
+<p>In epidemiological studies, a useful surrogate marker is a causal factor for the disease of interest, not merely a correlated factor. As Fleming (1996) stated, “a correlate does not a surrogate make.”</p>
+</blockquote>
+<p>Definition: Sensitivity (aka recall) = T good S good / (T good S bad + T good S good)</p>
+<p>i.e., true positive / actual positives.</p>
+<p>Definition: Specificity = true negative / actual negatives</p>
+<p>aka negative recall. Of all the cases where treatment would have failed, how many did you catch as true negative?</p>
+<p>Hypothesis: For the surrogate to be “useful”, both sensitivity and specificity have to be close to 1 (area under curve should be 1).</p>
+<p>Definition: Relative risk = (a/(a+b)) / (c/(c+d))</p>
+<p>(a/(a+b)) = precision, i.e., how many of your positive labels were right? Another way: % of correct positive labels.</p>
+<p>(c/(c+d)) = _, i.e., how many of your negative labels were wrong? Another way: % of wrong negative labels.</p>
+<p>If % of correct positive labels increases, then relative risk will increase. If % of wrong negative labels decreases, then relative risk will increase.</p>
+<p>Hypothesis: We want relative risk to be high.</p>
+<p>So, we want 1/RR to be low.</p>
+<p>Definition: Attributable proportion AP = SE / (1 - 1/RR). (???)</p>
+<p>Hypothesis: For the surrogate marker to be “successful”, AP should be close to 1.</p>
+<p><strong>Observation</strong>: Surrogate validation: “Schatzkin, Freedman, and colleagues proposed strategies for determining whether a biomarker is a valid surrogate for a disease of interest, for instance whether human papillomavirus infection is a valid surrogate for cervival dysplasia.”</p>
+<h2 id="biomarkers">Biomarkers</h2>
+<p>Types of biomarkers: valid surrogates (blood pressure); candidate surrogates thought to reflect the pathologic process (brain appearance in Alzheimer’s disease); reflect drug action but of uncertain relation to clinical outcome; still more remote from clinical benefit endpoint.</p>
+<p>Under intervention:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Unreliable interaction between biomarker and the treatment intervention - Biomarker is of no value as a surrogate endpoint - Prostate-specific antigen (PSA) is a useful biomarker for prostate cancer detection but unreliable as an indicator of treatment response</p></li>
+<li><p>The full effect of the intervention is observed through the biomarker assessment - Biomarker is an ideal sur- rogate endpoint - None known at present</p></li>
+<li><p>Intervention affects the endpoint and the bio- marker independently; only a proportion of the treatment effect is cap- tured by the surrogate endpoint - Biomarker has value as a surrogate endpoint but explains only a part of the treatment effect - Most established surro- gate endpoints (e.g., de- velopment of opportunis- tic infections with HIV anti-viral and mortality)</p></li>
+<li><p>Intervention affects favorably on the biomarker but unfavorably on the well-state and disease - Biomarker is of little practical use as a surrogate endpoint but may have utility in exploratory studies - Suppression of ventricular ectopy as a biomarker of fatal arrhythmia following myocardial infarctions (CAST trial)</p></li>
+</ol>
+<p>Global intervention assessment = testing biomarkers for efficacy and toxicity and thus narrowing down the surrogate markers, and then evaluating patient benefit for them.</p>
 <h1 id="surrogate-endpoints">Surrogate Endpoints</h1>
 <h2 id="understand">Understand</h2>
 <p>Question: What were some proposed definitions so far? Where did they break down?</p>
@@ -327,7 +378,7 @@ x-&gt;z-&gt;y</code></pre>
 <p>http://blogs.sciencemag.org/pipeline/archives/2017/10/13/a-painful-unacceptable-lack-of-data</p>
 
 <div class="info">Created: June 22, 2017</div>
-<div class="info">Last modified: October 20, 2017</div>
+<div class="info">Last modified: October 21, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, eb</div>
 
