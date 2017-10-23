@@ -145,9 +145,6 @@
 <p>Hypothesis: Allow yourself only one-button changes -&gt; fewer possible interventions and thus fewer possible input states.</p>
 <p><strong>Hypothesis</strong>: Number of possible interventions -&gt; number of categories.</p>
 <p><strong>Hypothesis</strong>: Number of categories -&gt; number of possible input-output mappings -&gt; number of possible causes for any output and number of possible outputs for any cause.</p>
-<h1 id="evidence">Evidence</h1>
-<h2 id="os">OS</h2>
-<p>When killing a process, trying to delete all pipes it owns. But the pipes don’t seem to be deleted. Don’t know why.</p>
 <h1 id="tests">Tests</h1>
 <p>Observation: I have one test for each condition mentioned in the spec.</p>
 <p>For example, “In any case, if the arguments are invalid, the pipe was already connected to other processes, or the state of the pipe does not permit connection, the system call returns SYSERR.” I have a test for each of them.</p>
@@ -166,6 +163,8 @@
 <p><strong>Lesson</strong>: Write your code one branch at a time. Write a unit test up-front to make sure you’re actually adding a feature.</p>
 <p>You should change code only within one of the possible input categories. If you want to do something for input A, you must do something (maybe a dummy default action) for inputs B and C.</p>
 <p>Corollary: That way, at each point, you can tell which value was caused by the branch for A and which one by the branch for B.</p>
+<h2 id="what-is-the-next-unit-test">What is the Next Unit Test?</h2>
+<p>Hypothesis: If you’re stuck, ask yourself what is the next unit test you want to pass.</p>
 <h1 id="work-needed-is-proportional-to-number-of-test-cases">Work Needed is proportional to number of Test Cases</h1>
 <p>Corollary: The total work you need to do depends on the number of branches you need to implement and the time it takes you to code and test each branch.</p>
 <p>Observation: I didn’t even <em>know</em> how many branches I had to deal with. I couldn’t see them in my head when I thought about the problem of “implementing pipes for XINU”.</p>
@@ -174,6 +173,69 @@
 <p>Corollary: Number of test cases is determined by the number of branches you need to implement. Make sure you have that many.</p>
 <p>Hypothesis: If we assume that the time needed to make one unit test pass is constant, then the estimated time for the whole project should be proportional to the number of branches in each function (i.e., the number of test cases).</p>
 <p>We can use that to estimate time needed.</p>
+<h2 id="planning-fallacy">Planning Fallacy?</h2>
+<p>Observation: I underestimated the number of test cases I would need to implement. Sometimes, I was so unsure that I needed to have unit tests for smaller things like adding a semaphore to my pipe entry, because I’d not used it before.</p>
+<p>Observation: I didn’t even know what output I wanted from some function.</p>
+<h1 id="callers-define-your-contract">Callers define your Contract</h1>
+<p>Observation: Hard to change the behaviour of <code>pipe_set</code> without knowing how and where it’s been used. I don’t want to break its “contract”.</p>
+<p>Hypothesis: If you had unit tests (and an assertion-based contract), you could just use that as your contract and change whatever you wanted as long as you didn’t break it.</p>
+<h1 id="why-you-need-to-roll-back-sometimes">Why you Need to Roll Back Sometimes</h1>
+<p>Observation: Error when trying to create a semaphore. No clue why.</p>
+<p>Experiment: Didn’t change anything in the lower-level functions. Just toggled the high-level tests to see which combination broke it.</p>
+<p>For example, I knew that running the 20 tests gave the error. Running 0 tests didn’t give the error. Running the first 10 didn’t either. Turned out running two particular tests together gave the error. Cool. That narrowed it down. (I was able to find out that I was initializing too many semaphores and thus running out.)</p>
+<p>Imagine if I’d tried this without the high-level functions and had made changes here and there. I would have been overwhelmed within a few minutes. Guess how I know that? Because that’s what I started out doing. Only after half an hour or so did I wise up.</p>
+<p><strong>Hypothesis</strong>: Need to roll back and toggle features when you have errors across functions.</p>
+<p>Unit tests catch errors that are within a single function. For errors across functions, you need high-level toggling.</p>
+<h1 id="backward-inference-1">Backward Inference</h1>
+<p><strong>Hypothesis</strong>: This is how you do backward inference. You narrow down some combination of high-level causes and test them till you find one whose effect matches the observed output. After, that you narrow it down at the next level, thus keeping the “complexity” or number of possible causes limited at all times.</p>
+<p>Observation: The key was that turning on all the high-level causes on gave you a positive answer (error) and turning them all off gave you a negative answer (no error). So, you could tell that the error must begin with some combination of causes between zero and everything.</p>
+<h1 id="which-input-configuration-did-i-fail-to-handle">Which Input Configuration did I Fail To Handle?</h1>
+<p>Observation: Notice that I didn’t exactly break any of my older unit tests. What I broke was the underlying code (<code>pipinit</code>), which was exacerbated by the fact that I ran so many tests and ended up creating too many semaphores.</p>
+<p>Observation: I added a new property to the program (semaphores), which caused problems.</p>
+<p>Observation: I failed to ensure the property that the program used only a limited set of semaphores.</p>
+<p>Question: Where could I have checked for that property?</p>
+<p>Well, the number of semaphores created would be proportional to the number of times <code>pipinit</code> was called, which I assumed was just once during system initialization. Turned out that <code>pipdelete</code> also called <code>pipinit</code>. As did my test setup function (when trying to reset all pipes).</p>
+<p>Observation: It’s simple. I should have handled the case where <code>semcreate</code> returns SYSERR. That’s all. That’s how stupid my mistake was. Cost me a full hour spent scratching my head.</p>
+<p><strong>Hypothesis</strong>: Bug -&gt; ask “which input configuration did I fail to handle?”.</p>
+<p>Observation: This would never have happened in Haskell. It would have given me a <code>Maybe Semaphore</code>, whose <code>Nothing</code> case I would be forced to handle.</p>
+<p>Lesson: In particular, look closely at the input type you’re getting.</p>
+<p>For example, in <code>pipe_disconnect_writer</code>, instead of worrying about all the possible states that the rest of the system can be in, I should look at just the input pipe. It can be in a free, used, or connected state. If I handle all three cases faithfully, I’ve done my job. Nothing else to worry about.</p>
+<p>Observation: The reader process could be in a waiting state when somebody disconnects it. So, I have to handle the different process states too.</p>
+<p>Observation: I don’t know what to do in the various cases there.</p>
+<h1 id="look-at-properties-of-your-own-input-not-of-other-functions">Look at Properties of your own Input, not of Other Functions</h1>
+<p>Observation: Have to look at callers of <code>pipe_disconnect_writer</code> because I’m not sure if there can ever be a case where the reader disconnects first and leaves writer calling disconnect later.</p>
+<p>Actually, I don’t have to. I can see that <code>pipe_disconnect_reader</code> always leaves writer disconnected. If the pipe to reader was in the PIPE_CONNECTED state, it would disconnect writer. Else, writer would have already been disconnected. Inference!</p>
+<p>Hypothesis: I suspect I could avoid writer having to look through reader’s code by checking the invariants on pipe itself.</p>
+<p>Pipe doesn’t even have a state for “reader disconnected but writer not yet disconnected”. That’s it. End of story.</p>
+<p><strong>Hypothesis</strong>: A function shouldn’t need to look at the innards of other functions to decide what to do. It should just look at its inputs, their properties, and its own desired output properties.</p>
+<h1 id="processing-evidence">Processing Evidence</h1>
+<p>Question: What kinds of observations do I have to process?</p>
+<p>For example, let’s consider each operation of the kind “ABCD -&gt; X and ABC’D’ -&gt; X implies that C and D probably don’t cause X” to be a single cognitive step. (I think we process that kind of stuff really quickly.)</p>
+<p>Question: So, how many such operations do I have to run (for a given number of branches)?</p>
+<h1 id="lost-track">Lost Track</h1>
+<p>Observation: Got stuck debugging a stupid return value error. Lost track of what my original aim with.</p>
+<p>One change at a time.</p>
+<h1 id="debugging-principles">Debugging Principles</h1>
+<p>Hypothesis: You need to have a really small test case.</p>
+<p>My mistake with the scheduler was that I was working with a six processes all running at the same time doing god-knows-what. How are you supposed to debug that efficiently?</p>
+<p>Observation: Not able to interpret the debugging output because there are too many printf statements and I don’t know what came from where.</p>
+<p>Observation: Narrowed it down by toggling the high-level function calls. Things look much clearer. I know that the output is coming from a given two lines.</p>
+<p>Observation: Narrowed it even further. Check only the semaphore part.</p>
+<p>Observation: Right now, things “aren’t straight” in my head. I don’t know which configurations I’ve handled and which ones I haven’t. So, I don’t feel like I can reason about the behaviour of the program.</p>
+<p><strong>Hypothesis</strong>: Know which inputs configurations you’ve handled and which not -&gt; feel confident about the behaviour of the program.</p>
+<p><strong>Hypothesis</strong>: Notice what changes you’ve made. Any change in behaviour is due to a change you’ve made.</p>
+<p>So, look at your diff from the previous state.</p>
+<p><strong>Lesson</strong>: The moment you get an error, toggle back to a working state and then look at the differences.</p>
+<h1 id="duplication-leads-to-more-input-configurations">Duplication Leads to More Input Configurations</h1>
+<p>Observation: The official code had a state field that could take the value <code>PIPE_CONNECTED</code>, etc. However, that was strongly correlated with the writer and reader semaphore being free or not-free. So, I may have to consider multiple input configurations that actually mean the same thing.</p>
+<p><strong>Hypothesis</strong>: Code duplication -&gt; more input configurations that give the same output but which you have to handle separately in case they are given inconsistently.</p>
+<p>For example, I would have to flag an error in the case where the variable says <code>PIPE_CONNECTED</code> but the semaphores are actually free. Unnecessary headache.</p>
+<p>Corollary: What’s more, when you finally merge those redundant input states, you’ll have to do a lot of careful work to remove the separate if-cases.</p>
+<h1 id="truly-pure-functions">Truly Pure Functions</h1>
+<p>Observation: Right now, some of my unit tests depend on more than one function. For example, testing disconnect depends on the correct behaviour of “connect”.</p>
+<p>Hypothesis: Pure functions won’t be like that. You can genuinely test their input configurations alone.</p>
+<p>Observation: But disconnect will still call pipe-related functions like reset or set writer or whatever.</p>
+<p><strong>Hypothesis</strong>: Either your higher unit tests will test multiple functions or you will have to use equational reasoning.</p>
 <h1 id="types">Types</h1>
 <p>Hypothesis: Ensure that your existing functions satisfy their exact interface (through type-checking and contracts and unit tests) and minimize their interface -&gt; don’t need to worry them anymore.</p>
 <p>Hypothesis: One-button change &lt;- two things of the same type.</p>
@@ -189,7 +251,7 @@
 <p>Question: Should you minimize interfaces during the refactor step?</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: October 22, 2017</div>
+<div class="info">Last modified: October 23, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
