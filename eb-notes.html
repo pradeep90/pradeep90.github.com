@@ -292,12 +292,59 @@ x-&gt;z-&gt;y</code></pre>
 <p>Hypothesis: Transportability &lt;- same causal graph, causal mechanisms between X and Y are the same, auxiliary mechanisms may be different, probabilities may be different.</p>
 <p>Basically, do they differ in f or U?</p>
 <p>Observation: X -&gt; Z -&gt; Y; the mechanism from X -&gt; Z could be different in the two populations, but you can adjust for that with P*(Z|X). The mechanism in P(y|do(x),z) is assumed to be the same.</p>
-<p><strong>Hypothesis</strong>: Transportability &lt;- same causal graph, effects of mechanisms that are different can be identified or experimentally measured, some probabilities may be different.</p>
+<p>Hypothesis: Transportability &lt;- same causal graph, effects of mechanisms that are different can be identified or experimentally measured, some probabilities may be different.</p>
 <p>Question: Why did they assume that P(y|do(x), z) is the same as P*(y|do(x), z) in the Markov chain example above?</p>
+<h2 id="transportability-assumptions">Transportability Assumptions</h2>
 <p><strong>Hypothesis</strong>: Use do-calculus on causal effects &lt;- common causal graph.</p>
 <p><strong>Hypothesis</strong>: Assume P(A) = P*(A) &lt;- empirical information.</p>
 <p>For example, in X -&gt; Z -&gt; Y, P(y|do(x), z) = P(y|z) in the causal graph; so it holds for both P and P*. Then, if we are given that <code>P(y|z) = P*(y|z)</code>, we can remove the star.</p>
-<h2 id="data-fusion">Data Fusion</h2>
+<p>Observation: Assume that <code>S _|_ Y | do(x)</code> =&gt; P*(y|do(x)) = P(y|do(x)).</p>
+<p>Basically, assume that the mechanisms with the selector are the same in both populations.</p>
+<p><strong>Hypothesis</strong>: Variables without the selector have the same mechanism in both populations.</p>
+<h2 id="surrogate-endpoints-from-a-causality-viewpoint">Surrogate Endpoints from a Causality Viewpoint</h2>
+<p>Hypothesis: Problem statement - relationship between two treatments considered (say drug A and drug B), where you have data on Z and Y for the drug A treatment, but only data on Z for the drug B treatment.</p>
+<p>Hypothesis: If drug A = drug B, then knowing about Z alone in the second case should be enough to infer things about Y.</p>
+<p>Question: What if the population changes the mechanism for Z?</p>
+<p><strong>Question</strong>: Is it the same drug in both the studies or different drugs? What do you mean by “if the two treatments are identical”?</p>
+<blockquote>
+<p>Shared by most workers in the field, this description lacks a key ingredient: the relation- ship between the two treatments considered, one prevailing when data is available on both the surrogate (Z) and the endpoint (Y ), and the second, when data on the surrogate alone are available. Clearly, if the two treatments are identical, the problem is trivially solved, for then, strong correlation between Z and Y in the first study should suffice; all accurate predictions that Z provides about Y in the first study, both across and within treatment arms, will remain valid in the follow-up study. We must conclude therefore, that the collec- tive intuition against the sufficiency of correlation 9 stems from a tacit understanding that the two studies are conducted under two different conditions, and that “strong correlation,” should mean not merely accuracy of prediction but also robustness to the new condition. It follows that any formal definition of surrogacy must specify how the new conditions differ from those prevailing in the original study and incorporate this specification in the body of the definition. We will now propose such specification.</p>
+</blockquote>
+<blockquote>
+<p>Specifically, for Z to be a surrogate for Y , Z must be a good predictor of P (y|do(x)) and also remain a good predictor under new settings in which Z is directly controlled, as in Fig. 2(c). The reason we should concern ourselves with such settings is that, once Z is proclaimed a “surrogate endpoints” it invites efforts (e.g., by drug manufacturers) to find direct means of controlling Z.</p>
+</blockquote>
+<p>Hypothesis: That’s the key problem. Can Z remember a good predictor of the effect on Y even when people try to game it?</p>
+<p>Observation: Positive exemplar - a perfect mediator works. (example: X,S -&gt; Z -&gt; Y)</p>
+<p>Observation: Negative exemplar - descendant of a mediator doesn’t work.</p>
+<p><strong>TODO</strong>: Question: What does S mean in 7(b)? Maybe S is the drug. [No. I think S is the selector for the new mechanism that decides Z.]</p>
+<p>In 7(a): P(y|do(x), z) = P(y|z).</p>
+<p>P(y|do(x), z, s) = P(y|z).</p>
+<blockquote>
+<p>This means that whatever predictions (about the true endpoint Y ) we can make from observing Z in the initial study, those same predictions will remain valid in the followup study, irrespective of the new condition created by S.</p>
+</blockquote>
+<blockquote>
+<p>This is no longer the case in Fig. 7(b). Here the true endpoint Y can be highly correlated with the putative surrogate Z, for both treatment and control, but in the follow up study this correlation may be severely altered, even destroyed.</p>
+</blockquote>
+<p>In 7(b): P(y|do(x), z) = P(y|x, z)</p>
+<p>P(y|do(x), z, s) = P(y|x, z, s)</p>
+<blockquote>
+<p>A sharper difference emerges between the two models when we consider the role of Z in evaluating the efficacy of new treatments, say S.</p>
+</blockquote>
+<p>I’m confused. If we are now considering a new treatment S, what were we considering earlier?</p>
+<p>Hypothesis: Condition - P* terms must not involve Y (since Y is not measured in the follow-up studies).</p>
+<blockquote>
+<p>In Fig. 7(b), on the other hand, the effect of S on Y cannot be thus decomposed into P-terms involving Y and P*-terms not involving Y, which means that we cannot forego measurement of Y under the new environment, thus loosing surrogacy.</p>
+</blockquote>
+<p><strong>Hypothesis</strong>: “Surrogate endpoint” problem = decompose effect of S on Y into P-terms involving Y and P*-terms not involving Y (so that we can forego measurement of Y under the new environment).</p>
+<p>Hypothesis: “Measurements of P (y|do(x), z) and P (z|do(x), s) [should be] sufficient for assessing P (y|do(x), z, s) or P (y|do(x), s)”.</p>
+<blockquote>
+<p>This is a direct consequence of the non-robustness of the Z-specific effect P (y|do(x), z, s) to new treatments represented by S indeed, if Z is merely a symptom of U , its correlation with Y may be deceptive; a new drug (S) may cure Z without having any effect on Y and without altering the effect of X on Y .</p>
+</blockquote>
+<p><strong>TODO</strong>: Inadequacy of “principal surrogacy” - false positive and false negative.</p>
+<blockquote>
+<p>What we may lose in going from perfect to imperfect mediation is the ability to control the effect of X on Y through interventions on Z, but we do not lose the ability to properly assess the effectiveness of such interventions by measuring their effect on Z. The first views surrogates as targets for control, the second as sources of information. It is the latter quality that has been the traditional motivation behind the quest for surrogates, and we will adhere to this tradition in this paper.</p>
+</blockquote>
+<p>Question: Examples of good and bad surrogate endpoints?</p>
+<h1 id="data-fusion-type-signatures">Data Fusion: Type Signatures</h1>
 <p>Hypothesis: Type of dataset = (population (?), experimental vs observation, sampling, measured)</p>
 <p><strong>Hypothesis</strong>: Data fusion problem :: heterogeneous datasets -&gt; Maybe target dataset of some type.</p>
 <p>Observation: Causal inference :: dataset of type (population a, observational, sampling s, measured v) -&gt; dataset of type (population a, experimental, sampling s, measured v).</p>
@@ -369,16 +416,15 @@ x-&gt;z-&gt;y</code></pre>
 </ol>
 <p>Global intervention assessment = testing biomarkers for efficacy and toxicity and thus narrowing down the surrogate markers, and then evaluating patient benefit for them.</p>
 <h1 id="surrogate-endpoints">Surrogate Endpoints</h1>
-<h2 id="understand">Understand</h2>
-<p>Question: What were some proposed definitions so far? Where did they break down?</p>
 <h2 id="ideas">Ideas</h2>
 <p>Hypothesis: The surrogate end-points don’t have to be mediators. They could be effects of the target variable.</p>
 <p>For example, the final answer to a math problem (say, 74.5) is strong evidence that you’ve actually understood the relevant technique.</p>
+<p>(But a post-outcome variable will take too long for a target variable like death. Defeats the whole point of the surrogate endpoint.)</p>
 <h2 id="links">Links</h2>
-<p>http://blogs.sciencemag.org/pipeline/archives/2017/10/13/a-painful-unacceptable-lack-of-data</p>
+<p>http://blogs.sciencemag.org/pipeline/archives/2017/10/13/a-painful-unacceptable-lack-of-DATA</p>
 
 <div class="info">Created: June 22, 2017</div>
-<div class="info">Last modified: October 21, 2017</div>
+<div class="info">Last modified: October 24, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, eb</div>
 

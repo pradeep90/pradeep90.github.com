@@ -236,18 +236,48 @@
 <p>Hypothesis: Pure functions won’t be like that. You can genuinely test their input configurations alone.</p>
 <p>Observation: But disconnect will still call pipe-related functions like reset or set writer or whatever.</p>
 <p><strong>Hypothesis</strong>: Either your higher unit tests will test multiple functions or you will have to use equational reasoning.</p>
-<h1 id="types">Types</h1>
+<h1 id="abstract-types-reduce-the-number-of-input-configurations">Abstract Types reduce the number of Input Configurations</h1>
+<p>Question: How can we reduce the time taken to implement some features?</p>
+<p>Observation: Time taken seems to depend on the number of test cases (aka input configurations) and the time taken to pass each test case.</p>
+<p><strong>Hypothesis</strong>: Abstract types reduce the number of input configurations and thus reduce the number of tests.</p>
+<p>For example, <code>sortInts :: [Int] -&gt; [Int]</code> has way more configurations than the generic <code>sort :: Ord a =&gt; [a] -&gt; [a]</code>.</p>
+<p>Lesson: If you want to code faster, design your types well.</p>
+<h1 id="understanding-knowing-the-output-for-each-input-configuration">Understanding = Knowing the Output for each Input Configuration</h1>
+<p>Hypothesis: Understanding = knowing the output for each input configuration.</p>
+<h1 id="confidence">Confidence</h1>
+<p>Hypothesis: Confidence &lt;- knowing the possible input configurations and then knowing that you’ve handled all of them.</p>
+<p>With my journal notes, for example, I don’t know the input configurations for some mechanism I’m trying to figure out (like how we learn) and so I don’t know if I’ve covered everything.</p>
+<h1 id="assorted-ideas-todo">Assorted Ideas (TODO)</h1>
+<p><strong>TODO</strong>: Composition (<code>pipe_is_writer_semaphore_free = pipe_is_semaphore_free . pipe_writer_semaphore</code>). Should you know the properties?</p>
+<p>Duplication is bad because it makes you test essentially the same branch multiple times. For example, <code>pipe_is_writer_semaphore_free</code> and <code>pipe_is_reader_semaphore_free</code> both just call <code>pipe_writer_semaphore</code> with different arguments. But I have to run different tests.</p>
+<p><strong>Hypothesis</strong>: When you have roughly the same test for two different functions, you have duplicated some code.</p>
+<p>Hypothesis: If two branches give you the same output, merge them.</p>
+<p>Hypothesis: Uncertainty &lt;- number of branches because the answer for each of those branches could be something different. You have to know all of the outcomes.</p>
+<p>Hypothesis: Duplication -&gt; takes more work to test and more work to understand.</p>
+<p><strong>Hypothesis</strong>: It’s a mistake to have duplicate code because you end up doing more work to test your program.</p>
+<hr />
+<p><strong>Hypothesis</strong>: In deliberate practice (and thinking in general), chunks correspond to the branches of your model.</p>
+<p>So, chess grandmasters who have learned 50k chunks have learned 50k different branches of their model of chess.</p>
+<p>Hypothesis: There’s a lot of duplication in there. You could probably merge parts of several branches. (Maybe it’s necessary for optimization - because they can recognize formations in a flash.)</p>
+<p><strong>TODO</strong>: Figure out how you can represent each chunk - aka branch - as a flashcard, for easy learning.</p>
+<h2 id="how-to-abstract">How to Abstract</h2>
+<p>Hypothesis: Look at the input and output and merge those input configurations that have the same output. Also look at cases where the output part is a known function of the input.</p>
+<h1 id="top-level-interventions-vs-surgical-interventions">Top-Level Interventions vs Surgical Interventions</h1>
+<p>Observation: In the scheduler problem, I had to change one part of the system to affect the overall behaviour. In the pipes problem, however, I had full control of my system (since I was coding for the unit tests).</p>
+<p>Question: Are they different in kind?</p>
+<h1 id="other-notes">Other Notes</h1>
+<h2 id="types">Types</h2>
 <p>Hypothesis: Ensure that your existing functions satisfy their exact interface (through type-checking and contracts and unit tests) and minimize their interface -&gt; don’t need to worry them anymore.</p>
 <p>Hypothesis: One-button change &lt;- two things of the same type.</p>
 <p>Hypothesis: Then, your actions would be: extend the current type, add an alternative of the same type, and minimize interface via type abstraction (and function abstraction if needed).</p>
-<h1 id="alternatives-have-the-same-interface">Alternatives have the Same Interface</h1>
+<h2 id="alternatives-have-the-same-interface">Alternatives have the Same Interface</h2>
 <p><strong>Hypothesis</strong>: Alternatives must have the same interface, or else you can’t switch between them without the user knowing the difference.</p>
 <p>Question: Why, if at all, would this lead to functions with minimal interfaces?</p>
 <p>Question: What would the overall code look like?</p>
 <p><strong>Test</strong>: Try to reorganize an existing program like this, so you can compare the differences.</p>
 <p>Hypothesis: At each point, the program will look like a hierarchical bunch of alternatives.</p>
 <p>Hypothesis: Or, it will look like a bunch of overall alternatives.</p>
-<h1 id="minimize-interface">Minimize Interface</h1>
+<h2 id="minimize-interface">Minimize Interface</h2>
 <p>Question: Should you minimize interfaces during the refactor step?</p>
 
 <div class="info">Created: October 20, 2017</div>
