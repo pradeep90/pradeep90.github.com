@@ -265,6 +265,87 @@
 <h1 id="top-level-interventions-vs-surgical-interventions">Top-Level Interventions vs Surgical Interventions</h1>
 <p>Observation: In the scheduler problem, I had to change one part of the system to affect the overall behaviour. In the pipes problem, however, I had full control of my system (since I was coding for the unit tests).</p>
 <p>Question: Are they different in kind?</p>
+<h1 id="when-there-are-no-readily-available-tests">When There are No Readily Available Tests</h1>
+<p>Observation: Writing a research project proposal for a course - don’t know what is good and what isn’t.</p>
+<p>Question: How do I get feedback? How do I go about implementing “code” (aka models) to handle different inputs?</p>
+<p><strong>Hypothesis</strong>: Causes and effects all the way.</p>
+<p>For example, come up with the causes and effects of surrogate endpoints.</p>
+<h1 id="confused-write-a-test">Confused? Write a Test</h1>
+<p>Observation: Confused about whether a process waiting on a semaphore will get a return value of SYSERR or OK. Been thinking about it for the last 10 minutes.</p>
+<p>Hypothesis: Run a simple test to find out the answer.</p>
+<p>Hypothesis: “Confused” = don’t know the output of some branch.</p>
+<h1 id="make-a-change-only-when-a-test-fails">Make a Change only when a Test Fails</h1>
+<p>Observation: Wasted a lot of time just staring at the screen hoping for a “perfect” solution to land in my mind.</p>
+<p>Observation: I don’t have near-term tests for the changes I’m making to pipgetc. They are all abstract changes.</p>
+<p>Observation: Long time since I ran <em>any</em> test (or even compiled the code). No feedback.</p>
+<p><strong>Hypothesis</strong>: Make a change only when a test fails. Duh!</p>
+<p>It’s called red-green-refactor. I’ve been making changes willy-nilly.</p>
+<p>Corollary: Otherwise, you will end up making blue-sky changes to your code.</p>
+<p>Corollary: Don’t have to think about abstract cases. Don’t have to “contemplate the ifs”. Just make the current test case pass.</p>
+<p><strong>Hypothesis</strong>: Writing code without a failing test -&gt; don’t know if you’re cutting through.</p>
+<p>Corollary: Writing to pass tests -&gt; consequentialism.</p>
+<h1 id="interface-possible-input-configurations">Interface = Possible Input Configurations</h1>
+<p>Hypothesis: Instead of talking about the “interface” to some program, talk about the different input configurations that it may receive. That, together with the expected output, defines its “interface”.</p>
+<p>In other words, talk about the test cases it must satisfy.</p>
+<p><strong>Corollary</strong>: Minimal interface = few input branches.</p>
+<p>For example, <code>sort :: Ord a =&gt; [a] -&gt; [a]</code> has fewer possible inputs than <code>sortInts :: [Int] -&gt; [Int]</code>.</p>
+<h1 id="minimizing-the-outputs">Minimizing the Outputs</h1>
+<p>Observation: We’ve seen how to minimize the number of inputs to a function by combining those that produce the same output into the same category.</p>
+<p><strong>Hypothesis</strong>: If you can get only a few possible outputs, forbid the other output values.</p>
+<p>For example, a function that tells you whether or not a semaphore is free will return either true or false. Capturing that in an Int makes your interface unnecessarily large because the caller would have to assert that the output is either 0 or 1. So, make it a Bool.</p>
+<h1 id="testing-a-high-level-function-shouldnt-be-blind">Testing a High-level Function: Shouldn’t be Blind?</h1>
+<p>Question: Can you tell how many branches (and thus total test cases) a function will have, based on its type signature?</p>
+<p><strong>Hypothesis</strong>: It depends on the definition.</p>
+<p>For example, if I write <code>fourthRoot</code> from scratch, I would have to test several inputs cases like 0, 1, -1, 0.01, 4, etc. But if I know that <code>fourthRoot = sqrt &lt;=&lt; sqrt</code>, I feel like things become simpler.</p>
+<p>Hypothesis: Number of test cases &lt;- amount of code duplication.</p>
+<p>For example, <code>sortInts</code> and <code>sortLists</code> would share most of their code, except for the List- vs Int-handling parts. It would be stupid to test the same quicksort algorithm in both cases. <strong>Corollary</strong>: Amount of duplication among tests =&gt; amount of duplication among their functions. Question: So how would you do it ideally? How to not duplicate tests between <code>sortLists</code> and <code>sortInts</code>?</p>
+<p>Hypothesis: The answer would seem to be to extract their common code into <code>sort</code>.</p>
+<p>Then, you would write <code>sortLists = sort</code> (or just use sort directly where you would have used sortLists).</p>
+<p><strong>Question</strong>: But say you did <code>fourthRoot = sqrt &lt;=&lt; sqrt</code>. What tests should you now write?</p>
+<p>Hypothesis: You probably don’t need to check for invalid inputs like -1, etc. because sqrt already does that and returns <code>Nothing</code>.</p>
+<p><strong>Corollary</strong>: A tester who insisted on being blind to the code and coming up with “advance predictions” would end up duplicating a ton of work for <code>fourthRoot</code>. Ditto for <code>sortLists</code> and <code>sortInts</code> if he didn’t understand that they used the same sorting algorithm.</p>
+<p>Hypothesis: This is why people use type systems, so that they don’t have to duplicate their test code. They can reason about things from the types themselves.</p>
+<h2 id="no-ifs-no-tests">No Ifs, No Tests</h2>
+<p><strong>Hypothesis</strong>: You need to write unit tests only if you introduce new if-statements.</p>
+<p>For example, take <code>f = uniq . sort</code>. Why do you believe that that function will return a sorted list unique elements?</p>
+<p>Positive exemplar: When I wrote <code>pipgetc</code>, I had to test the cases where the function was supposed to return <code>SYSERR</code>. They were separate if-conditions in the code.</p>
+<p>Hypothesis: Could it depend on the size of the function too?</p>
+<p>Hypothesis: You should know the properties of each function in the chain.</p>
+<p>For example, if I gave you <code>doSomeMagic . sort</code>, you wouldn’t really know what that function did.</p>
+<p><strong>Observation</strong>: Ad hoc if-conditions in each function create exponential number of branches in a function chain.</p>
+<p>In contrast, a return type of Maybe monadically composes to give you just two possible outputs at each point in the chain.</p>
+<h2 id="when-can-you-chain">When can you Chain?</h2>
+<p><strong>Hypothesis</strong>: You can chain together functions when each one “handles” all the possible outputs of the previous one.</p>
+<p>For example, <code>uniq</code> handles the empty list and normal list outputs of <code>sort</code>. <code>sqrt</code> handles the Just and Nothing outputs of <code>sqrt</code>.</p>
+<p>Corollary: Functions not in a chain -&gt; there could be output configurations you failed to handle.</p>
+<p>For example, possible NULL values in C.</p>
+<p>Observation: If I were doing pipe functions in a chain, I could be certain that they handled all the intermediate configurations. But since I was writing an imperative function, I didn’t know if I had handled the cases where the pipe became free after a call to wait or got disconnected or whatever.</p>
+<h1 id="exams-input-branch-concept-needed">Exams: Input Branch = Concept Needed</h1>
+<p>Hypothesis: Input branch = question that I have to answer. Which depends on the concepts needed.</p>
+<p>Hypothesis: Input branch = concept needed. I need to have the correct output for each concept. Output = concept definition.</p>
+<p>For example, I need to know what a “proper causal path” is, in case they ask for it in the exam.</p>
+<h1 id="why-refactor-your-proofs-and-code">Why Refactor your Proofs and Code?</h1>
+<p>Hypothesis: Refactor -&gt; find simple solution -&gt; store that as your output for that particular input.</p>
+<p>Reuse that solution for other inputs -&gt; learn to recognize that input type based on this technique.</p>
+<p>For example, HW2 8(c) took a lot of trial and error for me to find the answer. (Still don’t know if I’ve made a mistake somewhere.) Now, if I cleaned it up and got to the answer in, say, three steps, then I could extract general lessons from that clean solution.</p>
+<p><strong>Observation</strong>: Basically, I’m unable to “draw lessons” from a jumble of trial-and-error proof steps.</p>
+<p>Why not?</p>
+<p><strong>Hypothesis</strong>: I can’t see which parts of the input led to which parts of the output.</p>
+<p>So, my current “proof” (more like one page of arrows and scribbles) feels like it pertains only to problem 8(c). I can’t see what I would reuse for a variation of the problem.</p>
+<p>Corollary: This is why you need to do proofs over and over till you get a succinct solution. (Ditto for programming.)</p>
+<p><strong>Hypothesis</strong>: You need to bring your proof into a form where you can see that if you toggled a high-level variable A, you wouldn’t need to do step 1 anymore. If you toggled B, you wouldn’t need step 2 anymore, and so on.</p>
+<p>Why can’t I do that now? The proof is so large and hairy that I can’t imagine the alternative.</p>
+<h2 id="confused-by-the-options">Confused by the Options</h2>
+<p>Observation: Still confused (even though I did the proof a few minutes ago).</p>
+<p><strong>Hypothesis</strong>: Confusion = don’t know the conditions when you should choose option A vs option B vs option C.</p>
+<p>For example, I can see that two back-door paths from X to Y are potentially unblocked if I condition on W1 or W2.</p>
+<p>What options do I have? I could apply rule 2 on X, rule 3 on X, condition on Z1, condition on W2, condition on W1, or condition on some combination of those 3. Which one should I choose?</p>
+<p>Next, if I choose to condition on Z, what should I do? Rule 2 on X, rule 3 on X, rule 2 or Z, rule 3 on Z, condition on W1, etc.</p>
+<p>There are tons of options!</p>
+<p>Observation: Experts somehow slice through this thicket of options and hone in on the correct one.</p>
+<p><strong>Hypothesis</strong>: Given the graph and the desired expression, there is a direct way to come to the correct step <em>without</em> much trial and error.</p>
+<p>Observation: There are only three trails from X to Y.</p>
+<p>Hypothesis: Maybe there is a simpler way to come to an ID expression without traversing the do-calculus expression tree. Use the trails somehow.</p>
 <h1 id="other-notes">Other Notes</h1>
 <h2 id="types">Types</h2>
 <p>Hypothesis: Ensure that your existing functions satisfy their exact interface (through type-checking and contracts and unit tests) and minimize their interface -&gt; don’t need to worry them anymore.</p>
@@ -281,7 +362,7 @@
 <p>Question: Should you minimize interfaces during the refactor step?</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: October 23, 2017</div>
+<div class="info">Last modified: October 25, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
