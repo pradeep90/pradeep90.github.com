@@ -270,10 +270,6 @@
 <p>Question: How do I get feedback? How do I go about implementing “code” (aka models) to handle different inputs?</p>
 <p><strong>Hypothesis</strong>: Causes and effects all the way.</p>
 <p>For example, come up with the causes and effects of surrogate endpoints.</p>
-<h1 id="confused-write-a-test">Confused? Write a Test</h1>
-<p>Observation: Confused about whether a process waiting on a semaphore will get a return value of SYSERR or OK. Been thinking about it for the last 10 minutes.</p>
-<p>Hypothesis: Run a simple test to find out the answer.</p>
-<p>Hypothesis: “Confused” = don’t know the output of some branch.</p>
 <h1 id="make-a-change-only-when-a-test-fails">Make a Change only when a Test Fails</h1>
 <p>Observation: Wasted a lot of time just staring at the screen hoping for a “perfect” solution to land in my mind.</p>
 <p>Observation: I don’t have near-term tests for the changes I’m making to pipgetc. They are all abstract changes.</p>
@@ -337,7 +333,7 @@
 <p>Why can’t I do that now? The proof is so large and hairy that I can’t imagine the alternative.</p>
 <h2 id="confused-by-the-options">Confused by the Options</h2>
 <p>Observation: Still confused (even though I did the proof a few minutes ago).</p>
-<p><strong>Hypothesis</strong>: Confusion = don’t know the conditions when you should choose option A vs option B vs option C.</p>
+<p><strong>Hypothesis</strong>: Confusion = don’t know the conditions when you should choose option A vs option B vs option C (in order to reach your target).</p>
 <p>For example, I can see that two back-door paths from X to Y are potentially unblocked if I condition on W1 or W2.</p>
 <p>What options do I have? I could apply rule 2 on X, rule 3 on X, condition on Z1, condition on W2, condition on W1, or condition on some combination of those 3. Which one should I choose?</p>
 <p>Next, if I choose to condition on Z, what should I do? Rule 2 on X, rule 3 on X, rule 2 or Z, rule 3 on Z, condition on W1, etc.</p>
@@ -348,6 +344,63 @@
 <p>Hypothesis: Maybe there is a simpler way to come to an ID expression without traversing the do-calculus expression tree. Use the trails somehow. (Don’t know how.)</p>
 <p><strong>Observation</strong>: Still feels like every step of the proof depends on every other step.</p>
 <p>Basically, I’m still traversing the tree by trial and error. If I choose rule 2 on X, then the whole rest of the proof changes (it seems).</p>
+<p>Question: Why not try all possible techniques?</p>
+<p>Observation: Heavy resistance from my mind when I try to do that.</p>
+<p><strong>Hypothesis</strong>: I believe that trial and error is inefficient, so I have zero motivation for doing it. Correct solutions usually lead to the answers directly without much trial and error. That feels like the signature of a good technique, and conversely, trying things blindly feels like the signature of a bad technique.</p>
+<p>That seems to have paid off in general. Looking for direct algorithms seems to have been a good heuristic in the past.</p>
+<p>Corollary: That also makes me more confused than most, because I’m unwilling to accept trial and error where I can’t see why I’m using some technique, or use a half-cooked understanding of some technique. I need crystal-clear understanding before I take action.</p>
+<h2 id="confused-write-a-test">Confused? Write a Test</h2>
+<p>Observation: Confused about whether a process waiting on a semaphore will get a return value of SYSERR or OK. Been thinking about it for the last 10 minutes.</p>
+<p>Hypothesis: Run a simple test to find out the answer.</p>
+<p>Hypothesis: “Confused” = don’t know the output of some branch.</p>
+<h2 id="infer-based-on-the-variables-we-focus-on">Infer based on the Variables we Focus on</h2>
+<p><strong>Hypothesis</strong>: Which conclusion we come to &lt;- the variables we focus on.</p>
+<p>Just focus on one variable, like how awesome romantic life is - feel like a life without romance is worthless. Focus on money and flashy cars and the other stuff rappers rap about - feel like a life without that is a waste.</p>
+<p>Focus on more variables - get a more nuanced view. For example, celebrities may get way more compliments than you or me, but they also get a ton more hate. They get judged every single day for things they didn’t or even couldn’t do perfectly.</p>
+<p>However, focus on too many variables - try to figure out a building’s architecture in one go (for a novice like me) - fail. Ditto for “complex” do-calculus problems - too much information for me to use.</p>
+<p><strong>Hypothesis</strong>: Confusion (one cause) &lt;- focusing on too many variables.</p>
+<h2 id="ignore-some-variables">Ignore Some Variables</h2>
+<p><strong>Corollary</strong>: If you get convinced that all the variables you see are important, you will try to take all of them into account. And because you don’t have any high-level rule that covers a dozen variables at once, you will get “confused”. You won’t know which technique to use.</p>
+<p>You could have done much better if you focused on just a few variables you “understood” (i.e., for whose configuration you knew how to respond).</p>
+<p>Lesson: Sometimes, it’s best to reduce the number of variables you focus on. (When?)</p>
+<h2 id="case-study-edge-of-tomorrow">Case Study: Edge of Tomorrow</h2>
+<p>Observation: Cage drops into the battlefield. No clue what to do. There are missiles flying every way, people fighting here and there, aircrafts exploding above. What to do for this input configuration? Turn left or right? Run or walk? Or just lay low? Massively confused.</p>
+<p>Observation: He doesn’t know which events to pay attention to. He keeps looking around.</p>
+<p>Hypothesis: Doesn’t know which inputs are relevant for the techniques he has.</p>
+<p>For example, he can’t do anything about the aircrafts exploding miles away. So, ignore them. Ditto for the people already dead - no technique will bring them back. So, ignore them too. His gun can shoot only things that are nearby - so, focus only on targets that are nearby.</p>
+<p>Observation: Guy spasming in his exo-suit. Cage gawks.</p>
+<p>Observation: Hmm… A big part of being confused seems to be about wasting time on useless parts of the input.</p>
+<p>Hypothesis: Given the techniques you have, you need to ignore all the parts of the inputs that are irrelevant. Otherwise, you will be overwhelmed because you have nothing stored in your mind for that exact “complex” configuration.</p>
+<p>For example, Cage (along with us as the viewers) is overwhelmed by the fact that there are dozens of aircrafts hovering above doing crazy shit, missiles flying everywhere, and so on. We have no clear rule for what to do in this situation. But once you realize that all you can do with your weapons is shoot things that are nearby, you will ignore all of these factors and focus on any mimics who are close. You know how to respond to <em>that</em> situation: see mimic, shoot it.</p>
+<p><strong>Hypothesis</strong>: If you have a bunch of clear high-level techniques but you focus on too many irrelevant variables, you will feel like you don’t know which technique you need for that configuration. You will be “confused”.</p>
+<p>Lesson: Ignore irrelevant variables. Basically don’t waste time on useless things, like Cage gawking at the spasming soldier. Take your mind off those things.</p>
+<p><strong>Lesson</strong>: Don’t pay attention to anything that is irrelevant to your target and weapons.</p>
+<p>For example, don’t pay attention to the missile that just took out the guy next to you (apart from remembering to duck and walk in zigzag patterns or whatever). Don’t pay attention to the guy on fire - can’t do anything about it; will only confuse you. Don’t pay attention to the aircraft on fire (past ensuring that it’s not going to fall on you).</p>
+<p>Observation: Gun - some error message in Japanese - don’t know what to do for this configuration (in order to get his safety off).</p>
+<p>Hypothesis: What options does he have? He could press some combination of the buttons on the gun. One of them must turn the safety off. It is probably not some “complex” procedure because people have to do it quite often. Focusing on the fact that it is in Japanese and that you don’t know the language and that you’re screwed and so on is unhelpful.</p>
+<p>Observation: Crashing aircraft. He came up with the correct response - running and jumping into a ditch.</p>
+<p><strong>Observation</strong>: Swordsmen are famous for having their attention completely on their opponent. They don’t waste attention on worrying about what others think of them (because their weapon can’t help them do anything about that).</p>
+<p>Observation: The only weapon he had left was the explosive. What is the only thing he could do with it? Detonate it when the enemy got close. He did that. Every other detail was irrelevant.</p>
+<p>Observation: He wakes up after dying. Confused. Doesn’t know what to do for such an input configuration. What can he do? Live life again, become stronger, and hopefully kill some more mimics. The rest is kind of irrelevant. (Though he should figure out how he was awoken.)</p>
+<p>Observation: Rita dies after killing the first mimic; the second time around, he’s coming up with a better technique for the same situation. (The theme of the whole movie.)</p>
+<p>Question: Given a particular situation and target, how do you improve your technique?</p>
+<p>Hypothesis: Use the scientific method with the input as the situation plus your technique, and the output as the outcome of your actions.</p>
+<p>Notice how different variations of your technique lead to different outcomes and infer a model of which technique configurations lead to good outputs.</p>
+<p><strong>Hypothesis</strong>: Basically, use the outputs to categorize your technique configurations.</p>
+<p>For example, if trying to convince the Sergeant gets you nowhere, stop doing that. Eliminate that variable from your technique configuration space.</p>
+<p>Hypothesis: For each input configuration, choose the high-level technique that gets you the best outcome. Categorize inputs this way.</p>
+<p>Observation: He jumped off right away. He knew that other techniques would get bad results. Landed on his feet too. He’s running with a purpose now. He knows what to do for the current input.</p>
+<p>Observation: Got hit by the jeep once. Not again.</p>
+<h2 id="relevant-variables-only-but-still-confused">Relevant Variables Only but Still Confused?</h2>
+<p>For example, I didn’t know whether to use <code>G_-X_Z-</code> or <code>G_X-_Z-</code> for rule 2 of do-calculus.</p>
+<p>Hypothesis: I knew that I needed to use rule 2 in that situation, but I was confused about the <em>definition</em>.</p>
+<p>Hypothesis: This is just confusion at one level down. For the input “use rule 2”, I didn’t know the correct output.</p>
+<p>Instead of being confused about the high-level technique to use, I was confused about a lower-level technique within it.</p>
+<h2 id="what-if-you-have-a-lot-of-low-level-techniques">What if You have a Lot of Low-level Techniques?</h2>
+<p>For example, the gun had some error message in Japanese. How could Cage go about testing the different combinations of buttons on the gun to turn the safety off?</p>
+<h2 id="what-if-you-have-no-techniques">What if You Have No Techniques?</h2>
+<p>Question: What if you don’t have any high-level techniques?</p>
+<p>For example, if you asked me to fix a broken car engine, I would have no clue what to do. There too, I would be “confused”.</p>
 <h1 id="novice-go-slow">Novice: Go Slow</h1>
 <p>Observation: Felt a lot more in control when I applied each do-calculus rule deliberately. Basically wrote out the entire condition for the rule so that I wasn’t caught by edge cases.</p>
 <h1 id="unit-tests-are-better-than-blind-integration-tests">Unit Tests are better than Blind Integration Tests</h1>
@@ -370,7 +423,7 @@
 <p>Question: Should you minimize interfaces during the refactor step?</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: October 26, 2017</div>
+<div class="info">Last modified: October 28, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
