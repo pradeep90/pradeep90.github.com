@@ -407,6 +407,16 @@
 <p>Observation: For HW2 in SML, I went with a benchmark of tests, where I understood neither the input nor the output data.</p>
 <p>Observation: I can understand a single concrete test better.</p>
 <p><strong>Hypothesis</strong>: Go for well-understood simple unit tests over blind integration tests -&gt; actually feel confident about your code vs don’t know why it works or even what it’s supposed to do.</p>
+<h1 id="classified-information-everything-should-flow">Classified Information: Everything Should Flow</h1>
+<p>Hypothesis: Aim of information-storage: Collect all your data into the same flow. A model must either be an alternative to or an extension of another model.</p>
+<p>Corollary: You shouldn’t have information that’s just lying around. It should fit within your overall model.</p>
+<h2 id="detect-redundant-models-using-concrete-examples">Detect Redundant Models using Concrete Examples</h2>
+<p>We don’t want to store more than one hypothesis for the same problem type. Then, we would get confused about which one to use. Hypotheses must either be alternatives to each other (with well-defined unique inputs) or extensions (where you use one after the other).</p>
+<p>Question: How to detect whether you already have a hypothesis for a given problem?</p>
+<p><strong>Hypothesis</strong>: Use a concrete example vs use some name for the model -&gt; recall your existing model for that example vs may not remember existing models you have for the same problem.</p>
+<p>For example, “confusion” and “being overwhelmed” and “seems chaotic” and so on refer to the same problem - not knowing which output to produce for a given input. Things become clearer when I give the example of a battle field (like in Edge of Tomorrow). All the above labels would apply, which makes me understand that I have more than one model for the same situation and I must mark them as equivalent (at least for this problem).</p>
+<p>Corollary: Using lower-level concepts will do just as well.</p>
+<p>For example, “boundaries” and “personal space” and “personal rights” all boil down to the economic concept of “property rights” - stuff that you control.</p>
 <h1 id="other-notes">Other Notes</h1>
 <h2 id="types">Types</h2>
 <p>Hypothesis: Ensure that your existing functions satisfy their exact interface (through type-checking and contracts and unit tests) and minimize their interface -&gt; don’t need to worry them anymore.</p>
@@ -423,7 +433,7 @@
 <p>Question: Should you minimize interfaces during the refactor step?</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: October 28, 2017</div>
+<div class="info">Last modified: October 29, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
