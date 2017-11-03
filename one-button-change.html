@@ -244,6 +244,7 @@
 <p>Lesson: If you want to code faster, design your types well.</p>
 <h1 id="understanding-knowing-the-output-for-each-input-configuration">Understanding = Knowing the Output for each Input Configuration</h1>
 <p>Hypothesis: Understanding = knowing the output for each input configuration.</p>
+<p>Observation: I keep saying “I don’t understand surrogate endpoints (or some other concept)”.</p>
 <h1 id="confidence">Confidence</h1>
 <p>Hypothesis: Confidence &lt;- knowing the possible input configurations and then knowing that you’ve handled all of them.</p>
 <p>With my journal notes, for example, I don’t know the input configurations for some mechanism I’m trying to figure out (like how we learn) and so I don’t know if I’ve covered everything.</p>
@@ -417,6 +418,12 @@
 <p>For example, “confusion” and “being overwhelmed” and “seems chaotic” and so on refer to the same problem - not knowing which output to produce for a given input. Things become clearer when I give the example of a battle field (like in Edge of Tomorrow). All the above labels would apply, which makes me understand that I have more than one model for the same situation and I must mark them as equivalent (at least for this problem).</p>
 <p>Corollary: Using lower-level concepts will do just as well.</p>
 <p>For example, “boundaries” and “personal space” and “personal rights” all boil down to the economic concept of “property rights” - stuff that you control.</p>
+<h1 id="static-types-help-you-abstract">Static Types help you Abstract</h1>
+<p>Observation: Writing a Python function to flatten a YAML dictionary that had two redundant nested lists of dictionaries. Was going to write some hopelessly ad hoc function to deal with “innings” and “deliveries” (since those were the keys that had the nested lists).</p>
+<p>Then realized that I should just write one generic function to flatten a list of dictionaries, and use that on innings and deliveries separately.</p>
+<p>Would have been a no-brainer in Haskell. The type would have made it obvious (I think).</p>
+<p>Hypothesis: Static types (a la Haskell) help you abstract, whereas dynamic types make it hard to see the patterns.</p>
+<p>(Feels overly-general.)</p>
 <h1 id="other-notes">Other Notes</h1>
 <h2 id="types">Types</h2>
 <p>Hypothesis: Ensure that your existing functions satisfy their exact interface (through type-checking and contracts and unit tests) and minimize their interface -&gt; don’t need to worry them anymore.</p>
@@ -433,7 +440,7 @@
 <p>Question: Should you minimize interfaces during the refactor step?</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: October 29, 2017</div>
+<div class="info">Last modified: November  2, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
