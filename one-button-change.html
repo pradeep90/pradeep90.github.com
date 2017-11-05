@@ -434,6 +434,89 @@
 <p>Would have been a no-brainer in Haskell. The type would have made it obvious (I think).</p>
 <p>Hypothesis: Static types (a la Haskell) help you abstract, whereas dynamic types make it hard to see the patterns.</p>
 <p>(Feels overly-general.)</p>
+<h1 id="premature-abstraction-considered-harmful">Premature Abstraction Considered Harmful</h1>
+<p>Observation: I’m struggling to get actual stats from the IPL match data even though it’s a pretty simple map of a simple function over each ball in the data.</p>
+<p>Observation: I’m trying to get a “good” (aka perfect) design of Match and Ball and Player and PlayerStats. Even though all I really want is the average and total runs for each player.</p>
+<p>Observation: Quick and dirty way of doing it - total runs = map over deliveries in both innings and if batsman is the given batsman, add runs scored by batsman.</p>
+<p>Observation: How <em>I</em> want to do it - <code>match.get_player_stats()</code> with different seasons and so on.</p>
+<p>Hypothesis: Focus on passing the test in an ugly way, then refactor -&gt; fast code + clean; focus on writing clean code -&gt; may waste time worrying about “good” design.</p>
+<p>Hypothesis: Focus on passing the test in an ugly way -&gt; have code that actually <em>works</em> for some input, goddamit. Focus on writing clean code -&gt; may have code that doesn’t work for any useful input yet even after an hour of thinking.</p>
+<p>Why would it be a net win to write ugly code and then refactor, rather than write clean code the first time around?</p>
+<p>Hypothesis: Code that works, refactor it -&gt; you’re changing only one thing at a time (design, not behaviour) -&gt; very little time, can choose how clean you want your design to be wrt expected inputs.</p>
+<p>Code that doesn’t work, write clean code -&gt; you’re changing two things at the same time (design <em>and</em> behaviour) -&gt; will take longer (?), may overengineer.</p>
+<p>Observation: You don’t want to write lots of code without stopping to test. You will get very confused if you get an error. (?)</p>
+<p><strong>Inference</strong>: A test will run only one branch. So, no if-statements needed. Probably just a chain of function calls.</p>
+<p><strong>Hypothesis</strong>: To pass a well-designed test, you will need only a chain of function calls.</p>
+<p>Hypothesis: Chain of functions that we understand -&gt; won’t take much time (why?). Branches of functions -&gt; will take time (why?).</p>
+<p>Corollary: So, writing “ugly”, concrete code to pass a unit test won’t take too much time.</p>
+<p>Observation: What about abstract code that still just passes one test case? For example, <code>Match:get_balls()</code> and <code>Match:map_over_balls()</code> and <code>runs_for_ball()</code>.</p>
+<p><strong>Observation</strong>: The abstraction <code>Match:get_balls()</code> may or may not work. You may have made a mistake in defining the method or in the module scope (if Match is in another file) or whatever. Source of uncertainty - have to test it.</p>
+<p><strong>Observation</strong>: You have multiple design choices - different levels of abstraction. For example, you could deal with separate methods for <code>get_balls()</code> and <code>map_over_balls()</code>, but not a separate class for <code>PlayerStats</code>. Or you could go the whole way and have subclasses for BowlerStats and BatsmanStats (and of course FielderStats) and have, god forbid, visitor methods to do complicated processing. But, for my problem of extracting data for machine learning, that is simply overkill.</p>
+<p>Observation: Each time you add a new abstraction, you have to test it (since you may or may not have implemented the abstraction correctly, or may have even picked one that doesn’t fit your problem).</p>
+<p><strong>Hypothesis</strong>: Multi-variable space, each time you switch from one state to another -&gt; you have to test the output (in case something changes).</p>
+<p><strong>Corollary</strong>: Change two variables at the same time and run just one test -&gt; if that test goes wrong, you won’t know which change broke it. Change two variables and want to be certain -&gt; will take more tests (and thus more time).</p>
+<p><strong>Hypothesis</strong>: One long chain of function calls -&gt; will pass the test case (one branch), very little time, will not overengineer.</p>
+<p>Abstract code (using separate functions or classes) -&gt; will pass the test case (one branch), will take more time because you’re changing the design too, may overengineer.</p>
+<h1 id="searching-within-the-program-space">Searching within the Program Space</h1>
+<h2 id="code-transformation-fail-to-fail-gives-no-information">Code Transformation: Fail to Fail gives No Information</h2>
+<p><strong>Hypothesis</strong>: Going from fail to fail doesn’t give you any information about your latest change.</p>
+<p>old code -&gt; fail (so we know it’s broken)</p>
+<p>old code broken + correct change -&gt; fail old code broken + wrong change -&gt; fail</p>
+<p>Going from fail to pass tells you that your latest change is correct.</p>
+<p>Going from pass to pass tells you that your latest change is correct. This is true if you changed the code, but not necessarily if you added new code (you may have forgotten to test it).</p>
+<p>Going from pass to fail tells you that your latest change is wrong.</p>
+<h2 id="why-is-writing-abstract-code-time-consuming">Why is writing Abstract Code time-consuming?</h2>
+<p>Question: What is the exact difference in coding time between passing the test and then refactoring vs passing the test with clean code?</p>
+<p><strong>Hypothesis</strong>: Pass the test with ugly code -&gt; 1 test (though you may sometimes test different parts of the chain too). Refactor the ugly code that <em>works</em> -&gt; m tests (one for each abstraction like function or class).</p>
+<p>You would go from no code to code that works. 1 test. Then, you would go from code that works to code that works plus one abstraction. Then, you would go again from code that works to code that works plus abstraction. And so on till you’re satisfied. m tests.</p>
+<p>Pass the test with clean code -&gt; suppose you add m abstractions and the test fails. You will need to toggle many of those abstractions (which will take time) before you isolate the bug.</p>
+<p>You would go from no code to code that doesn’t work plus abstraction. Then, from code that doesn’t work to code that doesn’t plus abstraction. And so on.</p>
+<p>Even if you ran a test at each point, you wouldn’t know if it doesn’t work because the current abstraction is broken or because the prior abstractions are.</p>
+<p>Corollary: This whole problem would be solved if you could add abstractions like you add code. Then, you could unit test each change and romp ahead.</p>
+<h2 id="why-is-debugging-so-hard">Why is Debugging so Hard?</h2>
+<p>Observation: Debugging seems to be pretty hard and time-consuming. Lot more confusing and frustrating than normal coding.</p>
+<p>For example, 17 out of the 30 hours I spent on OS HW2 were lost in debugging.</p>
+<p>Why? Is debugging a different operation from normal coding?</p>
+<h2 id="a-model-of-programming">A Model of Programming</h2>
+<p>Observation: Consider a case where you have a multi-variable configuration space like (A2, B5, C1) -&gt; pass; (A1, B8, C5) -&gt; fail; etc. We will call each configuration a “program”.</p>
+<p>You have different “features” that will let you change the program from one configuration to another. For example, “sort the output list” could correspond to going from B5 to B6 and thus take your program (A2, B5, C1) to (A2, B6, C1).</p>
+<p>However, you are not a perfect programmer, so you could make a mistake while implementing the first feature and end up at some other value than B6.</p>
+<p>Basically, you can’t tell if you are at B6. You have to infer from the result of your test case that checks for a sorted output list. It will go from “fail” for B5 to “pass” for B6 and thus tell you that you implemented the feature correctly.</p>
+<p>Let’s say C1 is a function to compute the mean-squared error for two vectors. It does all that in one function. C3 is a function that does the same thing but has a “cleaner design” than C1: it calculates the error vector first and then calls <code>meansqr</code> for it. So, it requires two additional features on top of C1 - separate functions for <code>error</code> and <code>meansqr</code>. So, you have to go from C1 to C2 (i.e., C1 + <code>error</code>) and then from C2 to C3 (C1 + <code>error</code> + <code>meansqr</code>).</p>
+<p>Now, the clean way to get to C3 would be to extract <code>error</code> in C1 and run a test to see if you really are at C2 (which would be the same test for C1 because C1 and C2 behave identically). Then, extract <code>meansqr</code> and run a test to see if you really are at C3 (which is the same test as for C1 or C2 as they all behave identically). Even if you made a mistake while extracting <code>error</code>, you would know that the error (heh) would be in your latest change, not anywhere else in the code. Simple. No frustration.</p>
+<p>What if you extracted <code>error</code> and <code>meansqr</code> in one shot? Well, if your implementation of C3 passed the test, then you could be pretty confident that you did it right.</p>
+<p>But what if the test for C3 fails? Now, you don’t know if the problem is in your extraction of <code>error</code> or in your extraction of <code>meansqr</code>.</p>
+<p>How would you handle this? The best way would be to go back to the inline version of <code>meansqr</code> and check if the test passed then. If so, the problem is in your extraction of <code>meansqr</code> and you can run finer tests.</p>
+<p>Assume that you didn’t have to write new code manually or press undo in your editor repeatedly till you got back to C2 and ran your test. What if you could jump from C1 to C2 or from C2 to C1 in a flash? Basically, what if you could toggle any implemented feature instantaneously?</p>
+<p>Well, if your original code passed the test for C1 but your implementation of features <code>error</code> and <code>meansqr</code> failed the test, you could tell that the problem must have been somewhere in the implementation of the two features. Then, you could just toggle <code>meansqr</code> and see if that code passed the test. Say it doesn’t. So, there must be a problem with <code>error</code> (there may also be a problem with <code>meansqr</code>; we don’t know). We then toggle features within <code>error</code> to check which one broke our code until we pinpoint the culprit.</p>
+<p>In the worst case, you need two tests - one to check <code>error</code> and one to check <code>meansqr</code>, which is the same number of tests as in normal coding where you test after every feature.</p>
+<h2 id="debugging-is-hard-when-you-cant-toggle-easily">Debugging is Hard when you Can’t Toggle Easily</h2>
+<p>Observation: Some state transitions are costlier in the reverse direction.</p>
+<p><strong>Hypothesis</strong>: Debugging is hard when you can’t toggle the state space easily.</p>
+<p>You can figure out the right configuration effortlessly if you can walk through state configurations in an instant. (In fact, you can even automate it.)</p>
+<h2 id="hard-to-toggle-abstractions">Hard to Toggle Abstractions</h2>
+<p><strong>Observation</strong>: It’s hard to switch from code with abstraction to code with no abstraction in one step.</p>
+<p><strong>Hypothesis</strong>: It’s hard to toggle abstractions.</p>
+<p>Except for the last few edits or so, our editors don’t allow us to roll back abstractions. It’s a pain even if you use git.</p>
+<p><strong>Corollary</strong>: If you change more than one abstraction at a time, you will need a lot of time to figure out your error. You can’t simply toggle the abstraction to figure out which one broke your test. You have to accept the abstraction as it is and change things <em>within</em> it.</p>
+<p><strong>Hypothesis</strong>: It’s easy to toggle tests.</p>
+<p>I did it effortlessly with my <code>pipe</code> tests.</p>
+<p>Observation: Types of abstractions - we can extract a method from some code, extract a class, add different branches via an if-statement, etc.</p>
+<p>For example, when testing a class in Python, I wrote the code to generate test data in the <code>setUp</code> method. But that meant that code was regenerated for test case, which was wasteful. So, I decided to move it to the class constructor. But that failed because the TestCase constructor expected two inputs (I think. I’m not sure. That’s the point). Which ones? I don’t know. So, I looked online for more details. People recommended that I use a <code>setUpClass</code> method. But that was a “class method”. I wasn’t sure what that was - a static method like in Java or something else. Anyway, I tried using <code>self.foo</code> everywhere and the code failed. Why? Because <code>self</code> wasn’t even visible in the class method (obviously). So, I replaced every instance of <code>self</code> with <code>cls</code> (since that was the name of the argument). Then my code worked.</p>
+<p><strong>Hypothesis</strong>: We are more uncertain about abstractions than about normal code.</p>
+<p>So we are likely to make more mistakes when abstracting than when writing usual functions. That explains my struggle above.</p>
+<p><strong>Hypothesis</strong>: Abstractions are usually set in stone.</p>
+<p>Once you add an abstraction (like a class or function), it’s so hard to get back the original code that you stick with the abstraction.</p>
+<p>But you don’t know if your abstraction itself was correct. So, you’re now uncertain about both your abstraction and your code’s behaviour.</p>
+<p><strong>Hypothesis</strong>: Hard to decide whether or not to go for an abstraction unless you know the potential use cases.</p>
+<p><strong>Corollary</strong>: You will dilly-dally. You won’t spend your time coding; you will spend it pondering.</p>
+<h2 id="toggling-abstractions">Toggling Abstractions</h2>
+<p><strong>Question</strong>: Why can’t you unit test abstractions?</p>
+<p><strong>Question</strong>: What if you had two versions - code without no abstraction and the same code with abstraction?</p>
+<p>Observation: You don’t always know the right output. So, a reference implementation helps you know more detail than you could have generated yourself.</p>
+<h1 id="writing-tests">Writing Tests</h1>
+<h2 id="granularity-of-tests">Granularity of Tests</h2>
+<p><strong>Question</strong>: How do you chose the granularity of the function for which you want to write tests? (Excellent question.)</p>
 <h1 id="other-notes">Other Notes</h1>
 <h2 id="types">Types</h2>
 <p>Hypothesis: Ensure that your existing functions satisfy their exact interface (through type-checking and contracts and unit tests) and minimize their interface -&gt; don’t need to worry them anymore.</p>
@@ -450,7 +533,7 @@
 <p>Question: Should you minimize interfaces during the refactor step?</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: November  3, 2017</div>
+<div class="info">Last modified: November  5, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
