@@ -434,29 +434,9 @@
 <p>Would have been a no-brainer in Haskell. The type would have made it obvious (I think).</p>
 <p>Hypothesis: Static types (a la Haskell) help you abstract, whereas dynamic types make it hard to see the patterns.</p>
 <p>(Feels overly-general.)</p>
-<h1 id="premature-abstraction-considered-harmful">Premature Abstraction Considered Harmful</h1>
-<p>Observation: I’m struggling to get actual stats from the IPL match data even though it’s a pretty simple map of a simple function over each ball in the data.</p>
-<p>Observation: I’m trying to get a “good” (aka perfect) design of Match and Ball and Player and PlayerStats. Even though all I really want is the average and total runs for each player.</p>
-<p>Observation: Quick and dirty way of doing it - total runs = map over deliveries in both innings and if batsman is the given batsman, add runs scored by batsman.</p>
-<p>Observation: How <em>I</em> want to do it - <code>match.get_player_stats()</code> with different seasons and so on.</p>
-<p>Hypothesis: Focus on passing the test in an ugly way, then refactor -&gt; fast code + clean; focus on writing clean code -&gt; may waste time worrying about “good” design.</p>
-<p>Hypothesis: Focus on passing the test in an ugly way -&gt; have code that actually <em>works</em> for some input, goddamit. Focus on writing clean code -&gt; may have code that doesn’t work for any useful input yet even after an hour of thinking.</p>
-<p>Why would it be a net win to write ugly code and then refactor, rather than write clean code the first time around?</p>
-<p>Hypothesis: Code that works, refactor it -&gt; you’re changing only one thing at a time (design, not behaviour) -&gt; very little time, can choose how clean you want your design to be wrt expected inputs.</p>
-<p>Code that doesn’t work, write clean code -&gt; you’re changing two things at the same time (design <em>and</em> behaviour) -&gt; will take longer (?), may overengineer.</p>
-<p>Observation: You don’t want to write lots of code without stopping to test. You will get very confused if you get an error. (?)</p>
+<h1 id="pass-a-test-with-a-chain-of-function-calls">Pass a Test with a Chain of Function Calls</h1>
 <p><strong>Inference</strong>: A test will run only one branch. So, no if-statements needed. Probably just a chain of function calls.</p>
 <p><strong>Hypothesis</strong>: To pass a well-designed test, you will need only a chain of function calls.</p>
-<p>Hypothesis: Chain of functions that we understand -&gt; won’t take much time (why?). Branches of functions -&gt; will take time (why?).</p>
-<p>Corollary: So, writing “ugly”, concrete code to pass a unit test won’t take too much time.</p>
-<p>Observation: What about abstract code that still just passes one test case? For example, <code>Match:get_balls()</code> and <code>Match:map_over_balls()</code> and <code>runs_for_ball()</code>.</p>
-<p><strong>Observation</strong>: The abstraction <code>Match:get_balls()</code> may or may not work. You may have made a mistake in defining the method or in the module scope (if Match is in another file) or whatever. Source of uncertainty - have to test it.</p>
-<p><strong>Observation</strong>: You have multiple design choices - different levels of abstraction. For example, you could deal with separate methods for <code>get_balls()</code> and <code>map_over_balls()</code>, but not a separate class for <code>PlayerStats</code>. Or you could go the whole way and have subclasses for BowlerStats and BatsmanStats (and of course FielderStats) and have, god forbid, visitor methods to do complicated processing. But, for my problem of extracting data for machine learning, that is simply overkill.</p>
-<p>Observation: Each time you add a new abstraction, you have to test it (since you may or may not have implemented the abstraction correctly, or may have even picked one that doesn’t fit your problem).</p>
-<p><strong>Hypothesis</strong>: Multi-variable space, each time you switch from one state to another -&gt; you have to test the output (in case something changes).</p>
-<p><strong>Corollary</strong>: Change two variables at the same time and run just one test -&gt; if that test goes wrong, you won’t know which change broke it. Change two variables and want to be certain -&gt; will take more tests (and thus more time).</p>
-<p><strong>Hypothesis</strong>: One long chain of function calls -&gt; will pass the test case (one branch), very little time, will not overengineer.</p>
-<p>Abstract code (using separate functions or classes) -&gt; will pass the test case (one branch), will take more time because you’re changing the design too, may overengineer.</p>
 <h1 id="searching-within-the-program-space">Searching within the Program Space</h1>
 <h2 id="code-transformation-fail-to-fail-gives-no-information">Code Transformation: Fail to Fail gives No Information</h2>
 <p><strong>Hypothesis</strong>: Going from fail to fail doesn’t give you any information about your latest change.</p>
@@ -495,25 +475,65 @@
 <p><strong>Hypothesis</strong>: Debugging is hard when you can’t toggle the state space easily.</p>
 <p>You can figure out the right configuration effortlessly if you can walk through state configurations in an instant. (In fact, you can even automate it.)</p>
 <h2 id="hard-to-toggle-abstractions">Hard to Toggle Abstractions</h2>
-<p><strong>Observation</strong>: It’s hard to switch from code with abstraction to code with no abstraction in one step.</p>
-<p><strong>Hypothesis</strong>: It’s hard to toggle abstractions.</p>
-<p>Except for the last few edits or so, our editors don’t allow us to roll back abstractions. It’s a pain even if you use git.</p>
-<p><strong>Corollary</strong>: If you change more than one abstraction at a time, you will need a lot of time to figure out your error. You can’t simply toggle the abstraction to figure out which one broke your test. You have to accept the abstraction as it is and change things <em>within</em> it.</p>
 <p><strong>Hypothesis</strong>: It’s easy to toggle tests.</p>
 <p>I did it effortlessly with my <code>pipe</code> tests.</p>
-<p>Observation: Types of abstractions - we can extract a method from some code, extract a class, add different branches via an if-statement, etc.</p>
-<p>For example, when testing a class in Python, I wrote the code to generate test data in the <code>setUp</code> method. But that meant that code was regenerated for test case, which was wasteful. So, I decided to move it to the class constructor. But that failed because the TestCase constructor expected two inputs (I think. I’m not sure. That’s the point). Which ones? I don’t know. So, I looked online for more details. People recommended that I use a <code>setUpClass</code> method. But that was a “class method”. I wasn’t sure what that was - a static method like in Java or something else. Anyway, I tried using <code>self.foo</code> everywhere and the code failed. Why? Because <code>self</code> wasn’t even visible in the class method (obviously). So, I replaced every instance of <code>self</code> with <code>cls</code> (since that was the name of the argument). Then my code worked.</p>
-<p><strong>Hypothesis</strong>: We are more uncertain about abstractions than about normal code.</p>
-<p>So we are likely to make more mistakes when abstracting than when writing usual functions. That explains my struggle above.</p>
+<p><strong>Hypothesis</strong>: It’s hard to toggle abstractions.</p>
+<p>Except for the last few edits or so, our editors don’t allow us to roll back abstractions. It’s a pain even if you use git.</p>
 <p><strong>Hypothesis</strong>: Abstractions are usually set in stone.</p>
 <p>Once you add an abstraction (like a class or function), it’s so hard to get back the original code that you stick with the abstraction.</p>
 <p>But you don’t know if your abstraction itself was correct. So, you’re now uncertain about both your abstraction and your code’s behaviour.</p>
 <p><strong>Hypothesis</strong>: Hard to decide whether or not to go for an abstraction unless you know the potential use cases.</p>
 <p><strong>Corollary</strong>: You will dilly-dally. You won’t spend your time coding; you will spend it pondering.</p>
-<h2 id="toggling-abstractions">Toggling Abstractions</h2>
-<p><strong>Question</strong>: Why can’t you unit test abstractions?</p>
-<p><strong>Question</strong>: What if you had two versions - code without no abstraction and the same code with abstraction?</p>
-<p>Observation: You don’t always know the right output. So, a reference implementation helps you know more detail than you could have generated yourself.</p>
+<h2 id="one-thing-at-a-time-abstract-while-coding---more-uncertain">One Thing at a Time: Abstract while Coding -&gt; More Uncertain</h2>
+<p>For example, when testing a class in Python, I wrote the code to generate test data in the <code>setUp</code> method. But that meant that code was regenerated for test case, which was wasteful. So, I decided to move it to the class constructor. But that failed because the TestCase constructor expected two inputs (I think. I’m not sure. That’s the point). Which ones? I don’t know. So, I looked online for more details. People recommended that I use a <code>setUpClass</code> method. But that was a “class method”. I wasn’t sure what that was - a static method like in Java or something else. Anyway, I tried using <code>self.foo</code> everywhere and the code failed. Why? Because <code>self</code> wasn’t even visible in the class method (obviously). So, I replaced every instance of <code>self</code> with <code>cls</code> (since that was the name of the argument). Then my code worked.</p>
+<p><strong>Hypothesis</strong>: We are more uncertain about abstractions than about normal code.</p>
+<p>Corollary: So we are likely to make more mistakes when abstracting than when writing usual functions. That explains my struggle above.</p>
+<p>Observation: When calculating the total runs for a player in the first and second innings, I wanted to abstract the loop into a function and call that function on the two parts. Instead, I forced myself to write two duplicate loops (<em>cringe</em>). But the code still failed the test. So, if I had abstracted the loop into a function, I would have been unsure if the problem was because of my abstraction or because of the code itself.</p>
+<p><strong>Observation</strong>: Holy crap. Refactoring was a breeze! I could see exactly what I needed to change (extract a Match::balls iterator) and did it without any worries about the behaviour.</p>
+<p>Observation: Again, when trying to aggregate stats from 70 matches, I’m trying to look for the ideal solution where I pickle the YAML object for future use and so on. Instead, I should just run it in a quick and dirty way, no matter what the cost.</p>
+<h2 id="default-values-for-abstractions">Default Values for Abstractions</h2>
+<p><strong>Hypothesis</strong>: Have default values for abstractions -&gt; can add an abstraction without making mistakes and without changing behaviour vs have to add an abstraction (perhaps making mistakes) and change behaviour too.</p>
+<p>Observation: Still hard to reverse an abstraction.</p>
+<h2 id="moving-forward-is-easier-than-debugging-backward">Moving Forward is easier than Debugging Backward</h2>
+<p><strong>Lesson</strong>: Adding features and releasing at each point -&gt; quick and painless. Adding lots of features and then debugging -&gt; slow and painful (because you can’t toggle features easily).</p>
+<h1 id="premature-abstraction-considered-harmful">Premature Abstraction Considered Harmful</h1>
+<p>Observation: I’m struggling to get actual stats from the IPL match data even though it’s a pretty simple map of a simple function over each ball in the data.</p>
+<p>Observation: I’m trying to get a “good” (aka perfect) design of Match and Ball and Player and PlayerStats. Even though all I really want is the average and total runs for each player.</p>
+<p>Observation: Quick and dirty way of doing it - total runs = map over deliveries in both innings and if batsman is the given batsman, add runs scored by batsman.</p>
+<p>Observation: How <em>I</em> want to do it - <code>match.get_player_stats()</code> with different seasons and so on.</p>
+<p>Hypothesis: Focus on passing the test in an ugly way, then refactor -&gt; fast code + clean; focus on writing clean code -&gt; may waste time worrying about “good” design.</p>
+<p>Hypothesis: Focus on passing the test in an ugly way -&gt; have code that actually <em>works</em> for some input, goddamit. Focus on writing clean code -&gt; may have code that doesn’t work for any useful input yet even after an hour of thinking.</p>
+<p>Why would it be a net win to write ugly code and then refactor, rather than write clean code the first time around?</p>
+<p>Hypothesis: Code that works, refactor it -&gt; you’re changing only one thing at a time (design, not behaviour) -&gt; very little time, can choose how clean you want your design to be wrt expected inputs.</p>
+<p>Code that doesn’t work, write clean code -&gt; you’re changing two things at the same time (design <em>and</em> behaviour) -&gt; will take longer (?), may overengineer.</p>
+<p>Observation: You don’t want to write lots of code without stopping to test. You will get very confused if you get an error. (?)</p>
+<p>Hypothesis: Chain of functions that we understand -&gt; won’t take much time (why?). Branches of functions -&gt; will take time (why?).</p>
+<p>Corollary: So, writing “ugly”, concrete code to pass a unit test won’t take too much time.</p>
+<p>Observation: What about abstract code that still just passes one test case? For example, <code>Match:get_balls()</code> and <code>Match:map_over_balls()</code> and <code>runs_for_ball()</code>.</p>
+<p>Observation: The abstraction <code>Match:get_balls()</code> may or may not work. You may have made a mistake in defining the method or in the module scope (if Match is in another file) or whatever. Source of uncertainty - have to test it.</p>
+<p>Observation: You have multiple design choices - different levels of abstraction. For example, you could deal with separate methods for <code>get_balls()</code> and <code>map_over_balls()</code>, but not a separate class for <code>PlayerStats</code>. Or you could go the whole way and have subclasses for BowlerStats and BatsmanStats (and of course FielderStats) and have, god forbid, visitor methods to do complicated processing. But, for my problem of extracting data for machine learning, that is simply overkill.</p>
+<p>Observation: Each time you add a new abstraction, you have to test it (since you may or may not have implemented the abstraction correctly, or may have even picked one that doesn’t fit your problem).</p>
+<p><strong>Hypothesis</strong>: One long chain of function calls -&gt; will pass the test case (one branch), very little time, will not overengineer. Refactor -&gt; easier to test going forward -&gt; quick.</p>
+<p>Abstract code (using separate functions or classes) -&gt; will pass the test case (one branch), will take more time because you’re changing the design too, may overengineer. Debugging -&gt; slow.</p>
+<p><strong>Lesson</strong>: Because debugging is slow and painful, it’s better to write quick and dirty code and then refactor, than to write clean code in the first attempt.</p>
+<p><strong>Observation</strong>: [2017-11-05 Sun] Tried to write quick and dirty code to pass one simple unit test. Nearly got a heart attack in the process. Here it is:</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> batsman_total(match, player):
+	d <span class="op">=</span> match.match_details[<span class="st">'innings'</span>][<span class="st">'1st innings'</span>][<span class="st">'deliveries'</span>]
+	<span class="bu">print</span>(d)
+	total <span class="op">=</span> <span class="dv">0</span>
+	<span class="cf">for</span> ball_num, ball <span class="op">in</span> d.items():
+		<span class="cf">if</span> ball[<span class="st">'batsman'</span>] <span class="op">==</span> player:
+			total <span class="op">+=</span> ball[<span class="st">'runs'</span>][<span class="st">'batsman'</span>]
+	<span class="cf">return</span> total</code></pre></div>
+<p>I couldn’t bring myself to write <code>total += anything</code>. Felt so fucking gauche. Ditto for the for-loop and direct testing (<code>if ball['batsman'] == player</code>). I felt like reaching for a map and filter. But that would probably be overkill. I needed to bring myself to cut through to the actual output.</p>
+<p>But this code is fine for my purposes!</p>
+<p><strong>Hypothesis</strong>: I usually overengineer. I can code faster by writing quick and dirty code and then refactoring, instead of throwing in abstractions like <code>map</code> and <code>filter</code> and so on, especially in a predominantly-imperative language like Python.</p>
+<h2 id="rule-of-three">Rule of Three</h2>
+<p><strong>Question</strong>: What if you abstracted code only on the second use?</p>
+<p>Maybe go for the Rule of Three? (https://blog.codinghorror.com/rule-of-three/)</p>
+<p>What’s the worst that can happen if you <em>don’t</em> abstract your code?</p>
+<p><strong>Inference</strong>: Unabstracted code is hard to understand and hard to change too. It’s not just about reuse.</p>
+<p>I don’t know the answer.</p>
 <h1 id="writing-tests">Writing Tests</h1>
 <h2 id="granularity-of-tests">Granularity of Tests</h2>
 <p><strong>Question</strong>: How do you chose the granularity of the function for which you want to write tests? (Excellent question.)</p>
