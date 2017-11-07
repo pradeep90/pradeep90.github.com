@@ -491,6 +491,7 @@
 <p>Observation: When calculating the total runs for a player in the first and second innings, I wanted to abstract the loop into a function and call that function on the two parts. Instead, I forced myself to write two duplicate loops (<em>cringe</em>). But the code still failed the test. So, if I had abstracted the loop into a function, I would have been unsure if the problem was because of my abstraction or because of the code itself.</p>
 <p><strong>Observation</strong>: Holy crap. Refactoring was a breeze! I could see exactly what I needed to change (extract a Match::balls iterator) and did it without any worries about the behaviour.</p>
 <p>Observation: Again, when trying to aggregate stats from 70 matches, I’m trying to look for the ideal solution where I pickle the YAML object for future use and so on. Instead, I should just run it in a quick and dirty way, no matter what the cost.</p>
+<p>Observation: Lost my way after a while and reverted to my old over-engineering habits.</p>
 <h2 id="default-values-for-abstractions">Default Values for Abstractions</h2>
 <p><strong>Hypothesis</strong>: Have default values for abstractions -&gt; can add an abstraction without making mistakes and without changing behaviour vs have to add an abstraction (perhaps making mistakes) and change behaviour too.</p>
 <p>Observation: Still hard to reverse an abstraction.</p>
@@ -553,7 +554,7 @@
 <p>Question: Should you minimize interfaces during the refactor step?</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: November  5, 2017</div>
+<div class="info">Last modified: November  6, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
