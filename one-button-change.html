@@ -535,6 +535,14 @@
 <p>What’s the worst that can happen if you <em>don’t</em> abstract your code?</p>
 <p><strong>Inference</strong>: Unabstracted code is hard to understand and hard to change too. It’s not just about reuse.</p>
 <p>I don’t know the answer.</p>
+<h1 id="write-and-test-in-isolation-before-you-use">Write and Test in Isolation before You Use</h1>
+<p>When you want to extend a function with some new function, test your new code as a function before you use it here. For example, if you want your <code>generate_stats</code> function to write the final matrix to a file (why do you want to do that within the same function?), have a separate function that writes a matrix to a file, test it, and then use it here.</p>
+<p>Observation: I ended up with a script that was costly to test when I was extracting ftrs from a dataset. I/O was mixed with program logic.</p>
+<p>Corollary: You will end up with one-button changes to your original function, so it will be easier to test too (as compared to the case where you simply dumped code at the end of the function).</p>
+<h1 id="deliberate-execution-of-hypothesis">Deliberate Execution of Hypothesis</h1>
+<p>Test your explicit hypothesis at each step by asking it what to do. If it’s blank, fill it in with your intuitive next step. For example, use your “one-button change” hypothesis to write your course programs.</p>
+<p><strong>Hypothesis</strong>: Live life “deliberately” -&gt; get an explicit hypothesis about a lot of things you do.</p>
+<p>For example, should you watch a YouTube video now? What is the expected outcome? What else could you be doing? Read a book? Ok. Let’s say that’s what you need to do right now. Well, does it work to simply tell yourself “I need to read a book now”? Probably not. What does work? What passes the unit test “have read a book for an hour today”?</p>
 <h1 id="writing-tests">Writing Tests</h1>
 <h2 id="granularity-of-tests">Granularity of Tests</h2>
 <p><strong>Question</strong>: How do you chose the granularity of the function for which you want to write tests? (Excellent question.)</p>
@@ -554,7 +562,7 @@
 <p>Question: Should you minimize interfaces during the refactor step?</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: November  6, 2017</div>
+<div class="info">Last modified: November  7, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
