@@ -552,26 +552,23 @@
 <p>Observation: Refactoring gets you from dirty correct code to clean correct code. The final code is more general - easier to understand and change and reuse.</p>
 <p><strong>Hypothesis</strong>: The difference is induction.</p>
 <p>Hypothesis: I’m confused about my course concepts and about dirty code because I haven’t got succinct general hypotheses from them. I’m still at the concrete level that’s hard to reason about because it’s verbose (and I don’t have a clear input-output relationship).</p>
+<h1 id="dont-change-a-function.-duplicate-it.">Don’t Change a Function. Duplicate it.</h1>
+<p>Hypothesis: Want to change a <code>generate_stats</code> function to return the average instead of strike rate &lt;- make a duplicate function that’s specific for average. You can refactor it later.</p>
+<p>Corollary: This way, you can switch between them easily.</p>
+<p><strong>Hypothesis</strong>: Function &lt;- input and output types, output properties (i.e., the whole interface)</p>
+<p>So, if you want to change the interface of the function (return averages instead of strike rates), even if the type is the same (list of numbers), write a separate function instead.</p>
+<p><strong>Corollary</strong>: To avoid dead code, have an if-condition that lets you switch between the alternative functions.</p>
 <h1 id="writing-tests">Writing Tests</h1>
 <h2 id="granularity-of-tests">Granularity of Tests</h2>
 <p><strong>Question</strong>: How do you chose the granularity of the function for which you want to write tests? (Excellent question.)</p>
-<h1 id="other-notes">Other Notes</h1>
-<h2 id="types">Types</h2>
-<p>Hypothesis: Ensure that your existing functions satisfy their exact interface (through type-checking and contracts and unit tests) and minimize their interface -&gt; don’t need to worry them anymore.</p>
-<p>Hypothesis: One-button change &lt;- two things of the same type.</p>
-<p>Hypothesis: Then, your actions would be: extend the current type, add an alternative of the same type, and minimize interface via type abstraction (and function abstraction if needed).</p>
-<h2 id="alternatives-have-the-same-interface">Alternatives have the Same Interface</h2>
-<p><strong>Hypothesis</strong>: Alternatives must have the same interface, or else you can’t switch between them without the user knowing the difference.</p>
-<p>Question: Why, if at all, would this lead to functions with minimal interfaces?</p>
-<p>Question: What would the overall code look like?</p>
-<p><strong>Test</strong>: Try to reorganize an existing program like this, so you can compare the differences.</p>
-<p>Hypothesis: At each point, the program will look like a hierarchical bunch of alternatives.</p>
-<p>Hypothesis: Or, it will look like a bunch of overall alternatives.</p>
-<h2 id="minimize-interface">Minimize Interface</h2>
-<p>Question: Should you minimize interfaces during the refactor step?</p>
+<h1 id="refactor-before-you-commit">Refactor Before you Commit</h1>
+<p>Observation: My <code>generate_stats</code> script is ugly and feels hard to refactor because it takes several minutes to run.</p>
+<p>Observation: I didn’t refactor it the first time around when I was trying to just get the code to run. Yes, I want to pass the simple test as soon as possible, but I should refactor after that, so that my technical debt doesn’t pile up.</p>
+<p>Hypothesis: Refactor before you commit -&gt; easier to code in the future.</p>
+<p>Don’t refactor before you commit -&gt; end up with ugly code that’s hard to reason about.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: November  8, 2017</div>
+<div class="info">Last modified: November  9, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
