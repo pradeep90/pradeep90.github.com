@@ -566,9 +566,13 @@
 <p>Observation: I didn’t refactor it the first time around when I was trying to just get the code to run. Yes, I want to pass the simple test as soon as possible, but I should refactor after that, so that my technical debt doesn’t pile up.</p>
 <p>Hypothesis: Refactor before you commit -&gt; easier to code in the future.</p>
 <p>Don’t refactor before you commit -&gt; end up with ugly code that’s hard to reason about.</p>
+<h1 id="costly-feedback">Costly Feedback</h1>
+<p>Question: How to write code when running tests is costly?</p>
+<p>For example, it takes several minutes to test whether my <code>generate_stats</code> script gives the same output as before. So, I hesitate to refactor any part of it, lest I break the code in some way that will cost me a lot to fix (where I’ll have to run the script for several minutes again to make sure I really did fix it).</p>
+<p><strong>Hypothesis</strong>: If you’re writing I/O code, separate the pure and impure parts. Now, you can quickly test and thus refactor the pure logic to your heart’s content.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: November  9, 2017</div>
+<div class="info">Last modified: November 11, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
