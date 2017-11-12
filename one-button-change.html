@@ -550,8 +550,19 @@
 <p>Question: What’s the difference between rote-learning the night before the exam and proper learning over a period of time?</p>
 <p>Question: What’s the difference between correct code that’s dirty and correct code that’s clean?</p>
 <p>Observation: Refactoring gets you from dirty correct code to clean correct code. The final code is more general - easier to understand and change and reuse.</p>
-<p><strong>Hypothesis</strong>: The difference is induction.</p>
+<p>Hypothesis: The difference is induction.</p>
 <p>Hypothesis: I’m confused about my course concepts and about dirty code because I haven’t got succinct general hypotheses from them. I’m still at the concrete level that’s hard to reason about because it’s verbose (and I don’t have a clear input-output relationship).</p>
+<h2 id="how-much-work-is-refactoring">How Much Work is Refactoring?</h2>
+<p><strong>Hypothesis</strong>: Two different concrete functions or hypotheses -&gt; one function that does both [call this refactoring or induction].</p>
+<p>example: merge <code>get_strike_rates</code> and <code>get_averages</code> into a generic <code>get_features</code>.</p>
+<p><strong>Question</strong>: How much work is it to refactor (inductively generalize) two functions (hypotheses)?</p>
+<p>Hypothesis: First, check where they differ.</p>
+<p>If they are nearly identical functions -&gt; just abstract the difference.</p>
+<h2 id="tests-1">Tests</h2>
+<p>Test: <code>get_strike_rates</code> and <code>get_averages</code> had the same code except for one function call. I could accept a function argument for that call alone.</p>
+<h2 id="learning-and-induction">Learning and Induction</h2>
+<p><strong>Question</strong>: Is this what I’m doing when I’m reading a new book that talks about a topic I’ve understood before? Am I trying to merge my current theory along with the new theory and evidence in the book to get a unified theory?</p>
+<p>For example, if I read a book about the cognitive psychology of learning, I have to figure out how it fits with my existing model of associative memory and exponential decay. That feels like quite a bit of work.</p>
 <h1 id="dont-change-a-function.-duplicate-it.">Don’t Change a Function. Duplicate it.</h1>
 <p>Hypothesis: Want to change a <code>generate_stats</code> function to return the average instead of strike rate &lt;- make a duplicate function that’s specific for average. You can refactor it later.</p>
 <p>Corollary: This way, you can switch between them easily.</p>
