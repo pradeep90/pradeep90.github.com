@@ -106,9 +106,19 @@
 <h1 id="ispell">Ispell</h1>
 <p>Set your personal dictionary file so that your words are saved.</p>
 <pre><code>(setq ispell-personal-dictionary &quot;~/.ispell_pradeep_laptop&quot;)</code></pre>
+<h1 id="upgrading-from-emacs-24.3-to-25.3">Upgrading from Emacs 24.3 to 25.3</h1>
+<p>What still doesn’t work:</p>
+<p>log-edit-done - doesn’t show diff and fails when I try to commit.</p>
+<pre><code>log-edit-show-diff: Diff functionality has not been setup
+
+Wrong type argument: commandp, nil</code></pre>
+<p>This is because of the following code in log-edit.el.gz:</p>
+<pre><code>(defvar log-edit-callback nil)
+(defvar log-edit-diff-function nil)</code></pre>
+<p>I’m guessing that Git backend support has somehow not been set up.</p>
 
 <div class="info">Created: August  6, 2015</div>
-<div class="info">Last modified: August 20, 2017</div>
+<div class="info">Last modified: November 12, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, emacs</div>
 
