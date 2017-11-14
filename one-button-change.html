@@ -585,9 +585,40 @@
 <p>Observation: Good security professionals seem to consider different possible scenarios.</p>
 <p>Hypothesis: Think of contingency plans to most possible scenarios -&gt; high security vs poor security.</p>
 <p>Observation: I haven’t considered different possibilities about my career plans. What if I hate my research area after a couple of years? What if I never make a breakthrough in “metacognitive algorithms”? No contingency plans.</p>
+<h1 id="minimize-the-number-of-your-weapons">Minimize the Number of your Weapons</h1>
+<p>Observation: How do you check whether a value is in a Map? You could do (<code>elem</code> (elems m2)), but that would require you to know the function <code>elems</code>. Instead, you could just do (value <code>elem</code> m2)! Why? Because <code>Map</code> is in Foldable.</p>
+<p><strong>Hypothesis</strong>: Have interface for commonly-used functions -&gt; don’t have to remember a lot of specific functions, can reuse code, can make your code more abstract.</p>
+<p>Don’t have interface for commonly-used functions -&gt; have to remember specific functions, can’t reuse code, code is specific to that data type.</p>
+<p>For example, I would have to know that <code>elems</code> was the function that returned all the values in a Map.</p>
+<h1 id="refactoring-hypothesis">Refactoring Hypothesis</h1>
+<h2 id="hypothesis">Hypothesis</h2>
+<p>Starting out -&gt; get overall type signatures and goals.</p>
+<p>one function definition - abstract it and run tests.</p>
+<p>two function definitions with duplicated code and slightly different goals - extract common abstract functions and run tests.</p>
+<p>prose - will talk about the causes of some key variable - collect them on that key variable.</p>
+<h2 id="tests-2">Tests</h2>
+<p><code>get_features_strike_rate</code> and <code>get_features_average</code> with <em>roughly the same code</em> except for <code>strike_rate</code> and <code>average</code> – accept a stat_fn and have a common abstract function.</p>
+<h2 id="refactor-this-essay">Refactor This Essay</h2>
+<p>What are the tests I run to make sure the new version works the same as the old one?</p>
+<p>Come up with an explicit hypothesis for the steps I need to follow while refactoring.</p>
+<h2 id="key-variables">Key Variables</h2>
+<p>process evidence vs get confused &lt;- how many high-level changes you make at a time (<strong>to what?</strong>)</p>
+<p>change within existing function vs add a new function</p>
+<p>easily toggled design variable vs not</p>
+<p>how many changes you have to make to move from one design to another (one-button vs multiple changes)</p>
+<p>have a default alternative stub that fails X’s unit test vs not (when you have just one value X and want to toggle it)</p>
+<h1 id="hypotheses-about-hypotheses-model-of-the-domain">Hypotheses about Hypotheses: Model of the Domain</h1>
+<p>Hypothesis: My state-transition <em>model</em> of programming seems to cover all the hypotheses that talk about amount of uncertainty about your program’s correctness or the amount of work required to fix bugs.</p>
+<p><strong>Hypothesis</strong>: One type of hypothesis: move from concrete inputs to an abstract model, make abstract predictions, and then convert them to concrete predictions.</p>
+<p>Test: Toggling one design variable at a time seems to be easier to handle than changing multiple variables – the state-transition model of programming seems to explain this.</p>
+<p>Observation: My other “hypotheses” seem to be heavily under-specified. For example: [Multiple changes when trying to go to a desired state -&gt; could leave the system in a state that is “hard to reason about”]. The undefined terms here are “the system”, “state”, “multiple changes”, and “go to a desired state”.</p>
+<p><strong>Question</strong>: How did you locate that abstract model in the first place? Aren’t you overgeneralizing from a few examples (a1 -&gt; b1 to a -&gt; b)?</p>
+<p>Question: How do we write normal abstract programming functions?</p>
+<p>Hypothesis: We categorize - we look at all the possible input configurations and group together those that give the same output configuration.</p>
+<p>Hypothesis: We basically considered the simplest function definition for each input configuration and then merged them all, leaving aside some differing components.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: November 12, 2017</div>
+<div class="info">Last modified: November 13, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
