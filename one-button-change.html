@@ -585,7 +585,25 @@
 <p>Observation: Good security professionals seem to consider different possible scenarios.</p>
 <p>Hypothesis: Think of contingency plans to most possible scenarios -&gt; high security vs poor security.</p>
 <p>Observation: I haven’t considered different possibilities about my career plans. What if I hate my research area after a couple of years? What if I never make a breakthrough in “metacognitive algorithms”? No contingency plans.</p>
-<h1 id="minimize-the-number-of-your-weapons">Minimize the Number of your Weapons</h1>
+<h1 id="program-to-an-interface-not-an-implementation">Program to an Interface, not an Implementation</h1>
+<h2 id="program-to-an-interface-hypothesis">Program to an Interface: Hypothesis</h2>
+<p>Observation: When extending XINU in C, I wrote a few linked-list manipulation functions. They repeated several well-known functions like extract from linked list and so on. I shouldn’t have had to write them from scratch. But I couldn’t find any existing functions I could reuse (or rather, I didn’t look for them). Plus, it was a “unique” linked list structure - one where the elements were part of a pre-existing table, and were not dynamically generated. Still, there should have been a generic List interface that I could just use without knowing too much about the innards.</p>
+<p><strong>Hypothesis</strong>: Program to an interface, not an implementation -&gt; code that is easier to understand, reuse, and modify.</p>
+<p>For example, if you want to check if an element is a value in a Map, don’t search the specific functions within Data.Map. Look for the interfaces that it satisfies: Foldable, Traversable, Functor, Monoid, etc.</p>
+<p>Test: You’re given <code>Maybe (Int, String)</code> and you want to map the string to its length (“foo” to 3). That is, you want to get <code>Maybe (Int, Int)</code>. <em>Don’t</em> try to unpack Maybe into the two cases Just and Nothing and then try to convert the inner values. Instead, realize that you want to deal with Maybe as a Functor. – easier to understand, easier to reuse (you could use it with any functor of functor), easier to modify (you could change the definition of Maybe).</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">*</span><span class="dt">Main</span> <span class="dt">Data.Map</span><span class="fu">&gt;</span> <span class="kw">let</span> x <span class="fu">=</span> <span class="dt">Just</span> (<span class="dv">3</span>, <span class="st">&quot;foobar&quot;</span>)
+<span class="fu">*</span><span class="dt">Main</span> <span class="dt">Data.Map</span><span class="fu">&gt;</span> fmap (fmap length) x
+<span class="dt">Just</span> (<span class="dv">3</span>,<span class="dv">6</span>)</code></pre></div>
+<p>Compare that to:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">*</span><span class="dt">Main</span> <span class="dt">Data.Map</span><span class="fu">&gt;</span> <span class="kw">let</span> f (<span class="dt">Just</span> (x, s)) <span class="fu">=</span> <span class="dt">Just</span> (x, length s); f <span class="dt">Nothing</span> <span class="fu">=</span> <span class="dt">Nothing</span>
+<span class="fu">*</span><span class="dt">Main</span> <span class="dt">Data.Map</span><span class="fu">&gt;</span> f x
+<span class="dt">Just</span> (<span class="dv">3</span>,<span class="dv">6</span>)</code></pre></div>
+<p>This is a very specific function. You don’t know exactly what it’s doing unless you examine both the branches and realize that neither x nor the Maybe structure is affected, but the string s is turned into its length. It takes a while to realize that the whole point of the function was to turn the string into its length. With <code>fmap (fmap length)</code>, that purpose is front and centre. We know that we don’t care about the other value x or the structure of the Maybe value. Similarly, this is hard to reuse with any other type, such as a list of list of strings, because you have to handle a different type of structure, whereas the interface-version transfers easily:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">*</span><span class="dt">Main</span> <span class="dt">Data.Map</span><span class="fu">&gt;</span> fmap (fmap length) [[<span class="st">&quot;yo&quot;</span>, <span class="st">&quot;boyz&quot;</span>, <span class="st">&quot;I&quot;</span>], [<span class="st">&quot;am&quot;</span>, <span class="st">&quot;sing&quot;</span>, <span class="st">&quot;song&quot;</span>]]
+[[<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">1</span>],[<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">4</span>]]</code></pre></div>
+<p>Likewise, if you want to do something other than get the length of the string, you know exactly what to change - there are just three words in the function - “fmap”, “fmap”, and “length”. Whereas in the explicit version, you have to search for the precise thing you want to change and be wary of not affecting any of the surrounding code.</p>
+<p>Test: You have a XML-like tree of sentences and you want to get all the verbs used in the tree. (Assume you have a function that will extract verbs from a sentence.) – treat the tree as Foldable and use <code>foldmap getVerbs</code>.</p>
+<h2 id="minimize-the-number-of-your-weapons">Minimize the Number of your Weapons</h2>
 <p>Observation: How do you check whether a value is in a Map? You could do (<code>elem</code> (elems m2)), but that would require you to know the function <code>elems</code>. Instead, you could just do (value <code>elem</code> m2)! Why? Because <code>Map</code> is in Foldable.</p>
 <p><strong>Hypothesis</strong>: Have interface for commonly-used functions -&gt; don’t have to remember a lot of specific functions, can reuse code, can make your code more abstract.</p>
 <p>Don’t have interface for commonly-used functions -&gt; have to remember specific functions, can’t reuse code, code is specific to that data type.</p>
@@ -596,6 +614,7 @@
 <p>one function definition - abstract it and run tests.</p>
 <p>two function definitions with duplicated code and slightly different goals - extract common abstract functions and run tests.</p>
 <p>prose - will talk about the causes of some key variable - collect them on that key variable.</p>
+<p><strong>Question</strong>: What does this predict about programming to an interface? Will the code be easier to understand, reuse, and modify? Why?</p>
 <h2 id="tests-2">Tests</h2>
 <p><code>get_features_strike_rate</code> and <code>get_features_average</code> with <em>roughly the same code</em> except for <code>strike_rate</code> and <code>average</code> – accept a stat_fn and have a common abstract function.</p>
 <h2 id="refactor-this-essay">Refactor This Essay</h2>
@@ -618,7 +637,7 @@
 <p>Hypothesis: We basically considered the simplest function definition for each input configuration and then merged them all, leaving aside some differing components.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: November 13, 2017</div>
+<div class="info">Last modified: November 15, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
