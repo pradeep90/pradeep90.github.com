@@ -437,6 +437,18 @@
 <h1 id="pass-a-test-with-a-chain-of-function-calls">Pass a Test with a Chain of Function Calls</h1>
 <p><strong>Inference</strong>: A test will run only one branch. So, no if-statements needed. Probably just a chain of function calls.</p>
 <p><strong>Hypothesis</strong>: To pass a well-designed test, you will need only a chain of function calls.</p>
+<h2 id="one-test-per-function-in-the-chain">One Test per Function in the Chain?</h2>
+<p><strong>Question</strong>: How many tests for a function with no if-statements but a chain of function calls?</p>
+<p><strong>Hypothesis</strong>: When you have a chain f . g . h, you will need to show why you need each individual function (and if possible, each combination).</p>
+<p>Test: In <code>website-join-disjointed-paragraphs</code>, I have</p>
+<pre class="elisp"><code>(my-map-paragraphs-in-buffer
+   (-compose (-partial 's-join &quot; &quot;)
+	     (-partial '-filter 's-present?)
+	     's-lines))</code></pre>
+<p>I was puzzled. Why do I need that function in the middle: <code>(-partial '-filter 's-present?)</code>? I can see that <code>s-lines</code> turns a string with disjointed lines into a list of lines and that <code>s-join</code> joins them into one paragraph. When will you possibly need to filter with <code>s-present?</code>?</p>
+<p>I looked at my unit test for that function (I had just one) and couldn’t see why you needed that <code>s-present?</code> function. In fact, that test passed even without the middle function. However, another test, one that tested this function on a real-world input failed. Only then did I realize that that function was there to handle a trailing newline, which all my files have.</p>
+<p>I tested that theory by adding a smaller, specific test with a trailing newline and saw that toggling <code>s-present?</code> made that test pass or fail.</p>
+<p>Basically, I needed to show that my function definition needed that middle function in order to pass some test.</p>
 <h1 id="searching-within-the-program-space">Searching within the Program Space</h1>
 <h2 id="code-transformation-fail-to-fail-gives-no-information">Code Transformation: Fail to Fail gives No Information</h2>
 <p><strong>Hypothesis</strong>: Going from fail to fail doesn’t give you any information about your latest change.</p>
@@ -608,11 +620,20 @@
 <p><strong>Hypothesis</strong>: Have interface for commonly-used functions -&gt; don’t have to remember a lot of specific functions, can reuse code, can make your code more abstract.</p>
 <p>Don’t have interface for commonly-used functions -&gt; have to remember specific functions, can’t reuse code, code is specific to that data type.</p>
 <p>For example, I would have to know that <code>elems</code> was the function that returned all the values in a Map.</p>
+<h2 id="mock-objects">Mock Objects</h2>
+<p>Test: Test-Driven Development: A Practical Guide has a whole chapter about different types of “Mock” classes - Verifiable, MockObject, ReturnObjectList, Expectation, AbstractExpectation, ExpectationValue, ExpectationSegment, etc. Do we really need all those classes?</p>
+<p>Observation: Haskell doesn’t seem to use these kinds of things. I don’t hear advanced programmers like PG or Stevey or others using mocks heavily.</p>
+<p>Inference: Mocks -&gt; test behaviour of an interface without using costly I/O or computations.</p>
+<blockquote>
+<p>You may simply have a lot of fixture to put in place, or you may be working in the context of a large, complex system. This could be a database, a workflow system, or some system for which you are developing an extension (e.g., an IDE). Your fixture may involve getting the system into a specific state so that it responds the way your tests require. This may be impossible to do quickly.</p>
+<p>– Test-Driven Development: A Practical Guide, Chapter 7</p>
+</blockquote>
 <h1 id="refactoring-hypothesis">Refactoring Hypothesis</h1>
 <h2 id="hypothesis">Hypothesis</h2>
 <p>Starting out -&gt; get overall type signatures and goals.</p>
 <p>one function definition - abstract it and run tests.</p>
 <p>two function definitions with duplicated code and slightly different goals - extract common abstract functions and run tests.</p>
+<p>one abstract function, old unrefactored code that you’re trying to subsume - check if it’s a subclass of your abstract function (that it handles a subset of the branches?)</p>
 <p>prose - will talk about the causes of some key variable - collect them on that key variable.</p>
 <p><strong>Question</strong>: What does this predict about programming to an interface? Will the code be easier to understand, reuse, and modify? Why?</p>
 <h2 id="tests-2">Tests</h2>
@@ -637,7 +658,7 @@
 <p>Hypothesis: We basically considered the simplest function definition for each input configuration and then merged them all, leaving aside some differing components.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: November 15, 2017</div>
+<div class="info">Last modified: November 19, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
