@@ -449,6 +449,70 @@
 <p>I looked at my unit test for that function (I had just one) and couldn’t see why you needed that <code>s-present?</code> function. In fact, that test passed even without the middle function. However, another test, one that tested this function on a real-world input failed. Only then did I realize that that function was there to handle a trailing newline, which all my files have.</p>
 <p>I tested that theory by adding a smaller, specific test with a trailing newline and saw that toggling <code>s-present?</code> made that test pass or fail.</p>
 <p>Basically, I needed to show that my function definition needed that middle function in order to pass some test.</p>
+<h2 id="compose-properties-of-functions">Compose Properties of Functions</h2>
+<p>It feels like that when we compose functions, we compose their properties to get the overall property.</p>
+<p>Test:</p>
+<pre class="elisp"><code>(defun s-join-broken-paragraph (s)
+  &quot;Join broken lines in paragraph string S.&quot;
+  (funcall (-compose (-partial 's-join &quot; &quot;)
+	     (-partial '-filter 's-present?)
+	     's-lines)
+	   s))</code></pre>
+<p>We know that <code>s-lines</code> will break a string into lines, <code>filter s-present?</code> will keep only those lines that are not empty, and that <code>s-join &quot; &quot;</code> will join those lines with a space in between. So, does that sum up to “join broken lines in paragraph string”?</p>
+<p>Note that a big assumption is that there is only one paragraph with broken lines. If the input looks like:</p>
+<pre><code>This is
+the first
+paragraph. Phew.
+
+This is actually the second
+paragraph. Uh oh.</code></pre>
+<p>the output is:</p>
+<pre><code>This is the first paragraph. Phew. This is actually the second paragraph. Uh oh.</code></pre>
+<p>which is not what I want.</p>
+<p>Observation: I’m assuming that a “paragraph” is some “complex” thing with lots of possible cases that I will have to handle.</p>
+<p>But if we assume that one broken paragraph is just a bunch of lines with none of them separated by a blank line, then our job becomes a lot easier.</p>
+<p>If we assume that a broken paragraph is a bunch of lines, then s-lines will get us all of those lines. Right now, the <code>filter s-present?</code> is just there to handle a trailing newline, so let’s ignore it. The <code>s-join &quot; &quot;</code> takes the lines and creates a string out of them.</p>
+<p><strong>Hypothesis</strong>: To handle all possible configurations of some variable:</p>
+<p>unpack it, do something to each part, combine them -&gt; “handle” that variable.</p>
+<h2 id="succinct-properties">Succinct Properties?</h2>
+<p>Test:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">Prelude</span> <span class="dt">Data.Map</span><span class="fu">&gt;</span> <span class="kw">let</span> d <span class="fu">=</span> fromList <span class="fu">$</span> zip [<span class="dv">1</span><span class="fu">..</span>] [<span class="ch">'a'</span><span class="fu">..</span><span class="ch">'z'</span>]
+fromList [(<span class="dv">1</span>,<span class="ch">'a'</span>),(<span class="dv">2</span>,<span class="ch">'b'</span>),(<span class="dv">3</span>,<span class="ch">'c'</span>),(<span class="dv">4</span>,<span class="ch">'d'</span>),(<span class="dv">5</span>,<span class="ch">'e'</span>),(<span class="dv">6</span>,<span class="ch">'f'</span>),(<span class="dv">7</span>,<span class="ch">'g'</span>),(<span class="dv">8</span>,<span class="ch">'h'</span>),(<span class="dv">9</span>,<span class="ch">'i'</span>),(<span class="dv">10</span>,<span class="ch">'j'</span>),(<span class="dv">11</span>,<span class="ch">'k'</span>),(<span class="dv">12</span>,<span class="ch">'l'</span>),(<span class="dv">13</span>,<span class="ch">'m'</span>),(<span class="dv">14</span>,<span class="ch">'n'</span>),(<span class="dv">15</span>,<span class="ch">'o'</span>),(<span class="dv">16</span>,<span class="ch">'p'</span>),(<span class="dv">17</span>,<span class="ch">'q'</span>),(<span class="dv">18</span>,<span class="ch">'r'</span>),(<span class="dv">19</span>,<span class="ch">'s'</span>),(<span class="dv">20</span>,<span class="ch">'t'</span>),(<span class="dv">21</span>,<span class="ch">'u'</span>),(<span class="dv">22</span>,<span class="ch">'v'</span>),(<span class="dv">23</span>,<span class="ch">'w'</span>),(<span class="dv">24</span>,<span class="ch">'x'</span>),(<span class="dv">25</span>,<span class="ch">'y'</span>),(<span class="dv">26</span>,<span class="ch">'z'</span>)]
+<span class="dt">Prelude</span> <span class="dt">Data.Map</span><span class="fu">&gt;</span> <span class="kw">let</span> d2 <span class="fu">=</span> fromList <span class="fu">.</span> map Data.Tuple.swap <span class="fu">.</span> toList <span class="fu">$</span> d
+fromList [(<span class="ch">'a'</span>,<span class="dv">1</span>),(<span class="ch">'b'</span>,<span class="dv">2</span>),(<span class="ch">'c'</span>,<span class="dv">3</span>),(<span class="ch">'d'</span>,<span class="dv">4</span>),(<span class="ch">'e'</span>,<span class="dv">5</span>),(<span class="ch">'f'</span>,<span class="dv">6</span>),(<span class="ch">'g'</span>,<span class="dv">7</span>),(<span class="ch">'h'</span>,<span class="dv">8</span>),(<span class="ch">'i'</span>,<span class="dv">9</span>),(<span class="ch">'j'</span>,<span class="dv">10</span>),(<span class="ch">'k'</span>,<span class="dv">11</span>),(<span class="ch">'l'</span>,<span class="dv">12</span>),(<span class="ch">'m'</span>,<span class="dv">13</span>),(<span class="ch">'n'</span>,<span class="dv">14</span>),(<span class="ch">'o'</span>,<span class="dv">15</span>),(<span class="ch">'p'</span>,<span class="dv">16</span>),(<span class="ch">'q'</span>,<span class="dv">17</span>),(<span class="ch">'r'</span>,<span class="dv">18</span>),(<span class="ch">'s'</span>,<span class="dv">19</span>),(<span class="ch">'t'</span>,<span class="dv">20</span>),(<span class="ch">'u'</span>,<span class="dv">21</span>),(<span class="ch">'v'</span>,<span class="dv">22</span>),(<span class="ch">'w'</span>,<span class="dv">23</span>),(<span class="ch">'x'</span>,<span class="dv">24</span>),(<span class="ch">'y'</span>,<span class="dv">25</span>),(<span class="ch">'z'</span>,<span class="dv">26</span>)]</code></pre></div>
+<p>We can see that <code>toList</code> will get us a list of all the key-value pairs, <code>map swap</code> will make them value-key pairs, and <code>fromList</code> will construct a new map from them.</p>
+<p>Of course, one edge case is when there is more than one key with the same value. Which one will be lost? The one that comes earlier in the key ordering.</p>
+<p>These two function chains were easy enough. When might function chains be hard to reason about?</p>
+<p>You could have a really long function chain or you could have lots of possible variations.</p>
+<p>For example,</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">Prelude</span> <span class="dt">Data.List</span><span class="fu">&gt;</span> <span class="kw">let</span> xs <span class="fu">=</span> [<span class="dv">1</span><span class="fu">..</span><span class="dv">10</span>]
+<span class="dt">Prelude</span> <span class="dt">Data.List</span><span class="fu">&gt;</span> take <span class="dv">3</span> <span class="fu">.</span> reverse <span class="fu">.</span> sort <span class="fu">.</span> nub <span class="fu">.</span> take <span class="dv">20</span> <span class="fu">.</span> sort <span class="fu">.</span> take <span class="dv">30</span> <span class="fu">.</span> cycle <span class="fu">$</span> xs
+[<span class="dv">7</span>,<span class="dv">6</span>,<span class="dv">5</span>]</code></pre></div>
+<p>Why is the output [7, 6, 5]? I don’t really know. But I can sort of follow the chain.</p>
+<p>Aren’t there all kinds of possible configurations? I don’t think so. It’s a list, so there are two cases - the empty list and the non-empty list. If xs is empty, the output at every point along the chain will be empty. So, that’s a trivial case.</p>
+<p>Now, you just have to take a non-empty list. Shouldn’t you have to consider a lot of possible lists, maybe those that have just one element or five elements?</p>
+<p>Observation: You can’t make any sort of closed-function claim about the output list. You will say that it will have the output that is dictated by the chain.</p>
+<p>Observation: In the key-value swapping example before, I could claim succinctly that the final map would have key-value pairs but in the opposite order.</p>
+<p><strong>Hypothesis</strong>: Some function chains lend themselves to succinct properties, some don’t. (How falsifiable!)</p>
+<p>Observation: The long chain above, if encapsulated as a function, would have a very large <em>interface</em>. You couldn’t do better than just describing the chain itself.</p>
+<p>Observation: When you <code>mappend</code> two strings, what you get back is still a string.</p>
+<p>Question: Out of all the possible implementations of Monoid or Functor or Monad, why do we choose particular ones?</p>
+<p>Test: What does it mean when you compose two Parsers? What properties are you composing?</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">abParser ::</span> <span class="dt">Parser</span> (<span class="dt">Char</span>, <span class="dt">Char</span>)
+abParser <span class="fu">=</span> (,) <span class="fu">&lt;$&gt;</span> char <span class="ch">'a'</span> <span class="fu">&lt;*&gt;</span> char <span class="ch">'b'</span></code></pre></div>
+<h2 id="properties-of-intermediate-values">Properties of Intermediate Values</h2>
+<p>Test: Poorly-written abstract function that I found hard to understand (part of a Sudoku solver I wrote):</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">boxes3x3' ::</span> <span class="dt">Eq</span> b <span class="ot">=&gt;</span> <span class="dt">Matrix</span> b <span class="ot">-&gt;</span> <span class="dt">Matrix</span> [b]
+boxes3x3' <span class="fu">=</span> fmap concat <span class="fu">.</span> overMatrix (concatMap (replicate <span class="dv">3</span> <span class="fu">.</span> concatMap (replicate <span class="dv">3</span>)) <span class="fu">.</span> map ( transpose <span class="fu">.</span> map byThrees) <span class="fu">.</span> byThrees)</code></pre></div>
+<p>What now?</p>
+<p>Note, however, that the interface of the function is actually pretty simple. It needs to take a Sudoku matrix where each cell contains a list of its possible values and return a matrix where each cell contains the possibilities for all the cells in its 3x3 box. (A test case would have helped greatly.)</p>
+<p>Hypothesis: You need to understand the properties of the data structure at each point in the function chain.</p>
+<p>Ok. I understood the function. <code>overMatrix</code> lets you map over the rows in the Matrix. <code>byThrees</code> gets you three rows at a time. Then, consider <code>transpose . map byThrees</code> on the first three rows. <code>map byThrees</code> gets you the three column values at a time for each row. <code>transpose</code> on that for the first three rows gives you the first three 3x3 boxes in the Sudoku matrix. Basically, at this point, you’ve got a 3x3 matrix of boxes. You want to give the same box to all the 9 cells in each box, so <code>concatMap (replicate 3 . concatMap (replicate 3))</code> turns the 3x3 matrix of boxes into a 9x9 matrix of boxes, where each cell has the 3x3 box that it resides in. <code>fmap concat</code> flattens each 3x3 box to give a 9-element list of its elements.</p>
+<p>Observation: We can break this into three parts: the first part where you get a 3x3 matrix of boxes, the second part where you get a 9x9 matrix of boxes, and the final part where you get a 9x9 matrix of lists.</p>
+<p><strong>Hypothesis</strong>: Chain - get the data type at each point and ask for its properties with respect to your goal.</p>
+<p>Question: How many tests would you need to be confident in your implementation of each part? How do you know that your code really will get a 3x3 matrix of the 9 boxes in the Sudoku matrix?</p>
+<p>Well, the input numbers don’t really matter. So, that reduces a lot of possible input configurations.</p>
+<p><strong>Question</strong>: For any given input matrix, should we test for the entire output or can we just test a few cells?</p>
 <h1 id="searching-within-the-program-space">Searching within the Program Space</h1>
 <h2 id="code-transformation-fail-to-fail-gives-no-information">Code Transformation: Fail to Fail gives No Information</h2>
 <p><strong>Hypothesis</strong>: Going from fail to fail doesn’t give you any information about your latest change.</p>
@@ -547,6 +611,14 @@
 <p>What’s the worst that can happen if you <em>don’t</em> abstract your code?</p>
 <p><strong>Inference</strong>: Unabstracted code is hard to understand and hard to change too. It’s not just about reuse.</p>
 <p>I don’t know the answer.</p>
+<h2 id="quick-and-dirty-vs-clean-why-i-procrastinate">Quick-and-Dirty vs Clean: Why I Procrastinate</h2>
+<p>Observation: I had the idea that mock objects were actually unnecessary if you strictly separated pure code from impure code, like in Haskell or other languages. That’s why you didn’t see Haskellers go ga-ga over mocks. (In fact, you don’t see anybody except Agile fellows.)</p>
+<p>But then I got caught up in writing some elisp code (which took over two hours). Then I felt like searching online for some precision teaching books. And finally I was late for a video call. So I didn’t write down my full ideas about mock objects and didn’t commit that code. And it weighed on my mind even as I was freshening up.</p>
+<p>Question: Why didn’t I simply jot down the rough idea as I did above? It would have taken me a couple of minutes, tops. It may not have been perfect, but I could commit the change and free my mind.</p>
+<p><strong>Hypothesis</strong>: Expect to write correct abstract code before I commit, have some idea I need to write down, little time -&gt; don’t write it down at all.</p>
+<p>Expect to just pass the test with a quick and dirty hypothesis (and maybe refactor later), have some idea, little time -&gt; write it down well enough to pass that specific test.</p>
+<p>Corollary: Expect to have code that passes all tests written down (and put only as much confidence in your hypothesis as the tests warrant) -&gt; can do what needs to be done faster.</p>
+<p>Test: Jotting down my mock objects idea – I wanted to get a general hypothesis that fit with all my other “complex” programming ideas.</p>
 <h1 id="write-and-test-in-isolation-before-you-use">Write and Test in Isolation before You Use</h1>
 <p>When you want to extend a function with some new function, test your new code as a function before you use it here. For example, if you want your <code>generate_stats</code> function to write the final matrix to a file (why do you want to do that within the same function?), have a separate function that writes a matrix to a file, test it, and then use it here.</p>
 <p>Observation: I ended up with a script that was costly to test when I was extracting ftrs from a dataset. I/O was mixed with program logic.</p>
@@ -628,6 +700,8 @@
 <p>You may simply have a lot of fixture to put in place, or you may be working in the context of a large, complex system. This could be a database, a workflow system, or some system for which you are developing an extension (e.g., an IDE). Your fixture may involve getting the system into a specific state so that it responds the way your tests require. This may be impossible to do quickly.</p>
 <p>– Test-Driven Development: A Practical Guide, Chapter 7</p>
 </blockquote>
+<p>Hypothesis: Separate pure code from impure code -&gt; won’t need to use mocks (much?).</p>
+<p>What about my scheduler? Didn’t I need a default scheduler?</p>
 <h1 id="refactoring-hypothesis">Refactoring Hypothesis</h1>
 <h2 id="hypothesis">Hypothesis</h2>
 <p>Starting out -&gt; get overall type signatures and goals.</p>
@@ -658,7 +732,7 @@
 <p>Hypothesis: We basically considered the simplest function definition for each input configuration and then merged them all, leaving aside some differing components.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: November 19, 2017</div>
+<div class="info">Last modified: November 20, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 

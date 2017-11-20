@@ -228,9 +228,27 @@ find . -type f -name &quot;*.c&quot; | xargs wc -l
 <p>Hypothesis: That feels like duplication of code. Wait. It is! Why do you have two different types for the same value! One should be a view of the other - a simple function somewhere.</p>
 <p>Observation: All my time so far was spent debugging because of a simple type confusion.</p>
 <p><strong>Observation</strong>: Always, always, always make a test fail before you make it pass.</p>
+<h1 id="os-hw3">OS HW3</h1>
+<h2 id="problem-statement">Problem Statement</h2>
+<p>Overview</p>
+<p><strong>TODO</strong>: Read Intel manual volume 3, chapters 2-5</p>
+<h3 id="virtual-memory-services">Virtual Memory Services</h3>
+<p>vcreate</p>
+<p>vgetmem</p>
+<p>vfreemem</p>
+<p>Question: What is the observable difference between vgetmem and vfreemem?</p>
+<p>srpolicy</p>
+<h3 id="backing-stores-and-memory-management">Backing Stores and Memory Management</h3>
+<p>We need virtual memory to extend the memory of the machine using disk space or SSD.</p>
+<p>rdserver is simply the secondary storage from where we will read or write pages.</p>
+<p>Question: How many backing stores do you need? Is it that when one is blocked and a process demands another page, we have to use the next one?</p>
+<h3 id="using-the-paging-server-api">Using the Paging Server API</h3>
+<p>No need to run rdserver when using QEMU.</p>
+<h2 id="implementation-plan">Implementation Plan</h2>
+<p><strong>Hypothesis</strong>: Assert preconditions and postconditions. Argument testing - null, etc. Also, have a unit test for each branch.</p>
 
 <div class="info">Created: September  9, 2017</div>
-<div class="info">Last modified: October 22, 2017</div>
+<div class="info">Last modified: November 20, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, os</div>
 
