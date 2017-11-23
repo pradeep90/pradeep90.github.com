@@ -513,6 +513,13 @@ boxes3x3' <span class="fu">=</span> fmap concat <span class="fu">.</span> overMa
 <p>Question: How many tests would you need to be confident in your implementation of each part? How do you know that your code really will get a 3x3 matrix of the 9 boxes in the Sudoku matrix?</p>
 <p>Well, the input numbers don’t really matter. So, that reduces a lot of possible input configurations.</p>
 <p><strong>Question</strong>: For any given input matrix, should we test for the entire output or can we just test a few cells?</p>
+<h2 id="verify-properties-using-quickcheck">Verify Properties using QuickCheck</h2>
+<p><strong>Hypothesis</strong>: Function - verify its properties using QuickCheck.</p>
+<p>Test: boxes3x3’ must return a 3x3 matrix of boxes corresponding to the input Sudoku matrix – we can use QuickCheck to verify that.</p>
+<h2 id="how-many-tests-for-a-chain-of-functions">How Many Tests for a Chain of Functions?</h2>
+<p><strong>Question</strong>: How many tests do I need to for a chain of functions?</p>
+<p>Just one? No matter what the functions are? Seriously?</p>
+<p>Hypothesis: I want to know the causes of #tests for chain of functions. What are the variables? Number of functions in the chain, whether it’s about the limits of my mind vs the actual uncertainty I have about the code, the number of branches of each function, and the size of their interfaces.</p>
 <h1 id="searching-within-the-program-space">Searching within the Program Space</h1>
 <h2 id="code-transformation-fail-to-fail-gives-no-information">Code Transformation: Fail to Fail gives No Information</h2>
 <p><strong>Hypothesis</strong>: Going from fail to fail doesn’t give you any information about your latest change.</p>
@@ -730,9 +737,21 @@ boxes3x3' <span class="fu">=</span> fmap concat <span class="fu">.</span> overMa
 <p>Question: How do we write normal abstract programming functions?</p>
 <p>Hypothesis: We categorize - we look at all the possible input configurations and group together those that give the same output configuration.</p>
 <p>Hypothesis: We basically considered the simplest function definition for each input configuration and then merged them all, leaving aside some differing components.</p>
+<h1 id="skill-acquisition">Skill Acquisition</h1>
+<h2 id="skill-acquisition-hypothesis">Skill Acquisition: Hypothesis</h2>
+<p><strong>Hypothesis</strong>: Skill you’re trying to learn, have a “unit test” for it -&gt; know whether you have actually learned it or not</p>
+<p>Skill you’re trying to learn, don’t have a “unit test” for it -&gt; don’t know whether you have actually learned it or not</p>
+<p>Skill you’re trying to maintain, run your “unit test” for it -&gt; know whether you still have it or not</p>
+<p>Skill you’re trying to maintain, don’t run your “unit test” for it -&gt; don’t know whether you still have it or not</p>
+<p>Test: I want to reinforce good behaviour. Am I doing that? (Too vague, I suspect.)</p>
+<p>Test: I learned about inadequacy analysis. Do I think about the amount of work required to get some value when analyzing HP fanfiction (like in Eliezer’s Hero Licensing)? – Is this a good unit test? I don’t know.</p>
+<p>Test: The classic graph for front-door criterion - will you apply the front-door criterion? I suspect that I will remember the solution directly.</p>
+<p><strong>Question</strong>: How to avoid <strong>remembering</strong> the solution and actually <strong>generating</strong> it?</p>
+<p>Test: Reinforcement - I give away my ideas for free thus reinforcing freeloading.</p>
+<p><strong>Question</strong>: How to remember to do stuff on specific cues? Can you have unit tests for that?</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: November 20, 2017</div>
+<div class="info">Last modified: November 22, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
