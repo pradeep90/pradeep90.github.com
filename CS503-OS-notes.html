@@ -244,11 +244,49 @@ find . -type f -name &quot;*.c&quot; | xargs wc -l
 <p>Question: How many backing stores do you need? Is it that when one is blocked and a process demands another page, we have to use the next one?</p>
 <h3 id="using-the-paging-server-api">Using the Paging Server API</h3>
 <p>No need to run rdserver when using QEMU.</p>
+<p>Need to run rdserver on the XINU frontend machine.</p>
+<h3 id="memory-layout">Memory Layout</h3>
+<blockquote>
+<p>1024 pages starting at memory address 0x90000000 are used for device memory (Ethernet and Console) and must be mapped at the same physical address. Hence, the first four page tables and the page table for device memory for every process will be the same, i.e. they are shared/global.</p>
+</blockquote>
+<blockquote>
+<p>Memory at page 4096 and above constitute a process019s private virtual memory. This private address space is visible only to the process that owns it. A process019s private heap is mapped somewhere in this area by vcreate().</p>
+</blockquote>
+<p><strong>TODO</strong>: I don’t get it.</p>
+<h3 id="page-tables">Page Tables</h3>
+<p>Question: What is a page table? Is it per-process? Does the process decide where to place the page table in XINU memory? How?</p>
+<p>Question: How many page tables for a process?</p>
+<p>Question: Does the page table contain pages or just pointers? Where are the pages stored then?</p>
+<blockquote>
+<p>For Lab3, you will not be paging either the page directories or page tables. That is, page directories and page tables should not be relying on backing stores. For page directory, they must always be allocated. However, it is not practical to allocate all potential page tables for a newly created process. Therefore, to conserve memory, page tables are created on-demand. The first time a page is touched (i.e. it has been mapped by a process), a page table needs to be allocated. Conversely, when a page table is no longer needed, it should be removed in order to conserve space.</p>
+</blockquote>
+<h3 id="page-fault-interrupt-service-routine-isr">Page Fault Interrupt Service Routine (ISR)</h3>
+<p><strong>TODO</strong>: Some assembly required.</p>
+<h3 id="finding-the-backing-store-for-a-virtual-address">Finding the Backing Store for a Virtual Address</h3>
+<h3 id="inverted-page-table">Inverted Page Table</h3>
+<h3 id="private-heap">Private Heap</h3>
+<p>What is a private heap? Where is it stored in the XINU layout? Where would getmem normally have got memory from?</p>
+<h3 id="prototypes">Prototypes?</h3>
+<p>prototypes.h</p>
+<h3 id="handling-error-code-on-page-fault">Handling error code on page fault</h3>
+<p>https://piazza.com/class/j6dtteb9lor25u?cid=185</p>
+<h3 id="memory-addressing">Memory Addressing</h3>
+<p>http://pages.cs.wisc.edu/~remzi/OSTEP/vm-paging.pdf http://wiki.osdev.org/Paging http://wiki.osdev.org/Setting_Up_Paging</p>
 <h2 id="implementation-plan">Implementation Plan</h2>
 <p><strong>Hypothesis</strong>: Assert preconditions and postconditions. Argument testing - null, etc. Also, have a unit test for each branch.</p>
+<hr />
+<p><strong>TODO</strong>: Change port.</p>
+<p><strong>TODO</strong>: Set CR0 (assembly required - look at Piazza resources)</p>
+<p>Make sure your code works with just the null process</p>
+<p>You need the backing store only when you run out of frames.</p>
+<p>~10 lines of assembly</p>
+<p><strong>TODO</strong>: Do we have to do a clean build whenever we change a #DEFINE constant?</p>
+<h2 id="tests">Tests</h2>
+<p>4 processes, 2 backing stores each</p>
+<p>1 process, 8 backing stores</p>
 
 <div class="info">Created: September  9, 2017</div>
-<div class="info">Last modified: November 20, 2017</div>
+<div class="info">Last modified: November 25, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, os</div>
 

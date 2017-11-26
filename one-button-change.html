@@ -716,9 +716,11 @@ boxes3x3' <span class="fu">=</span> fmap concat <span class="fu">.</span> overMa
 <p>two function definitions with duplicated code and slightly different goals - extract common abstract functions and run tests.</p>
 <p>one abstract function, old unrefactored code that you’re trying to subsume - check if it’s a subclass of your abstract function (that it handles a subset of the branches?)</p>
 <p>prose - will talk about the causes of some key variable - collect them on that key variable.</p>
+<p>two different sections talking about the same thing - collect the tests but ignore the hypotheses -&gt; get a combined hypothesis that passes all the tests, shrink your overall prose.</p>
 <p><strong>Question</strong>: What does this predict about programming to an interface? Will the code be easier to understand, reuse, and modify? Why?</p>
 <h2 id="tests-2">Tests</h2>
-<p><code>get_features_strike_rate</code> and <code>get_features_average</code> with <em>roughly the same code</em> except for <code>strike_rate</code> and <code>average</code> – accept a stat_fn and have a common abstract function.</p>
+<p>Test: <code>get_features_strike_rate</code> and <code>get_features_average</code> with <em>roughly the same code</em> except for <code>strike_rate</code> and <code>average</code> – accept a stat_fn and have a common abstract function.</p>
+<p>Test: decisiveness - had three sections talking about it, collected them all under my newest explanation (indecisiveness is caused by optimizing for too many variables), was able to cover them all, shrank my prose. – I ignored the hypotheses and collected the tests.</p>
 <h2 id="refactor-this-essay">Refactor This Essay</h2>
 <p>What are the tests I run to make sure the new version works the same as the old one?</p>
 <p>Come up with an explicit hypothesis for the steps I need to follow while refactoring.</p>
@@ -751,7 +753,7 @@ boxes3x3' <span class="fu">=</span> fmap concat <span class="fu">.</span> overMa
 <p><strong>Question</strong>: How to remember to do stuff on specific cues? Can you have unit tests for that?</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: November 24, 2017</div>
+<div class="info">Last modified: November 25, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
