@@ -213,7 +213,7 @@
 <p>For example, let’s consider each operation of the kind “ABCD -&gt; X and ABC’D’ -&gt; X implies that C and D probably don’t cause X” to be a single cognitive step. (I think we process that kind of stuff really quickly.)</p>
 <p>Question: So, how many such operations do I have to run (for a given number of branches)?</p>
 <h1 id="lost-track">Lost Track</h1>
-<p>Observation: Got stuck debugging a stupid return value error. Lost track of what my original aim with.</p>
+<p>Observation: Got stuck debugging a stupid return value error. Lost track of what my original aim was.</p>
 <p>One change at a time.</p>
 <h1 id="debugging-principles">Debugging Principles</h1>
 <p>Hypothesis: You need to have a really small test case.</p>
@@ -751,9 +751,14 @@ boxes3x3' <span class="fu">=</span> fmap concat <span class="fu">.</span> overMa
 <p><strong>Question</strong>: How to avoid <strong>remembering</strong> the solution and actually <strong>generating</strong> it?</p>
 <p>Test: Reinforcement - I give away my ideas for free thus reinforcing freeloading.</p>
 <p><strong>Question</strong>: How to remember to do stuff on specific cues? Can you have unit tests for that?</p>
+<h1 id="programming-for-minimum-interface-at-speed">Programming for Minimum Interface at Speed</h1>
+<h2 id="minimum-interface-at-speed-hypothesis">Minimum Interface at Speed: Hypothesis</h2>
+<p><strong>Hypothesis</strong>: Want to add a new feature - get a failing test first -&gt; speed (no abstract thinking).</p>
+<p>Failing test - pass it by writing a quick and dirty chain of function calls, no branches -&gt; correctness, speed.</p>
+<p>Test passed - refactor your code -&gt; speed, quality (more understandable, reusable, and modifiable).</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: November 25, 2017</div>
+<div class="info">Last modified: November 26, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 

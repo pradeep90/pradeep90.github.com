@@ -242,6 +242,7 @@ find . -type f -name &quot;*.c&quot; | xargs wc -l
 <p>We need virtual memory to extend the memory of the machine using disk space or SSD.</p>
 <p>rdserver is simply the secondary storage from where we will read or write pages.</p>
 <p>Question: How many backing stores do you need? Is it that when one is blocked and a process demands another page, we have to use the next one?</p>
+<p>read_bs is a way to read pages instead of blocks from a backing store. That backing store could be on QEMU or on a real RDISK, based on the value of WRDISK.</p>
 <h3 id="using-the-paging-server-api">Using the Paging Server API</h3>
 <p>No need to run rdserver when using QEMU.</p>
 <p>Need to run rdserver on the XINU frontend machine.</p>
@@ -252,26 +253,50 @@ find . -type f -name &quot;*.c&quot; | xargs wc -l
 <blockquote>
 <p>Memory at page 4096 and above constitute a process019s private virtual memory. This private address space is visible only to the process that owns it. A process019s private heap is mapped somewhere in this area by vcreate().</p>
 </blockquote>
-<p><strong>TODO</strong>: I don’t get it.</p>
+<p>Question: The layout shown is the per-process virtual address space. Each process will see the world like that. So, the page it accesses at page number 1300 will be frame number 1300 in physical memory. However, the page it accesses at 11000 will be some arbitrary frame in physical memory. Right?</p>
 <h3 id="page-tables">Page Tables</h3>
-<p>Question: What is a page table? Is it per-process? Does the process decide where to place the page table in XINU memory? How?</p>
-<p>Question: How many page tables for a process?</p>
-<p>Question: Does the page table contain pages or just pointers? Where are the pages stored then?</p>
 <blockquote>
-<p>For Lab3, you will not be paging either the page directories or page tables. That is, page directories and page tables should not be relying on backing stores. For page directory, they must always be allocated. However, it is not practical to allocate all potential page tables for a newly created process. Therefore, to conserve memory, page tables are created on-demand. The first time a page is touched (i.e. it has been mapped by a process), a page table needs to be allocated. Conversely, when a page table is no longer needed, it should be removed in order to conserve space.</p>
+<p>For Lab3, you will not be paging either the page directories or page tables. That is, page directories and page tables should not be relying on backing stores. For page directory, they must always be allocated. However, it is not practical to allocate all potential page tables for a newly created process. Therefore, to conserve memory, page tables are created on-demand. The first time a page is touched (i.e. it has been mapped by a process), a page table needs to be allocated.</p>
 </blockquote>
+<blockquote>
+<p>Conversely, when a page table is no longer needed, it should be removed in order to conserve space.</p>
+</blockquote>
+<p>Question: When will you need to remove a page table?</p>
 <h3 id="page-fault-interrupt-service-routine-isr">Page Fault Interrupt Service Routine (ISR)</h3>
+<blockquote>
+<p>Check that a is a valid address, if not, print an error message and kill the process.</p>
+</blockquote>
+<p>Question: What do you mean “valid address”?</p>
+<blockquote>
+<p>Using the backing store map, find the store s and page offset o which correspond to vp.</p>
+</blockquote>
+<p>Question: How to find the store?</p>
 <p><strong>TODO</strong>: Some assembly required.</p>
 <h3 id="finding-the-backing-store-for-a-virtual-address">Finding the Backing Store for a Virtual Address</h3>
+<blockquote>
+<p><pid, vpage, npages, store></p>
+</blockquote>
+<p>Question: Is vpage the starting page number and npages the number of pages numbers from there?</p>
+<p>Question: How many backing stores? Divide total number of pages into 8? Or 2 stores per process?</p>
+<blockquote>
+<p>f(pid, vaddr) =&gt; (store, page_offset within store)</p>
+</blockquote>
+<p>Question: How can we find a page for every virtual address? There are 500k possible pages but only 205 pages available on the backing store.</p>
+<p>(Maybe virtual heap will be small enough to fit within one or two backing stores.)</p>
 <h3 id="inverted-page-table">Inverted Page Table</h3>
 <h3 id="private-heap">Private Heap</h3>
-<p>What is a private heap? Where is it stored in the XINU layout? Where would getmem normally have got memory from?</p>
+<blockquote>
+<p>A separate mapping must be created for a new process’s private heap when created with vcreate().</p>
+</blockquote>
+<p>Question: What does that mean? Is it that the page directory for every process will map to the same identity address for page numbers 0-4096?</p>
 <h3 id="prototypes">Prototypes?</h3>
 <p>prototypes.h</p>
 <h3 id="handling-error-code-on-page-fault">Handling error code on page fault</h3>
 <p>https://piazza.com/class/j6dtteb9lor25u?cid=185</p>
 <h3 id="memory-addressing">Memory Addressing</h3>
 <p>http://pages.cs.wisc.edu/~remzi/OSTEP/vm-paging.pdf http://wiki.osdev.org/Paging http://wiki.osdev.org/Setting_Up_Paging</p>
+<h2 id="assembly">Assembly</h2>
+<p>Have to store the value in a global variable and then copy from that global variable to a local variable. (See stacktrace.c for an example - <code>g_esp</code> vs <code>sp</code>.)</p>
 <h2 id="implementation-plan">Implementation Plan</h2>
 <p><strong>Hypothesis</strong>: Assert preconditions and postconditions. Argument testing - null, etc. Also, have a unit test for each branch.</p>
 <hr />
@@ -284,9 +309,11 @@ find . -type f -name &quot;*.c&quot; | xargs wc -l
 <h2 id="tests">Tests</h2>
 <p>4 processes, 2 backing stores each</p>
 <p>1 process, 8 backing stores</p>
+<h2 id="observations">Observations</h2>
+<p>When I tried setting page directory to NULL and enabled paging, the OS seemed to keep rebooting.</p>
 
 <div class="info">Created: September  9, 2017</div>
-<div class="info">Last modified: November 25, 2017</div>
+<div class="info">Last modified: November 27, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, os</div>
 
