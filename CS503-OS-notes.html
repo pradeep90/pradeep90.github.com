@@ -297,6 +297,18 @@ find . -type f -name &quot;*.c&quot; | xargs wc -l
 <p>http://pages.cs.wisc.edu/~remzi/OSTEP/vm-paging.pdf http://wiki.osdev.org/Paging http://wiki.osdev.org/Setting_Up_Paging</p>
 <h2 id="assembly">Assembly</h2>
 <p>Have to store the value in a global variable and then copy from that global variable to a local variable. (See stacktrace.c for an example - <code>g_esp</code> vs <code>sp</code>.)</p>
+<p><strong>Question</strong>: Should I have a .S file for page fault interrupt service routine.</p>
+<p>Question: Should I pop error code? But clkdisp.S doesn’t do that. (Going with “add $4, %esp iret” as per SO.)</p>
+<p>Question: assembly - sti needed?</p>
+<h2 id="page-fault-handler">Page Fault Handler</h2>
+<p>Question: How to get the faulted address?</p>
+<p>(Answer: CR2)</p>
+<h2 id="context-switching">Context-Switching</h2>
+<p>Question: Do we need to clear the TLB upon context switch?</p>
+<blockquote>
+<p>As we switch context between processes, we must also switch between memory spaces. This is accomplished by updating the PDBR register with every context switch. This register must always point to a valid page directory that is in RAM at a page boundary.</p>
+</blockquote>
+<p>When you context-switch, you don’t need to clear TLB?</p>
 <h2 id="implementation-plan">Implementation Plan</h2>
 <p><strong>Hypothesis</strong>: Assert preconditions and postconditions. Argument testing - null, etc. Also, have a unit test for each branch.</p>
 <hr />
