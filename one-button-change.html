@@ -750,7 +750,13 @@ boxes3x3' <span class="fu">=</span> fmap concat <span class="fu">.</span> overMa
 <p>Skill you’re trying to learn, don’t have a “unit test” for it -&gt; don’t know whether you have actually learned it or not</p>
 <p>Skill you’re trying to maintain, run your “unit test” for it -&gt; know whether you still have it or not</p>
 <p>Skill you’re trying to maintain, don’t run your “unit test” for it -&gt; don’t know whether you still have it or not</p>
-<p><strong>Hypothesis:</strong>: Situations, possible actions, situation-action associations - learn how to apply the actions to anything and then store the right action for each concrete situation -&gt; skill acquisition.</p>
+<p><strong>Hypothesis</strong>: Situations, possible actions, situation-action associations - learn how to apply the actions to anything and then store the right action for each concrete situation -&gt; skill acquisition.</p>
+<h2 id="learning-abstract-ideas">Learning Abstract Ideas</h2>
+<p><strong>Hypothesis</strong>: Procedure you want to learn as skill, refactor it, make flashcards as unit tests for the different configurations -&gt; build the cue-memory associations.</p>
+<p>Test: Making a junction tree out of a Markov random field - “first high-level step” -&gt; “variable elimination”, etc.</p>
+<h2 id="fluency-and-flashcards">Fluency and Flashcards</h2>
+<p><strong>Hypothesis</strong>: Test yourself using flashcards repeatedly (overlearning) -&gt; high fluency.</p>
+<p>Test: Reviewing flashcards for SML final exam - went from 27 seconds per flashcard to 8 seconds to 5 seconds. For the causality midterm - went from 30 seconds per flashcard to 9 seconds to 4 seconds! – tested again and again - high fluency.</p>
 <h2 id="skill-acquisition-tests">Skill Acquisition: Tests</h2>
 <p>Test: I want to reinforce good behaviour. Am I doing that? (Too vague, I suspect.)</p>
 <p>Test: I learned about inadequacy analysis. Do I think about the amount of work required to get some value when analyzing HP fanfiction (like in Eliezer’s Hero Licensing)? – Is this a good unit test? I don’t know.</p>
@@ -761,17 +767,13 @@ boxes3x3' <span class="fu">=</span> fmap concat <span class="fu">.</span> overMa
 <p>Test: People come up with some suggestion - I can either reinforce or punish. Choose one of the four options. – just four possible abstract actions. However, there are a lot of concrete situations, like “when something falls short of your standard” or “thought about past action” or “someone tries to manipulate you”. Store the right action for each situation based on careful analysis or just feedback.</p>
 <h1 id="programming-for-minimum-interface-at-speed">Programming for Minimum Interface at Speed</h1>
 <h2 id="minimum-interface-at-speed-hypothesis">Minimum Interface at Speed: Hypothesis</h2>
-<p><strong>Hypothesis</strong>: new function - come up with different input configurations -&gt; test ideas.</p>
-<p>want to handle a new input configuration (add a new feature) - get a failing test first -&gt; speed (no abstract thinking).</p>
-<p>new feature, pure function, write automated failing test -&gt; speed.</p>
-<p>new feature, impure function, manual failing test -&gt; speed.</p>
-<p>failing test - pass it by writing a quick and dirty chain of function calls, no branches -&gt; correctness, speed.</p>
-<p>test passed - refactor your code -&gt; speed, quality (more understandable, reusable, and modifiable).</p>
-<p>manual test passed - write automated test -&gt; speed, quality. (??)</p>
-<p>writing code - do you have a failing test for it? -&gt; write useful code.</p>
-<p>question about one small part, write a test in a scratch file -&gt; get answer quickly (since you’re only changing a few variables instead of the whole original program).</p>
-<p>debugging - read your diffs line by line -&gt; notice what changes you made that could have caused the error.</p>
-<h2 id="minimum-interface-at-speed-tests">Minimum Interface at Speed: Tests</h2>
+<p><strong>Hypothesis</strong>: pure function, know all possible input configurations for which the output is different -&gt; know test cases; clear how to proceed.</p>
+<p>pure function, don’t know all possible input configurations for which the output is different -&gt; don’t know all test cases; not clear how to proceed.</p>
+<p>impure function, know exactly where it will be called and what you expect (thus, know all possible input configurations for which the output is different) -&gt; know test cases; clear how to proceed.</p>
+<p>impure function, don’t know all the places where it will be called and what you expect (thus, don’t know all possible input configurations for which output is different) -&gt; don’t know test cases; not clear how to proceed.</p>
+<p>two input configurations, don’t know if they are supposed to give the same output or not, plan for both -&gt; can choose the correct one once you get feedback.</p>
+<p>two input configurations, don’t know if they are supposed to give the same output or not, plan for neither -&gt; confused even after feedback?</p>
+<hr />
 <p>Test: <code>org-autoclock</code> – crystal-clear after I wrote out the configurations.</p>
 <pre><code>Three variables: task, clock, file
 
@@ -781,6 +783,33 @@ clocked in, task file -&gt; resume if needed
 clocked in, not in task file -&gt; clock out if needed
 clocked out, task file -&gt; resume
 clocked out, not in task file -&gt; do nothing</code></pre>
+<p>Test: unclear about vcreate and what it actually does - well, hsize can be 100, 300, or 1M. What to do for each case? Next, allocate_bs may return SYSERR - what to do then? – write input configurations -&gt; clear!</p>
+<p>Test: <code>deallocate_bs</code> - not sure of all the places where it is called. I can see that it is called when a process is killed. But where else? I feel unsure. – impure function, don’t know all possible input configurations.</p>
+<p>Test: Haskell - list recursion - either empty or head and tail - clear. – pure function - know all possible configurations.</p>
+<p>Test: OS HW3 - <code>open backing store</code> - don’t know whether more than one process can access the same backing store. If so, then I have to handle the case where multiple processes try to access the store and own different pages in it. If not, then I don’t have to worry about any of that. – don’t know all possible input configurations for which output is different. If one process, then no matter what, we know that the behaviour is the same simple thing. If multiple processes, then we know that the behaviour depends on which process is asking for what page and whether somebody else is accessing the store right now.</p>
+<p>Test: OS HW3 - don’t know whether hsize can be more than 1600 or not. Every other doubt stems from this uncertainty. – if hsize is only within 1600, then I know what to do. If not, then I don’t know what to do, but I can find out. Clear.</p>
+<h2 id="debugging-hypothesis">Debugging: Hypothesis</h2>
+<p><strong>Hypothesis</strong>: don’t know the cause of something, have the source code and can run interventions (aka <strong>debugging</strong>), list all your assumptions (or at least toggle your diff till you get a “yes”) -&gt; figure out which assumption is causing your error.</p>
+<p>debugging - read your diffs line by line -&gt; notice what changes you made that could have caused the error.</p>
+<p>Test: Tried writing at an address but the CR2 value showed some other address. Turned out that I had interpreted the output as hex when it was actually a long int! – toggling my diff would have helped.</p>
+<p>Test: Re-read my buggy page directory setup code - discovered my errors. – read the diff line by line.</p>
+<h2 id="differing-predictions">Differing predictions</h2>
+<p><strong>Hypothesis</strong>: Don’t know the cause of something, don’t have the source code and can’t run interventions, come up with possible causes - get their differing predictions -&gt; figure out the right cause.</p>
+<p>Want to know where I know more than others - get their differing predictions (how?) -&gt; figure out problems that they just can’t solve.</p>
+<p>Test: Why did Goldenfold say “5 more minutes of this and I’ll get mad”. Two possible causes. We can look at their differing predictions to get feedback. – don’t have the source code and can’t run interventions; but can look at differing predictions.</p>
+<p>Test: What do I know about “cognitive psychology” that others don’t? – how to get differing predictions?</p>
+<h2 id="speed-and-product">Speed and Product</h2>
+<p><strong>Test</strong>: Others seem to finish assignments sooner than me. Is it because they’re writing different code than me or because they’re writing the same code faster?</p>
+<h2 id="minimum-interface-at-speed-more-hypotheses">Minimum Interface at Speed: More Hypotheses</h2>
+<p>want to handle a new input configuration (add a new feature) - get a failing test first -&gt; speed (no abstract thinking).</p>
+<p>new feature, pure function, write automated failing test -&gt; speed.</p>
+<p>new feature, impure function, manual failing test -&gt; speed.</p>
+<p>failing test - pass it by writing a quick and dirty chain of function calls, no branches -&gt; correctness, speed.</p>
+<p>test passed - refactor your code -&gt; speed, quality (more understandable, reusable, and modifiable).</p>
+<p>manual test passed - write automated test -&gt; speed, quality. (??)</p>
+<p>writing code - do you have a failing test for it? -&gt; write useful code.</p>
+<p>question about one small part, write a test in a scratch file -&gt; get answer quickly (since you’re only changing a few variables instead of the whole original program).</p>
+<h2 id="other-tests">Other Tests</h2>
 <p>Test: page table code in HW3 - wrote hopelessly buggy pointer arithmetic code. Zero tests.</p>
 <p>Test: Wasn’t sure how to condition on a variable when there were two factors. Did the derivation in a scratch page - got the answer!</p>
 <p>Test: Wasn’t sure how to do pointer arithmetic on an array. Ditto for bit shifting. Results were shocking! – yup.</p>
@@ -790,7 +819,7 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Test: function to paste joined text - automated test - fast – pure function.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: November 30, 2017</div>
+<div class="info">Last modified: December  1, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
