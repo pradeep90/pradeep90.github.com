@@ -600,21 +600,6 @@ boxes3x3' <span class="fu">=</span> fmap concat <span class="fu">.</span> overMa
 <p>Observation: The abstraction <code>Match:get_balls()</code> may or may not work. You may have made a mistake in defining the method or in the module scope (if Match is in another file) or whatever. Source of uncertainty - have to test it.</p>
 <p>Observation: You have multiple design choices - different levels of abstraction. For example, you could deal with separate methods for <code>get_balls()</code> and <code>map_over_balls()</code>, but not a separate class for <code>PlayerStats</code>. Or you could go the whole way and have subclasses for BowlerStats and BatsmanStats (and of course FielderStats) and have, god forbid, visitor methods to do complicated processing. But, for my problem of extracting data for machine learning, that is simply overkill.</p>
 <p>Observation: Each time you add a new abstraction, you have to test it (since you may or may not have implemented the abstraction correctly, or may have even picked one that doesn’t fit your problem).</p>
-<p><strong>Hypothesis</strong>: One long chain of function calls -&gt; will pass the test case (one branch), very little time, will not overengineer. Refactor -&gt; easier to test going forward -&gt; quick.</p>
-<p>Abstract code (using separate functions or classes) -&gt; will pass the test case (one branch), will take more time because you’re changing the design too, may overengineer. Debugging -&gt; slow.</p>
-<p><strong>Lesson</strong>: Because debugging is slow and painful, it’s better to write quick and dirty code and then refactor, than to write clean code in the first attempt.</p>
-<p><strong>Observation</strong>: [2017-11-05 Sun] Tried to write quick and dirty code to pass one simple unit test. Nearly got a heart attack in the process. Here it is:</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> batsman_total(match, player):
-	d <span class="op">=</span> match.match_details[<span class="st">'innings'</span>][<span class="st">'1st innings'</span>][<span class="st">'deliveries'</span>]
-	<span class="bu">print</span>(d)
-	total <span class="op">=</span> <span class="dv">0</span>
-	<span class="cf">for</span> ball_num, ball <span class="op">in</span> d.items():
-		<span class="cf">if</span> ball[<span class="st">'batsman'</span>] <span class="op">==</span> player:
-			total <span class="op">+=</span> ball[<span class="st">'runs'</span>][<span class="st">'batsman'</span>]
-	<span class="cf">return</span> total</code></pre></div>
-<p>I couldn’t bring myself to write <code>total += anything</code>. Felt so fucking gauche. Ditto for the for-loop and direct testing (<code>if ball['batsman'] == player</code>). I felt like reaching for a map and filter. But that would probably be overkill. I needed to bring myself to cut through to the actual output.</p>
-<p>But this code is fine for my purposes!</p>
-<p><strong>Hypothesis</strong>: I usually overengineer. I can code faster by writing quick and dirty code and then refactoring, instead of throwing in abstractions like <code>map</code> and <code>filter</code> and so on, especially in a predominantly-imperative language like Python.</p>
 <h2 id="rule-of-three">Rule of Three</h2>
 <p><strong>Question</strong>: What if you abstracted code only on the second use?</p>
 <p>Maybe go for the Rule of Three? (https://blog.codinghorror.com/rule-of-three/)</p>
@@ -765,6 +750,12 @@ boxes3x3' <span class="fu">=</span> fmap concat <span class="fu">.</span> overMa
 <p>Test: Reinforcement - I give away my ideas for free thus reinforcing freeloading.</p>
 <p><strong>Question</strong>: How to remember to do stuff on specific cues? Can you have unit tests for that?</p>
 <p>Test: People come up with some suggestion - I can either reinforce or punish. Choose one of the four options. – just four possible abstract actions. However, there are a lot of concrete situations, like “when something falls short of your standard” or “thought about past action” or “someone tries to manipulate you”. Store the right action for each situation based on careful analysis or just feedback.</p>
+<h2 id="motivation-aka-ignition-close-positive-exemplars">Motivation aka Ignition: Close Positive Exemplars</h2>
+<p><strong>Hypothesis</strong>: See someone similar to yourself achieve great things i.e., close positive exemplar -&gt; feel that you could do it too if you made those small changes.</p>
+<p>See someone dissimilar to yourself achieve great things i.e., distant positive exemplar -&gt; feel that they must have some special “aura of destiny” and that you couldn’t do it no matter what.</p>
+<hr />
+<p>Test: Me and Samsung Patrick. Korean female golfers and the first one. – close positive exemplar.</p>
+<p>Test: Einstein. Mad scientists like Rick or whoever. “Geniuses” like the famous startup founders who talk weirdly and wear sweatshirts. Mathematical “geniuses” who look and act completely differently from normal people. “Smart” people using big words and an affected American accent - all to say that restore() simply sets the <strong>one</strong> bit back to what it was. – distant positive exemplars. Feel like I could never <em>be</em> like them. But I don’t have to <em>be</em> like them, I have to <strong>do</strong> what they did. And for that, I don’t have to emulate all their other characteristics.</p>
 <h1 id="programming-for-minimum-interface-at-speed">Programming for Minimum Interface at Speed</h1>
 <h2 id="minimum-interface-at-speed-hypothesis">Minimum Interface at Speed: Hypothesis</h2>
 <p><strong>Hypothesis</strong>: pure function, know all possible input configurations for which the output is different -&gt; know test cases; clear how to proceed.</p>
@@ -788,17 +779,47 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Test: Haskell - list recursion - either empty or head and tail - clear. – pure function - know all possible configurations.</p>
 <p>Test: OS HW3 - <code>open backing store</code> - don’t know whether more than one process can access the same backing store. If so, then I have to handle the case where multiple processes try to access the store and own different pages in it. If not, then I don’t have to worry about any of that. – don’t know all possible input configurations for which output is different. If one process, then no matter what, we know that the behaviour is the same simple thing. If multiple processes, then we know that the behaviour depends on which process is asking for what page and whether somebody else is accessing the store right now.</p>
 <p>Test: OS HW3 - don’t know whether hsize can be more than 1600 or not. Every other doubt stems from this uncertainty. – if hsize is only within 1600, then I know what to do. If not, then I don’t know what to do, but I can find out. Clear.</p>
-<h2 id="debugging-hypothesis">Debugging: Hypothesis</h2>
-<p><strong>Hypothesis</strong>: don’t know the cause of something, have the source code and can run interventions (aka <strong>debugging</strong>), list all your assumptions (or at least toggle your diff till you get a “yes”) -&gt; figure out which assumption is causing your error.</p>
+<h2 id="debugging-look-at-the-diffs">Debugging: Look at the Diffs!</h2>
+<p><strong>Hypothesis</strong>: don’t know the cause of something, have the source code and can run interventions (aka <strong>debugging</strong>), look at your <strong>diff</strong>, list all your assumptions or toggle your diff till you get a “yes” -&gt; figure out which assumption is causing your error.</p>
 <p>debugging - read your diffs line by line -&gt; notice what changes you made that could have caused the error.</p>
 <p>Test: Tried writing at an address but the CR2 value showed some other address. Turned out that I had interpreted the output as hex when it was actually a long int! – toggling my diff would have helped.</p>
 <p>Test: Re-read my buggy page directory setup code - discovered my errors. – read the diff line by line.</p>
-<h2 id="differing-predictions">Differing predictions</h2>
+<h2 id="complex-diffs-toggling-a-lot-of-variables">“Complex” Diffs: Toggling a Lot of Variables</h2>
+<p><strong>Hypothesis</strong>: Diff toggles a lot of variables -&gt; hard to predict what the output will be.</p>
+<p>Diff toggles a few variables -&gt; easier to predict what the output will be.</p>
+<hr />
+<p>Test: Lots of changes in my Emacs folder - don’t know what leads to what. – lots of variables changed - I took .emacs.d/ off the load-path, moved my personal elisp files into one folder, deleted the old lisp packages I was storing manually and instead got them from the package manager, and used <code>(require 'foo-feature)</code> instead of loading its file manually. Any of them in any combination could cause problems!</p>
+<p>Test: Exactly one section changed in my one-button change essay - I know exactly what that does to the essay. – “look at diffs” - ok that affects my model of how to debug something, but not my ideas about refactoring or programming to an interface.</p>
+<h2 id="confusion-look-at-the-diffs">Confusion: Look at the Diffs!</h2>
+<p><strong>Corollary</strong>: Went from not confused to confused, get the specific changes (<strong>diffs</strong>) that caused the problem -&gt; need to learn about the effects of a very few variables.</p>
+<p>Went from not confused to confused, don’t know which specific changes caused the problem -&gt; feel like you need to learn about a lot of variables.</p>
+<p><strong>Lesson</strong>: Start with something you’re not confused about and take it from there.</p>
+<hr />
+<p>Test: Was following along the causal RL lecture till the q_i’s started coming in. Basically, I went from “not confused” to “confused”. Earlier, my mental model - my program - passed the tests of predicting the correct answer. But now, it couldn’t. So, I needed to look at the diff and figure out which change broke my model. – Got the specific diff that broke my model.</p>
+<p>Test: Confused about all causality papers. Don’t think I’ve been un-confused about “all causality papers”. Feel like I will have to read a lot of papers to become un-confused about “causality papers”.</p>
+<h2 id="differing-predictions-well-look-at-the-diffs">Differing predictions: Well, Look at the Diffs!</h2>
 <p><strong>Hypothesis</strong>: Don’t know the cause of something, don’t have the source code and can’t run interventions, come up with possible causes - get their differing predictions -&gt; figure out the right cause.</p>
-<p>Want to know where I know more than others - get their differing predictions (how?) -&gt; figure out problems that they just can’t solve.</p>
+<p>Want to know where I know more than others - get their differing predictions (by taking the diffs of our proposed explanations or just the books we’ve read) -&gt; figure out problems that they just can’t solve.</p>
+<hr />
 <p>Test: Why did Goldenfold say “5 more minutes of this and I’ll get mad”. Two possible causes. We can look at their differing predictions to get feedback. – don’t have the source code and can’t run interventions; but can look at differing predictions.</p>
-<p>Test: What do I know about “cognitive psychology” that others don’t? – how to get differing predictions?</p>
-<h2 id="speed-and-product">Speed and Product</h2>
+<p>Test: What do I know about “cognitive psychology” that others don’t? How to get differing predictions? They talk about “complex neural networks” and “network of ideas”. I don’t (I know about how it’s cue-memory associations all the way down). They talk about how forgetful they are, I don’t (I know about the exponential decay curve). They think re-reading is good enough. I don’t (I know that you need to test for recall). – Their proposed explanations are different from mine in these ways. From these, I can come up with differing predictions - people who test themselves will actually learn things.</p>
+<h2 id="speed-coding-hat-vs-refactoring-hat">Speed: Coding Hat vs Refactoring Hat</h2>
+<p><strong>Hypothesis</strong>: adding a new feature, one long chain of function calls -&gt; will pass the test case (one branch), very little time, will not overengineer. Refactor -&gt; easier to test going forward -&gt; quick. h/t Kent Beck.</p>
+<p>adding a new feature, abstract code (using separate functions or classes) -&gt; will pass the test case (one branch), will take more time because you’re changing the design too, may overengineer. Debugging -&gt; slow.</p>
+<p>adding a new feature, optimized code (low-memory quick functions or detailed, convincing examples) -&gt; will pass the test case (one branch), will take more time because you’re changing the design at the same time you’re making it faster; may overengineer. Debugging -&gt; slow.</p>
+<p><strong>Test</strong>: [2017-11-05 Sun] Tried to write quick and dirty code to pass one simple unit test. Nearly got a heart attack in the process. Here it is:</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> batsman_total(match, player):
+	d <span class="op">=</span> match.match_details[<span class="st">'innings'</span>][<span class="st">'1st innings'</span>][<span class="st">'deliveries'</span>]
+	<span class="bu">print</span>(d)
+	total <span class="op">=</span> <span class="dv">0</span>
+	<span class="cf">for</span> ball_num, ball <span class="op">in</span> d.items():
+		<span class="cf">if</span> ball[<span class="st">'batsman'</span>] <span class="op">==</span> player:
+			total <span class="op">+=</span> ball[<span class="st">'runs'</span>][<span class="st">'batsman'</span>]
+	<span class="cf">return</span> total</code></pre></div>
+<p>I couldn’t bring myself to write <code>total += anything</code>. Felt so fucking gauche. Ditto for the for-loop and direct testing (<code>if ball['batsman'] == player</code>). I felt like reaching for a map and filter. But that would probably be overkill. I needed to bring myself to cut through to the actual output.</p>
+<p>But this code is fine for my purposes! I usually overengineer. I can code faster by writing quick and dirty code and then refactoring, instead of throwing in abstractions like <code>map</code> and <code>filter</code> and so on, especially in a predominantly-imperative language like Python.</p>
+<p>Test: Want to write down my completeness proof in LaTeX - hesitating because I feel like I need to write a complete report that flows from start to end, and maybe have diagrams and stuff. No! All I need to write is the proof alone. Everything else can come later. – one thing at a time.</p>
+<p>Test: Spent the last one hour coming up with a crystal-clear model that would show how <span class="math inline">\(U_Z\)</span> and Y are related even though that’s not the point of my proof. Dammit. – I was trying to abstract? Was I? I was trying to optimize for a <strong>great</strong> proof - one that would convince any snotty critics. But I didn’t really need that. This isn’t my final draft; this is just a proof of concept.</p>
 <p><strong>Test</strong>: Others seem to finish assignments sooner than me. Is it because they’re writing different code than me or because they’re writing the same code faster?</p>
 <h2 id="minimum-interface-at-speed-more-hypotheses">Minimum Interface at Speed: More Hypotheses</h2>
 <p>want to handle a new input configuration (add a new feature) - get a failing test first -&gt; speed (no abstract thinking).</p>
@@ -819,7 +840,7 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Test: function to paste joined text - automated test - fast – pure function.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: December  1, 2017</div>
+<div class="info">Last modified: December  2, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
