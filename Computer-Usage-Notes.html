@@ -72,13 +72,15 @@ alias -g awksum=&quot;awknum '{sum+=\$1}END{print sum}'&quot;</code></pre>
 <p>Clone from another computer:</p>
 <pre><code>git clone username@foo.cs.purdue.edu:/homes/username/repo-name/</code></pre>
 <p>Add a submodule: Using Magit, I could just clone (or start) a new repository in a subdirectory and add the directory. It automatically added the required lines to .gitmodules and got things working.</p>
+<p>Treat “binary” file <code>autorun.exp</code> as text: In .gitattributes, add</p>
+<pre><code>*.exp diff</code></pre>
 <h1 id="shell">Shell</h1>
 <h2 id="diff-output-of-two-commands">Diff Output of Two Commands</h2>
 <p>Convoluted way to check if a file has duplicate lines (you could just do <code>sort | uniq -d</code>):</p>
 <pre><code>diff &lt;(sort foo.txt) &lt;(sort -u foo.txt)</code></pre>
 
 <div class="info">Created: August 19, 2015</div>
-<div class="info">Last modified: November 28, 2017</div>
+<div class="info">Last modified: December  3, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes</div>
 

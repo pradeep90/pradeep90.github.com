@@ -757,13 +757,14 @@ boxes3x3' <span class="fu">=</span> fmap concat <span class="fu">.</span> overMa
 <p>Test: Me and Samsung Patrick. Korean female golfers and the first one. – close positive exemplar.</p>
 <p>Test: Einstein. Mad scientists like Rick or whoever. “Geniuses” like the famous startup founders who talk weirdly and wear sweatshirts. Mathematical “geniuses” who look and act completely differently from normal people. “Smart” people using big words and an affected American accent - all to say that restore() simply sets the <strong>one</strong> bit back to what it was. – distant positive exemplars. Feel like I could never <em>be</em> like them. But I don’t have to <em>be</em> like them, I have to <strong>do</strong> what they did. And for that, I don’t have to emulate all their other characteristics.</p>
 <h1 id="programming-for-minimum-interface-at-speed">Programming for Minimum Interface at Speed</h1>
-<h2 id="minimum-interface-at-speed-hypothesis">Minimum Interface at Speed: Hypothesis</h2>
+<h2 id="look-at-the-input-configurations">Look at the Input Configurations</h2>
 <p><strong>Hypothesis</strong>: pure function, know all possible input configurations for which the output is different -&gt; know test cases; clear how to proceed.</p>
 <p>pure function, don’t know all possible input configurations for which the output is different -&gt; don’t know all test cases; not clear how to proceed.</p>
 <p>impure function, know exactly where it will be called and what you expect (thus, know all possible input configurations for which the output is different) -&gt; know test cases; clear how to proceed.</p>
 <p>impure function, don’t know all the places where it will be called and what you expect (thus, don’t know all possible input configurations for which output is different) -&gt; don’t know test cases; not clear how to proceed.</p>
 <p>two input configurations, don’t know if they are supposed to give the same output or not, plan for both -&gt; can choose the correct one once you get feedback.</p>
 <p>two input configurations, don’t know if they are supposed to give the same output or not, plan for neither -&gt; confused even after feedback?</p>
+<p><strong>Hypothesis</strong>: Concrete walk-through, toggle each variable (come up with alternatives for each concrete value) -&gt; get possible input configurations.</p>
 <hr />
 <p>Test: <code>org-autoclock</code> – crystal-clear after I wrote out the configurations.</p>
 <pre><code>Three variables: task, clock, file
@@ -779,6 +780,8 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Test: Haskell - list recursion - either empty or head and tail - clear. – pure function - know all possible configurations.</p>
 <p>Test: OS HW3 - <code>open backing store</code> - don’t know whether more than one process can access the same backing store. If so, then I have to handle the case where multiple processes try to access the store and own different pages in it. If not, then I don’t have to worry about any of that. – don’t know all possible input configurations for which output is different. If one process, then no matter what, we know that the behaviour is the same simple thing. If multiple processes, then we know that the behaviour depends on which process is asking for what page and whether somebody else is accessing the store right now.</p>
 <p>Test: OS HW3 - don’t know whether hsize can be more than 1600 or not. Every other doubt stems from this uncertainty. – if hsize is only within 1600, then I know what to do. If not, then I don’t know what to do, but I can find out. Clear.</p>
+<p>Test: OS HW3 - What worked, I think, was to have a concrete walk-through. That told me where there could be potential hotspots.</p>
+<p>“You want to read from some address in your private heap. [might want read from elsewhere] (You’ve already used vgetmem to allocate the memory. [might not have used vgetmem yet]). First, there will be a page fault because you’ve never accessed that page before [might have accessed that page before and it might be present or not]. So, you will allocate one frame for the page table and then one frame for the page itself [may not need to allocate one frame for the page table]. And then copy that page from the backing store [or just don’t]. There will always be a free frame available, so no problem [there may not be a free frame available, in which case, problem].” – Input configurations - want to access memory within your private heap or not; have used vgetmem or not; have accessed page before; is present in memory; need to allocate frame for page table; copy from backing store or don’t; free frame available or not. Also, it’s one process right now. What if you have multiple processes?</p>
 <h2 id="debugging-look-at-the-diffs">Debugging: Look at the Diffs!</h2>
 <p><strong>Hypothesis</strong>: don’t know the cause of something, have the source code and can run interventions (aka <strong>debugging</strong>), look at your <strong>diff</strong>, list all your assumptions or toggle your diff till you get a “yes” -&gt; figure out which assumption is causing your error.</p>
 <p>debugging - read your diffs line by line -&gt; notice what changes you made that could have caused the error.</p>
@@ -797,6 +800,7 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <hr />
 <p>Test: Was following along the causal RL lecture till the q_i’s started coming in. Basically, I went from “not confused” to “confused”. Earlier, my mental model - my program - passed the tests of predicting the correct answer. But now, it couldn’t. So, I needed to look at the diff and figure out which change broke my model. – Got the specific diff that broke my model.</p>
 <p>Test: Confused about all causality papers. Don’t think I’ve been un-confused about “all causality papers”. Feel like I will have to read a lot of papers to become un-confused about “causality papers”.</p>
+<p>Test: OS HW3 - really, really confused about what to do. No clear idea about how to proceed. – Okay. Narrow down the diff. What worked, I think, was to have a concrete walk-through. That told me where there could be potential hotspots (for example, if there were no free frame available, I’d have to replace a page).</p>
 <h2 id="differing-predictions-well-look-at-the-diffs">Differing predictions: Well, Look at the Diffs!</h2>
 <p><strong>Hypothesis</strong>: Don’t know the cause of something, don’t have the source code and can’t run interventions, come up with possible causes - get their differing predictions -&gt; figure out the right cause.</p>
 <p>Want to know where I know more than others - get their differing predictions (by taking the diffs of our proposed explanations or just the books we’ve read) -&gt; figure out problems that they just can’t solve.</p>
@@ -840,7 +844,7 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Test: function to paste joined text - automated test - fast – pure function.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: December  2, 2017</div>
+<div class="info">Last modified: December  4, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 

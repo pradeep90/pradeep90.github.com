@@ -233,107 +233,75 @@ find . -type f -name &quot;*.c&quot; | xargs wc -l
 <p>Overview</p>
 <p><strong>TODO</strong>: Read Intel manual volume 3, chapters 2-5</p>
 <h3 id="virtual-memory-services">Virtual Memory Services</h3>
+<p>heap: tell whether an address is valid or not; freelist and so on.</p>
+<p>private heap. dummy heap.</p>
 <p>vcreate: process must have a private heap with hsize pages.</p>
 <p>vgetmem: given a private heap, ask for memory -&gt; get it.</p>
 <p>vfreemem: given a private heap, free memory -&gt; free it up.</p>
-<p>Two types of heaps: normal public heap; private virtual heap. You should be able to switch between the two.</p>
 <p>srpolicy: set page replacement function.</p>
-<h3 id="backing-stores-and-memory-management">Backing Stores and Memory Management</h3>
-<p>We need virtual memory to extend the memory of the machine using disk space or SSD.</p>
-<p>rdserver is simply the secondary storage from where we will read or write pages.</p>
-<p>Question: How many backing stores do you need? Is it that when one is blocked and a process demands another page, we have to use the next one?</p>
-<p>read_bs is a way to read pages instead of blocks from a backing store. That backing store could be on QEMU or on a real RDISK, based on the value of WRDISK.</p>
-<h3 id="using-the-paging-server-api">Using the Paging Server API</h3>
-<p>No need to run rdserver when using QEMU.</p>
-<p>Need to run rdserver on the XINU frontend machine.</p>
-<h3 id="memory-layout">Memory Layout</h3>
-<blockquote>
-<p>1024 pages starting at memory address 0x90000000 are used for device memory (Ethernet and Console) and must be mapped at the same physical address. Hence, the first four page tables and the page table for device memory for every process will be the same, i.e. they are shared/global.</p>
-</blockquote>
-<blockquote>
-<p>Memory at page 4096 and above constitute a process019s private virtual memory. This private address space is visible only to the process that owns it. A process019s private heap is mapped somewhere in this area by vcreate().</p>
-</blockquote>
-<h3 id="page-tables">Page Tables</h3>
-<blockquote>
-<p>For Lab3, you will not be paging either the page directories or page tables. That is, page directories and page tables should not be relying on backing stores. For page directory, they must always be allocated. However, it is not practical to allocate all potential page tables for a newly created process. Therefore, to conserve memory, page tables are created on-demand. The first time a page is touched (i.e. it has been mapped by a process), a page table needs to be allocated.</p>
-</blockquote>
-<blockquote>
-<p>Conversely, when a page table is no longer needed, it should be removed in order to conserve space.</p>
-</blockquote>
-<h3 id="page-fault-interrupt-service-routine-isr">Page Fault Interrupt Service Routine (ISR)</h3>
-<blockquote>
-<p>Check that a is a valid address, if not, print an error message and kill the process.</p>
-</blockquote>
-<blockquote>
-<p>Using the backing store map, find the store s and page offset o which correspond to vp.</p>
-</blockquote>
-<h3 id="obtain-a-free-frame">Obtain a Free Frame</h3>
-<h3 id="backing-store-map">Backing Store Map</h3>
-<blockquote>
-<p><pid, vpage, npages, store></p>
-</blockquote>
-<p>Question: Is vpage the starting page number and npages the number of pages numbers from there?</p>
-<p>Question: How many backing stores? Divide total number of pages into 8? Or 2 stores per process?</p>
-<blockquote>
-<p>f(pid, vaddr) =&gt; (store, page_offset within store)</p>
-</blockquote>
-<p>Question: How can we find a page for every virtual address? There are 500k possible pages but only 205 pages available on the backing store.</p>
-<p>(Maybe virtual heap will be small enough to fit within one or two backing stores.)</p>
-<h3 id="inverted-page-table">Inverted Page Table</h3>
-<p>Have reference count of frames - how many entries in this page table are present.</p>
-<h3 id="private-heap">Private Heap</h3>
-<blockquote>
-<p>A separate mapping must be created for a new process’s private heap when created with vcreate().</p>
-</blockquote>
-<p>Question: What does that mean? Is it that the page directory for every process will map to the same identity address for page numbers 0-4096?</p>
 <h3 id="prototypes">Prototypes?</h3>
-<p>prototypes.h</p>
+<p><strong>TODO</strong>: prototypes.h</p>
 <h3 id="handling-error-code-on-page-fault">Handling error code on page fault</h3>
 <p>https://piazza.com/class/j6dtteb9lor25u?cid=185</p>
 <h3 id="memory-addressing">Memory Addressing</h3>
 <p>http://pages.cs.wisc.edu/~remzi/OSTEP/vm-paging.pdf http://wiki.osdev.org/Paging http://wiki.osdev.org/Setting_Up_Paging</p>
 <h2 id="assembly">Assembly</h2>
 <p>Have to store the value in a global variable and then copy from that global variable to a local variable. (See stacktrace.c for an example - <code>g_esp</code> vs <code>sp</code>.)</p>
-<p><strong>Question</strong>: Should I have a .S file for page fault interrupt service routine.</p>
-<p>Question: Should I pop error code? But clkdisp.S doesn’t do that. (Going with “add $4, %esp iret” as per SO.)</p>
-<p>Question: assembly - sti needed?</p>
 <h2 id="page-fault-handler">Page Fault Handler</h2>
 <p>Question: How to get the faulted address?</p>
 <p>(Answer: CR2)</p>
 <h2 id="context-switching">Context-Switching</h2>
-<p>Question: Do we need to clear the TLB upon context switch?</p>
 <p><strong>Important</strong>: Flush the TLB upon context-switch.</p>
 <blockquote>
 <p>As we switch context between processes, we must also switch between memory spaces. This is accomplished by updating the PDBR register with every context switch. This register must always point to a valid page directory that is in RAM at a page boundary.</p>
 </blockquote>
 <p>When you context-switch, you don’t need to clear TLB?</p>
-<h2 id="implementation-plan">Implementation Plan</h2>
-<p><strong>Hypothesis</strong>: Assert preconditions and postconditions. Argument testing - null, etc. Also, have a unit test for each branch.</p>
+<p>When switching to a non-virtual process, set pdbr to the null process’ page directory. (Or just that process’ page directory, which will point to the same 5 global page tables.)</p>
+<h2 id="killing-the-process">Killing the Process</h2>
+<p>When killing it, don’t write back frames. Just free them.</p>
+<h2 id="backing-store">Backing Store</h2>
+<p>Allocate backing stores in vcreate. To use the backing store, open, read or write, close.</p>
+<h2 id="outline">Outline</h2>
+<p>Question: What if nframes is 50? Does that mean that addresses in page 2000 will not be accessible even though they are part of the global table and marked as present? (That page will be handled like any other virtual memory page.)</p>
+<h3 id="run-through-with-one-concrete-example">Run through with one concrete example</h3>
+<p><strong>Hypothesis</strong>: Any page in your virtual heap - exists in your allocated backing store (and if marked as present, exists in a frame as well).</p>
+<p>Any page in the first 1024 pages - exists in memory.</p>
+<p>Any page in the other global page tables - exists in frames (but not in the backing store).</p>
+<p>Hypothesis: memlist is from the end of XINU to the 1024th page.</p>
+<p>Question: Should the global page tables be in a frame or somewhere else? How to prevent them from being replaced? (For now, I will assume yes.)</p>
 <hr />
-<p><strong>TODO</strong>: Do we have to do a clean build whenever we change a #DEFINE constant?</p>
+<p>NFRAMES = 3072</p>
+<p>You want to read from some address in your private heap. (You’ve already used vgetmem to allocate the memory.).</p>
+<p>First, there will be a page fault because you’ve never accessed that page before. So, you will allocate one frame for the page table and then one frame for the page itself. And then copy that page from the backing store.</p>
+<p>There will always be a free frame available, so no problems.</p>
+<p>Test: Just have a dummy heap that simply marks an address space as valid. vgetmem need not have any effect. Test whether you can access different pages in your heap without trouble. Also have a dummy backing store that simply returns the frame as such.</p>
+<p>Test: Context-switch to see if that works. Again, access different pages in that process’ separate heap.</p>
+<p>Test: Implement the heap with memlist.</p>
+<hr />
+<p>NFRAMES = 50</p>
+<p>You want to read from some address in your private heap. (You’ve already used vgetmem to allocate the memory.).</p>
+<p>First, there will be a page fault because you’ve never accessed that page before. So, you will allocate one frame for the page table and then one frame for the page itself. And then copy that page from the backing store.</p>
+<p>Test: Free frame available - same as before.</p>
+<p>Test: Free frame not available - have to replace a page. Implement the backing store stuff.</p>
+<h2 id="heap">Heap</h2>
+<p>Test: access page beyond virtual memory - should fail.</p>
+<h2 id="vcreate">vcreate</h2>
+<p>initialize heap and page directory</p>
+<h2 id="frame-allocator">Frame Allocator</h2>
+<p>use this for the global page tables and directory? create_global_page_directory(pid) ?? create_global_page_table(pid) ?? create_page_directory(pid) create_page_table(pid) get free frame bring in faulted page pick a page to replace</p>
+<h2 id="vgetmem">vgetmem</h2>
+<p>get memory from heap</p>
+<p>Test: two processes write at the same address, no conflict.</p>
+<h2 id="implementation-plan">Implementation Plan</h2>
+<p><strong>TODO</strong>: Use FRAME0.</p>
+<p><strong>Hypothesis</strong>: Assert preconditions and postconditions. Argument testing - null, etc. Also, have a unit test for each branch.</p>
 <h2 id="tests">Tests</h2>
 <p>4 processes, 2 backing stores each</p>
 <p>1 process, 8 backing stores</p>
 <p>6 processes.</p>
-<h2 id="observations">Observations</h2>
-<p>When I tried setting page directory to NULL and enabled paging, the OS seemed to keep rebooting.</p>
-<h2 id="questions">Questions</h2>
-<p><strong>TODO</strong>: Explain whole process in your own words.</p>
-<p>Question: hsize is 100 - allocate one backing store. 300? 10000? The process can access only that part (plus the global heap)?</p>
-<p>Answer: heap size will be between 0 and 1600.</p>
-<p>What if you try to give hsize as 1M? Isn’t that still possible using a limited number of frames, by constantly replacing pages? But isn’t it limited by the size of the backing store (1600 total pages)?</p>
-<p><strong>Question</strong>: Divide the heap into parts across backing stores? 200 per store?</p>
-<p>Answer: Yes.</p>
-<p>Does the backing store look like this - pid 4, 0, 200, backing store 2; pid 5, 400, 100, backing store 1?</p>
-<p>Question: allocate backing stores on startup? when a process wants to use a backing store, call open_bs? when a process is killed, call close_bs?</p>
-<p><strong>Hypothesis</strong>: Allocate backing stores in vcreate. To use the backing store, open, read or write, close.</p>
-<p>Question: One process per backing store, right? What is <code>usecount</code>?</p>
-<p>Question: Virtual heap should be private - do we need to set access bits in the page directory or page table?</p>
-<p><strong>Question</strong>: It seems to pass page replacement and page fault handling (when I use getmem in vgetmem). Why?</p>
-<p>Question: How to access a random address in memory (given pages)? My initial example doesn’t seem to work.</p>
 
 <div class="info">Created: September  9, 2017</div>
-<div class="info">Last modified: December  1, 2017</div>
+<div class="info">Last modified: December  4, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, os</div>
 
