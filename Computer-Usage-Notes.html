@@ -74,13 +74,19 @@ alias -g awksum=&quot;awknum '{sum+=\$1}END{print sum}'&quot;</code></pre>
 <p>Add a submodule: Using Magit, I could just clone (or start) a new repository in a subdirectory and add the directory. It automatically added the required lines to .gitmodules and got things working.</p>
 <p>Treat “binary” file <code>autorun.exp</code> as text: In .gitattributes, add</p>
 <pre><code>*.exp diff</code></pre>
+<p>Get commit count:</p>
+<pre><code>git rev-list HEAD --count
+
+# For a particular file
+
+git rev-list HEAD --count -- one-button-change.md</code></pre>
 <h1 id="shell">Shell</h1>
 <h2 id="diff-output-of-two-commands">Diff Output of Two Commands</h2>
 <p>Convoluted way to check if a file has duplicate lines (you could just do <code>sort | uniq -d</code>):</p>
 <pre><code>diff &lt;(sort foo.txt) &lt;(sort -u foo.txt)</code></pre>
 
 <div class="info">Created: August 19, 2015</div>
-<div class="info">Last modified: December  3, 2017</div>
+<div class="info">Last modified: December  4, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes</div>
 

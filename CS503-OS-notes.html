@@ -250,6 +250,13 @@ find . -type f -name &quot;*.c&quot; | xargs wc -l
 <h2 id="page-fault-handler">Page Fault Handler</h2>
 <p>Question: How to get the faulted address?</p>
 <p>(Answer: CR2)</p>
+<p>Might need semaphores to deal with context-switching</p>
+<p>https://piazza.com/class/j6dtteb9lor25u?cid=201</p>
+<p>Need it because you will switch to rdsproc and block on calls to the backing store and another process may page fault as well. So, wait on a semaphore at the beginning and signal at the end.</p>
+<p>Check whether address is valid:</p>
+<blockquote>
+<p>You need to check if it’s within the virtual heap. You already mentioned the starting page number of the virtual heap (so translate that into an address), so there’s your lower bound. You know at vcreate how large your virtual heap is, so you can calculate the upper bound using hsize.</p>
+</blockquote>
 <h2 id="context-switching">Context-Switching</h2>
 <p><strong>Important</strong>: Flush the TLB upon context-switch.</p>
 <blockquote>
@@ -259,8 +266,6 @@ find . -type f -name &quot;*.c&quot; | xargs wc -l
 <p>When switching to a non-virtual process, set pdbr to the null process’ page directory. (Or just that process’ page directory, which will point to the same 5 global page tables.)</p>
 <h2 id="killing-the-process">Killing the Process</h2>
 <p>When killing it, don’t write back frames. Just free them.</p>
-<h2 id="backing-store">Backing Store</h2>
-<p>Allocate backing stores in vcreate. To use the backing store, open, read or write, close.</p>
 <h2 id="outline">Outline</h2>
 <p>Question: What if nframes is 50? Does that mean that addresses in page 2000 will not be accessible even though they are part of the global table and marked as present? (That page will be handled like any other virtual memory page.)</p>
 <h3 id="run-through-with-one-concrete-example">Run through with one concrete example</h3>
@@ -283,10 +288,14 @@ find . -type f -name &quot;*.c&quot; | xargs wc -l
 <p>First, there will be a page fault because you’ve never accessed that page before. So, you will allocate one frame for the page table and then one frame for the page itself. And then copy that page from the backing store.</p>
 <p>Test: Free frame available - same as before.</p>
 <p>Test: Free frame not available - have to replace a page. Implement the backing store stuff.</p>
+<h2 id="backing-store">Backing store</h2>
+<p>Allocate backing stores in vcreate. To use the backing store, open, read or write, close.</p>
+<p><strong>TODO</strong>: Bug - it doesn’t print everything in the compilation buffer, but does so when I pipe it into grep or a file.</p>
 <h2 id="heap">Heap</h2>
 <p>Test: access page beyond virtual memory - should fail.</p>
 <h2 id="vcreate">vcreate</h2>
-<p>initialize heap and page directory</p>
+<p>Initialize heap and page directory</p>
+<p><strong>TODO</strong>: If you allocate next in vcreate, you will try to allocate new virtual memory (page) of the process you call vcreate instead of the process created by vcreate. You may avoid doing this by allocating next in vgetmem.</p>
 <h2 id="frame-allocator">Frame Allocator</h2>
 <p>use this for the global page tables and directory? create_global_page_directory(pid) ?? create_global_page_table(pid) ?? create_page_directory(pid) create_page_table(pid) get free frame bring in faulted page pick a page to replace</p>
 <h2 id="vgetmem">vgetmem</h2>
@@ -296,12 +305,13 @@ find . -type f -name &quot;*.c&quot; | xargs wc -l
 <p><strong>TODO</strong>: Use FRAME0.</p>
 <p><strong>Hypothesis</strong>: Assert preconditions and postconditions. Argument testing - null, etc. Also, have a unit test for each branch.</p>
 <h2 id="tests">Tests</h2>
-<p>4 processes, 2 backing stores each</p>
+<p>4 processes, 2 backing stores each - all running the page policy tests</p>
 <p>1 process, 8 backing stores</p>
 <p>6 processes.</p>
+<p>Test cases: NFRAME [50, 3072]; PAGE_ALLOCATION [0, 1]</p>
 
 <div class="info">Created: September  9, 2017</div>
-<div class="info">Last modified: December  4, 2017</div>
+<div class="info">Last modified: December  5, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, os</div>
 
