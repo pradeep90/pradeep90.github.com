@@ -785,8 +785,11 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <h2 id="debugging-look-at-the-diffs">Debugging: Look at the Diffs!</h2>
 <p><strong>Hypothesis</strong>: don’t know the cause of something, have the source code and can run interventions (aka <strong>debugging</strong>), look at your <strong>diff</strong>, list all your assumptions or toggle your diff till you get a “yes” -&gt; figure out which assumption is causing your error.</p>
 <p>debugging - read your diffs line by line -&gt; notice what changes you made that could have caused the error.</p>
+<p>debugging - just try different inputs without looking at the diff -&gt; find it harder to come up with the right inputs.</p>
+<hr />
 <p>Test: Tried writing at an address but the CR2 value showed some other address. Turned out that I had interpreted the output as hex when it was actually a long int! – toggling my diff would have helped.</p>
 <p>Test: Re-read my buggy page directory setup code - discovered my errors. – read the diff line by line.</p>
+<p>Test: Process wasn’t receiving message from parent. Tried lots of variations. Finally realized that I wasn’t even resuming the process. – didn’t look at the diff.</p>
 <h2 id="complex-diffs-toggling-a-lot-of-variables">“Complex” Diffs: Toggling a Lot of Variables</h2>
 <p><strong>Hypothesis</strong>: Diff toggles a lot of variables -&gt; hard to predict what the output will be.</p>
 <p>Diff toggles a few variables -&gt; easier to predict what the output will be.</p>
@@ -840,6 +843,11 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p><strong>Test</strong>: pipcreate - all possible configurations handled, but it took a long time (~25 hours) before I could pass even one shell integration test. – was going test by test.</p>
 <h2 id="red-green-refactor-vs-focus-gambling">Red-Green-Refactor vs Focus-Gambling</h2>
 <p>Test: Implementing the pseudo-code first and then covering branches with tests violates red-green-refactor. Then again, focus-gambling itself violates red-green-refactor. You’re concluding first and running tests later.</p>
+<h2 id="remember-to-refactor">Remember to Refactor</h2>
+<p><strong>Hypothesis</strong>: After passing the test, reminder to refactor -&gt; refactor.</p>
+<p>After passing the test, no reminder to refactor -&gt; don’t refactor.</p>
+<hr />
+<p>Test: initialize_nullproc_paging remained ugly. I didn’t refactor it. – no reminder.</p>
 <h2 id="minimum-interface-at-speed-more-hypotheses">Minimum Interface at Speed: More Hypotheses</h2>
 <p>want to handle a new input configuration (add a new feature) - get a failing test first -&gt; speed (no abstract thinking).</p>
 <p>new feature, pure function, write automated failing test -&gt; speed.</p>
@@ -859,7 +867,7 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Test: function to paste joined text - automated test - fast – pure function.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: December  5, 2017</div>
+<div class="info">Last modified: December  6, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 

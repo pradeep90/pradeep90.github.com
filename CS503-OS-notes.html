@@ -304,6 +304,12 @@ find . -type f -name &quot;*.c&quot; | xargs wc -l
 <h2 id="implementation-plan">Implementation Plan</h2>
 <p><strong>TODO</strong>: Use FRAME0.</p>
 <p><strong>Hypothesis</strong>: Assert preconditions and postconditions. Argument testing - null, etc. Also, have a unit test for each branch.</p>
+<p>Test: [Done] No heap, no virtual memory stuff, no backing store. Extend the null process’ page directory.</p>
+<p>Test: [Done] access different pages.</p>
+<p>Test: per-process page directory. context-switch. context-switch when accessing the same memory addresses.</p>
+<p>Test: heap.</p>
+<p>Test: refactor - frame list.</p>
+<p>Test: one page when there’s no free frame. implement backing store.</p>
 <h2 id="tests">Tests</h2>
 <p>4 processes, 2 backing stores each - all running the page policy tests</p>
 <p>1 process, 8 backing stores</p>

@@ -116,9 +116,15 @@ Wrong type argument: commandp, nil</code></pre>
 <pre><code>(defvar log-edit-callback nil)
 (defvar log-edit-diff-function nil)</code></pre>
 <p>I’m guessing that Git backend support has somehow not been set up.</p>
+<h1 id="writing-your-own-elisp-packages">Writing your own Elisp Packages</h1>
+<p>I wrote <code>org-autoclock.el</code>. It’s not yet a package that can be installed via the package manager, but it is a working standalone file.</p>
+<p>But I failed to require <code>org</code> and <code>s</code> and <code>f</code>, which the code needed and which worked in my setup because I had already required them. So, naturally, when my friend tried to use <code>org-autoclock</code>, it blew up. Bad.</p>
+<p><strong>Lesson</strong>: Run your proposed elisp code in an isolated Emacs instance so that you see which dependencies you need.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">emacs</span> -Q -l org-autoclock.el</code></pre></div>
+<p>Observation: When Emacs doesn’t know the definition of some function, it just skips it or something.</p>
 
 <div class="info">Created: August  6, 2015</div>
-<div class="info">Last modified: November 12, 2017</div>
+<div class="info">Last modified: December  5, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, emacs</div>
 
