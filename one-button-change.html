@@ -848,6 +848,49 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>After passing the test, no reminder to refactor -&gt; don’t refactor.</p>
 <hr />
 <p>Test: initialize_nullproc_paging remained ugly. I didn’t refactor it. – no reminder.</p>
+<h2 id="toggle-behind-an-interface-with-one-button">Toggle behind an Interface with One Button!</h2>
+<p><strong>Hypothesis</strong>: Feature you want to toggle, hide the current feature behind an interface and toggle completely with one button -&gt; handle each use of the interface (read or write), don’t mix and match between the features, quick -&gt; no uncertainty, no errors.</p>
+<p>Feature you want to toggle, don’t hide the current feature behind an interface or don’t toggle completely or don’t have just one button -&gt; may miss places where it is used, will take longer -&gt; uncertainty, errors.</p>
+<p><strong>Hypothesis</strong>: Searching for all uses of the thing you’re toggling leads to recursive toggles.</p>
+<hr />
+<p><strong>Test</strong>: OS HW3 - massively confused. Don’t know how to implement <strong>page-directory switching</strong>. Don’t know what could go wrong. Don’t know all the places where page-directory could be <strong>used</strong> (and thus be messed up by me). - Try getting one integration test. If it breaks, you can always revert back to confusion. – It worked! All I had to do was add an entry to procent, initialize it during create, have pointers to the global page tables, set up procent for nullproc too, update the page directory entry in <code>page_fault_handler</code>, and simply load the directory upon context-switch. Basically, set up process page directory correctly for all processes (initialize, pointers to global page tables, null process); update it when needed; load it when needed.</p>
+<p>Ah, fuck. I should have hidden <code>process.page_directory</code> and made them come for it. That way I would have known who wanted to read it and who wanted to write it. What a way to drive in an age-old lesson - program to an interface, not an implementation. I forgot it when it came to OS development in C.</p>
+<p>Explanation: I had the integration test of two processes writing to the same virtual address. When it came to the first 4096 pages, both the alternatives would work the same. They would differ only when going beyond the initial pages. The default alternative would overwrite one of the values in the null process’ page directory. My new per-process page directory alternative would have separate page directories for them and thus write separate values. So, pdbr should point to the current process’ page directory. Also, as per the integration test, the page fault handler should also use the current process’ page directory.</p>
+<p>Hmm… I should basically have grepped for <code>page.*directory</code> and looked at everything that depended on it.</p>
+<p>Look at the interface for everything.</p>
+<p>The kernel’s view of the “page directory” - <strong>all</strong> it knew or cared about was CR3. So, if I wanted it to use a different page directory, I needed to change CR3. Where? At the end of <code>resched</code>.</p>
+<p>Similarly, the OS’s view of the page directory - right now, everything depended directly on <code>page_directory_nullproc</code>. That was the only page directory in existence. I wanted to propose an alternative to it - a per-process page directory. So, I should have hidden it behind an interface and then toggled to the per-process page directory without anyone being any wiser.</p>
+<p>Actual explanation: Feature I wanted to toggle - global page directory vs per-process page directory; didn’t hide the global page directory behind an interface -&gt; missed places where it was used (like the page fault handler and resched).</p>
+<p>Test: Didn’t hide procent behind an interface when toggling the feature “no page_directory field” to “page_directory field” -&gt; missed places where it was used (like create, initialize, and global initialize).</p>
+<p>Test: I forgot to update nullproc’s page directory. Why? Because I updated procent without hiding it behind an interface. So, I didn’t catch all its users, in particular <code>initialize</code>. I should have looked for everything that initialized procent (since nothing would read or write to <code>page_directory</code> yet). – Caused errors.</p>
+<p>Test: When toggling global page directory with per-process page directory, I have to toggle the definition of procent, which requires me to seek all uses of procent. Similarly, toggling memlist involves toggling meminit, which requires finding out all the places where meminit is called.</p>
+<h2 id="abstract-dont-accept-all-the-information-youre-given">Abstract: Don’t Accept all the Information you’re Given</h2>
+<p><strong>Hypothesis</strong>: Desired output, accept all the information given (deal with a concrete type) -&gt; have to deal with more input configurations.</p>
+<p>Desired output, abstract the inputs using the possible outputs (deal with an abstract type) -&gt; have to deal with fewer input configurations.</p>
+<hr />
+<p>Test: <code>findPerson</code> vs <code>find</code>. – Have to deal with Person being male or female.</p>
+<h2 id="decompose-the-input">Decompose the Input</h2>
+<p><strong>Hypothesis</strong>: Input, treat it like some monolithic data structure -&gt; have to deal with a lot of input configurations.</p>
+<p>Input, treat it like some decomposable data structure (where the parts are decoupled) -&gt; fewer input configurations.</p>
+<p><strong>Hypothesis</strong>: Sum-product type, decompose -&gt; easily done.</p>
+<p>Some other type, decompose -&gt; pretty hard.</p>
+<hr />
+<p>Test: Guy <a href="http://www.jamesshore.com/Agile-Book/test_driven_development.html">talking about TDD</a> - <code>parseQuery</code> in Java took several red-green-refactor cycles. I did it in one line of Haskell and it was right too. Why? Why didn’t I need all the extra unit tests? I suspect that most of them were already covered by the functions I was composing. (The empty string one wasn’t.) – The guy was treating <code>QueryString</code> like some monolithic data structure that could have any number of possible configurations. I was treating it like a bunch of strings separated by “&amp;” and then separated by “=” within those.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import qualified</span> <span class="dt">Data.Map</span> <span class="kw">as</span> <span class="dt">M</span>
+m <span class="fu">=</span> M.fromList <span class="fu">.</span> map ((\[x, y] <span class="ot">-&gt;</span> (x, y)) <span class="fu">.</span> splitOn <span class="st">&quot;=&quot;</span>) <span class="fu">.</span> splitOn <span class="st">&quot;&amp;&quot;</span> <span class="fu">$</span>  <span class="st">&quot;name1=value1&amp;name2=value2&amp;name3=value3&quot;</span></code></pre></div>
+<p>Maybe these were well-worn paths that many programmers had already trodden. It would be a mistake to write fresh unit tests for them, as if you were completely uncertain as to their behaviour.</p>
+<p>Observation: <code>parseQuery</code> is way too specific. What you really have is a bunch of a’s with delimiters. Writing a specific function for that is just stupid.</p>
+<h2 id="chain-decompose-transform-compose">Chain = Decompose, Transform, Compose</h2>
+<p><strong>Hypothesis</strong>: Chain of functions -&gt; each function either decomposes the previous data structure or composes it into something bigger or transforms each part without composing it.</p>
+<hr />
+<p>Test:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">callGrepOnFile p <span class="fu">=</span> unlines <span class="fu">.</span> grep p <span class="fu">.</span> lines
+
+<span class="co">-- Read the files, grep each of them, and combine the results.</span>
+callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> map (callGrepOnFile p)) <span class="fu">.</span> mapM readFile <span class="fu">$</span> fs</code></pre></div>
+<p><code>lines</code> breaks down the string into a bunch of lines (each of which is simpler than the whole file and is independent of the rest). <code>grep p</code> transforms the lines into some other set of lines (just a subset). <code>unlines</code> composes the bunch of lines into a string.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">mapM<span class="ot"> ::</span> (<span class="dt">Monad</span> m, <span class="dt">Traversable</span> t) <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> m b) <span class="ot">-&gt;</span> t a <span class="ot">-&gt;</span> m (t b)</code></pre></div>
+<p>Next, <code>mapM readFile</code> transforms a list of files into a list of monads and then composes those monads to get an overall monad. Basically, you can see it as composing a bunch of files. <code>fmap</code> transforms part of a structure without touching the rest. <code>map (callGrepOnFile p)</code> transforms each element of that part-structure using <code>callGrepOnFile</code>. Finally, <code>concat</code> composes those elements into a valid part-structure.</p>
 <h2 id="minimum-interface-at-speed-more-hypotheses">Minimum Interface at Speed: More Hypotheses</h2>
 <p>want to handle a new input configuration (add a new feature) - get a failing test first -&gt; speed (no abstract thinking).</p>
 <p>new feature, pure function, write automated failing test -&gt; speed.</p>
