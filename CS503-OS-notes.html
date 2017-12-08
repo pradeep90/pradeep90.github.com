@@ -308,10 +308,20 @@ find . -type f -name &quot;*.c&quot; | xargs wc -l
 <p>Test: [Done] access different pages.</p>
 <p>Test: [Done] per-process page directory. context-switch. context-switch when accessing the same memory addresses.</p>
 <p>[Done] Keeps rebooting when I load the new page directory.</p>
-<p>Test: heap. check for valid address.</p>
-<p>Test: non-virtual process page directories must point to nullproc page directory. (Or just check for valid heap address so that they don’t go past the first four page tables?)</p>
-<p>Test: refactor - frame list.</p>
-<p>Test: one page when there’s no free frame. implement backing store.</p>
+<p>Test: [Done] heap. check for valid address.</p>
+<p>Test: [Done] non-virtual process page directories must point to nullproc page directory. (Or just check for valid heap address so that they don’t go past the first four page tables?)</p>
+<p>Test: [Done] Run the official test - page fault handling.</p>
+<p>Test: [Done] refactor - frame list.</p>
+<p>Test: [Done] ask for more frames than NFRAMES. should obtain a free frame.</p>
+<p>Test: [Done] one page when there’s no free frame.</p>
+<p>Test: dirty page; access 50 more pages; check if the old value is still there.</p>
+<p>Test: Implement backing store.</p>
+<p>Test: page replacement policy.</p>
+<p>Test: Run the official test - page replacement.</p>
+<p>Test: hooks.</p>
+<p>Test: process being killed.</p>
+<p>Test: Run official test with several processes (semaphores). Both page fault-handling and replacement.</p>
+<p>Test: I don’t evict pd or pt. Test whether the reference count thing matters.</p>
 <h2 id="tests">Tests</h2>
 <p>4 processes, 2 backing stores each - all running the page policy tests</p>
 <p>1 process, 8 backing stores</p>
@@ -321,7 +331,7 @@ find . -type f -name &quot;*.c&quot; | xargs wc -l
 <p>Question: resched - load page directory before or after context switch?</p>
 
 <div class="info">Created: September  9, 2017</div>
-<div class="info">Last modified: December  6, 2017</div>
+<div class="info">Last modified: December  8, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, os</div>
 

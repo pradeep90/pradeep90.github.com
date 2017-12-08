@@ -828,6 +828,7 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Test: Want to write down my completeness proof in LaTeX - hesitating because I feel like I need to write a complete report that flows from start to end, and maybe have diagrams and stuff. No! All I need to write is the proof alone. Everything else can come later. – one thing at a time.</p>
 <p>Test: Spent the last one hour coming up with a crystal-clear model that would show how <span class="math inline">\(U_Z\)</span> and Y are related even though that’s not the point of my proof. Dammit. – I was trying to abstract? Was I? I was trying to optimize for a <strong>great</strong> proof - one that would convince any snotty critics. But I didn’t really need that. This isn’t my final draft; this is just a proof of concept.</p>
 <p><strong>Test</strong>: Others seem to finish assignments sooner than me. Is it because they’re writing different code than me or because they’re writing the same code faster?</p>
+<p>Test: OS HW3 - I’m taking a long time to pass each test. Is it some essential difficulty of the problem (with respect to my current skill) or am I just being slow somehow?</p>
 <h2 id="high-level-design-needs-an-integration-test-maybe-with-mocking">High-level Design needs an Integration Test (maybe with Mocking)</h2>
 <p><strong>Corollary</strong>: Have integration test with expected output (maybe mocking out each lower-level function for the particular test input), get high-level design -&gt; low uncertainty.</p>
 <p>Don’t have integration test, get high-level design -&gt; high uncertainty.</p>
@@ -835,6 +836,12 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Test: OS HW3 - change design of my paging code - don’t know which one will be better (and still pass all tests). Don’t know how to implement free-frame list in the best way or how to decouple the heap and backing store from the rest of the program, etc. – didn’t have any integration test, lots of uncertainty.</p>
 <p>Test: OS HW2 - pipes - knew how the high-level pieces were going to fit together. Basically, didn’t have to do any <strong>high-level design changes</strong>. Just implement pipgetc, pipputc, etc. and the test code would simply use a pipe like a normal device. – didn’t need to change the high-level design.</p>
 <p>Test: OS HW3 - tried one example of virtual memory page access - got the general idea of how control flowed. Got the high-level design (heap was used just to allocate memory, backing store was really used only when there were insufficient frames). – integration test helped me get the answer quickly.</p>
+<h2 id="integration-test-followed-by-unit-tests">Integration Test followed by Unit Tests</h2>
+<p><strong>Corollary</strong>: Write one failing integration test that doesn’t have any branches anywhere, come up with high-level design, write unit tests for each module, put it together -&gt; high-level design at speed, module design at speed, correctness.</p>
+<p>Write just the failing integration test, no unit tests -&gt; may not handle certain cases - errors, high uncertainty about modules - slow, hesitate to change code.</p>
+<p>No integration test, write just unit tests -&gt; uncertainty about design - slow, don’t know how to proceed.</p>
+<hr />
+<p>Test: OS HW3 - obtaining a free frame - if page was dirty, write it to the backing store. – got the high-level design, but don’t know if my <code>get_new_frame</code> function handle possible cases well. Hesitant to make global changes like adding a new field to <code>invpt_entry</code>.</p>
 <h2 id="implementing-a-spec-focus-gambling">Implementing a Spec: Focus-Gambling</h2>
 <p><strong>Hypothesis</strong>: Given high-level design, pseudo-code that you know is correct, implement first, write tests later, put only as much confidence in your program as the number of tests you pass -&gt; get correctness first and good module-level design later -&gt; low uncertainty about each function because you already know the pseudo-code, quick.</p>
 <p>Given high-level design, pseudo-code that you know is correct, test-driven design -&gt; get correctness and good module-level design at the same time -&gt; low uncertainty, but slow because you have to code step-by-step.</p>
@@ -874,6 +881,7 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Input, treat it like some decomposable data structure (where the parts are decoupled) -&gt; fewer input configurations.</p>
 <p><strong>Hypothesis</strong>: Sum-product type, decompose -&gt; easily done.</p>
 <p>Some other type, decompose -&gt; pretty hard.</p>
+<p><strong>Corollary</strong>: Decompose reality.</p>
 <hr />
 <p>Test: Guy <a href="http://www.jamesshore.com/Agile-Book/test_driven_development.html">talking about TDD</a> - <code>parseQuery</code> in Java took several red-green-refactor cycles. I did it in one line of Haskell and it was right too. Why? Why didn’t I need all the extra unit tests? I suspect that most of them were already covered by the functions I was composing. (The empty string one wasn’t.) – The guy was treating <code>QueryString</code> like some monolithic data structure that could have any number of possible configurations. I was treating it like a bunch of strings separated by “&amp;” and then separated by “=” within those.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import qualified</span> <span class="dt">Data.Map</span> <span class="kw">as</span> <span class="dt">M</span>
@@ -910,7 +918,7 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p>Test: function to paste joined text - automated test - fast – pure function.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: December  6, 2017</div>
+<div class="info">Last modified: December  7, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
