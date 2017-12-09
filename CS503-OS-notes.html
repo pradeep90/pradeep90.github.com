@@ -322,6 +322,7 @@ find . -type f -name &quot;*.c&quot; | xargs wc -l
 <p>Test: process being killed.</p>
 <p>Test: Run official test with several processes (semaphores). Both page fault-handling and replacement.</p>
 <p>Test: I don’t evict pd or pt. Test whether the reference count thing matters.</p>
+<p><strong>Important</strong>: Massive bug because Galileo runs rdsproc (or something) that takes up a lot of the stack and thus gives SYSERR when later processes ask for stack.</p>
 <h2 id="tests">Tests</h2>
 <p>4 processes, 2 backing stores each - all running the page policy tests</p>
 <p>1 process, 8 backing stores</p>

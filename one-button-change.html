@@ -614,10 +614,6 @@ boxes3x3' <span class="fu">=</span> fmap concat <span class="fu">.</span> overMa
 <p>Expect to just pass the test with a quick and dirty hypothesis (and maybe refactor later), have some idea, little time -&gt; write it down well enough to pass that specific test.</p>
 <p>Corollary: Expect to have code that passes all tests written down (and put only as much confidence in your hypothesis as the tests warrant) -&gt; can do what needs to be done faster.</p>
 <p>Test: Jotting down my mock objects idea – I wanted to get a general hypothesis that fit with all my other “complex” programming ideas.</p>
-<h1 id="write-and-test-in-isolation-before-you-use">Write and Test in Isolation before You Use</h1>
-<p>When you want to extend a function with some new function, test your new code as a function before you use it here. For example, if you want your <code>generate_stats</code> function to write the final matrix to a file (why do you want to do that within the same function?), have a separate function that writes a matrix to a file, test it, and then use it here.</p>
-<p>Observation: I ended up with a script that was costly to test when I was extracting ftrs from a dataset. I/O was mixed with program logic.</p>
-<p>Corollary: You will end up with one-button changes to your original function, so it will be easier to test too (as compared to the case where you simply dumped code at the end of the function).</p>
 <h1 id="deliberate-execution-of-hypothesis">Deliberate Execution of Hypothesis</h1>
 <p>Test your explicit hypothesis at each step by asking it what to do. If it’s blank, fill it in with your intuitive next step. For example, use your “one-button change” hypothesis to write your course programs.</p>
 <p><strong>Hypothesis</strong>: Live life “deliberately” -&gt; get an explicit hypothesis about a lot of things you do.</p>
@@ -842,6 +838,31 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>No integration test, write just unit tests -&gt; uncertainty about design - slow, don’t know how to proceed.</p>
 <hr />
 <p>Test: OS HW3 - obtaining a free frame - if page was dirty, write it to the backing store. – got the high-level design, but don’t know if my <code>get_new_frame</code> function handle possible cases well. Hesitant to make global changes like adding a new field to <code>invpt_entry</code>.</p>
+<h2 id="test-your-mechanism-in-isolation-no-need-to-change-the-rest">Test your Mechanism in Isolation: No Need to Change the Rest</h2>
+<p><strong>Hypothesis</strong>: Work needed to test all branches of a mechanism = work needed to set the desired inputs, get the outputs, and understand the outputs. Everything else is screened off by the input.</p>
+<p><strong>Corollary</strong>: Unit tests -&gt; minimum work to set the inputs, minimum time to get the outputs, minimum work to understand the outputs.</p>
+<p>Integration tests -&gt; need to do extra work to set the desired inputs because you have to <strong>change</strong> the rest of the program, lot of time to get the outputs since there may be other code before the final output, harder to understand the outputs because they could be caused by any part of the program.</p>
+<p><strong>Hypothesis</strong>: Got the type signature for a mechanism (using your integration test), write and test it in isolation -&gt; less work to get to a correct implementation, can exhaustively test all the relevant input configurations -&gt; quick, correct.</p>
+<p>Got the type signature for a mechanism (using your integration test), write and test it as part of your overall program -&gt; more work to get to a correct implementation, costly to exhaustively test all the relevant input configurations -&gt; slower, may have errors.</p>
+<hr />
+<p>Test: My friend kept changing code within his (already large) functions. I had to keep telling him to extract the code and test it separately. (For example, plotting figures or using an array of arrays or getting all combinations of some configurations.) – changing code was easy enough, even though the interpreter would have been much faster; getting the output took longer because he had to train the classifiers first; didn’t know if the error was because of the code or something else.</p>
+<p>Test: I ended up with a script that was costly to test when I was extracting features from a dataset - I couldn’t test the matrix-saving code until I ran the 15-minute script. And if it failed for some trivial reason after 15 minutes, like it did, I was fucked. – pretty easy to change the inputs; took ages to get the output; not too hard to understand the output.</p>
+<p>Test: OS HW3 - inverted page table – had to do a lot of work to get its inputs (in fact, I didn’t even separate its interface; I just used it inline wherever I wanted); had to wait for the whole program to run before I could see the output; and had to parse the whole table output to see what was going on.</p>
+<h2 id="first-class-inputs-and-outputs-fast-direct-feedback">First-Class Inputs and Outputs: Fast, Direct Feedback</h2>
+<p><strong>Hypothesis</strong>: First-class input -&gt; can set the input without doing any other work.</p>
+<p>No first-class input -&gt; have to set the input by changing a lot of other variables.</p>
+<p><strong>Hypothesis</strong>: First-class output -&gt; can test the output without doing much work.</p>
+<p>No first-class output -&gt; have to test in a round-about manner.</p>
+<hr />
+<p>Test: OS HW1 scheduler – couldn’t test it with a particular configuration of ready processes with different priorities. Had to change the whole system just to get that configuration right.</p>
+<p>Test: pipputc – couldn’t really test with first-class inputs. Had to set up processes. Work.</p>
+<p>Test: batsmen average – could just test using the 3-over mini-game. Little work. (Though I couldn’t really test it with arbitrary inputs. Had to work with what I was given.)</p>
+<p>Test: OS HW1 scheduler – no first-class output of (next process, next ready list) that I could test directly. Had to run all the processes for several seconds and observe their steady-state CPU usage ratio.</p>
+<p>Test; pipgetc – could test the output of the pipe without even using another process.</p>
+<h2 id="understanding-testing-it-with-different-inputs">Understanding = Testing it with Different Inputs?</h2>
+<p><strong>Hypothesis</strong>: Some output depends on a lot of other variables or takes a long time to give the output or gives output that is hard to isolate -&gt; have to do a lot of work to test and understand it with different inputs (aka “understand” it).</p>
+<p>Some output depends on just a few other variables and takes a short while to produce output and gives isolated output -&gt; have to do less work to test it with different inputs.</p>
+<p><strong>Corollary</strong>: If that is true, then the explanations that will lead to a lot of understanding will be those that let you change inputs without much effort, get the output quickly, and isolate the cause easily. They would let you answer “what if” questions easily.</p>
 <h2 id="implementing-a-spec-focus-gambling">Implementing a Spec: Focus-Gambling</h2>
 <p><strong>Hypothesis</strong>: Given high-level design, pseudo-code that you know is correct, implement first, write tests later, put only as much confidence in your program as the number of tests you pass -&gt; get correctness first and good module-level design later -&gt; low uncertainty about each function because you already know the pseudo-code, quick.</p>
 <p>Given high-level design, pseudo-code that you know is correct, test-driven design -&gt; get correctness and good module-level design at the same time -&gt; low uncertainty, but slow because you have to code step-by-step.</p>
@@ -918,7 +939,7 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p>Test: function to paste joined text - automated test - fast – pure function.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: December  7, 2017</div>
+<div class="info">Last modified: December  8, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
