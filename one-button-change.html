@@ -564,7 +564,7 @@ boxes3x3' <span class="fu">=</span> fmap concat <span class="fu">.</span> overMa
 <p><strong>Hypothesis</strong>: It’s easy to toggle tests.</p>
 <p>I did it effortlessly with my <code>pipe</code> tests.</p>
 <p><strong>Hypothesis</strong>: It’s hard to toggle abstractions.</p>
-<p>Except for the last few edits or so, our editors don’t allow us to roll back abstractions. It’s a pain even if you use git.</p>
+<p>Except for the last few edits or so, our editors don’t allow us to roll back abstractions. It’s a pain even if you use it.</p>
 <p><strong>Hypothesis</strong>: Abstractions are usually set in stone.</p>
 <p>Once you add an abstraction (like a class or function), it’s so hard to get back the original code that you stick with the abstraction.</p>
 <p>But you don’t know if your abstraction itself was correct. So, you’re now uncertain about both your abstraction and your code’s behaviour.</p>
@@ -832,6 +832,47 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Test: OS HW3 - change design of my paging code - don’t know which one will be better (and still pass all tests). Don’t know how to implement free-frame list in the best way or how to decouple the heap and backing store from the rest of the program, etc. – didn’t have any integration test, lots of uncertainty.</p>
 <p>Test: OS HW2 - pipes - knew how the high-level pieces were going to fit together. Basically, didn’t have to do any <strong>high-level design changes</strong>. Just implement pipgetc, pipputc, etc. and the test code would simply use a pipe like a normal device. – didn’t need to change the high-level design.</p>
 <p>Test: OS HW3 - tried one example of virtual memory page access - got the general idea of how control flowed. Got the high-level design (heap was used just to allocate memory, backing store was really used only when there were insufficient frames). – integration test helped me get the answer quickly.</p>
+<h2 id="spec-or-integration-test-quick-feedback-about-high-level-design">Spec or Integration Test: Quick Feedback about High-level Design</h2>
+<p><strong>Corollary</strong>: Writing a spec (or better, a prototype) = coming up with integration tests (with feedback from the user).</p>
+<p><strong>Hypothesis</strong>: Spec or integration test, change your high-level design -&gt; can set the input configuration (aka your program) quickly and get feedback from user (who is the mechanism you’re testing).</p>
+<p>Write fully-tested code, change your high-level design -&gt; lot of work to change the input configuration (your program).</p>
+<hr />
+<p>Test: Joel Spolsky:</p>
+<blockquote>
+<p>Now, Mr. Rogers over at Well-Tempered Software Company (colloquially, “WellTemperSoft”) is one of those nerdy organized types who refuses to write code until he’s got a spec. He spends about 20 minutes designing the backwards compatibility feature the same way Speedy did, and comes up with a spec that basically says:</p>
+<blockquote>
+<p>When opening a file created with an older version of the product, the file is converted to the new format.</p>
+</blockquote>
+<p>The spec is shown to the customer, who says “wait a minute! We don’t want to switch everyone at once!” So Mr. Rogers thinks some more, and amends the spec to say:</p>
+<blockquote>
+<p>When opening a file created with an older version of the product, the file is converted to the new format in memory. When saving this file, the user is given the option to convert it back.</p>
+</blockquote>
+<p>Another 20 minutes have elapsed.</p>
+<p>Mr. Rogers’ boss, an object nut, looks at this and thinks something might be amiss. He suggests a different architecture.</p>
+<blockquote>
+<p>The code will be factored to use two interfaces: V1 and V2. V1 contains all the version one features, and V2, which inherits from V1, adds all the new features. Now V1::Save can handle the backwards compatibility while V2::Save can be used to save all the new stuff. If you’ve opened a V1 file and try to use V2 functionality, the program can warn you right away, and you will have to either convert the file or give up the new functionality.</p>
+</blockquote>
+<p>20 more minutes.</p>
+<p>Mr. Rogers is grumpy. This refactoring will take 3 weeks, instead of the 2 weeks he originally estimated! But it does solve all the customer problems, in an elegant way, so he goes off and does it.</p>
+<p>– <a href="https://www.joelonsoftware.com/2000/10/02/painless-functional-specifications-part-1-why-bother/"></a></p>
+</blockquote>
+<p>Explanation: I suspect that a spec is just an integration test. You come up with a high-level input-output pair and go through the particular branch of (not-yet-existing) code that it exercises. – The key is that you can change the high-level design quickly and get feedback (about whether they do what the users wants and whether they will lead to good-quality code).</p>
+<p>Test: PG on spec vs prototype:</p>
+<blockquote>
+<ol start="8" style="list-style-type: decimal">
+<li>Start small. A program gets easier to hold in your head as you become familiar with it. You can start to treat parts as black boxes once you feel confident you’ve fully explored them. But when you first start working on a project, you’re forced to see everything. If you start with too big a problem, you may never quite be able to encompass it. So if you need to write a big, complex program, the best way to begin may not be to write a spec for it, but to write a prototype that solves a subset of the problem. Whatever the advantages of planning, they’re often outweighed by the advantages of being able to keep a program in your head.</li>
+</ol>
+<p>– <a href="http://www.paulgraham.com/head.html"></a></p>
+</blockquote>
+<blockquote>
+<p>What and how should not be kept too separate. You’re asking for trouble if you try to decide what to do without understanding how to do it. But hacking can certainly be more than just deciding how to implement some spec. At its best, it’s creating the spec– though it turns out the best way to do that is to implement it.</p>
+<p>– <a href="http://www.paulgraham.com/hp.html"></a></p>
+</blockquote>
+<p>Explanation: Write a prototype to pass one integration test (such as evaluating some small Lisp program) and then abstract your code into well-separated modules. – You can test different high-level design ideas using your integration test without much trouble (because you don’t have too many branches).</p>
+<blockquote>
+<p>The moral of the story is that when you design your product in a human language, it only takes a few minutes to try thinking about several possibilities, revising, and improving your design. Nobody feels bad when they delete a paragraph in a word processor. But when you design your product in a programming language, it takes weeks to do iterative designs. What’s worse, a programmer who’s just spend 2 weeks writing some code is going to be quite attached to that code, no matter how wrong it is.</p>
+<p>– <a href="https://www.joelonsoftware.com/2000/10/02/painless-functional-specifications-part-1-why-bother/"></a></p>
+</blockquote>
 <h2 id="integration-test-followed-by-unit-tests">Integration Test followed by Unit Tests</h2>
 <p><strong>Corollary</strong>: Write one failing integration test that doesn’t have any branches anywhere, come up with high-level design, write unit tests for each module, put it together -&gt; high-level design at speed, module design at speed, correctness.</p>
 <p>Write just the failing integration test, no unit tests -&gt; may not handle certain cases - errors, high uncertainty about modules - slow, hesitate to change code.</p>
@@ -848,6 +889,8 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Test: My friend kept changing code within his (already large) functions. I had to keep telling him to extract the code and test it separately. (For example, plotting figures or using an array of arrays or getting all combinations of some configurations.) – changing code was easy enough, even though the interpreter would have been much faster; getting the output took longer because he had to train the classifiers first; didn’t know if the error was because of the code or something else.</p>
 <p>Test: I ended up with a script that was costly to test when I was extracting features from a dataset - I couldn’t test the matrix-saving code until I ran the 15-minute script. And if it failed for some trivial reason after 15 minutes, like it did, I was fucked. – pretty easy to change the inputs; took ages to get the output; not too hard to understand the output.</p>
 <p>Test: OS HW3 - inverted page table – had to do a lot of work to get its inputs (in fact, I didn’t even separate its interface; I just used it inline wherever I wanted); had to wait for the whole program to run before I could see the output; and had to parse the whole table output to see what was going on.</p>
+<p>Test: OS HW3 - FIFO order – didn’t write any unit tests. Had to set inputs only via the tests I ran; had to wait for the output; couldn’t understand the output directly because I wasn’t using first-class reference strings. 1 hour 50 minutes right there.</p>
+<p>Test: rectangle numbering in Emacs - wanted it to start from 1 instead of 0, but kept putting it off because it felt like it wouldn’t be worth it to dive into some foreign code and change what I wanted. Just realized that it’s <em>my</em> code that starts from 0. Changed it in a jiffy. – somebody else’s code - have to do a lot of work to set the input (in case configuration variables don’t exist). my code - can just dive in and change whatever I want.</p>
 <h2 id="first-class-inputs-and-outputs-fast-direct-feedback">First-Class Inputs and Outputs: Fast, Direct Feedback</h2>
 <p><strong>Hypothesis</strong>: First-class input -&gt; can set the input without doing any other work.</p>
 <p>No first-class input -&gt; have to set the input by changing a lot of other variables.</p>
@@ -859,6 +902,49 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Test: batsmen average – could just test using the 3-over mini-game. Little work. (Though I couldn’t really test it with arbitrary inputs. Had to work with what I was given.)</p>
 <p>Test: OS HW1 scheduler – no first-class output of (next process, next ready list) that I could test directly. Had to run all the processes for several seconds and observe their steady-state CPU usage ratio.</p>
 <p>Test; pipgetc – could test the output of the pipe without even using another process.</p>
+<h2 id="cycle-time-time-it-takes-to-toggle-and-get-feedback">Cycle Time: Time it takes to Toggle and get Feedback</h2>
+<p><strong>Corollary</strong>: Long time to get feedback (<strong>long cycle time</strong>) -&gt; get it less frequently -&gt; more uncertain about your code -&gt; slower.</p>
+<p>Short time to get feedback (<strong>short cycle time</strong>) -&gt; get it more frequently -&gt; less uncertain about your code -&gt; faster.</p>
+<p><strong>Hypothesis</strong>: Key question - how much time does it take to toggle a feature (or set its value for the first time) and get understandable feedback? In other words, what is the cycle time?</p>
+<hr />
+<p>Test: Joel Spolsky: – get feedback less frequently and find it harder to code and make more silly errors.</p>
+<blockquote>
+<p>If the process takes any more than one step, it is prone to errors. And when you get closer to shipping, you want to have a very fast cycle of fixing the “last” bug, making the final EXEs, etc. If it takes 20 steps to compile the code, run the installation builder, etc., you’re going to go crazy and you’re going to make silly mistakes.</p>
+<p>– <a href="https://www.joelonsoftware.com/2000/08/09/the-joel-test-12-steps-to-better-code/"></a></p>
+</blockquote>
+<p>Test: Joel Spolsky - why developers always want faster hardware – faster cycle time.</p>
+<blockquote>
+<p>A crucial observation here is that you have to run through the loop again and again to write a program, and so it follows that the faster the Edit-Compile-Test loop, the more productive you will be, down to a natural limit of instantaneous compiles. That’s the formal, computer-science-y reason that computer programmers want really fast hardware and compiler developers will do anything they can to get super-fast Edit-Compile-Test loops.</p>
+<p>– <a href="https://www.joelonsoftware.com/2001/01/27/daily-builds-are-your-friend/"></a></p>
+</blockquote>
+<h2 id="frequent-automated-releases-low-effort-low-cycle-time">Frequent, Automated Releases: Low Effort, Low Cycle Time</h2>
+<p><strong>Hypothesis</strong>: One-button change (or one-button execution) -&gt; set inputs with little work. (Zero-button -&gt; zero work!)</p>
+<p>Automated release -&gt; get output with little work. It may take time, but you don’t have to do anything manually.</p>
+<p>Dashboard -&gt; understand output with little work. The output gets interpreted for you.</p>
+<p>Frequent releases -&gt; actually get feedback about your changes and thus have lower uncertainty.</p>
+<p>Corollary: Daily build -&gt; zero-button execution.</p>
+<p>Corollary: Unit tests -&gt; automated release, easy-to-understand output (“10/11 tests passed.”)</p>
+<h2 id="powerful-abstractions-lead-to-quick-tests">Powerful Abstractions lead to Quick Tests</h2>
+<p><strong>Corollary</strong>: Powerful abstractions -&gt; less code to set a particular configuration as input to some other mechanism, less work to understand the output (since it is at a high level), may be slower.</p>
+<hr />
+<p>Test: When testing my pop-by-age code when trying to delete a process’ frames, I needed to get frames that had maximum age. Get maximum of a list (or tree or anything) by age - in Haskell, one word - <code>maximumBy</code> (assuming it implements Foldable). In C, I have to write an explicit for-loop keeping track of <code>max_age</code> and <code>max_i</code>. – less code to set a particular configuration in Haskell; less work to understand the output because it’s just an element (in C, it’s the index of the list); speed doesn’t matter much here.</p>
+<h2 id="specs-and-estimation">Specs and Estimation</h2>
+<p><strong>Hypothesis</strong>: Spec -&gt; estimate how long it will take.</p>
+<p><strong>Hypothesis</strong>: Spec -&gt; may turn into a to-do list and thus negative reinforcement instead of the positive reinforcement of building something that has never existed before.</p>
+<hr />
+<blockquote>
+<p>Number three giant important reason to have a spec is that without a detailed spec, it’s impossible to make a schedule. Not having a schedule is OK if it’s your PhD and you plan to spend 14 years on the thing, or if you’re a programmer working on the next Duke Nukem and we’ll ship when we’re good and ready. But for almost any kind of real business, you just have to know how long things are going to take, because developing a product costs money. You wouldn’t buy a pair of jeans without knowing what the price is, so how can a responsible business decide whether to build a product without knowing how long it will take and, therefore, how much it will cost? For more on scheduling, read Painless Software Schedules.</p>
+<p>– <a href="https://www.joelonsoftware.com/2000/10/02/painless-functional-specifications-part-1-why-bother/"></a></p>
+</blockquote>
+<h2 id="scenarios-make-something-users-want">Scenarios: Make Something Users Want</h2>
+<p>Hypothesis: Come up with scenarios (not input-output specifications) -&gt; make something users want.</p>
+<p>Come up with input-output specifications -&gt; make something that works as per your specification but which nobody may want.</p>
+<hr />
+<p>Test: Joel Spolsky - talking about scenarios where a businessman would want to use his website. If he makes it correctly (and if the businessman really does want such a feature), he would have made something users want.</p>
+<blockquote>
+<p>Scenarios. When you’re designing a product, you need to have some real live scenarios in mind for how people are going to use it. Otherwise you end up designing a product that doesn’t correspond to any real-world usage (like the Cue?Cat). Pick your product’s audiences and imagine a fictitious, totally imaginary but totally stereotypical user from each audience who uses the product in a totally typical way. Chapter 9 of my UI design book (available online for free) talks about creating fictional users and scenarios. This is where you put them. The more vivid and realistic the scenario, the better a job you will do designing a product for your real or imagined users, which is why I tend to put in lots of made-up details.</p>
+<p>– <a href="https://www.joelonsoftware.com/2000/10/03/painless-functional-specifications-part-2-whats-a-spec/"></a></p>
+</blockquote>
 <h2 id="understanding-testing-it-with-different-inputs">Understanding = Testing it with Different Inputs?</h2>
 <p><strong>Hypothesis</strong>: Some output depends on a lot of other variables or takes a long time to give the output or gives output that is hard to isolate -&gt; have to do a lot of work to test and understand it with different inputs (aka “understand” it).</p>
 <p>Some output depends on just a few other variables and takes a short while to produce output and gives isolated output -&gt; have to do less work to test it with different inputs.</p>
@@ -939,7 +1025,7 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p>Test: function to paste joined text - automated test - fast – pure function.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: December  8, 2017</div>
+<div class="info">Last modified: December 10, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
