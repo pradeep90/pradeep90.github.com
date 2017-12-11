@@ -917,6 +917,7 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>A crucial observation here is that you have to run through the loop again and again to write a program, and so it follows that the faster the Edit-Compile-Test loop, the more productive you will be, down to a natural limit of instantaneous compiles. That’s the formal, computer-science-y reason that computer programmers want really fast hardware and compiler developers will do anything they can to get super-fast Edit-Compile-Test loops.</p>
 <p>– <a href="https://www.joelonsoftware.com/2001/01/27/daily-builds-are-your-friend/"></a></p>
 </blockquote>
+<p>Test: Math proofs - long time to get the output. You have to be the human interpreter and run the proof line by line. Sometimes you may not know either way and may have to wait for an experienced mathematician to give you feedback. You can’t (without automatic theorem provers, which I don’t think most mathematicians use) get the output in an instant. In this regard, we programmers are fortunate. – more uncertain about your math proofs. That’s why they have more than one proof for the same theorem (according to Terence Tao).</p>
 <h2 id="frequent-automated-releases-low-effort-low-cycle-time">Frequent, Automated Releases: Low Effort, Low Cycle Time</h2>
 <p><strong>Hypothesis</strong>: One-button change (or one-button execution) -&gt; set inputs with little work. (Zero-button -&gt; zero work!)</p>
 <p>Automated release -&gt; get output with little work. It may take time, but you don’t have to do anything manually.</p>
@@ -928,6 +929,13 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p><strong>Corollary</strong>: Powerful abstractions -&gt; less code to set a particular configuration as input to some other mechanism, less work to understand the output (since it is at a high level), may be slower.</p>
 <hr />
 <p>Test: When testing my pop-by-age code when trying to delete a process’ frames, I needed to get frames that had maximum age. Get maximum of a list (or tree or anything) by age - in Haskell, one word - <code>maximumBy</code> (assuming it implements Foldable). In C, I have to write an explicit for-loop keeping track of <code>max_age</code> and <code>max_i</code>. – less code to set a particular configuration in Haskell; less work to understand the output because it’s just an element (in C, it’s the index of the list); speed doesn’t matter much here.</p>
+<h2 id="writing-essays-for-others-forces-you-get-feedback">Writing Essays for Others forces you get Feedback</h2>
+<p><strong>Hypothesis</strong>: Write essay meant to be published -&gt; actually run over each line with a reader’s eye, have to explain everything in detail -&gt; actually specify your model, actually get feedback.</p>
+<p>Write stuff just for “internal use” -&gt; just go with what you feel is the output of the mechanism, can hand-wave over details -&gt; don’t specify your model, don’t get the feedback you could have got.</p>
+<p>So, writing for yourself is like writing a 200-line function that you’ve never been tested. Writing for others is like writing a function that you will test pretty soon.</p>
+<p><strong>Lesson</strong>: Consider your casual judgment to be a poor source of feedback. Instead, prefer the feedback of a reader (even if it’s an imaginary one that pipes up as you’re writing). So, write as close to the final medium as possible. That’s how you’ll force yourself to think like a reader.</p>
+<hr />
+<p>Test: Surrogate endpoints - stuck for nearly six hours on the one-to-one mapping proof for a simple n=1 inducing path. Wrote about it in the report. Found out that I was <strong>not</strong> going into an infinite recursion as I had thought. My approach was actually right. Why did this work when I was writing it out? – When I was writing the report, I was looking at it from the viewpoint of my professor, who’d be reviewing it. So, I wanted to make everything understandable.</p>
 <h2 id="specs-and-estimation">Specs and Estimation</h2>
 <p><strong>Hypothesis</strong>: Spec -&gt; estimate how long it will take.</p>
 <p><strong>Hypothesis</strong>: Spec -&gt; may turn into a to-do list and thus negative reinforcement instead of the positive reinforcement of building something that has never existed before.</p>
