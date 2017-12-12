@@ -836,6 +836,7 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p><strong>Corollary</strong>: Writing a spec (or better, a prototype) = coming up with integration tests (with feedback from the user).</p>
 <p><strong>Hypothesis</strong>: Spec or integration test, change your high-level design -&gt; can set the input configuration (aka your program) quickly and get feedback from user (who is the mechanism you’re testing).</p>
 <p>Write fully-tested code, change your high-level design -&gt; lot of work to change the input configuration (your program).</p>
+<p><strong>Hypothesis</strong>: Spec -&gt; list your high-level assumptions so that you can toggle them deliberately or test them against reality.</p>
 <hr />
 <p>Test: Joel Spolsky:</p>
 <blockquote>
@@ -873,6 +874,25 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>The moral of the story is that when you design your product in a human language, it only takes a few minutes to try thinking about several possibilities, revising, and improving your design. Nobody feels bad when they delete a paragraph in a word processor. But when you design your product in a programming language, it takes weeks to do iterative designs. What’s worse, a programmer who’s just spend 2 weeks writing some code is going to be quite attached to that code, no matter how wrong it is.</p>
 <p>– <a href="https://www.joelonsoftware.com/2000/10/02/painless-functional-specifications-part-1-why-bother/"></a></p>
 </blockquote>
+<blockquote>
+<p>CORAL: All business plans for startups turn out to be wrong, but you still need them - and not just as works of fiction. They represent the written form of your current beliefs about your key assumptions. Writing down your business plan checks whether your current beliefs can possibly be coherent, and suggests which critical beliefs to test first, and which results should set off alarms, and when you are falling behind key survival thresholds. The idea isn’t that you stick to the business plan; it’s that having a business plan (a) checks that it seems possible to succeed in any way whatsoever, and (b) tells you when one of your beliefs is being falsified so you can explicitly change the plan and adapt. Having a written plan that you intend to rapidly revise in the face of new information is one thing. NOT HAVING A PLAN is another.</p>
+<p>– <a href="https://intelligence.org/2017/11/26/security-mindset-and-the-logistic-success-curve/"></a></p>
+</blockquote>
+<h2 id="rapid-prototyping-figure-out-the-high-level-design-before-the-low-level-details">Rapid Prototyping: Figure out the High-level Design before the Low-level Details</h2>
+<p><strong>Question</strong>: Why is it better to pass one integration test with a 120-line program written in three hours than to pass all kinds of tests with a spec implemented in three weeks?</p>
+<p>Observation: The differing variables are: number of tests passed, number of lines of code, and time taken. Also, the first one gets feedback about the design immediately.</p>
+<p><strong>Hypothesis</strong>: You’re uncertain about the integration tests you actually want to pass. And even if you know precisely which tests you wanted to pass, you’re still uncertain about the high-level design you should use for your code.</p>
+<p>If you write a lot of code to pass the tests you assumed were important, you have to do a lot of work to handle some other tests (plus you would have wasted all that time). Basically, the high-level design changes, and that costs you if you’ve already written much code.</p>
+<p>Similarly, if you write a lot of code and then decide to change your high-level design, you have to do a lot of work. High-level design change always takes work when you have a lot of code. You may get it wrong in your spec, which makes it costly to change three weeks down the line.</p>
+<p><strong>Corollary</strong>: It’s a mistake to write low-level code without getting the high-level design right.</p>
+<hr />
+<p>Test: PG on the Viaweb editor:</p>
+<blockquote>
+<p>The Viaweb editor must be one of the most extreme cases of incremental development. It began with a 120-line program for generating Web sites that I had used in an example in a book that I finished just before we started Viaweb. The Viaweb editor, which eventually grew to be about 25,000 lines of code, grew incrementally from this program. I never once sat down and rewrote the whole thing. I don’t think I was ever more than a day or two without running code. The whole development process was one long series of gradual changes.</p>
+<p>– <a href="http://ep.yimg.com/ty/cdn/paulgraham/bbnexcerpts.txt"></a></p>
+</blockquote>
+<p>Explanation: His initial integration test was passed by a 120-line program. He then added more integration tests and improved the design of the program as needed. – He figured out exactly which pieces he needed - the high-level design - before he implemented them in detail. For example, he needed macros to wrap HTML code in different tags, etc.</p>
+<p>Test: Haskell programmers use type signatures to do this kind of thing. Sudoku - get a matrix filled with possibilities for each cell, give each cell the possibilities of its row, column, and box neighbours, remove certain possibilities, repeat till you get either a solved matrix or a matrix that doesn’t improve anymore. Each of these steps is doable. – you’ve got the high-level design for passing the test of “solving a Sudoku grid”.</p>
 <h2 id="integration-test-followed-by-unit-tests">Integration Test followed by Unit Tests</h2>
 <p><strong>Corollary</strong>: Write one failing integration test that doesn’t have any branches anywhere, come up with high-level design, write unit tests for each module, put it together -&gt; high-level design at speed, module design at speed, correctness.</p>
 <p>Write just the failing integration test, no unit tests -&gt; may not handle certain cases - errors, high uncertainty about modules - slow, hesitate to change code.</p>
@@ -1033,7 +1053,7 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p>Test: function to paste joined text - automated test - fast – pure function.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: December 10, 2017</div>
+<div class="info">Last modified: December 12, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
