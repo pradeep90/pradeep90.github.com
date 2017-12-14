@@ -885,6 +885,8 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>If you write a lot of code to pass the tests you assumed were important, you have to do a lot of work to handle some other tests (plus you would have wasted all that time). Basically, the high-level design changes, and that costs you if you’ve already written much code.</p>
 <p>Similarly, if you write a lot of code and then decide to change your high-level design, you have to do a lot of work. High-level design change always takes work when you have a lot of code. You may get it wrong in your spec, which makes it costly to change three weeks down the line.</p>
 <p><strong>Corollary</strong>: It’s a mistake to write low-level code without getting the high-level design right.</p>
+<p><strong>Hypothesis</strong>: Have working program (for at least one integration test) -&gt; can come up with new integration tests based on empirical usage.</p>
+<p>Don’t have working program (for at least one integration test) -&gt; can’t imagine new integration tests.</p>
 <hr />
 <p>Test: PG on the Viaweb editor:</p>
 <blockquote>
@@ -893,6 +895,7 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 </blockquote>
 <p>Explanation: His initial integration test was passed by a 120-line program. He then added more integration tests and improved the design of the program as needed. – He figured out exactly which pieces he needed - the high-level design - before he implemented them in detail. For example, he needed macros to wrap HTML code in different tags, etc.</p>
 <p>Test: Haskell programmers use type signatures to do this kind of thing. Sudoku - get a matrix filled with possibilities for each cell, give each cell the possibilities of its row, column, and box neighbours, remove certain possibilities, repeat till you get either a solved matrix or a matrix that doesn’t improve anymore. Each of these steps is doable. – you’ve got the high-level design for passing the test of “solving a Sudoku grid”.</p>
+<p>Test: PG web page generator - if it initially created just one set of web pages, he may want to have code that generates new pages on demand, based on clicks. That would be a new integration test that he may not have thought of beforehand. – empirical usage gives you new ideas.</p>
 <h2 id="integration-test-followed-by-unit-tests">Integration Test followed by Unit Tests</h2>
 <p><strong>Corollary</strong>: Write one failing integration test that doesn’t have any branches anywhere, come up with high-level design, write unit tests for each module, put it together -&gt; high-level design at speed, module design at speed, correctness.</p>
 <p>Write just the failing integration test, no unit tests -&gt; may not handle certain cases - errors, high uncertainty about modules - slow, hesitate to change code.</p>
@@ -973,6 +976,11 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Scenarios. When you’re designing a product, you need to have some real live scenarios in mind for how people are going to use it. Otherwise you end up designing a product that doesn’t correspond to any real-world usage (like the Cue?Cat). Pick your product’s audiences and imagine a fictitious, totally imaginary but totally stereotypical user from each audience who uses the product in a totally typical way. Chapter 9 of my UI design book (available online for free) talks about creating fictional users and scenarios. This is where you put them. The more vivid and realistic the scenario, the better a job you will do designing a product for your real or imagined users, which is why I tend to put in lots of made-up details.</p>
 <p>– <a href="https://www.joelonsoftware.com/2000/10/03/painless-functional-specifications-part-2-whats-a-spec/"></a></p>
 </blockquote>
+<h2 id="have-working-code-at-each-point-no-unstructured-notes">Have Working Code at Each Point: No Unstructured Notes</h2>
+<p>Hypothesis: Have working code, add a feature -&gt; go from pass to fail, and then from fail to pass -&gt; know that your addition was useful.</p>
+<p>Have a mess, add some more -&gt; go from fail to fail -&gt; don’t know if your addition was useful.</p>
+<hr />
+<p>Test: [2017-12-12 Tue] My current presentation draft is a mess. No idea of how much work really remains and how much doesn’t. – Don’t know if my additions really cut through.</p>
 <h2 id="understanding-testing-it-with-different-inputs">Understanding = Testing it with Different Inputs?</h2>
 <p><strong>Hypothesis</strong>: Some output depends on a lot of other variables or takes a long time to give the output or gives output that is hard to isolate -&gt; have to do a lot of work to test and understand it with different inputs (aka “understand” it).</p>
 <p>Some output depends on just a few other variables and takes a short while to produce output and gives isolated output -&gt; have to do less work to test it with different inputs.</p>
