@@ -1020,6 +1020,16 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Test: Didn’t hide procent behind an interface when toggling the feature “no page_directory field” to “page_directory field” -&gt; missed places where it was used (like create, initialize, and global initialize).</p>
 <p>Test: I forgot to update nullproc’s page directory. Why? Because I updated procent without hiding it behind an interface. So, I didn’t catch all its users, in particular <code>initialize</code>. I should have looked for everything that initialized procent (since nothing would read or write to <code>page_directory</code> yet). – Caused errors.</p>
 <p>Test: When toggling global page directory with per-process page directory, I have to toggle the definition of procent, which requires me to seek all uses of procent. Similarly, toggling memlist involves toggling meminit, which requires finding out all the places where meminit is called.</p>
+<h2 id="representative-test-cannot-be-passed-by-any-existing-function">Representative Test: Cannot be Passed by Any Existing Function</h2>
+<p><strong>Hypothesis</strong>: Representative test = something that cannot be passed by any existing function.</p>
+<p>(What if it could be passed by some other function in the future? I suspect that function would be longer and thus have its prior probability penalized.)</p>
+<p><strong>Hypothesis</strong>: Mechanism, representative test -&gt; good experiment that gives you strong evidence about your mechanism?</p>
+<hr />
+<p>Test: <code>dropEnd :: Int -&gt; Seq a -&gt; Seq a</code> – Testing it with a list is not good enough. You could have just used <code>drop</code>. You have to use something for which no existing function would work. example: a pipe (or something).</p>
+<h2 id="fully-specified-representative-test">Fully-Specified Representative Test</h2>
+<p><strong>Hypothesis</strong>: Test that sounds simple enough, but the implementation is pretty “complex” &lt;- lots of other conditions not specified in the test.</p>
+<hr />
+<p>Test: Pipes for XINU - sounds simple enough - just send the output of the writer as the input of the reader. – Problem: conditions like writer may be killed at any time, as can reader, the buffer may become full, one of them may starve due to low priority, etc. Your pipes implementation must handle all of these cases.</p>
 <h2 id="abstract-dont-accept-all-the-information-youre-given">Abstract: Don’t Accept all the Information you’re Given</h2>
 <p><strong>Hypothesis</strong>: Desired output, accept all the information given (deal with a concrete type) -&gt; have to deal with more input configurations.</p>
 <p>Desired output, abstract the inputs using the possible outputs (deal with an abstract type) -&gt; have to deal with fewer input configurations.</p>
@@ -1067,7 +1077,7 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p>Test: function to paste joined text - automated test - fast – pure function.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: December 14, 2017</div>
+<div class="info">Last modified: December 15, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
