@@ -1030,6 +1030,16 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p><strong>Hypothesis</strong>: Test that sounds simple enough, but the implementation is pretty “complex” &lt;- lots of other conditions not specified in the test.</p>
 <hr />
 <p>Test: Pipes for XINU - sounds simple enough - just send the output of the writer as the input of the reader. – Problem: conditions like writer may be killed at any time, as can reader, the buffer may become full, one of them may starve due to low priority, etc. Your pipes implementation must handle all of these cases.</p>
+<h2 id="small-interface-expose-only-one-thing-at-a-time">Small Interface: Expose Only One Thing at a Time</h2>
+<p><strong>Hypothesis</strong>: Small interface -&gt; easier to use.</p>
+<p>Large interface -&gt; harder to use.</p>
+<hr />
+<p>Test: Haskell monad transformers - sound scary, but are surprisingly usable.</p>
+<p>For example, the implementation of ReaderT may look intimidating:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">newtype</span> <span class="dt">ReaderT</span> r (<span class="ot">m ::</span> k <span class="ot">-&gt;</span> <span class="fu">*</span>) (<span class="ot">a ::</span> k)
+  <span class="fu">=</span> <span class="dt">ReaderT</span> {<span class="ot">runReaderT ::</span> r <span class="ot">-&gt;</span> m a}</code></pre></div>
+<p>But look at its interface: you can use it as a functor or an applicative or a monad. So, if you want to use <code>applyDiscount :: Float -&gt; ReaderT Config m Float</code> twice, you can just say <code>applyDiscount &lt;=&lt; applyDiscount</code> without worrying about anything else because <code>ReaderT Config m Float</code> is just <code>m1 Float</code>.</p>
+<p>Also, when defining <code>applyDiscount</code>, if you have a function <code>discount :: Float -&gt; Float -&gt; Float</code> that accepts an amount and reduces it by the given discount rate, then you can use <code>asks discountRate :: Monad m =&gt; ReaderT Config m Float</code> and then <code>fmap (discount givenAmount)</code> over the value to get the discounted amount within the ReaderT monad. You’re programming to the interface of functors and monads.</p>
 <h2 id="abstract-dont-accept-all-the-information-youre-given">Abstract: Don’t Accept all the Information you’re Given</h2>
 <p><strong>Hypothesis</strong>: Desired output, accept all the information given (deal with a concrete type) -&gt; have to deal with more input configurations.</p>
 <p>Desired output, abstract the inputs using the possible outputs (deal with an abstract type) -&gt; have to deal with fewer input configurations.</p>
@@ -1075,9 +1085,11 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p><strong>Test</strong>: Trying to write org-autoclock - should I create an automated test or do a manual test? Which would lead to faster (quick-and-dirty) code?</p>
 <p>Test: org-autoclock - manual test - fast; try to write automated test - lost! – impure function.</p>
 <p>Test: function to paste joined text - automated test - fast – pure function.</p>
+<h2 id="experiment-tic-tac-toe">Experiment: Tic Tac Toe</h2>
+<p>TODO</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: December 15, 2017</div>
+<div class="info">Last modified: December 20, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
