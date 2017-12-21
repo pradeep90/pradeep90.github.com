@@ -1030,6 +1030,9 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p><strong>Hypothesis</strong>: Test that sounds simple enough, but the implementation is pretty “complex” &lt;- lots of other conditions not specified in the test.</p>
 <hr />
 <p>Test: Pipes for XINU - sounds simple enough - just send the output of the writer as the input of the reader. – Problem: conditions like writer may be killed at any time, as can reader, the buffer may become full, one of them may starve due to low priority, etc. Your pipes implementation must handle all of these cases.</p>
+<h2 id="extend-representative-test-with-every-diff">Extend Representative Test with every Diff</h2>
+<p><strong>Hypothesis</strong>: Extend your representative test with every diff. Either the diff will extend a chain or it will add a branch (or do some other thing). Your representative test should capture that.</p>
+<p>Test: Super Mario - v1.0 - just jumping around. Next, moving forward too. – initial representative test is whether you can jump around; next test checks if you can move forward too (which is a different branch).</p>
 <h2 id="small-interface-expose-only-one-thing-at-a-time">Small Interface: Expose Only One Thing at a Time</h2>
 <p><strong>Hypothesis</strong>: Small interface -&gt; easier to use.</p>
 <p>Large interface -&gt; harder to use.</p>
@@ -1068,6 +1071,18 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p><code>lines</code> breaks down the string into a bunch of lines (each of which is simpler than the whole file and is independent of the rest). <code>grep p</code> transforms the lines into some other set of lines (just a subset). <code>unlines</code> composes the bunch of lines into a string.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">mapM<span class="ot"> ::</span> (<span class="dt">Monad</span> m, <span class="dt">Traversable</span> t) <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> m b) <span class="ot">-&gt;</span> t a <span class="ot">-&gt;</span> m (t b)</code></pre></div>
 <p>Next, <code>mapM readFile</code> transforms a list of files into a list of monads and then composes those monads to get an overall monad. Basically, you can see it as composing a bunch of files. <code>fmap</code> transforms part of a structure without touching the rest. <code>map (callGrepOnFile p)</code> transforms each element of that part-structure using <code>callGrepOnFile</code>. Finally, <code>concat</code> composes those elements into a valid part-structure.</p>
+<h2 id="cut-through-work-in-the-final-medium">Cut Through: Work in the Final Medium</h2>
+<p><strong>Hypothesis</strong>: Experiment on the mechanism directly, get full feedback -&gt; low cycle time because you can toggle and get feedback quickly, can get to the final version faster.</p>
+<p>Experiment from within your final medium, get full feedback (by definition) -&gt; slower feedback because you can’t isolate the mechanism (toggling might be tedious, especially if you aren’t skilled in the medium), can get to the final version a bit slower.</p>
+<p>Experiment on the mechanism directly, don’t get full feedback -&gt; quick but partial feedback (may not even get full feedback from myself), may not get to the final version quickly.</p>
+<hr />
+<p>Test: Research report - handwritten notes vs LaTeX notes. – handwritten notes - won’t get feedback from others; may not even get harsh feedback from myself because I don’t look at it from a reader’s point of view. Earlier, I wasn’t skilled enough to think in LaTeX. Now I realize that I can. Done.</p>
+<p>Test: Unsure about pointer manipulation or struct indirection in C - tested it in a separate C file that wouldn’t be part of the final product. Helped a lot! – low cycle time because I isolated the mechanism!</p>
+<p>Test: Unit tests - they last. – you’re working in the final medium, full feedback, can isolate the mechanism,</p>
+<p>Test: Documentation - lasts. – ??</p>
+<p>Test: Website - it lasts. – final medium, full feedback (if you release), but at least partial feedback if you write it up (as compared to your journal notes); skilled - so it’s natural by now (see this essay).</p>
+<p>Test: Memory via spaced repetition (or just frequency testing) - it lasts. – you get full feedback in the future.</p>
+<p>Test: org-autoclock within my Emacs vs a blank Emacs. – got misleading feedback by running it in my Emacs; got full feedback from the user.</p>
 <h2 id="minimum-interface-at-speed-more-hypotheses">Minimum Interface at Speed: More Hypotheses</h2>
 <p>want to handle a new input configuration (add a new feature) - get a failing test first -&gt; speed (no abstract thinking).</p>
 <p>new feature, pure function, write automated failing test -&gt; speed.</p>
