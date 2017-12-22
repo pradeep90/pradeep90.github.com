@@ -1043,6 +1043,35 @@ clocked out, not in task file -&gt; do nothing</code></pre>
   <span class="fu">=</span> <span class="dt">ReaderT</span> {<span class="ot">runReaderT ::</span> r <span class="ot">-&gt;</span> m a}</code></pre></div>
 <p>But look at its interface: you can use it as a functor or an applicative or a monad. So, if you want to use <code>applyDiscount :: Float -&gt; ReaderT Config m Float</code> twice, you can just say <code>applyDiscount &lt;=&lt; applyDiscount</code> without worrying about anything else because <code>ReaderT Config m Float</code> is just <code>m1 Float</code>.</p>
 <p>Also, when defining <code>applyDiscount</code>, if you have a function <code>discount :: Float -&gt; Float -&gt; Float</code> that accepts an amount and reduces it by the given discount rate, then you can use <code>asks discountRate :: Monad m =&gt; ReaderT Config m Float</code> and then <code>fmap (discount givenAmount)</code> over the value to get the discounted amount within the ReaderT monad. You’re programming to the interface of functors and monads.</p>
+<h2 id="large-diff---high-uncertainty">Large Diff -&gt; High Uncertainty!</h2>
+<p><strong>Hypothesis</strong>: Large diff (change a lot of variables), fail -&gt; think that any of those variables would make you fail; so, lots of possibly-wrong beliefs (high uncertainty).</p>
+<p>Small diff (change one variable), fail -&gt; think that that one variable makes you fail, which is true; very few possibly-wrong beliefs (low uncertainty).</p>
+<p><strong>Corollary</strong>: Keep your diffs small -&gt; have fewer possibly-wrong beliefs.</p>
+<p><strong>Corollary</strong>: No positive exemplar, only negative exemplars -&gt; super-large diff -&gt; lots of possibly-wrong beliefs about what is possible.</p>
+<p><strong>Corollary</strong>: Only positive exemplars, no negative exemplars -&gt; consider the opposite viewpoint that you’ve seen only negative exemplars for <em>beating</em> the thing and will thus think that anything untested will still not be able to beat it.</p>
+<hr />
+<p>Test: Right now, when trying to test my representative test idea on causal decision theory, I was going for a massive negative exemplar and getting completely confused. – didn’t know which variable (difficulty, subject matter, amount of text, etc.) caused my confusion. Felt like “representative tests” were useless. Like they would fail on any input - no matter how small the text or what the subject matter or how difficult the topic. But I didn’t really have evidence for all of those other beliefs - they were possibly wrong.</p>
+<p>Test: Ran on a treadmill when I was young. Completely out of breath. Felt like cardio was not for me. – Jumped to the conclusion that the target variable (me) could not do any cardio at all, even though I had changed other variables like difficulty, duration, etc. That is, [Pradeep + tough cardio -&gt; couldn’t do it] became [Pradeep + any cardio -&gt; can’t do it]. Felt that any type of cardio would be too hard for me.</p>
+<p>Test: Now, I can do cardio for hours (and have actually done so). But I can’t quite stretch my legs or jog for long without losing my breath. – Came to the right conclusion that I could indeed do a lot of cardio. That is, [Pradeep + tough cardio -&gt; couldn’t do it; Pradeep + reasonably tough cardio -&gt; could do it] became [Pradeep + reasonably tough cardio -&gt; can do it]. Even now, I think that anything to do with long-distance running is too hard for me. That’s because I haven’t got any positive exemplars between hard cycling and running. Way lower uncertainty!</p>
+<p>Basically, I need to look at the difference between the positive and negative exemplars. Earlier, it was [very, very easy cardio -&gt; can do it; very tough cardio -&gt; can’t do it]. But there are a lot of variables that differ between them. For example, the tough cardio involved running, which I had never done. It didn’t consider cycling, which I had done a lot of. Even with just running, I should have taken “running slowly” and “running a bit faster” and so on, till I found the breaking point.</p>
+<p>Test: No positive exemplar - before the 20th century - going to Mars. Never even left the planet. Felt impossible. Now, have been to the moon, have sent probes past Pluto. Lot fewer possibly-wrong beliefs about what is possible. – earlier, very large diff; people thought anything extra-terrestrial was impossible (or at least very hard).</p>
+<p><strong>Test</strong>: Only positive exemplars - saw TA answer all my questions better than I could - felt like he knew way more than me. Started going into research - even there, he seemed to know way more. But when it got deep, I could start to see mistakes. Fallible after all.</p>
+<p>Look at it from the opposite angle. These are all negative exemplars for beating him. Slightly difficult question - couldn’t beat him. Much more difficult question - still couldn’t beat him. And so on. It’s like the scale is inverted. Earlier, it went from easy to hard, and all the positive exemplars were on the easy end and all the negative exemplars were on the hard end. Now, the scale goes from hard to easy, with the (potential) positive exemplars for beating him on the hard end and all the negative exemplars on the easy end. The aim is to go harder and harder till you get a positive exemplar for beating him.</p>
+<p>So, as per my hypothesis, only negative exemplars means that you have a super-large diff (from the infinitely hard configuration - the “God” configuration) and so you think that a positive exemplar is completely impossible. That is, you can’t beat him.</p>
+<p>How to remedy this? Get a small diff. From what? From a positive exemplar. That way, you will go from pass to fail and thus learn something useful.</p>
+<p>(But the number of negative exemplars is way smaller than the number of positive exemplars. Shouldn’t you follow the logic of the earlier examples and toggle from the exemplar that is less numerous?)</p>
+<p>The main question is why, here, you think everything untested is possible when, in general, you assume that everything untested is impossible?</p>
+<p>Maybe the mechanism you’re trying to test is “what would beat him?”. So, anything untested is considered to be incapable of beating him. (Not exactly sure of this argument.)</p>
+<p>Test: Only positive exemplars - undefeated team like Australia in the early 00s - feel like you would need to be a god to defeat them. – only negative exemplars for beating them. Felt like anything untested would also fail to beat them.</p>
+<h2 id="high-uncertainty---strongly-coupled-feel-like-a-lot-of-work">High Uncertainty -&gt; Strongly Coupled, Feel like a Lot of Work</h2>
+<p><strong>Hypothesis</strong>: High uncertainty -&gt; think you have to handle all of the failing cases separately -&gt; lots of branches -&gt; lots of work; seems strongly coupled.</p>
+<p>Low uncertainty -&gt; have to handle just a few branches -&gt; less work; seems decoupled.</p>
+<hr />
+<p>Test: Representative test idea - tried on a “complex” causal decision theory chapter - felt like I had to handle a lot of different variables at the same time (difficulty, equations, prose, background knowledge) before my idea would work. – large diff, high uncertainty, lots of apparently failing cases.</p>
+<p>Test: pipgetc - worked for the non-blocking case; now added blocking - I felt like everything else worked and I just needed to support blocking on the pipe – small diff (non-blocking vs blocking; everything else is the same); a few apparently failing cases - can add a simple branch to handle the case when the buffer is empty.</p>
+<h2 id="to-get-decoupled-code-get-fine-grained-tests-aka-controlled-experiments">To get Decoupled Code, get Fine-grained Tests (aka Controlled Experiments)</h2>
+<p><strong>Corollary</strong>: If you can run a small test (toggle just a few variables) -&gt; small diff -&gt; less work, more decoupled code.</p>
+<p>If you can run only a large test -&gt; large diff -&gt; more work, strongly coupled code.</p>
 <h2 id="abstract-dont-accept-all-the-information-youre-given">Abstract: Don’t Accept all the Information you’re Given</h2>
 <p><strong>Hypothesis</strong>: Desired output, accept all the information given (deal with a concrete type) -&gt; have to deal with more input configurations.</p>
 <p>Desired output, abstract the inputs using the possible outputs (deal with an abstract type) -&gt; have to deal with fewer input configurations.</p>
@@ -1104,7 +1133,7 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p>TODO</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: December 20, 2017</div>
+<div class="info">Last modified: December 22, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
