@@ -1063,15 +1063,13 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>The main question is why, here, you think everything untested is possible when, in general, you assume that everything untested is impossible?</p>
 <p>Maybe the mechanism you’re trying to test is “what would beat him?”. So, anything untested is considered to be incapable of beating him. (Not exactly sure of this argument.)</p>
 <p>Test: Only positive exemplars - undefeated team like Australia in the early 00s - feel like you would need to be a god to defeat them. – only negative exemplars for beating them. Felt like anything untested would also fail to beat them.</p>
-<h2 id="high-uncertainty---strongly-coupled-feel-like-a-lot-of-work">High Uncertainty -&gt; Strongly Coupled, Feel like a Lot of Work</h2>
-<p><strong>Hypothesis</strong>: High uncertainty -&gt; think you have to handle all of the failing cases separately -&gt; lots of branches -&gt; lots of work; seems strongly coupled.</p>
-<p>Low uncertainty -&gt; have to handle just a few branches -&gt; less work; seems decoupled.</p>
+<h2 id="to-know-what-to-change-get-fine-grained-tests-aka-controlled-experiments">To Know what to Change, get Fine-grained Tests (aka Controlled Experiments)</h2>
+<p><strong>Corollary</strong>: If you can run a fine-grained test (toggle just a few variables) -&gt; small diff -&gt; know exactly which branch of my code to change -&gt; less work.</p>
+<p>If you can run only a coarse-grained test -&gt; large diff -&gt; don’t know exactly which branches to change -&gt; more work; have to write multi-variable branches and later refactor.</p>
 <hr />
-<p>Test: Representative test idea - tried on a “complex” causal decision theory chapter - felt like I had to handle a lot of different variables at the same time (difficulty, equations, prose, background knowledge) before my idea would work. – large diff, high uncertainty, lots of apparently failing cases.</p>
-<p>Test: pipgetc - worked for the non-blocking case; now added blocking - I felt like everything else worked and I just needed to support blocking on the pipe – small diff (non-blocking vs blocking; everything else is the same); a few apparently failing cases - can add a simple branch to handle the case when the buffer is empty.</p>
-<h2 id="to-get-decoupled-code-get-fine-grained-tests-aka-controlled-experiments">To get Decoupled Code, get Fine-grained Tests (aka Controlled Experiments)</h2>
-<p><strong>Corollary</strong>: If you can run a small test (toggle just a few variables) -&gt; small diff -&gt; less work, more decoupled code.</p>
-<p>If you can run only a large test -&gt; large diff -&gt; more work, strongly coupled code.</p>
+<p>Test: Tried to do 5 things at the same time once my winter vacations started. Failed. Felt like none of those 5 things would work out. – coarse-grained test; have to do all 5 things correctly before I will tell myself “my plan succeeded”. Don’t get feedback about intermediate moves. Don’t know which one is actually causing the overall plan to fail - just see that I’m not making any progress. Don’t know what to change.</p>
+<p>Test: Representative test idea - tried on a “complex” causal decision theory chapter - felt like I had to handle a lot of different variables at the same time (difficulty, equations, prose, background knowledge) before my idea would work. – coarse-grained test; don’t know exactly what to change about my idea to make the test pass; have to try lots of possibilities.</p>
+<p>Test: pipgetc - worked for the non-blocking case; now added blocking - I felt like everything else worked and I just needed to support blocking on the pipe – fine-grained test; small diff (non-blocking vs blocking; everything else is the same); know exactly which branch to change.</p>
 <h2 id="abstract-dont-accept-all-the-information-youre-given">Abstract: Don’t Accept all the Information you’re Given</h2>
 <p><strong>Hypothesis</strong>: Desired output, accept all the information given (deal with a concrete type) -&gt; have to deal with more input configurations.</p>
 <p>Desired output, abstract the inputs using the possible outputs (deal with an abstract type) -&gt; have to deal with fewer input configurations.</p>
