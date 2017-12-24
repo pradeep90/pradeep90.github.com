@@ -1127,11 +1127,24 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p><strong>Test</strong>: Trying to write org-autoclock - should I create an automated test or do a manual test? Which would lead to faster (quick-and-dirty) code?</p>
 <p>Test: org-autoclock - manual test - fast; try to write automated test - lost! – impure function.</p>
 <p>Test: function to paste joined text - automated test - fast – pure function.</p>
-<h2 id="experiment-tic-tac-toe">Experiment: Tic Tac Toe</h2>
-<p>TODO</p>
+<h2 id="dont-rewrite-from-scratch">Don’t Rewrite from Scratch</h2>
+<p><strong>Hypothesis</strong>: Old code that kind of works but is messy, rewrite from scratch -&gt; lose hard-won information (fixes for unintuitive and hard-to-find bugs) stored in the ugly code.</p>
+<p>Old code that kind of works but is messy, refactor or at least use as a testing model for your snazzy new function -&gt; keep the hard-won information.</p>
+<p>Lesson: Feel like throwing away old code or prose -&gt; refactor or use as a model instead.</p>
+<hr />
+<p>Test: Joel Spolsky on rewriting (working but ugly) code from scratch -</p>
+<blockquote>
+<p>The idea that new code is better than old is patently absurd. Old code has been used. It has been tested. Lots of bugs have been found, and they’ve been fixed. There’s nothing wrong with it. It doesn’t acquire bugs just by sitting around on your hard drive. Au contraire, baby! Is software supposed to be like an old Dodge Dart, that rusts just sitting in the garage? Is software like a teddy bear that’s kind of gross if it’s not made out of all new material?</p>
+<p>Back to that two page function. Yes, I know, it’s just a simple function to display a window, but it has grown little hairs and stuff on it and nobody knows why. Well, I’ll tell you why: those are bug fixes. One of them fixes that bug that Nancy had when she tried to install the thing on a computer that didn’t have Internet Explorer. Another one fixes that bug that occurs in low memory conditions. Another one fixes that bug that occurred when the file is on a floppy disk and the user yanks out the disk in the middle. That LoadLibrary call is ugly but it makes the code work on old versions of Windows 95.</p>
+<p>– <a href="https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/"></a></p>
+</blockquote>
+<p>Explanation: Would lose bug fixes.</p>
+<p>Test: Essay on understanding - 42k words as of December 23, 2017. Feel like just throwing it away and building a new model from scratch using my latest format for unit tests and such. Experimental method! - But no, that would make me forget or have to re-generate hard-won evidence from over the last 8 months. (Roughly 100 hours of work - 155 words in commit 5116ad9 took 22 minutes @ 422 words per hour - where I was exposed to a variety of information such as causality math, biology text, category theory proofs, programming experiments on myself and others, and my Purdue course work - most of which would be hard to reproduce.) You do <strong>not</strong> want to lose that processed evidence. – Better to use it as a reference model and assimilate its evidence into a new model.</p>
+<p>Test: Rewriting speed - one section of 614 words from “understanding” took 8 minutes to capture in a new model. (~4.5k words per hour. Seems overly optimistic. Let’s see.)</p>
+<p>Next - 75 minutes to process around 3k words = 2.4k words per hour. Estimation = 16 hours from now.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: December 22, 2017</div>
+<div class="info">Last modified: December 24, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
