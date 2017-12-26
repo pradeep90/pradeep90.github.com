@@ -266,8 +266,6 @@
 <p>So, chess grandmasters who have learned 50k chunks have learned 50k different branches of their model of chess.</p>
 <p>Hypothesis: There’s a lot of duplication in there. You could probably merge parts of several branches. (Maybe it’s necessary for optimization - because they can recognize formations in a flash.)</p>
 <p><strong>TODO</strong>: Figure out how you can represent each chunk - aka branch - as a flashcard, for easy learning.</p>
-<h2 id="how-to-abstract">How to Abstract</h2>
-<p>Hypothesis: Look at the input and output and merge those input configurations that have the same output. Also look at cases where the output part is a known function of the input.</p>
 <h1 id="top-level-interventions-vs-surgical-interventions">Top-Level Interventions vs Surgical Interventions</h1>
 <p>Observation: In the scheduler problem, I had to change one part of the system to affect the overall behaviour. In the pipes problem, however, I had full control of my system (since I was coding for the unit tests).</p>
 <p>Question: Are they different in kind?</p>
@@ -752,6 +750,257 @@ boxes3x3' <span class="fu">=</span> fmap concat <span class="fu">.</span> overMa
 <hr />
 <p>Test: Me and Samsung Patrick. Korean female golfers and the first one. – close positive exemplar.</p>
 <p>Test: Einstein. Mad scientists like Rick or whoever. “Geniuses” like the famous startup founders who talk weirdly and wear sweatshirts. Mathematical “geniuses” who look and act completely differently from normal people. “Smart” people using big words and an affected American accent - all to say that restore() simply sets the <strong>one</strong> bit back to what it was. – distant positive exemplars. Feel like I could never <em>be</em> like them. But I don’t have to <em>be</em> like them, I have to <strong>do</strong> what they did. And for that, I don’t have to emulate all their other characteristics.</p>
+<h1 id="my-experiments-with-programs">My Experiments with Programs</h1>
+<p><strong>TODO</strong>: Test the Roman Numerals problem again by using an integration test from the problem statement to get the high-level design.</p>
+<h2 id="experiment-program-i-know-how-to-write">Experiment: Program I know how to write</h2>
+<p><strong>Test</strong>: Roman Numerals.</p>
+<p>Failed miserably to write the program quickly (or even correctly).</p>
+<p><strong>Question</strong>: I’m terribly confused. WHAT THE FUCK takes so much time when writing a program?</p>
+<p>Why did it take me <strong>24 minutes</strong> to figure out how to concatenate <code>[Parser [a]]</code>? (Ed: [2017-12-25 Mon] You weren’t isolating the mechanism? But you were working in the interpreter. Then, maybe you weren’t being smart about your changes.)</p>
+<p>Where was I searching and what could I have tried instead?</p>
+<h3 id="roman-numerals-observations">Roman Numerals: Observations</h3>
+<p><strong>Question</strong>: Should I have toggled some fixed assumption? Which one?</p>
+<p>Let’s look at this as scientific experimentation.</p>
+<p><strong>Goal</strong>: My job was to find a correct program in the space of all programs - one that would pass my tests.</p>
+<p><strong>Observation</strong>: An empty program -&gt; will fail tests</p>
+<p><strong>Observation</strong>: My Seasoned Schemer program (or some other random program) -&gt; will fail tests (how did I know that?)</p>
+<p><strong>Observation</strong>: My old Roman Numerals program -&gt; passes tests</p>
+<p>My tests tell me that my final program should have the type <code>romanToInt :: [Char] -&gt; Int</code>, should type-check, and further accept a valid roman numeral as input and return its decimal value as output.</p>
+<p>I suppose that valid roman numeral to int is easy enough. (How do I know that?)</p>
+<hr />
+<p>3m to figure out that the program needed just two simple functions intToRoman and romanToInt, with no parsing.</p>
+<p>4m to figure out how to use Parser and run it with a simple <code>char 'f'</code> Parser (memory)</p>
+<p>10m to create the RomanNumeral type and create a one-character parser</p>
+<p>3m to create an alternative parser</p>
+<p>8m to append list of RomanNumeral</p>
+<p>24m to figure out how to concat <code>[Parser [a]]</code> - writing the type signature would have helped me out</p>
+<p>15m to realize that it doesn’t work for “XX”.</p>
+<p>Look at everything I tried to concat <code>[Parser [a]]</code>:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">Main</span><span class="fu">&gt;</span> parse (numeralParser <span class="dt">M</span>) <span class="st">&quot;(unknown)&quot;</span> <span class="st">&quot;MMCMMMoobar&quot;</span>
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="kw">let</span> foo <span class="fu">=</span> parse (numeralParser <span class="dt">M</span>) <span class="st">&quot;(unknown)&quot;</span> <span class="st">&quot;MMCMMMoobar&quot;</span>
+<span class="dt">Main</span><span class="fu">&gt;</span> liftM concat [foo, foo]
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="kw">let</span> bar <span class="fu">=</span> parse (numeralParser <span class="dt">CM</span>) <span class="st">&quot;(unknown)&quot;</span> <span class="st">&quot;MMCMMMoobar&quot;</span>
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="kw">let</span> bar <span class="fu">=</span> parse (numeralParser <span class="dt">CM</span>) <span class="st">&quot;(unknown)&quot;</span> <span class="st">&quot;CMMMoobar&quot;</span>
+<span class="dt">Main</span><span class="fu">&gt;</span> bar
+<span class="dt">Main</span><span class="fu">&gt;</span> liftM concat [foo, bar]
+<span class="dt">Main</span><span class="fu">&gt;</span> liftM (liftM concat) [foo, bar]
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t liftM concat [foo, bar]
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t [foo, bar]
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t liftM concat
+<span class="dt">Main</span><span class="fu">&gt;</span> liftM concat [foo, bar]
+<span class="dt">Main</span><span class="fu">&gt;</span> concat <span class="fu">.</span> liftM concat <span class="fu">$</span> [foo, bar]
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="kw">let</span> bar <span class="fu">=</span> parse (numeralParser <span class="dt">CM</span>) <span class="st">&quot;(unknown)&quot;</span>
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t bar
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="kw">let</span> foo <span class="fu">=</span> parse (numeralParser <span class="dt">M</span>) <span class="st">&quot;(unknown)&quot;</span>
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t foo
+<span class="dt">Main</span><span class="fu">&gt;</span> bar <span class="fu">&lt;&gt;</span> foo
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t fmap <span class="fu">.</span> fmap
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t fmap <span class="fu">.</span> fmap <span class="fu">.</span> fmap
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t (fmap <span class="fu">.</span> fmap <span class="fu">.</span> fmap) foo bar
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t (fmap <span class="fu">.</span> fmap <span class="fu">.</span> fmap) (<span class="fu">++</span>) foo bar
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t fmap <span class="fu">.</span> fmap <span class="fu">.</span> fmap
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t (fmap <span class="fu">.</span> fmap <span class="fu">.</span> fmap) (<span class="fu">++</span>) [foo, bar]
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t (fmap <span class="fu">.</span> fmap <span class="fu">.</span> fmap <span class="fu">.</span> fmap) (<span class="fu">++</span>) [foo, bar]
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t (fmap <span class="fu">.</span> fmap <span class="fu">.</span> fmap ) concat [foo, bar]
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t mParser
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t numeralParser <span class="dt">M</span>
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="kw">let</span> x <span class="fu">=</span> numeralParser <span class="dt">M</span>
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="kw">let</span> y <span class="fu">=</span> numeralParser <span class="dt">CM</span>
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t [x, y]
+<span class="dt">Main</span><span class="fu">&gt;</span> sequence [x, y]
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t sequence [x, y]
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t fmap concat
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t traverse
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t sequence [<span class="st">&quot;yo&quot;</span>, <span class="st">&quot;boyz&quot;</span>]
+<span class="dt">Main</span><span class="fu">&gt;</span> sequence [<span class="st">&quot;yo&quot;</span>, <span class="st">&quot;boyz&quot;</span>]
+<span class="dt">Main</span><span class="fu">&gt;</span> sequence [<span class="dt">Just</span> <span class="st">&quot;yo&quot;</span>, <span class="dt">Just</span> <span class="st">&quot;boyz&quot;</span>]
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t fmap concat <span class="fu">.</span> sequence [x, y]
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t fmap concat <span class="fu">.</span> sequence <span class="fu">$</span> [x, y]
+<span class="dt">Main</span><span class="fu">&gt;</span> parse romanNumeral <span class="st">&quot;(unknown)&quot;</span> <span class="st">&quot;CMMMoobar&quot;</span>
+<span class="dt">Main</span><span class="fu">&gt;</span> parse romanNumeral <span class="st">&quot;(unknown)&quot;</span> <span class="st">&quot;MMMCMMMoobar&quot;</span>
+<span class="dt">Main</span><span class="fu">&gt;</span> parse romanNumeral <span class="st">&quot;(unknown)&quot;</span> <span class="st">&quot;MMMCMMMoobar&quot;</span>
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span><span class="kw">type</span> intToRoman'
+<span class="dt">Main</span><span class="fu">&gt;</span> main
+<span class="dt">Main</span><span class="fu">&gt;</span> parse romanNumeralParser <span class="st">&quot;(unknown)&quot;</span> <span class="st">&quot;MMMCMMMoobar&quot;</span>
+<span class="dt">Main</span><span class="fu">&gt;</span> map show <span class="fu">$</span> parse romanNumeralParser <span class="st">&quot;(unknown)&quot;</span> <span class="st">&quot;MMMCMMMoobar&quot;</span>
+<span class="dt">Main</span><span class="fu">&gt;</span> map (map show) <span class="fu">$</span> parse romanNumeralParser <span class="st">&quot;(unknown)&quot;</span> <span class="st">&quot;MMMCMMMoobar&quot;</span>
+<span class="dt">Main</span><span class="fu">&gt;</span> <span class="fu">:</span>t parse romanNumeralParser <span class="st">&quot;(unknown)&quot;</span> <span class="st">&quot;MMMCMMMoobar&quot;</span>
+<span class="dt">Main</span><span class="fu">&gt;</span> fmap (map show) <span class="fu">$</span> parse romanNumeralParser <span class="st">&quot;(unknown)&quot;</span> <span class="st">&quot;MMMCMMMoobar&quot;</span></code></pre></div>
+<p>I tried 50+ different things before I got the (incorrect) final program.</p>
+<p><strong>Observation</strong>: Firstly, I went wrong in working with <code>foo</code> and <code>bar</code> in the interpreter, which were of type <code>Either ParseError [RomanNumeral]</code> and not <code>Parser [RomanNumeral]</code> like the parsers in my code.</p>
+<p><strong>Observation</strong>: I tried</p>
+<pre><code>liftM concat
+liftM (liftM concat)
+concat . liftM concat
+bar &lt;&gt; foo
+(fmap . fmap . fmap) foo bar
+(fmap . fmap . fmap) (++) foo bar
+(fmap . fmap . fmap . fmap) (++) [foo, bar]
+(fmap . fmap . fmap ) concat [foo, bar]
+sequence [x, y]
+fmap concat
+traverse
+sequence [&quot;yo&quot;, &quot;boyz&quot;]
+sequence [Just &quot;yo&quot;, Just &quot;boyz&quot;]
+fmap concat . sequence [x, y]
+fmap concat . sequence $ [x, y]</code></pre>
+<p><strong>Hypothesis</strong>: Clearly I was trying stuff at random (<code>fmap . fmap . fmap . fmap</code>).</p>
+<p><strong>Hypothesis</strong>: Rather, I <em>thought</em> the problem was something, but it turned out to be something else.</p>
+<p><strong>Observation</strong>: Before the <code>fmap . fmap . fmap</code> attempt, I saw that</p>
+<pre><code>bar :: [Char] -&gt; Either ParseError [RomanNumeral]
+foo :: [Char] -&gt; Either ParseError [RomanNumeral]</code></pre>
+<p>and so thought that I needed to go three levels deep (<em>wrong</em> - it was two) so that I could fmap append (<em>wrong</em> - <code>fmap</code> is for one argument) the roman numerals inside foo and bar (<em>wrong</em> - I cared about the Parsers in my code not the output).</p>
+<p><strong>Observation</strong>: I was worried that I would get combinations of the inner array if I used <code>sequence</code>.</p>
+<p><strong>Observation</strong>: I didn’t remember (or didn’t understand) that <code>sequence</code> on <code>[m [a]]</code> gives <code>m [ [a]]</code> without touching the inner array.</p>
+<p>In fact, I should have generalized further. What I wanted was <code>[m b] -&gt; m [b]</code>.</p>
+<p>Hmm… I was thrown off by the fact that I wanted to concatenate the inner lists.</p>
+<p><strong>Hypothesis</strong>: So, I tried to <em>jump</em> from <code>[m [a]]</code> to the final <code>m [a]</code> in one step. And <em>that</em> is why I spent 24m trying to do a simple concatenation.</p>
+<p><strong>Observation</strong>: I had a similar struggle in the dark with trying to convert RomanNumeral to Int.</p>
+<pre><code>map show $ parse romanNumeralParser &quot;(unknown)&quot; &quot;MMMCMMMoobar&quot;
+map (map show) $ parse romanNumeralParser &quot;(unknown)&quot; &quot;MMMCMMMoobar&quot;
+:t parse romanNumeralParser &quot;(unknown)&quot; &quot;MMMCMMMoobar&quot;
+fmap (map show) $ parse romanNumeralParser &quot;(unknown)&quot; &quot;MMMCMMMoobar&quot;</code></pre>
+<p>Again, I didn’t think of the type signature and ended up trying to solve the wrong problem (I didn’t need to do <code>fmap (map show)</code>).</p>
+<p>Nor did I generalize enough - I should have seen that the output was <code>Either ParseError [RomanNumeral]</code>, thus <code>f [RomanNumeral]</code>, and therefore I just needed to do an <code>fmap</code>. (Still, this wasn’t the problem I wanted to solve.)</p>
+<p><strong>Observation</strong>: Look what I did to <em>append</em> two Parsers. (8m lost.)</p>
+<pre><code>chainl mParser (++) cmParser
+chainl mParser (liftM2 (++)) cmParser</code></pre>
+<p>Again, no clear type signature and not enough abstraction.</p>
+<hr />
+<p><strong>Observation</strong>: Wow. Look at the range of strategies I tried! Who said humans can’t search?</p>
+<p><strong>Question</strong>: What led to the range of strategies? Did each failed test give me the idea for the next test?</p>
+<h3 id="solving-the-wrong-problem-at-the-wrong-level-of-abstraction">Solving the Wrong Problem at the Wrong Level of Abstraction</h3>
+<p><strong>Hypothesis</strong>: What I should have done was to look at the type signature for my problem, after hiding the particulars.</p>
+<p>For example, I wanted <code>[Parser [a]] -&gt; Parser [ [a]]</code>. Generalizing further, I wanted <code>[m [a]] -&gt; m [ [a]]</code>.</p>
+<p><strong>Corollary</strong>: Having the desired type signature in mind will also keep you focussed on your goal.</p>
+<p>You won’t waste time trying to append the lists in <code>Either ParseError [RomanNumeral]</code> when you really care about <code>Parser [RomanNumeral]</code>.</p>
+<p><strong>Hypothesis</strong>: Keep type signature in mind -&gt; use time well. Don’t keep type signature in mind -&gt; may waste time on the wrong problem.</p>
+<p><strong>Corollary</strong>: Maybe there’s something to David Rock’s idea of writing down your overall goal so that you don’t forget it (and don’t have to keep it in your mind).</p>
+<hr />
+<p><strong>Hypothesis</strong>: Not generalizing enough -&gt; get confused vs clear.</p>
+<p>example: During my <code>sequence</code> confusion above, what I wanted was <code>[m b] -&gt; m [b]</code> but I kept working with the types <code>[m [a]] -&gt; m [a]</code>.</p>
+<p>Similarly, I tried to go 3-4 levels deep after looking at <code>foo :: [Char] -&gt; Either ParseError [RomanNumeral]</code>. But I should have generalized it as <code>foo :: f1 (f2 [RomanNumeral])</code>.</p>
+<p><strong>Hypothesis</strong>: Not remembering the exact type signature of functions -&gt; get confused vs clear</p>
+<p>example: I didn’t remember (or didn’t understand) that <code>sequence</code> on <code>[m [a]]</code> gives <code>m [ [a]]</code> without touching the inner array.</p>
+<h3 id="work-at-the-right-abstraction-level">Work at the Right Abstraction Level</h3>
+<p><strong>Hypothesis</strong>: You need to <em>generalize</em> your problem in a way that makes it easy to apply your next step.</p>
+<p>For example, if I had “simply” generalized the first step of my problem “concatenate <code>Parser [a]</code>” as <code>[m b] -&gt; m [b]</code>, I would have got the answer in a jiffy (<code>sequence</code>). I should have realized that <code>Parser</code> was irrelevant to my goal of concatenating the inner lists, and further that getting <code>m [a]</code> came after getting <code>m [ [a]]</code>.</p>
+<p>Somehow, I needed to realize that given my goal of concatenating the inner lists, <code>Parser</code> was irrelevant.</p>
+<p><strong>Hypothesis</strong>: You first come up with a strategy, and then prepare your code to make it easy to apply that strategy.</p>
+<p>For example, I decided to concatenate the Parsers above. So, I should have abstracted <code>Parser a</code> as <code>m a</code>.</p>
+<p>I decided to convert RomanNumeral into decimal by looking up the value of each token and summing it. So, I should have abstracted <code>Either ParseError [RomanNumeral]</code> as <code>f [RomanNumeral]</code>.</p>
+<p>How to abstract your code?</p>
+<p><strong>Hypothesis</strong>: Look at what your strategy needs. Abstract everything else.</p>
+<p><code>concat</code> needs <code>[ [a]]</code> and will give you <code>[a]</code>. So, abstract everything else.</p>
+<p><code>lookup</code> needs a <code>String</code>, which needs a <code>RomanNumeral</code>, so get in and get a RomanNumeral somehow. Abstract everything else.</p>
+<h3 id="scientific-method-for-programming">Scientific Method for Programming</h3>
+<p><strong>TODO</strong>: Create an ideal program for RomanNumeral and compare it to your current one.</p>
+<p>What I really want is to test for presence and absence of test-passing. However, it’s silly to use unrelated programs like <code>SudokuSolver</code> or <code>SExprParser</code>.</p>
+<p>I need something that is similar to RomanNumeral but wrong.</p>
+<p><strong>Observation</strong>: Right now, I can’t think of variables that differ between working programs and non-working programs.</p>
+<p><strong>Hypothesis</strong>: Maybe we need to compare intermediate versions of my program to get variables. Look at which versions gave an error and which ones didn’t.</p>
+<h4 id="variables">Variables</h4>
+<p><strong>Observation</strong>: Look at each diff of RomanNumeral:</p>
+<pre><code>data type RomanNumeral
+parser for M
+parser for CM
+alternative between them
+many parsers
+many M and many CM
+Roman numeral to int
+parsers for all Roman digits
+combine many parsers in sequence
+function to create parser for one Roman digit
+handle Either output of Parser
+tests
+QuickCheck property</code></pre>
+<hr />
+<p>Coming up with a parser for M involves trial and error. After that, a parser for CM is trivial (since they obviously differ only in the digit string).</p>
+<p>Again, after <code>many M</code>, <code>many CM</code> is easy.</p>
+<p><strong>Hypothesis</strong>: Basically, if you can get the same output with slightly different values, then you’ve got a variable.</p>
+<p>For example, parser for M and parser for CM.</p>
+<h3 id="type-signature-of-the-scientific-method">Type Signature of the Scientific Method</h3>
+<p><strong>Observation</strong>: I’m not at all clear about the type signature of the scientific method here.</p>
+<p>Maybe the program is the output?</p>
+<p><strong>Hypothesis</strong>: We want to figure out the model: thoughts -&gt; correct program vs wrong program.</p>
+<p>One hypothesis so far is that not keeping a type signature in mind leads to the wrong program. Another is that not abstracting the current program correctly leads to the wrong program in the next version.</p>
+<p>For example, I needed to know how to append two <code>Parser [a]</code> and I kept trying lots of things.</p>
+<p><strong>Hypothesis</strong>: My target model there was: problem statement, current version of program, strategy -&gt; program that passes the test of the problem statement (appending two <code>Parser [a]</code>) vs fails vs passes more tests than before.</p>
+<p>So, the variables to change are the problem statement, the current version of the program, and your strategy.</p>
+<p><strong>Hypothesis</strong>: Strategy :: current version of the program -&gt; next version of the program.</p>
+<p>And the strategy can be pretty subtle, like abstracting <code>[m [a]]</code> as <code>[m b]</code>. The first one led to a wild goose chase, the second one gave the answer in an instant.</p>
+<p><strong>Observation</strong>: Still don’t know how to compare or even <em>observe</em> strategies.</p>
+<hr />
+<p><strong>Lesson</strong>: Remember to include all your information in your model. For example, I design my program using the problem statement and the current version of the program.</p>
+<h3 id="how-to-come-up-with-strategies">How to come up with Strategies?</h3>
+<p><strong>Question</strong>: How to come up with strategies?</p>
+<p>How did I decide that I needed to concatenate Parsers?</p>
+<p><strong>Observation</strong>: I had a cached thought that a Parser would be a good idea for getting Roman numerals.</p>
+<h3 id="more-programming-experiments">More Programming Experiments</h3>
+<p><strong>Observation</strong>: I finished most of the little problems from 99 Problems in around a minute each.</p>
+<p><strong>Observation</strong>: <code>rotate</code> took 5 minutes, though.</p>
+<p>Didn’t know for sure how split worked. That took a minute.</p>
+<p>Error because I didn’t use n’. Another minute.</p>
+<p><strong>Observation</strong>: Combinations - lazy solution - ~4m; recursive solution - 3m</p>
+<h2 id="time-taken-is-proportional-to-loc">Time Taken is Proportional to LOC?</h2>
+<p><strong>Hypothesis</strong>: (Due to Brooks) Time taken to write a program is proportional to the number of lines of code?</p>
+<p>Note: I used <code>website-count-body-lines</code> to count LOC for Haskell.</p>
+<p>RomanNumeral - 54 LOC - 68m - 1.25926 - 35 =s 99 Problems - 22 LOC - 25m - 1.13636 RPN Solver - 36 LOC - 97m - 2.69444 - 20 =s RaceSort - 36 LOC - 77m - 2.13889 - 32 =s CIS194 Monads - 79 LOC - 238m - 3.01266 - 65 =s Wikibook Applicative Functors - 221 LOC - 257m - 1.1629 - 305 =s LispJavaPhoneNumber2017 - 86 LOC - 208m - 2.4186 - 62 =s</p>
+<p>Calc says that the correlation between [54, 22, 36, 36, 79, 221, 86] and [68, 25, 97, 77, 238, 257, 208] is <em>0.78</em>.</p>
+<p>Why would this be? For one, <code>rotate</code> had two equations, the main one and then the calculation for n. But <code>encode</code> had three, even though they were simple. <code>dupli</code> and <code>split</code> were just a few words long.</p>
+<h2 id="how-to-make-observations-follow-the-evidence">How to Make Observations: Follow the Evidence</h2>
+<p><strong>Hypothesis</strong>: How to make observations? Observations require <em>evidence</em>. So, look at the places where you get evidence.</p>
+<p>example: A, B -&gt; C; A, ~B -&gt; ~C; you need to see the output</p>
+<p>Could you program in the dark, with no type-checking or intermediate tests or checking documentation, but still get it right? Probably not.</p>
+<p>So, you need evidence. And what do you do with evidence? You update on it.</p>
+<p><strong>Corollary</strong>: Your output categories are determined by the feedback mechanism.</p>
+<p>Such as “9/15 tests pass” or “type error in the definition of romanToInt”.</p>
+<h2 id="aim-optimize-how-you-use-evidence">Aim: Optimize how you use Evidence?</h2>
+<p><strong>Hypothesis</strong>: Maybe my aim is to <em>optimize</em> my use of evidence. Get to the right answer with the least amount of evidence (and thus hopefully the least time).</p>
+<p><strong>Hypothesis</strong>: Time taken is decided by the amount of evidence you get and how well you process it.</p>
+<p><strong>Observation</strong>: When I had trouble with concatenating <code>Parser [a]</code> (I’m never going to live that down), I tried around 50 commands in the interpreter.</p>
+<p>encodeModified - 7 times (4 loads, 3 test runs) - 2m decodeModified - 3 times (2 loads, 1 test run) - 1.5m dupli - 3 times (2 loads, 1 test run) - 1m split - 3 times (2 loads, 1 test run) - 1m rotate - 14 times (6 loads, 5 test runs, 2 type queries, 1 evaluation) - 5m combinations - 19 times (9 loads, 6 test runs, 1 type query, 3 evaluations) - 8m</p>
+<p>Correlation (according to Calc): 0.98 between [7, 3, 3, 3, 14, 19] and [2, 1.5, 1, 1, 5, 8]</p>
+<hr />
+<p>As a programmer, you’re basically a scientist. You’re trying to discover the causal model as described by the problem statement and tests.</p>
+<p>So, if you want to program really fast, you need to process evidence really fast. Which means making powerful observations, inferences, and experiments.</p>
+<h3 id="evidence-from-within">Evidence from Within</h3>
+<p><strong>Observation</strong>: The interpreter is not your only source of evidence. Your mind can give you evidence too.</p>
+<p>For example, using my rule of using type signatures, I could have seen that I just needed to use <code>sequence</code> to help concatenate <code>[Parser [a]]</code>.</p>
+<p><strong>Hypothesis</strong>: Are rules sources of evidence?</p>
+<p><strong>Observation</strong>: I can tell that <code>fmap foo . sequence [xs, ys]</code> is going to blow up without evaluating it because I have a crude interpreter in my mind. My rule says that a dot-composition needs a <code>$</code> before the argument.</p>
+<p><strong>Observation</strong>: When a function gets over 50 lines of code, my mind warns me that it will be a headache later on (the code, not my mind).</p>
+<p><strong>Observation</strong>: Similarly, my mind tells me whether some technique will work (<code>sequence</code> to transpose a matrix) and how far a program is from completion. Useful things to know.</p>
+<p>Trying 50 different ways to concatenate <code>Parser [a]</code> is stupid and inefficient. You’re not making full use of the evidence given to you by the interpreter.</p>
+<blockquote>
+<p>Tum sunn nahi rahe ho, yaar.</p>
+<p>– Music director in Rockstar</p>
+</blockquote>
+<p><strong>Hypothesis</strong>: You need to find out as soon as possible if your idea will work.</p>
+<h2 id="experiment-sujeet-rpn-solver">Experiment: Sujeet RPN Solver</h2>
+<p>TODO:</p>
+<h2 id="experiment-sudoku-solver">Experiment: Sudoku Solver</h2>
+<p>TODO:</p>
+<h2 id="experiment-heathrow">Experiment: Heathrow</h2>
+<p><strong>Hypothesis</strong>: I had to consult the interpreter several times because I was dealing with an <em>unfamiliar</em> library (the Writer monad). Ditto for Parser.</p>
+<p>However, Sujeet didn’t need to check any other resources for <code>solve_rpn</code> because he knew everything he needed to write that program.</p>
+<h2 id="experiment-sudie-heathrow-with-twist">Experiment: Sudie Heathrow with Twist</h2>
+<p>TODO:</p>
+<h2 id="ideas-for-programming-experiments">Ideas for Programming Experiments</h2>
+<p>Give them instructions.</p>
+<p>For example, when they finish writing one block, tell them to test their code so far.</p>
+<p>When they make an error, ask them to narrow their scope and work on a toy example.</p>
+<p>Tell them to think of the problem’s type signature.</p>
+<h2 id="programming-experiment-design">Programming Experiment Design</h2>
+<p><strong>Hypothesis</strong>: Controlled experiment &lt;- toggle some variable that you suspect is a cause.</p>
+<p>If you think an using an interpreter or even running test cases gives you feedback, then eliminate them to see how that affects programming time.</p>
+<p>If you think the “complexity” of the problem statement affects programming time too, then make it simpler or more complex somehow.</p>
+<p><strong>Lesson</strong>: In short, write your hypothesis as “programming time &lt;- X, Y, Z” and toggle them individually (or maybe all at once to get a sufficient condition).</p>
+<p>Fine-tune your variables to the point where you can predict each extra minute of programming time.</p>
+<p>What if you provided helper functions, like <code>isOperator</code> or <code>isOperand</code>? How much less time would they take?</p>
+<p><strong>Hypothesis</strong>: Also, figure out - response &lt;- programming situation.</p>
+<p>Why did I not toggle all the variables when tracking down that Markdown <code>mark-paragraph</code> bug? Where did I go wrong?</p>
+<p>If you think programming time is caused by past experience, access to interpreter, and other things, then toggle them. Remove the effect of past experience somehow. (How? Maybe make them program in a new language.)</p>
 <h1 id="programming-for-minimum-interface-at-speed">Programming for Minimum Interface at Speed</h1>
 <h2 id="look-at-the-input-configurations">Look at the Input Configurations</h2>
 <p><strong>Hypothesis</strong>: pure function, know all possible input configurations for which the output is different -&gt; know test cases; clear how to proceed.</p>
@@ -832,6 +1081,27 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Test: OS HW3 - change design of my paging code - don’t know which one will be better (and still pass all tests). Don’t know how to implement free-frame list in the best way or how to decouple the heap and backing store from the rest of the program, etc. – didn’t have any integration test, lots of uncertainty.</p>
 <p>Test: OS HW2 - pipes - knew how the high-level pieces were going to fit together. Basically, didn’t have to do any <strong>high-level design changes</strong>. Just implement pipgetc, pipputc, etc. and the test code would simply use a pipe like a normal device. – didn’t need to change the high-level design.</p>
 <p>Test: OS HW3 - tried one example of virtual memory page access - got the general idea of how control flowed. Got the high-level design (heap was used just to allocate memory, backing store was really used only when there were insufficient frames). – integration test helped me get the answer quickly.</p>
+<h2 id="integration-test-follow-the-values-to-get-the-high-level-design">Integration Test: Follow the Values to get the High-level Design</h2>
+<p>[2017-12-25 Mon] Go through Bird section 6.1 taking for granted whatever he claims.</p>
+<p><strong>Hypothesis</strong>: Integration test, accept all the deductions (function calls) based on their given outputs, <strong>actually</strong> follow the values across steps from start to end -&gt; get the type signature of the high-level components, maybe even induce how it works based on the concrete values.</p>
+<p>For example, if step 1 takes X and outputs Y, then you must ensure that step 2 takes Y and outputs Z.</p>
+<p>Integration test, don’t have outputs for some deductions (function calls), follow the values -&gt; may get stuck on the type signature and working.</p>
+<p>Question: Why would following values give the “high-level design”?</p>
+<p><strong>Hypothesis</strong>: Follow the values -&gt; know what values each component of the program takes in and gives out -&gt; narrow down the causes of each value, can decouple the components.</p>
+<p>Don’t follow the values -&gt; don’t know what values each component of the program takes in and gives out -&gt; don’t narrow down the causes of each value, can’t decouple the components.</p>
+<p><strong>Hypothesis</strong>: Integration test, get inputs and outputs for all the function calls -&gt; decent representative tests for those functions, maybe even induce how they work.</p>
+<hr />
+<p>Test: I saw</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">=</span> [wrap, snoc] <span class="fu">.</span> (id <span class="fu">+</span> val<span class="fu">^</span>c x id) <span class="fu">.</span> [embed, op]<span class="fu">^</span>c
+<span class="co">-- coproduct</span>
+<span class="fu">=</span> [wrap, snoc <span class="fu">.</span> (val<span class="fu">^</span>c x id)) <span class="fu">.</span> [embed, op]<span class="fu">^</span>c</code></pre></div>
+<p>and induced that “coproduct” simply meant taking <code>[a, b] . (c + d)</code> and returning <code>[a . c, b . d]</code>. That’s all there is to it, at least as it is used in this proof! – just followed the values; got how it worked!</p>
+<p>Test: Not following values - I saw the long chain of equational reasoning. Kinda “followed” each step by assuming that its proof step actually did what they said it did. But couldn’t see the link between that whole chain and the final argument that digits = val^c and thus digits would convert a number to digits. I hadn’t followed the values from the chain to the final paragraph – didn’t get the type signature of the model; didn’t induce how it worked.</p>
+<p>Test: Follow values closely - already realized that val takes a decimal representation of a number to the number itself, and that thus val^c is just trying to get at the inverse! Crystal by the end of it! (Took a bit of time, though. Still, I was <strong>guaranteed</strong> to understand it by the end.) – got the type signature of each component (such as val, val^c, and function refinement) and even induced how it works (want foo; can see that there is a bar that goes in the opposite direction; get a “functional refinement” of bar^c and define foo as that function.);</p>
+<p>Test: MATLAB <a href="https://www.mathworks.com/help/stats/examples/selecting-features-for-classifying-high-dimensional-data.html">Cross-validation page</a> – Understood it in depth! (Took 24 minutes, though. Had 2.5k words. So, that’s 6.25k words per hour = 104 words per minute. Need to speed that up.) But it worked. Also learnt how to visualize things during feature selection (have a plot of MCE vs number of features, etc.). Got type signatures for the different parts of it (like holdout vs k-fold cross-validation, feature selection itself, ttest2, MCE, MCE with resubstitution - even though I’m not sure how it works, MCE vs number of features, how to judge whether you’re at a local minimum, etc.)</p>
+<p>Test: Knaster-Tarski theorem 6.1 – took around 15 minutes. Not as crystal clear as the previous ones. But I did get the gist. However, I don’t understand the final point (equations 6.2 and 6.3). (5 minutes later, I still don’t get the last paragraph.) So, this technique isn’t infallible. But it’s better than nothing. Got the type signature. Got stuck because I didn’t understand the line “Each of the equations … has a least solution and these least solutions coincide.” and I needed it to understand the last paragraph. Don’t have the contract since I didn’t see any concrete values and didn’t understand the theorem statement.</p>
+<p>Explanation: Didn’t have the output value for the unfamiliar function call “least solutions coincide” and couldn’t see a concrete example showing me the output value.</p>
+<p>Test: Follow the values to decouple - paging - when switching processes, you need to have different page directories and page tables; when accessing a virtual memory address, you need to have a page fault handler that can get a new frame for that page (and possibly its page table); when replacing a page, you need to have a free frame list with FIFO information and a backing store that has the data for the incoming page and can store data for the evicted page. – know the causes of paging during process-switching, page-fault handling, and page replacement.</p>
 <h2 id="spec-or-integration-test-quick-feedback-about-high-level-design">Spec or Integration Test: Quick Feedback about High-level Design</h2>
 <p><strong>Corollary</strong>: Writing a spec (or better, a prototype) = coming up with integration tests (with feedback from the user).</p>
 <p><strong>Hypothesis</strong>: Spec or integration test, change your high-level design -&gt; can set the input configuration (aka your program) quickly and get feedback from user (who is the mechanism you’re testing).</p>
@@ -1033,6 +1303,11 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <h2 id="extend-representative-test-with-every-diff">Extend Representative Test with every Diff</h2>
 <p><strong>Hypothesis</strong>: Extend your representative test with every diff. Either the diff will extend a chain or it will add a branch (or do some other thing). Your representative test should capture that.</p>
 <p>Test: Super Mario - v1.0 - just jumping around. Next, moving forward too. – initial representative test is whether you can jump around; next test checks if you can move forward too (which is a different branch).</p>
+<h2 id="integration-tests-need-both-input-and-output">Integration Tests need both Input and Output</h2>
+<p><strong>Hypothesis</strong>: Output for some input -&gt; can use it as a test.</p>
+<p>Don’t know the output for some input -&gt; can’t use it as a test.</p>
+<hr />
+<p>Test: Tried to get an integration test for my learning mechanism - “Digits of a Number section 6.1, Bird.” – I have the input. But I don’t have the output! Can’t use it as a test (and get a high-level design).</p>
 <h2 id="small-interface-expose-only-one-thing-at-a-time">Small Interface: Expose Only One Thing at a Time</h2>
 <p><strong>Hypothesis</strong>: Small interface -&gt; easier to use.</p>
 <p>Large interface -&gt; harder to use.</p>
@@ -1075,6 +1350,12 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Desired output, abstract the inputs using the possible outputs (deal with an abstract type) -&gt; have to deal with fewer input configurations.</p>
 <hr />
 <p>Test: <code>findPerson</code> vs <code>find</code>. – Have to deal with Person being male or female.</p>
+<h2 id="abstract-as-much-as-the-goal-allows">Abstract as much as the Goal allows</h2>
+<p><strong>Hypothesis</strong>: Goal doesn’t ask about the specifics of the input type, abstract the input type -&gt; simpler, more reusable, easily changeable code; think the answer is pretty simple.</p>
+<p>Goal doesn’t ask about the specifics of the input type, keep the input type concrete -&gt; more “complex”, less reusable, hard-to-change code; think the answer must be “complex” and try weird stuff.</p>
+<hr />
+<p>Test: Wanted to concatenate all the <code>Parser [a]</code> in a list <code>[Parser [a]]</code>. Was stuck for 24 minutes doing that because I got confused by the <code>Parser</code> bit and thought that the solution would be something “complex” like <code>(fmap . fmap . fmap ) concat pxs</code> (Yes, I actually tried that). – Got unnecessarily intimidated.</p>
+<p>Test: But the moment I thought of the problem above as concatenating all the lists within <code>[m [a]]</code>, I got the answer immediately: <code>sequence</code>. – Felt pretty simple.</p>
 <h2 id="decompose-the-input">Decompose the Input</h2>
 <p><strong>Hypothesis</strong>: Input, treat it like some monolithic data structure -&gt; have to deal with a lot of input configurations.</p>
 <p>Input, treat it like some decomposable data structure (where the parts are decoupled) -&gt; fewer input configurations.</p>
@@ -1142,7 +1423,7 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p>Test: Essay on understanding - 42k words as of December 23, 2017. Feel like just throwing it away and building a new model from scratch using my latest format for unit tests and such. Experimental method! - But no, that would make me forget or have to re-generate hard-won evidence from over the last 8 months. (Roughly 100 hours of work - 155 words in commit 5116ad9 took 22 minutes @ 422 words per hour - where I was exposed to a variety of information such as causality math, biology text, category theory proofs, programming experiments on myself and others, and my Purdue course work - most of which would be hard to reproduce.) You do <strong>not</strong> want to lose that processed evidence. – Better to use it as a reference model and assimilate its evidence into a new model.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: December 24, 2017</div>
+<div class="info">Last modified: December 26, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
