@@ -697,23 +697,31 @@ boxes3x3' <span class="fu">=</span> fmap concat <span class="fu">.</span> overMa
 <p>one function definition - abstract it and run tests.</p>
 <p>two function definitions with duplicated code and slightly different goals - extract common abstract functions and run tests.</p>
 <p>one abstract function, old unrefactored code that you’re trying to subsume - check if it’s a subclass of your abstract function (that it handles a subset of the branches?)</p>
-<p>prose - will talk about the causes of some key variable - collect them on that key variable.</p>
-<p>two different sections talking about the same thing - collect the tests but ignore the hypotheses -&gt; get a combined hypothesis that passes all the tests, shrink your overall prose.</p>
-<p><strong>Hypothesis</strong>: Lots of different sections talking about the corollaries of the same principle (like operant conditioning), organize them by interventions -&gt; maximum reusability, minimum code. Basically, do [situation, action -&gt; result].</p>
 <p><strong>Question</strong>: What does this predict about programming to an interface? Will the code be easier to understand, reuse, and modify? Why?</p>
 <h2 id="tests-2">Tests</h2>
 <p>Test: <code>get_features_strike_rate</code> and <code>get_features_average</code> with <em>roughly the same code</em> except for <code>strike_rate</code> and <code>average</code> – accept a stat_fn and have a common abstract function.</p>
+<h1 id="rewriting-refactoring-prose">Rewriting: Refactoring Prose</h1>
+<h2 id="disjoint-hypotheses">Disjoint Hypotheses</h2>
+<p><strong>Corollary</strong>: Two hypotheses, different output variables -&gt; disjoint.</p>
+<p>Two hypotheses, same output variables -&gt; overlapping.</p>
+<hr />
+<p>Test: category hierarchy &lt;- locality; category hierarchy &lt;- causal model – overlapping hypotheses.</p>
+<p>Test: direction of car &lt;- steering wheel; speed of car &lt;- pedal – disjoint hypotheses.</p>
+<h2 id="rewriting-mechanism">Rewriting Mechanism</h2>
+<p>What is the input and output? The input has old hypotheses with some tests and perhaps new hypotheses with some tests. The output has hypotheses and tests that cover all previous tests and perhaps some new tests as well.</p>
+<p><strong>Hypothesis</strong>: Get the original output variables, get old tests, come up with your own causes, pass new tests, pass old tests -&gt; get a hypothesis that covers all tests present and past.</p>
+<p>Question: What are the tests I run to make sure the new version works the same as the old one?</p>
+<hr />
+<p>Test: My summary of old category hierarchy ideas. I got it down from 3800 words to 1100 words, while adding new ideas and tests. Took around 3 hours. Original prose: around 30 “hypotheses”, 30 examples (no tests or even observations). Final prose: 8 hypotheses, 28 tests.</p>
+<p>Number of hypotheses straight from the original: 3.</p>
+<p>The final prose was strictly in the form of disjoint hypotheses followed by tests of each branch. Around 21 hypothesis branches (including corollaries). So, roughly one test per branch, sometimes more.</p>
+<p>The original prose was in the form of repetitive and overlapping hypotheses with no branches, some examples, and no real tests.</p>
+<p>What about the variables?</p>
+<p>Here are the output variables from the final prose that were in the original prose: grammar; easier to code in; first-class categories for certain patterns; close to the problem domain; category property; mysterious category; can reuse category hierarchy; granularity of categories. (That covered basically all the hypotheses.)</p>
+<p>Here are the output variables from the original prose: learning; grammar; category hierarchy; categorize a program; high-level patterns; extend the grammar; which parts are decoupled; behaviour of the whole as a function of the behaviour of its parts; simple language; mysterious properties; can reuse category hierarchy; composing categories; granularity of categories; recomputing categories;</p>
+<p>Most of the output variables are the same.</p>
 <p>Test: decisiveness - had three sections talking about it, collected them all under my newest explanation (indecisiveness is caused by optimizing for too many variables), was able to cover them all, shrank my prose. – I ignored the hypotheses and collected the tests.</p>
 <p>Test: “Stuff not up to standards, insult -&gt; negative reinforcement for better action” – it’s in the form of [situation, action -&gt; result].</p>
-<h2 id="refactor-this-essay">Refactor This Essay</h2>
-<p>What are the tests I run to make sure the new version works the same as the old one?</p>
-<p>Come up with an explicit hypothesis for the steps I need to follow while refactoring.</p>
-<h2 id="key-variables">Key Variables</h2>
-<p>process evidence vs get confused &lt;- how many high-level changes you make at a time (<strong>to what?</strong>)</p>
-<p>change within existing function vs add a new function</p>
-<p>easily toggled design variable vs not</p>
-<p>how many changes you have to make to move from one design to another (one-button vs multiple changes)</p>
-<p>have a default alternative stub that fails X’s unit test vs not (when you have just one value X and want to toggle it)</p>
 <h1 id="hypotheses-about-hypotheses-model-of-the-domain">Hypotheses about Hypotheses: Model of the Domain</h1>
 <p>Hypothesis: My state-transition <em>model</em> of programming seems to cover all the hypotheses that talk about amount of uncertainty about your program’s correctness or the amount of work required to fix bugs.</p>
 <p><strong>Hypothesis</strong>: One type of hypothesis: move from concrete inputs to an abstract model, make abstract predictions, and then convert them to concrete predictions.</p>
@@ -1090,6 +1098,8 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p><strong>Hypothesis</strong>: Follow the values -&gt; know what values each component of the program takes in and gives out -&gt; narrow down the causes of each value, can decouple the components.</p>
 <p>Don’t follow the values -&gt; don’t know what values each component of the program takes in and gives out -&gt; don’t narrow down the causes of each value, can’t decouple the components.</p>
 <p><strong>Hypothesis</strong>: Integration test, get inputs and outputs for all the function calls -&gt; decent representative tests for those functions, maybe even induce how they work.</p>
+<p><strong>Question</strong>: What if you gave somebody a fully-representative test of paging or some other large problem? Would they be able to design it in a quarter of the time you took?</p>
+<p>For example, consider a test that involved multiple processes accessing virtual memory as well as non-virtual memory and having page faults and needing to replace pages in FIFO order while using semaphores and so on. Assume that all output values are specified at each point.</p>
 <hr />
 <p>Test: I saw</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">=</span> [wrap, snoc] <span class="fu">.</span> (id <span class="fu">+</span> val<span class="fu">^</span>c x id) <span class="fu">.</span> [embed, op]<span class="fu">^</span>c
