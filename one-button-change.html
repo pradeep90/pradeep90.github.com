@@ -1014,6 +1014,65 @@ QuickCheck property</code></pre>
 <p><strong>Integration test</strong>: Want to make a Beamer presentation - can’t remember exactly how to do it. Look it up in my integration tests [fast index]. Want to add a pause between slides - can’t find it [try to look it up]. Search online and experiment within the demo presentation [add technique to integration test first]. Use the template.</p>
 <p><strong>Integration test</strong>: Writing a C program - I want to know how to get a pointer to an array. Is <code>p = &amp;a[0]</code> good enough? Can we just do <code>p = a</code>? [remember the integration test; look it up].</p>
 <p><strong>Integration test</strong>: ATDD by example: the parking charge calculator - they wrote an end-to-end test for the calculator in the browser [integration test] that initially checked just one branch of valet parking [short cycle time].</p>
+<h3 id="lisp-java-phone-number-problem">Lisp-Java Phone Number Problem</h3>
+<p>Source: http://www.flownet.com/ron/papers/lisp-java/</p>
+<p><strong>Integration test</strong>: Lisp as an Alternative to Java - Phone number problem.</p>
+<p>Convert phone number to phrases that encode it. Each final phrase should decode to the given phone number and should be made of words from the dictionary (and maybe single digits).</p>
+<p>(I understood the problem statement by intuition. Don’t know how to use the quantitative requirements.)</p>
+<p>Picking an integration test by most “complex”-seeming:</p>
+<pre><code>10/783--5: neu o&quot;d 5
+10/783--5: je bo&quot;s 5
+10/783--5: je Bo&quot; da</code></pre>
+<p><strong>Observation</strong>: That wasn’t really an integration test. It was just a bunch of unit tests. Also, I didn’t flesh out the integration test by progressively replacing the stubs.</p>
+<p>Property:</p>
+<p>(concatMap decode . map stripQuotes $ phrase) == just the digits == stripPunctuation phoneNumber</p>
+<p>I’m sure Bird would take the inverse somehow and get the answer in a few steps.</p>
+<p>Ok. How to get the “fully-specified integration test”?</p>
+<p>10/783–5 -&gt; 107835 [phone number -&gt; digits]</p>
+<p>107835 -&gt; 1 07835; 10 7835; 107 835; 1078 35; 10783 5. [digits -&gt; prefixes and suffixes]</p>
+<p>10 7835 -&gt; je [recursive call on 7835] -&gt; je bo“s [recursive call on 5]; je Bo” [recursive call on 35] -&gt; je bo“s 5; je Bo” da. [prefix, suffix -&gt; phrase]</p>
+<p>Hmm… Ok. That <em>is</em> a fully-specified integration test. Let’s run with it and see how it goes. [Step one done. Step two too.]</p>
+<p>Hello world works. [Step three done.]</p>
+<p>Integration test passes with one stub. One-button deployment.</p>
+<p>Follow <strong>all</strong> the values. Write tests for each function call needed to pass the integration test.</p>
+<p><strong>Observation</strong>: I’m making sure progress. May be slow (or not). But I’m definitely moving with a purpose.</p>
+<p>Observation: 34 minutes into the implementation - done with encode to words and the others. Didn’t expect to finish this easily. (<code>encode</code> is still left, though.)</p>
+<p>When debugging encode (which gave [] instead of phrases), I went back to a working version.</p>
+<p>My first integration test passed.</p>
+<p>Observation: However, <strong>stuck</strong> on the others. “*** Exception: Prelude.head: empty list”.</p>
+<p>Time for my debugging algorithm to step up.</p>
+<p><strong>Hypothesis</strong>: No debugging -&gt; anybody can coast through the problem.</p>
+<p>Debugging -&gt; way better to have unit tests and well-designed code.</p>
+<p>Test: What to do when you <strong>don’t</strong> have a diff? When you fail for a new test? – Narrow down the test first, I guess. (And then, maybe start stepping through the code.)</p>
+<p>Turns out I was using head on an empty list.</p>
+<p>Huh. It was in <code>checkConsecutiveWords</code>. Once I turned that off, the test passed.</p>
+<p>Test: Man, that “severe bug” was handled easily. It took all of two minutes to squint at the error message and realize that <code>head</code> was causing the exception. I overestimated the difficulty of the problem.</p>
+<p><strong>Test</strong>: Ran everything under one test - had to run tests several times before I could get the generated outcome for each of them. Much easier when I put them in separate tests and got all the generated outcomes in parallel. Way more <strong>information</strong>! You can easily refactor the test names later. For now, it’s more important to get information quickly.</p>
+<p>Test: Hard to get the <strong>output</strong> of intermediate mechanisms when you use <code>where</code> statements. High cycle time (?). Uncertainty about the cause of the output.</p>
+<p>Test: Separated f and thus the value of <code>result</code>. Realized that</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">filter (not <span class="fu">.</span> null) <span class="fu">.</span> concatMap (g dict letterMap) <span class="fu">$</span> possibleSplits <span class="st">&quot;112&quot;</span></code></pre></div>
+<p>itself gives <code>[&quot;1 &quot;]</code>. Narrowed down!</p>
+<p>Test: Broke down the input list <code>possibleSplits &quot;112&quot;</code> and checked the value. Turns out that <code>[(&quot;1&quot;,&quot;12&quot;)]</code> is what is giving the wrong output.</p>
+<p>Test: I’m running manual tests. Have to keep fucking binding dict and letterMap each time.</p>
+<p>Test: I don’t seem to have any first-class output for <code>g</code>. It’s just magic to me at this point. Hmm… I don’t know if <code>g</code> should return <code>[&quot;&quot;]</code> or <code>[]</code> when the suffix can’t be encoded. I don’t have a contract for <code>g</code>.</p>
+<p>Test: Took me 3h19m. Pradeep_2014 did it in 2h17m and he used better types than mine. I used Strings everywhere, for God’s sake. (Maybe his types led to a better design.)</p>
+<p>Test: Major problem - I was using functions or variables like <code>encode</code> and <code>g</code> and <code>result</code> without knowing their exact types or contracts. (I wrote those functions without specifying a test for them, even a rudimentary one based on the integration test.)</p>
+<p><strong>Hypothesis</strong>: I should have inferred g’s contract from its input and output for the integration test.</p>
+<hr />
+<p>Observation: Feeling like shit right now because I didn’t zoom through the problem.</p>
+<p><strong>Hypothesis</strong>: Don’t overpromise, keep improving -&gt; you will get the most utilons you can and you will be happy with that. No need to worry about what others might say.</p>
+<h2 id="programming-algorithm">Programming Algorithm</h2>
+<p><strong>Hypothesis</strong>:</p>
+<p>Get a “representative” integration test from the problem statement with input and output at every step. <a href="#fully-specified-representative-test">fully-specified representative test</a></p>
+<p>Follow the values step-by-step to get a high-level design along with type signatures (by looking at what values the output depends on). [follow the values]</p>
+<p>Start on top of a working hello-world program. [hello-world]</p>
+<p>Set up and pass the integration test with stubs. [stubs]</p>
+<p>Make it a one-button deployment. [deployment pipeline]</p>
+<p>Implement necessary functions in isolation [implement in isolation] using tests from the integration test [initial unit tests from the integration test; red-green]. Run the integration test every time. Replace stub with actual function call. [flesh out the integration test; run the deployment pipeline]</p>
+<p>Pass the test in a quick and dirty way. [coding hat]</p>
+<p>Add unit tests for each of the functions. [unit tests] Then refactor. [refactoring hat]</p>
+<p>If you need to use some technique, look it up in a Haskell integration test. [look it up in integration test]</p>
+<p>If you get a failing test or compilation error, narrow down the causes. [narrow down the causes by backward inference on top of the last working version - look at the diff]</p>
 <h2 id="look-at-the-input-configurations">Look at the Input Configurations</h2>
 <p><strong>Hypothesis</strong>: pure function, know all possible input configurations for which the output is different -&gt; know test cases; clear how to proceed.</p>
 <p>pure function, don’t know all possible input configurations for which the output is different -&gt; don’t know all test cases; not clear how to proceed.</p>
@@ -1465,7 +1524,7 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p>Test: Essay on understanding - 42k words as of December 23, 2017. Feel like just throwing it away and building a new model from scratch using my latest format for unit tests and such. Experimental method! - But no, that would make me forget or have to re-generate hard-won evidence from over the last 8 months. (Roughly 100 hours of work - 155 words in commit 5116ad9 took 22 minutes @ 422 words per hour - where I was exposed to a variety of information such as causality math, biology text, category theory proofs, programming experiments on myself and others, and my Purdue course work - most of which would be hard to reproduce.) You do <strong>not</strong> want to lose that processed evidence. – Better to use it as a reference model and assimilate its evidence into a new model.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: December 28, 2017</div>
+<div class="info">Last modified: December 30, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
