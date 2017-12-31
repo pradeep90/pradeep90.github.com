@@ -1010,7 +1010,7 @@ QuickCheck property</code></pre>
 <p>Why did I not toggle all the variables when tracking down that Markdown <code>mark-paragraph</code> bug? Where did I go wrong?</p>
 <p>If you think programming time is caused by past experience, access to interpreter, and other things, then toggle them. Remove the effect of past experience somehow. (How? Maybe make them program in a new language.)</p>
 <h1 id="programming-for-minimum-interface-at-speed">Programming for Minimum Interface at Speed</h1>
-<h2 id="programming-integration-test">Programming: Integration Test</h2>
+<h2 id="programming-acceptance-test">Programming: Acceptance Test</h2>
 <p><strong>Integration test</strong>: Want to make a Beamer presentation - can’t remember exactly how to do it. Look it up in my integration tests [fast index]. Want to add a pause between slides - can’t find it [try to look it up]. Search online and experiment within the demo presentation [add technique to integration test first]. Use the template.</p>
 <p><strong>Integration test</strong>: Writing a C program - I want to know how to get a pointer to an array. Is <code>p = &amp;a[0]</code> good enough? Can we just do <code>p = a</code>? [remember the integration test; look it up].</p>
 <p><strong>Integration test</strong>: ATDD by example: the parking charge calculator - they wrote an end-to-end test for the calculator in the browser [integration test] that initially checked just one branch of valet parking [short cycle time].</p>
@@ -1061,6 +1061,12 @@ QuickCheck property</code></pre>
 <hr />
 <p>Observation: Feeling like shit right now because I didn’t zoom through the problem.</p>
 <p><strong>Hypothesis</strong>: Don’t overpromise, keep improving -&gt; you will get the most utilons you can and you will be happy with that. No need to worry about what others might say.</p>
+<h3 id="acceptance-test-fix-bugs-in-os-hw3">Acceptance Test: Fix Bugs in OS HW3</h3>
+<p>That project involves legacy code and takes a while to compile and test as well.</p>
+<h3 id="acceptance-test-write-tests-for-and-refactor-os-hw1">Acceptance Test: Write Tests for and Refactor OS HW1</h3>
+<p>It has legacy code and it is in C. Enjoy. Make sure that you can write acceptance tests and pass them with ease. Remember how much trouble you had earlier.</p>
+<h3 id="more-acceptance-tests">More Acceptance Tests</h3>
+<p>Acceptance test: Grammar for problem statement of programming problem.</p>
 <h2 id="programming-algorithm">Programming Algorithm</h2>
 <p><strong>Hypothesis</strong>:</p>
 <p>Get a “representative” integration test from the problem statement with input and output at every step. <a href="#fully-specified-representative-test">fully-specified representative test</a></p>
@@ -1175,6 +1181,30 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Test: Knaster-Tarski theorem 6.1 – took around 15 minutes. Not as crystal clear as the previous ones. But I did get the gist. However, I don’t understand the final point (equations 6.2 and 6.3). (5 minutes later, I still don’t get the last paragraph.) So, this technique isn’t infallible. But it’s better than nothing. Got the type signature. Got stuck because I didn’t understand the line “Each of the equations … has a least solution and these least solutions coincide.” and I needed it to understand the last paragraph. Don’t have the contract since I didn’t see any concrete values and didn’t understand the theorem statement.</p>
 <p>Explanation: Didn’t have the output value for the unfamiliar function call “least solutions coincide” and couldn’t see a concrete example showing me the output value.</p>
 <p>Test: Follow the values to decouple - paging - when switching processes, you need to have different page directories and page tables; when accessing a virtual memory address, you need to have a page fault handler that can get a new frame for that page (and possibly its page table); when replacing a page, you need to have a free frame list with FIFO information and a backing store that has the data for the incoming page and can store data for the evicted page. – know the causes of paging during process-switching, page-fault handling, and page replacement.</p>
+<h3 id="values-are-easier-to-understand-than-types">Values are Easier to Understand than Types</h3>
+<p><strong>Hypothesis</strong>: New types -&gt; can’t move forward until you memorize - slow; hard to follow since you have to recall from memory.</p>
+<p>Known type (just normal values) -&gt; can zoom ahead - fast; easy to follow transformations since you know them by heart.</p>
+<hr />
+<p>Test: Phone number problem - could follow the input values from start to finish because I saw them simply as strings. You received an input string like “10/783–5” and got a digit-only string like “107835” and then you broke it up into prefixes and suffixes and tried to match them with dictionary words and so on. – It was all simple and understandable; I know how Strings behave.</p>
+<p>Test: Phone number problem - contrast that to my first attempt - look at the types: <code>DigitString, Dict, Token, NonDeterministicEncoding, Parser, PState, DictWord, PhoneNumber</code>. – You have to work pretty hard to understand all of them. And here’s the rub: you can’t fully understand the code unless you’ve understood them. I’d have to keep looking up the definition.</p>
+<p>Test: Look at this code (from 2014 - I don’t think I would have written the same code now):</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">parse' ::</span> <span class="dt">Dict</span> <span class="ot">-&gt;</span> <span class="dt">PState</span> <span class="ot">-&gt;</span> [<span class="dt">PState</span>]
+parse' _ ps<span class="fu">@</span>([], _) <span class="fu">=</span> [ps]
+parse' dict ps <span class="fu">=</span> flip nextPStates ps <span class="fu">.</span> mapMaybe (lookupToken dict) <span class="fu">.</span> prefixSplits <span class="fu">.</span> fst <span class="fu">$</span> ps</code></pre></div>
+<p>You can’t really understand that code if you don’t know what <code>PState</code> behaves like. – I can’t get started until I lookup <code>PState</code> or even <code>Dict</code>. Slow.</p>
+<p>Test: Here’s another sample:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">nextPStates ::</span> [(<span class="dt">DigitString</span>, <span class="dt">Token</span>)] <span class="ot">-&gt;</span> <span class="dt">PState</span> <span class="ot">-&gt;</span> [<span class="dt">PState</span>]
+nextPStates [] ps <span class="fu">=</span> nextPStatesWhenNoNewTokens ps
+nextPStates ts' (_, ts) <span class="fu">=</span> map (fmap (<span class="fu">:</span>ts)) ts'</code></pre></div>
+<p>Explanation: Can’t move forward until I know <code>DigitString</code> and <code>PState</code>. Slow.</p>
+<p>Test: Contrast that to my current code (which isn’t beautiful or anything) TODO</p>
+<p>Test: Reading Applied Behavioural Analysis - constantly got stopped in my tracks by the definitions they kept laying out - “respondent conditioning”, “modeling”, and other things. I didn’t <strong>know</strong> what those labels referred to and I had to struggle to figure it out. – can’t move forward without knowing those terms; hard to follow. Have to keep looking up the definitions.</p>
+<p>Test: Category theory book or Bird book - full of unknown types like “initial object”, “group”, “product”, “coproduct”, “functional refinement”, “catamorphism”, etc. – can’t move forward unless you know; have to keep looking up the definition.</p>
+<h2 id="refactoring-write-direct-tests-before-you-refactor">Refactoring: Write Direct Tests before you Refactor</h2>
+<p><strong>Hypothesis</strong>: Don’t have direct tests, refactor -&gt; may break the code; hard to debug.</p>
+<p>Don’t have tests, refactor -&gt; reasonably confident; easy to debug (narrow causes).</p>
+<hr />
+<p>Test: Phone number - trying to refactor <code>g</code> (yeah). The overall tests for <code>encode</code> keep failing. That’s because I don’t know the contract for <code>g</code> - I don’t have direct tests for it. So, I should see what behaviour it currently produces before I try to clean it up. – broke the code; hard to debug.</p>
 <h2 id="deployment-pipeline-flesh-out-the-integration-test">Deployment Pipeline: Flesh out the Integration Test</h2>
 <p><strong>Hypothesis</strong>: Deployment pipeline for hypotheses or programs = add a high-level integration test with function calls mocked out so that it all flows; fill out mocked-out functions using inputs and outputs from the integration test; release by running integration tests + unit tests; you’re done passing that integration test when you no longer have any mocks in the integration test -&gt; decoupled high-level design by following the values; isolated implementation for the inner functions by using real-world tests; working product at every point as certified by the integration test; frequent releases by implementing inner functions quickly and running the integration test + unit tests;</p>
 <p>don’t have high-level integration test; add functions without an overarching test -&gt; may commit to poor design; isolated implementation for functions; won’t have a working product for a while since there are no integration tests passed; infrequent high-level releases.</p>
@@ -1249,6 +1279,26 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>CORAL: All business plans for startups turn out to be wrong, but you still need them - and not just as works of fiction. They represent the written form of your current beliefs about your key assumptions. Writing down your business plan checks whether your current beliefs can possibly be coherent, and suggests which critical beliefs to test first, and which results should set off alarms, and when you are falling behind key survival thresholds. The idea isn’t that you stick to the business plan; it’s that having a business plan (a) checks that it seems possible to succeed in any way whatsoever, and (b) tells you when one of your beliefs is being falsified so you can explicitly change the plan and adapt. Having a written plan that you intend to rapidly revise in the face of new information is one thing. NOT HAVING A PLAN is another.</p>
 <p>– <a href="https://intelligence.org/2017/11/26/security-mindset-and-the-logistic-success-curve/"></a></p>
 </blockquote>
+<h2 id="continuous-delivery-run-acceptance-tests-in-a-production-like-environment">Continuous Delivery: Run Acceptance Tests in a Production-Like Environment</h2>
+<p><strong>Hypothesis</strong>: Continuous delivery = running acceptance tests in a production-like environment.</p>
+<p>(You still have to build and stage all the way to a production-like environment, running unit tests and integration tests along the way).</p>
+<hr />
+<p>Test: Writing a research report in LaTeX - production-like environment is the LaTeX PDF (not your handwritten sheaf of papers); running acceptance tests - getting feedback from yourself by looking at it from the eye of a reader and from others. – yup.</p>
+<p>Test: Negative exemplar - continuous integration where you simply run unit tests – that is not a production-like environment nor are they acceptance tests.</p>
+<h2 id="acceptance-test-talk-only-about-domain-variables">Acceptance Test: Talk only about Domain Variables</h2>
+<p><strong>Hypothesis</strong>: Acceptance test, talk only about domain variables -&gt; simple test; decoupled from implementation details.</p>
+<p>Acceptance test, talk about implementation variables too -&gt; complicated test; coupled to implementation details.</p>
+<hr />
+<p>Test: Auction sniper example - “Given auction, when I join and don’t bid, then I will lose” - nothing about XMPP or Swing or anything else. – simple test; can change the protocol and such.</p>
+<h2 id="acceptance-test-clear-focus-on-what-matters">Acceptance Test: Clear Focus on What Matters</h2>
+<p><strong>Hypothesis</strong>: Failing acceptance test -&gt; you know exactly what needs to be done; you know it matters; need to remember only your current failing acceptance tests.</p>
+<p>No failing acceptance test, write unit tests or just implement code -&gt; you don’t know exactly what <strong>needs</strong> to be done; you don’t know if it matters; have to remember a lot of TODOs.</p>
+<p><strong>Lesson</strong>: Writing a TODO - instead, make a failing acceptance test for it.</p>
+<p><strong>Question</strong>: What is the ideal behaviour for programming (on, say, the phone number problem)?</p>
+<hr />
+<p>Test: Phone number problem - I knew that <code>10/783--5: neu o&quot;d 5</code> wasn’t working yet and I needed to get on it. – No need to waste time on pointless “design” of beautiful types. Get that test passing ASAP. And I knew it mattered because that was they would test. Just needed to focus on that failing acceptance test.</p>
+<p>Test: Scheduler OS HW1 - no failing acceptance test (no real tests at all, in fact) – didn’t know if I was working on the right thing; didn’t know exactly what to do next (?). Had to remember a lot of to-do items in my Org file.</p>
+<p>Test: Want to write a to-do item for “handle multiple processes accessing the same virtual memory address” – instead, just add a failing acceptance test and set it aside. Don’t need to keep track of lots of to-do items.</p>
 <h2 id="rapid-prototyping-figure-out-the-high-level-design-before-the-low-level-details">Rapid Prototyping: Figure out the High-level Design before the Low-level Details</h2>
 <p><strong>Question</strong>: Why is it better to pass one integration test with a 120-line program written in three hours than to pass all kinds of tests with a spec implemented in three weeks?</p>
 <p>Observation: The differing variables are: number of tests passed, number of lines of code, and time taken. Also, the first one gets feedback about the design immediately.</p>
@@ -1524,7 +1574,7 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p>Test: Essay on understanding - 42k words as of December 23, 2017. Feel like just throwing it away and building a new model from scratch using my latest format for unit tests and such. Experimental method! - But no, that would make me forget or have to re-generate hard-won evidence from over the last 8 months. (Roughly 100 hours of work - 155 words in commit 5116ad9 took 22 minutes @ 422 words per hour - where I was exposed to a variety of information such as causality math, biology text, category theory proofs, programming experiments on myself and others, and my Purdue course work - most of which would be hard to reproduce.) You do <strong>not</strong> want to lose that processed evidence. – Better to use it as a reference model and assimilate its evidence into a new model.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: December 30, 2017</div>
+<div class="info">Last modified: December 31, 2017</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
