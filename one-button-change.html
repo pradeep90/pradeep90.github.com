@@ -1014,6 +1014,8 @@ QuickCheck property</code></pre>
 <p><strong>Integration test</strong>: Want to make a Beamer presentation - can’t remember exactly how to do it. Look it up in my integration tests [fast index]. Want to add a pause between slides - can’t find it [try to look it up]. Search online and experiment within the demo presentation [add technique to integration test first]. Use the template.</p>
 <p><strong>Integration test</strong>: Writing a C program - I want to know how to get a pointer to an array. Is <code>p = &amp;a[0]</code> good enough? Can we just do <code>p = a</code>? [remember the integration test; look it up].</p>
 <p><strong>Integration test</strong>: ATDD by example: the parking charge calculator - they wrote an end-to-end test for the calculator in the browser [integration test] that initially checked just one branch of valet parking [short cycle time].</p>
+<p><strong>Acceptance test</strong>: Milo against Avada Kedavra - he has never fought such a curse before. None of his “acceptance tests” (aka past experience or secondhand knowledge) has anything like this [no precedent in current acceptance tests].</p>
+<p>He searched his rule book of techniques (or just his memory) [search techniques] and came up with the Skeletal Troll [new acceptance test].</p>
 <h3 id="lisp-java-phone-number-problem">Lisp-Java Phone Number Problem</h3>
 <p>Source: http://www.flownet.com/ron/papers/lisp-java/</p>
 <p><strong>Integration test</strong>: Lisp as an Alternative to Java - Phone number problem.</p>
@@ -1058,6 +1060,7 @@ QuickCheck property</code></pre>
 <p>Test: Took me 3h19m. Pradeep_2014 did it in 2h17m and he used better types than mine. I used Strings everywhere, for God’s sake. (Maybe his types led to a better design.)</p>
 <p>Test: Major problem - I was using functions or variables like <code>encode</code> and <code>g</code> and <code>result</code> without knowing their exact types or contracts. (I wrote those functions without specifying a test for them, even a rudimentary one based on the integration test.)</p>
 <p><strong>Hypothesis</strong>: I should have inferred g’s contract from its input and output for the integration test.</p>
+<p>[2017-12-31 Sun] Want to refactor <code>g</code>. Realize that it’s type is pretty bad.</p>
 <hr />
 <p>Observation: Feeling like shit right now because I didn’t zoom through the problem.</p>
 <p><strong>Hypothesis</strong>: Don’t overpromise, keep improving -&gt; you will get the most utilons you can and you will be happy with that. No need to worry about what others might say.</p>
@@ -1181,9 +1184,8 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Test: Knaster-Tarski theorem 6.1 – took around 15 minutes. Not as crystal clear as the previous ones. But I did get the gist. However, I don’t understand the final point (equations 6.2 and 6.3). (5 minutes later, I still don’t get the last paragraph.) So, this technique isn’t infallible. But it’s better than nothing. Got the type signature. Got stuck because I didn’t understand the line “Each of the equations … has a least solution and these least solutions coincide.” and I needed it to understand the last paragraph. Don’t have the contract since I didn’t see any concrete values and didn’t understand the theorem statement.</p>
 <p>Explanation: Didn’t have the output value for the unfamiliar function call “least solutions coincide” and couldn’t see a concrete example showing me the output value.</p>
 <p>Test: Follow the values to decouple - paging - when switching processes, you need to have different page directories and page tables; when accessing a virtual memory address, you need to have a page fault handler that can get a new frame for that page (and possibly its page table); when replacing a page, you need to have a free frame list with FIFO information and a backing store that has the data for the incoming page and can store data for the evicted page. – know the causes of paging during process-switching, page-fault handling, and page replacement.</p>
-<h3 id="values-are-easier-to-understand-than-types">Values are Easier to Understand than Types</h3>
-<p><strong>Hypothesis</strong>: New types -&gt; can’t move forward until you memorize - slow; hard to follow since you have to recall from memory.</p>
-<p>Known type (just normal values) -&gt; can zoom ahead - fast; easy to follow transformations since you know them by heart.</p>
+<h3 id="values-are-easier-to-understand-than-unfamiliar-types">Values are Easier to Understand than Unfamiliar Types</h3>
+<p><strong>Hypothesis</strong>: Unfamiliar type or category -&gt; unfamiliar function calls; have to look them up.</p>
 <hr />
 <p>Test: Phone number problem - could follow the input values from start to finish because I saw them simply as strings. You received an input string like “10/783–5” and got a digit-only string like “107835” and then you broke it up into prefixes and suffixes and tried to match them with dictionary words and so on. – It was all simple and understandable; I know how Strings behave.</p>
 <p>Test: Phone number problem - contrast that to my first attempt - look at the types: <code>DigitString, Dict, Token, NonDeterministicEncoding, Parser, PState, DictWord, PhoneNumber</code>. – You have to work pretty hard to understand all of them. And here’s the rub: you can’t fully understand the code unless you’ve understood them. I’d have to keep looking up the definition.</p>
@@ -1205,6 +1207,25 @@ nextPStates ts' (_, ts) <span class="fu">=</span> map (fmap (<span class="fu">:<
 <p>Don’t have tests, refactor -&gt; reasonably confident; easy to debug (narrow causes).</p>
 <hr />
 <p>Test: Phone number - trying to refactor <code>g</code> (yeah). The overall tests for <code>encode</code> keep failing. That’s because I don’t know the contract for <code>g</code> - I don’t have direct tests for it. So, I should see what behaviour it currently produces before I try to clean it up. – broke the code; hard to debug.</p>
+<h3 id="refactoring-make-the-types-compose">Refactoring: Make the Types Compose</h3>
+<p><strong>Hypothesis</strong>: Refactor code, write out types, make them compose well with each other -&gt; clean code.</p>
+<hr />
+<p>Test: Type of g:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">g ::</span> [<span class="dt">String</span>] <span class="ot">-&gt;</span> <span class="dt">M.Map</span> <span class="dt">Char</span> <span class="dt">Char</span> <span class="ot">-&gt;</span> (<span class="dt">String</span>, <span class="dt">String</span>) <span class="ot">-&gt;</span> [<span class="dt">String</span>]</code></pre></div>
+<p>It’s not composable at all. It’s just a jumble of types. Specifically, it’s not <strong>closed</strong>. But I’d like to use it over and over, so I want it to be closed (either in the category of functions <code>a -&gt; a</code> or in the category of monads <code>a -&gt; m a</code>). – You can’t compose it with the external type of any other function.</p>
+<p>Test: Hmm… Haskell programs generally express one unit of computation with their function types.</p>
+<p>Representing the whole computation of phrases as <code>(PrefixDigits, SuffixDigits) -&gt; [Phrase]</code> hides the inner computations. We don’t know what’s happening underneath.</p>
+<p>What are we actually doing? We want (a) <code>PhoneNumber -&gt; [Phrase]</code>. So, we are (b) breaking it into <code>(PrefixDigits, SuffixDigits)</code> pairs and then (c) encoding <code>PrefixDigits</code> as a <code>Token</code> (which could be a <code>WordToken</code> or a <code>DigitToken</code>) and then (d) recursively encoding <code>SuffixDigits</code> as <code>[Phrase]</code> and then (e) combining the <code>Token</code> and the <code>[Phrase]</code> such that there are no consecutive digits.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- (a) and (c)</span>
+<span class="ot">encode ::</span> <span class="dt">PhoneNumber</span> <span class="ot">-&gt;</span> [<span class="dt">Phrase</span>]
+<span class="co">-- (b)</span>
+<span class="ot">allSplits ::</span> <span class="dt">PhoneNumber</span> <span class="ot">-&gt;</span> [(<span class="dt">PrefixDigits</span>, <span class="dt">SuffixDigits</span>)]
+<span class="co">-- (c)</span>
+<span class="ot">encodeToken ::</span> <span class="dt">PrefixDigits</span> <span class="ot">-&gt;</span> <span class="dt">Token</span>
+<span class="co">-- (e)</span>
+<span class="ot">combineToken ::</span> <span class="dt">Token</span> <span class="ot">-&gt;</span> [<span class="dt">Phrase</span>] <span class="ot">-&gt;</span> [<span class="dt">Phrase</span>]</code></pre></div>
+<p>See how much cleaner that is! And, of course, I would make the types abstract (for example, <code>allSplits</code> doesn’t need to know if the argument is a <code>PhoneNumber</code> or anything; it can work on a simple list).</p>
+<p>You can follow the computation from the types. The only way to get a <code>[Phrase]</code> is through <code>combineToken</code>, which needs a <code>Token</code>. We get that from <code>encodeToken</code>, which in turn takes inputs from <code>allSplits</code>. – They compose well with each other.</p>
 <h2 id="deployment-pipeline-flesh-out-the-integration-test">Deployment Pipeline: Flesh out the Integration Test</h2>
 <p><strong>Hypothesis</strong>: Deployment pipeline for hypotheses or programs = add a high-level integration test with function calls mocked out so that it all flows; fill out mocked-out functions using inputs and outputs from the integration test; release by running integration tests + unit tests; you’re done passing that integration test when you no longer have any mocks in the integration test -&gt; decoupled high-level design by following the values; isolated implementation for the inner functions by using real-world tests; working product at every point as certified by the integration test; frequent releases by implementing inner functions quickly and running the integration test + unit tests;</p>
 <p>don’t have high-level integration test; add functions without an overarching test -&gt; may commit to poor design; isolated implementation for functions; won’t have a working product for a while since there are no integration tests passed; infrequent high-level releases.</p>
@@ -1225,6 +1246,7 @@ nextPStates ts' (_, ts) <span class="fu">=</span> map (fmap (<span class="fu">:<
 <h2 id="fast-index-for-your-techniques-integration-tests">Fast Index for your Techniques: Integration Tests</h2>
 <p><strong>Corollary</strong>: Real-world scenario, can’t remember which technique to use, look <strong>only</strong> at your integration tests for a similar scenario -&gt; have to remember just the integration tests and will automatically have concrete discriminating cues; quickly get the single function you want; guaranteed up-to-date since you will replace old techniques with better ones; DRY because you can’t have multiple hypotheses for the same scenario.</p>
 <p>Real-world scenario, can’t remember which technique to use, no integration tests -&gt; have to remember a lot of context-less techniques for whom I don’t have discriminating cues; slow; may not be up-to-date; not DRY because I may see several techniques for the same (poorly-categorized) scenario.</p>
+<p>New scenario that your past acceptance tests don’t cover, search your techniques (aka weapons) -&gt; hopefully respond correctly; add as an acceptance test.</p>
 <p>Corollary: Scenario not in integration test, go online and add the technique to an integration test first -&gt; every technique you needed to look up will be in an integration test for easy lookup later; quicker way to test the new technique.</p>
 <p><strong>Corollary</strong>: We can easily remember integration tests (even if we don’t remember the answers). We struggle to remember generic text.</p>
 <hr />
@@ -1233,6 +1255,7 @@ nextPStates ts' (_, ts) <span class="fu">=</span> map (fmap (<span class="fu">:<
 <p>Test: Self-help books with a bunch of techniques (such as The Little Book of Talent: 52 Tips by Daniel Coyle, Writing Tools: 50 Essential Strategies for Every Writer by Roy Peter Clark, or Your Brain at Work by David Rock, which has 14 tips) - don’t know when to use what. I usually forget to use them. – have to remember a lot of context-less techniques (“Tip 45: For every hour of competition, spend five hours practicing.”); can’t find what I want; abstract scenario - may hit upon several seemingly-applicable techniques.</p>
 <p>Test: Have to make a Beamer presentation using Org mode - look it up in my demo Org Beamer presentation, not online. – have a default Org Beamer template I can use anywhere; can experiment on a simple template.</p>
 <p>Test: C pointer details - hard to remember the abstract knowledge about <code>p + i</code> and <code>(void *) p</code> and <code>(struct foo *) p</code> and so on. Easier to remember a test I ran on all these examples, from where I can easily get the answers I want. – done.</p>
+<p>Test: New scenario - Milo against Avada Kedavra - none of his usual spells worked; use the <a href="https://www.fanfiction.net/s/8096183/25/Harry-Potter-and-the-Natural-20">Skeletal Troll</a>. – he probably searched the rule book for something like this. He could then use it against anyone who cast the killing spell against him.</p>
 <h2 id="spec-or-integration-test-quick-feedback-about-high-level-design">Spec or Integration Test: Quick Feedback about High-level Design</h2>
 <p><strong>Corollary</strong>: Writing a spec (or better, a prototype) = coming up with integration tests (with feedback from the user).</p>
 <p><strong>Hypothesis</strong>: Spec or integration test, change your high-level design -&gt; can set the input configuration (aka your program) quickly and get feedback from user (who is the mechanism you’re testing).</p>
@@ -1285,6 +1308,19 @@ nextPStates ts' (_, ts) <span class="fu">=</span> map (fmap (<span class="fu">:<
 <hr />
 <p>Test: Writing a research report in LaTeX - production-like environment is the LaTeX PDF (not your handwritten sheaf of papers); running acceptance tests - getting feedback from yourself by looking at it from the eye of a reader and from others. – yup.</p>
 <p>Test: Negative exemplar - continuous integration where you simply run unit tests – that is not a production-like environment nor are they acceptance tests.</p>
+<h2 id="committing-partially-working-code-or-partially-correct-ideas">Committing Partially-Working Code or Partially-Correct Ideas</h2>
+<p>Hypothesis: If I commit ideas that I will soon subsume with another idea, then I will have trouble finding them. – Not true. I can always look at the git log and diff.</p>
+<p>But then my repo will no longer satisfy the property that, at any point, every function exists for a purpose - that is, it helps pass an acceptance test that wouldn’t be passed otherwise.</p>
+<p>Won’t it, though? At the previous state in the repo, the acceptance test would be passed thanks to the old idea. After you’ve subsumed the idea, the acceptance test would be passed thanks to your new idea. At no point is there a function that doesn’t pull its weight.</p>
+<p>Maybe the problem is that the code isn’t fully refactored. But that isn’t part of your repo property. It doesn’t say everything will be beautifully written. It just says everything will be necessary for passing the acceptance tests.</p>
+<p>Hypothesis: I don’t want there to be wrong ideas in my repo history aka perfectionism. What will people say?</p>
+<p><strong>Hypothesis</strong>: New idea, no acceptance test, want to refactor old ideas that the new idea subsumes -&gt; have to go through the whole essay (or at least the revision log) to find out ideas that it subsumes.</p>
+<p>New idea, no acceptance test but old changes are uncommitted, want to refactor old ideas that the new idea subsumes -&gt; have to go through just the uncommitted changes.</p>
+<p>New idea, have acceptance test, want to refactor old ideas that it subsumes -&gt; go through the acceptance tests to see which value transformations you could do by yourself.</p>
+<hr />
+<p>Test: I hesitate to commit partially-correct ideas that I’m in the middle of improving, even when they add up to over a thousand words.</p>
+<p>For example, I’m writing about reductionism and behaviorists and observable consequences and how you should have definitions that make more than one prediction and so on. I know that my final hypothesis will tie up all these loose ends elegantly pretty soon, so I don’t want to commit the rest before that.</p>
+<p><strong>Test</strong>: Tried committing partially-correct ideas - felt unclean, somehow. Didn’t like it at all. Felt like the log message would be misleading for future Pradeep. It would say “advance predictions &lt;- testable definitions”, which isn’t the whole story, especially because of what I’m working on next. – It’s extra work for him. If he had the obsolete ideas lying around uncommitted, he would know exactly what to change instead of having to trawl the essay or revision log. (There might still be other old ideas that could be subsumed, but at least this extra work would be avoided for the given ideas.)</p>
 <h2 id="acceptance-test-talk-only-about-domain-variables">Acceptance Test: Talk only about Domain Variables</h2>
 <p><strong>Hypothesis</strong>: Acceptance test, talk only about domain variables -&gt; simple test; decoupled from implementation details.</p>
 <p>Acceptance test, talk about implementation variables too -&gt; complicated test; coupled to implementation details.</p>
