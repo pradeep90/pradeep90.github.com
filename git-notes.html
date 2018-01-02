@@ -75,9 +75,12 @@ git rev-list HEAD --count -- one-button-change.md</code></pre>
 <pre><code>pre-commit run --files main.py foo.py</code></pre>
 <h2 id="run-all-tests-before-commit">Run all Tests before Commit</h2>
 <p>To run all tests in your repo before commit (using <code>pre-commit</code>), use the hook in my repository <a href="https://github.com/pradeep90/run-repo-tests">run-repo-tests</a>.</p>
+<h1 id="checkout-commit-by-date">Checkout Commit by Date</h1>
+<p>To checkout the commit you were at one year ago (helpful for nostalgic recollections and stats-gathering on New Year’s Eve):</p>
+<pre><code>git checkout `git rev-list -n 1 --before=&quot;1 year ago&quot; master`</code></pre>
 
 <div class="info">Created: December 13, 2017</div>
-<div class="info">Last modified: December 14, 2017</div>
+<div class="info">Last modified: January  1, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes</div>
 
