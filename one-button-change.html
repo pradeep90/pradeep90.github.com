@@ -1011,14 +1011,40 @@ QuickCheck property</code></pre>
 <p>If you think programming time is caused by past experience, access to interpreter, and other things, then toggle them. Remove the effect of past experience somehow. (How? Maybe make them program in a new language.)</p>
 <h1 id="programming-for-minimum-interface-at-speed">Programming for Minimum Interface at Speed</h1>
 <h2 id="programming-acceptance-test">Programming: Acceptance Test</h2>
-<p><strong>Integration test</strong>: Want to make a Beamer presentation - can’t remember exactly how to do it. Look it up in my integration tests [fast index]. Want to add a pause between slides - can’t find it [try to look it up]. Search online and experiment within the demo presentation [add technique to integration test first]. Use the template.</p>
-<p><strong>Integration test</strong>: Writing a C program - I want to know how to get a pointer to an array. Is <code>p = &amp;a[0]</code> good enough? Can we just do <code>p = a</code>? [remember the integration test; look it up].</p>
-<p><strong>Integration test</strong>: ATDD by example: the parking charge calculator - they wrote an end-to-end test for the calculator in the browser [integration test] that initially checked just one branch of valet parking [short cycle time].</p>
+<p><strong>Acceptance test</strong>: Want to make a Beamer presentation - can’t remember exactly how to do it. Look it up in my integration tests [fast index]. Want to add a pause between slides - can’t find it [try to look it up]. Search online and experiment within the demo presentation [add technique to integration test first]. Use the template.</p>
+<p><strong>Acceptance test</strong>: Writing a C program - I want to know how to get a pointer to an array. Is <code>p = &amp;a[0]</code> good enough? Can we just do <code>p = a</code>? [remember the integration test; look it up].</p>
+<p><strong>Acceptance test</strong>: ATDD by example: the parking charge calculator - they wrote an end-to-end test for the calculator in the browser [integration test] that initially checked just one branch of valet parking [short cycle time].</p>
 <p><strong>Acceptance test</strong>: Milo against Avada Kedavra - he has never fought such a curse before. None of his “acceptance tests” (aka past experience or secondhand knowledge) has anything like this [no precedent in current acceptance tests].</p>
 <p>He searched his rule book of techniques (or just his memory) [search techniques] and came up with the Skeletal Troll [new acceptance test].</p>
+<p><strong>Acceptance test</strong>: Anagrams</p>
+<p>I tested it once with a small “dictionary”</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">&gt;</span> anagrams [<span class="st">&quot;yo&quot;</span>, <span class="st">&quot;boyz&quot;</span>] <span class="st">&quot;yoboyz&quot;</span>
+[<span class="st">&quot;yoboyz&quot;</span>,<span class="st">&quot;boyzyo&quot;</span>]</code></pre></div>
+<p>once with a full dictionary but a nonsense word</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">&gt;</span> anagrams dw' <span class="st">&quot;yoboyz&quot;</span>
+[<span class="st">&quot;yboozy&quot;</span>,<span class="st">&quot;boozyy&quot;</span>,<span class="st">&quot;boozyy&quot;</span>,<span class="st">&quot;yboozy&quot;</span>]
+(<span class="fl">0.44</span> secs, <span class="dv">190</span>,<span class="dv">065</span>,<span class="dv">168</span> bytes)</code></pre></div>
+<p>and finally with a fully dictionary and a phrase from <a href="http://steve-yegge.blogspot.in/2006/10/egomania-itself.html">Steve Yegge</a>:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">&gt;</span> anagrams dw' <span class="st">&quot;agilemanifesto&quot;</span>
+[<span class="st">&quot;ngaliemasoftie&quot;</span>,<span class="st">&quot;ofeliamangiest&quot;</span>,<span class="st">&quot;ofeliasteaming&quot;</span>,<span class="st">&quot;agilemanifesto&quot;</span>,<span class="st">&quot;agleamnotifies&quot;</span>,<span class="st">&quot;foamiestgenial&quot;</span>,<span class="st">&quot;foamiestlinage&quot;</span>,<span class="st">&quot;foetalimagines&quot;</span>,<span class="st">&quot;fogieslaminate&quot;</span>,<span class="st">&quot;foliageinmates&quot;</span>,<span class="st">&quot;genialfoamiest&quot;</span>,<span class="st">&quot;goaliemanifest&quot;</span>,<span class="st">&quot;imaginesfoetal&quot;</span>,<span class="st">&quot;infamieslegato&quot;</span>,<span class="st">&quot;inmatesfoliage&quot;</span>,<span class="st">&quot;laminatefogies&quot;</span>,<span class="st">&quot;legatoinfamies&quot;</span>,<span class="st">&quot;linagefoamiest&quot;</span>,<span class="st">&quot;mangiestofelia&quot;</span>,<span class="st">&quot;manifestgoalie&quot;</span>,<span class="st">&quot;manifestoagile&quot;</span>,<span class="st">&quot;notifiesagleam&quot;</span>,<span class="st">&quot;semifinaltogae&quot;</span>,<span class="st">&quot;softiengaliema&quot;</span>,<span class="st">&quot;steamingofelia&quot;</span>,<span class="st">&quot;togaesemifinal&quot;</span>]
+(<span class="fl">61.92</span> secs, <span class="dv">69</span>,<span class="dv">279</span>,<span class="dv">505</span>,<span class="dv">520</span> bytes)</code></pre></div>
+<p>That’s all it took for me to be confident in my program. Those were my three acceptance tests. And I didn’t automate them. But it was still good enough for my purposes (which was just to test if I could write a quick one-off anagram generator in the Haskell interpreter). [don’t need to automate acceptance tests]</p>
+<p><strong>Acceptance test</strong>: Siebel self-experiment on Fischer random chess</p>
+<p>http://www.gigamonkeys.com/misc/fischer-random-chess.txt</p>
+<p>He wrote down his thoughts after every iteration.</p>
+<p>Challenge: Explain his thought process. Predict what he is going to do next.</p>
+<p><strong>Acceptance test</strong>: Siebel self-experiment on the “Impossible Book” problem</p>
+<p>http://www.gigamonkeys.com/misc/impossible-book-tdd.txt</p>
+<p><strong>Acceptance test</strong>: Designing at speed - OS HW3 Paging.</p>
+<p>How to go from the problem statement to the high-level design?</p>
+<p>Your attempt: how could you have reached the final version faster? How could you have processed evidence more efficiently?</p>
+<p><strong>Acceptance test</strong>: Speed coding - OS HW2 Pipes.</p>
+<p>How to implement the given high-level functions as quickly as possible (using the problem statement)?</p>
+<p><strong>Acceptance test</strong>: Code compression - Monads</p>
+<p>How much longer is your code if you don’t use monads?</p>
 <h3 id="lisp-java-phone-number-problem">Lisp-Java Phone Number Problem</h3>
 <p>Source: http://www.flownet.com/ron/papers/lisp-java/</p>
-<p><strong>Integration test</strong>: Lisp as an Alternative to Java - Phone number problem.</p>
+<p><strong>Acceptance test</strong>: Lisp as an Alternative to Java - Phone number problem.</p>
 <p>Convert phone number to phrases that encode it. Each final phrase should decode to the given phone number and should be made of words from the dictionary (and maybe single digits).</p>
 <p>(I understood the problem statement by intuition. Don’t know how to use the quantitative requirements.)</p>
 <p>Picking an integration test by most “complex”-seeming:</p>
@@ -1068,8 +1094,27 @@ QuickCheck property</code></pre>
 <p>That project involves legacy code and takes a while to compile and test as well.</p>
 <h3 id="acceptance-test-write-tests-for-and-refactor-os-hw1">Acceptance Test: Write Tests for and Refactor OS HW1</h3>
 <p>It has legacy code and it is in C. Enjoy. Make sure that you can write acceptance tests and pass them with ease. Remember how much trouble you had earlier.</p>
+<h3 id="acceptance-test-refactoring">Acceptance Test: Refactoring</h3>
+<p><strong>Acceptance test</strong>: Refactoring example from Ruby conference.</p>
+<p>Given some concrete code</p>
+<p>when I try to get minimum interface everywhere</p>
+<p>then I will get super-clean code.</p>
+<h3 id="acceptance-test-debugging">Acceptance Test: Debugging</h3>
+<p><strong>Acceptance test</strong>: Debugging an Awk one-liner</p>
+<p>Given that I wanted to extract acceptance tests from my essays</p>
+<p>when I tried an awk one-liner</p>
+<p>then it kind of worked, but missed more than half of the acceptance tests for reasons I couldn’t figure out. [negative exemplar]</p>
+<p>when I tried to change a few things</p>
+<p>then I got random changes. Didn’t know what worked. [toggling on a negative exemplar]</p>
+<p>when I started with one narrow section for which the command works perfectly</p>
+<p>then I could extend it from there quickly. [positive exemplar; don’t debug; fall back to a positive exemplar]</p>
+<h3 id="acceptance-test-type-signatures">Acceptance Test: Type Signatures</h3>
+<p><strong>Acceptance test</strong>: Type signatures - Awk - make them simpler and easier to compose.</p>
+<p>Given that I had an Awk script to get acceptance tests but it occasionally printed stuff beyond the current section</p>
+<p>when I broke the input Markdown files into sections [type: sections, not free-form text]</p>
+<p>then I could handle it effortlessly. [simple type]</p>
 <h3 id="more-acceptance-tests">More Acceptance Tests</h3>
-<p>Acceptance test: Grammar for problem statement of programming problem.</p>
+<p><strong>Acceptance test</strong>: Grammar for problem statement of programming problem.</p>
 <h2 id="programming-algorithm">Programming Algorithm</h2>
 <p><strong>Hypothesis</strong>:</p>
 <p>Get a “representative” integration test from the problem statement with input and output at every step. <a href="#fully-specified-representative-test">fully-specified representative test</a></p>
@@ -1184,6 +1229,12 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Test: Knaster-Tarski theorem 6.1 – took around 15 minutes. Not as crystal clear as the previous ones. But I did get the gist. However, I don’t understand the final point (equations 6.2 and 6.3). (5 minutes later, I still don’t get the last paragraph.) So, this technique isn’t infallible. But it’s better than nothing. Got the type signature. Got stuck because I didn’t understand the line “Each of the equations … has a least solution and these least solutions coincide.” and I needed it to understand the last paragraph. Don’t have the contract since I didn’t see any concrete values and didn’t understand the theorem statement.</p>
 <p>Explanation: Didn’t have the output value for the unfamiliar function call “least solutions coincide” and couldn’t see a concrete example showing me the output value.</p>
 <p>Test: Follow the values to decouple - paging - when switching processes, you need to have different page directories and page tables; when accessing a virtual memory address, you need to have a page fault handler that can get a new frame for that page (and possibly its page table); when replacing a page, you need to have a free frame list with FIFO information and a backing store that has the data for the incoming page and can store data for the evicted page. – know the causes of paging during process-switching, page-fault handling, and page replacement.</p>
+<h3 id="minimum-interface-try-alternative-values-and-abstract">Minimum Interface: Try Alternative Values and Abstract</h3>
+<p><strong>Hypothesis</strong>: Follow the values, try alternative values (toggle it), no change -&gt; abstract that value; reuse known functions.</p>
+<hr />
+<p>Test: Want to convert roman numerals to decimals. Use Parser. – I broke down the concrete problem of reading a roman number to the known technique of parsing.</p>
+<p>Test: Paging - broke it down to <code>get_new_frame</code>, <code>page_fault_handler</code>, <code>read_bs</code>, etc. – Well, get new frame needed to care only about the frame list and the replacement policy.</p>
+<p>Test: ATM example - suppose you were given lots of extraneous details like the make of the card reader, the keyboard model, etc., how could you strip it down to the core problem of requesting money and getting it? – toggle the values and <strong>realize</strong> that the outcome would be the same [may not always be so].</p>
 <h3 id="values-are-easier-to-understand-than-unfamiliar-types">Values are Easier to Understand than Unfamiliar Types</h3>
 <p><strong>Hypothesis</strong>: Unfamiliar type or category -&gt; unfamiliar function calls; have to look them up.</p>
 <hr />
@@ -1202,13 +1253,18 @@ nextPStates ts' (_, ts) <span class="fu">=</span> map (fmap (<span class="fu">:<
 <p>Test: Contrast that to my current code (which isn’t beautiful or anything) TODO</p>
 <p>Test: Reading Applied Behavioural Analysis - constantly got stopped in my tracks by the definitions they kept laying out - “respondent conditioning”, “modeling”, and other things. I didn’t <strong>know</strong> what those labels referred to and I had to struggle to figure it out. – can’t move forward without knowing those terms; hard to follow. Have to keep looking up the definitions.</p>
 <p>Test: Category theory book or Bird book - full of unknown types like “initial object”, “group”, “product”, “coproduct”, “functional refinement”, “catamorphism”, etc. – can’t move forward unless you know; have to keep looking up the definition.</p>
+<h2 id="dont-debug-fall-back-to-a-positive-exemplar">Don’t Debug: Fall back to a Positive Exemplar</h2>
+<p><strong>Hypothesis</strong>: Test passes -&gt; positive exemplar (hopefully with all necessary causes).</p>
+<p>Test fails, create a smaller exemplar that is positive and extend it to the larger exemplar -&gt; know what works (necessary causes) and what doesn’t; faster.</p>
+<p>Test fails, debug by toggling here and there -&gt; don’t know what works (necessary causes) and what doesn’t; slow.</p>
 <h2 id="refactoring-write-direct-tests-before-you-refactor">Refactoring: Write Direct Tests before you Refactor</h2>
 <p><strong>Hypothesis</strong>: Don’t have direct tests, refactor -&gt; may break the code; hard to debug.</p>
 <p>Don’t have tests, refactor -&gt; reasonably confident; easy to debug (narrow causes).</p>
 <hr />
 <p>Test: Phone number - trying to refactor <code>g</code> (yeah). The overall tests for <code>encode</code> keep failing. That’s because I don’t know the contract for <code>g</code> - I don’t have direct tests for it. So, I should see what behaviour it currently produces before I try to clean it up. – broke the code; hard to debug.</p>
 <h3 id="refactoring-make-the-types-compose">Refactoring: Make the Types Compose</h3>
-<p><strong>Hypothesis</strong>: Refactor code, write out types, make them compose well with each other -&gt; clean code.</p>
+<p><strong>Hypothesis</strong>: Type signatures -&gt; can see which functions you can compose (and which you can’t and must rewrite); doesn’t take a genius.</p>
+<p>No explicit type signatures -&gt; hard to see which functions you can compose; feels like it takes a genius.</p>
 <hr />
 <p>Test: Type of g:</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">g ::</span> [<span class="dt">String</span>] <span class="ot">-&gt;</span> <span class="dt">M.Map</span> <span class="dt">Char</span> <span class="dt">Char</span> <span class="ot">-&gt;</span> (<span class="dt">String</span>, <span class="dt">String</span>) <span class="ot">-&gt;</span> [<span class="dt">String</span>]</code></pre></div>
@@ -1335,6 +1391,31 @@ nextPStates ts' (_, ts) <span class="fu">=</span> map (fmap (<span class="fu">:<
 <p>Test: Phone number problem - I knew that <code>10/783--5: neu o&quot;d 5</code> wasn’t working yet and I needed to get on it. – No need to waste time on pointless “design” of beautiful types. Get that test passing ASAP. And I knew it mattered because that was they would test. Just needed to focus on that failing acceptance test.</p>
 <p>Test: Scheduler OS HW1 - no failing acceptance test (no real tests at all, in fact) – didn’t know if I was working on the right thing; didn’t know exactly what to do next (?). Had to remember a lot of to-do items in my Org file.</p>
 <p>Test: Want to write a to-do item for “handle multiple processes accessing the same virtual memory address” – instead, just add a failing acceptance test and set it aside. Don’t need to keep track of lots of to-do items.</p>
+<h2 id="acceptance-tests-vs-unit-tests-done-when-acceptance-tests-pass">Acceptance Tests vs Unit Tests: Done when Acceptance Tests Pass</h2>
+<p>Hypothesis: Can write “working product” without writing or passing all unit tests -&gt; may go faster without them.</p>
+<p>Can’t write “working product” without passing all acceptance tests (even if implicitly) -&gt; may go faster by writing them explicitly.</p>
+<p>Corollary: Expert programmers write programs with implicit acceptance tests in their minds.</p>
+<p><strong>Corollary</strong>: You don’t need to <strong>automate</strong> your acceptance tests.</p>
+<p>You may need to run it only once in a while and the overhead of doing it by hand might be worth the convenience.</p>
+<hr />
+<p>Test: Jamie Zawinski</p>
+<blockquote>
+<p>There’s bound to be stuff where this would have gone faster if we’d had unit tests or smaller modules or whatever. That all sounds great in principle. Given a leisurely development pace, that’s certainly the way to go. But when you’re looking at, “We’ve got to go from zero to done in six weeks,” well, I can’t do that unless I cut something out. And what I’m going to cut out is the stuff that’s not absolutely critical. And <strong>unit tests are not critical</strong>. If there’s no unit test the customer isn’t going to complain about that. That’s an upstream issue.</p>
+<p>– <a href="https://gigamonkeys.wordpress.com/2009/10/05/coders-unit-testing/"></a></p>
+</blockquote>
+<p>Explanation: Can write what matters without writing or passing all unit tests.</p>
+<h2 id="acceptance-test-go-from-end-to-end">Acceptance Test: Go from End to End</h2>
+<p>Hypothesis: Acceptance test - must go from end to end, not merely test some intermediate state -&gt; fewer overall tests, more likely to cover highly-likely money-making paths, no unused paths.</p>
+<hr />
+<p>Test: “Journey test” - Jez Humble - shopping website - login, add 3 items to cart, checkout, add delivery address, pay, logout – highly likely path; one that actually makes the money; not unused.</p>
+<h2 id="acceptance-test-high-level-decoupling">Acceptance Test: High-level Decoupling</h2>
+<p>Hypothesis: Acceptance test -&gt; high-level decoupling; everything unmentioned gives you degrees of freedom.</p>
+<hr />
+<p>Test: ATM example - doesn’t say which model of the keyboard or monitor or card reader or even bank you’re using. You can vary that as you please. All that matters is that when I have $100 in my account and ask for $20, I should get $20 and have $80 left in my account. – your high-level design shouldn’t worry about the low-level model types. You have to assume that the use will have those high-level actions. For example, you can assume that the user can enter “$20” on any keyboard - whether it’s a touchscreen, a numeric keypad, or a QWERTY keyboard (or even that he can enter it via a voice-recognition machine).</p>
+<h2 id="given-when-then-direct-causes">Given-When-Then = Direct Causes</h2>
+<p>Hypothesis: “Given X, when Y, then Z” -&gt; X and Y cause Z; you can induce that function by looking at the values.</p>
+<hr />
+<p>Test: BDD YT channel - bike kickstart - Given battery charged, gear neutral, when I kickstart, then the bike starts. – bike starting is caused by battery being charged, gear being neutral, and the bike being kickstarted.</p>
 <h2 id="rapid-prototyping-figure-out-the-high-level-design-before-the-low-level-details">Rapid Prototyping: Figure out the High-level Design before the Low-level Details</h2>
 <p><strong>Question</strong>: Why is it better to pass one integration test with a 120-line program written in three hours than to pass all kinds of tests with a spec implemented in three weeks?</p>
 <p>Observation: The differing variables are: number of tests passed, number of lines of code, and time taken. Also, the first one gets feedback about the design immediately.</p>
@@ -1490,11 +1571,13 @@ nextPStates ts' (_, ts) <span class="fu">=</span> map (fmap (<span class="fu">:<
 <h2 id="extend-representative-test-with-every-diff">Extend Representative Test with every Diff</h2>
 <p><strong>Hypothesis</strong>: Extend your representative test with every diff. Either the diff will extend a chain or it will add a branch (or do some other thing). Your representative test should capture that.</p>
 <p>Test: Super Mario - v1.0 - just jumping around. Next, moving forward too. – initial representative test is whether you can jump around; next test checks if you can move forward too (which is a different branch).</p>
-<h2 id="integration-tests-need-both-input-and-output">Integration Tests need both Input and Output</h2>
-<p><strong>Hypothesis</strong>: Output for some input -&gt; can use it as a test.</p>
+<h2 id="acceptance-tests-must-transform-input-to-output">Acceptance Tests must transform Input to Output</h2>
+<p><strong>Hypothesis</strong>: Output for some input -&gt; can use it as an acceptance test.</p>
+<p>Show how input is transformed into the output -&gt; can use it as a fully-specified acceptance test that helps you design your code.</p>
 <p>Don’t know the output for some input -&gt; can’t use it as a test.</p>
 <hr />
 <p>Test: Tried to get an integration test for my learning mechanism - “Digits of a Number section 6.1, Bird.” – I have the input. But I don’t have the output! Can’t use it as a test (and get a high-level design).</p>
+<p>Test: Phone number problem - just <code>10/783--5</code> to <code>neu o&quot;d 5</code> isn’t enough. – You need to show how you remove the punctuation, split the string, and lookup words in the dictionary. (fully-specified acceptance test)</p>
 <h2 id="small-interface-expose-only-one-thing-at-a-time">Small Interface: Expose Only One Thing at a Time</h2>
 <p><strong>Hypothesis</strong>: Small interface -&gt; easier to use.</p>
 <p>Large interface -&gt; harder to use.</p>
@@ -1610,7 +1693,7 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p>Test: Essay on understanding - 42k words as of December 23, 2017. Feel like just throwing it away and building a new model from scratch using my latest format for unit tests and such. Experimental method! - But no, that would make me forget or have to re-generate hard-won evidence from over the last 8 months. (Roughly 100 hours of work - 155 words in commit 5116ad9 took 22 minutes @ 422 words per hour - where I was exposed to a variety of information such as causality math, biology text, category theory proofs, programming experiments on myself and others, and my Purdue course work - most of which would be hard to reproduce.) You do <strong>not</strong> want to lose that processed evidence. – Better to use it as a reference model and assimilate its evidence into a new model.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: January  1, 2018</div>
+<div class="info">Last modified: January  4, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
