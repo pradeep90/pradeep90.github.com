@@ -1457,12 +1457,19 @@ nextPStates ts' (_, ts) <span class="fu">=</span> map (fmap (<span class="fu">:<
 <p>No first-class input -&gt; have to set the input by changing a lot of other variables.</p>
 <p><strong>Hypothesis</strong>: First-class output -&gt; can test the output without doing much work.</p>
 <p>No first-class output -&gt; have to test in a round-about manner.</p>
+<p>Corollary: Impure function (it can do <strong>I/O</strong>) -&gt; input and output are obviously not first-class.</p>
 <hr />
 <p>Test: OS HW1 scheduler – couldn’t test it with a particular configuration of ready processes with different priorities. Had to change the whole system just to get that configuration right.</p>
 <p>Test: pipputc – couldn’t really test with first-class inputs. Had to set up processes. Work.</p>
 <p>Test: batsmen average – could just test using the 3-over mini-game. Little work. (Though I couldn’t really test it with arbitrary inputs. Had to work with what I was given.)</p>
 <p>Test: OS HW1 scheduler – no first-class output of (next process, next ready list) that I could test directly. Had to run all the processes for several seconds and observe their steady-state CPU usage ratio.</p>
-<p>Test; pipgetc – could test the output of the pipe without even using another process.</p>
+<p>Test: pipgetc – could test the output of the pipe without even using another process.</p>
+<p>Test: org drill - get session data - it inserts stuff into a buffer instead of returning a string (no first-class output). It also uses <code>(current-time)</code> - not a first-class input. – have to run the whole drill session to set the input; have to look at the log file to check the output.</p>
+<h2 id="to-refactor-an-impure-function-make-it-pure">To Refactor an Impure Function, Make it Pure</h2>
+<p>Inference: Refactoring needs tests.</p>
+<p>Hypothesis: Make it a pure function, observe the inputs and outputs for a sample execution -&gt; acceptance test -&gt; can refactor easily.</p>
+<hr />
+<p>Test: <code>my-org-drill-insert-last-session-data</code> – took half an hour but it was much cleaner once I made it a pure function.</p>
 <h2 id="cycle-time-time-it-takes-to-toggle-and-get-feedback">Cycle Time: Time it takes to Toggle and get Feedback</h2>
 <p><strong>Corollary</strong>: Long time to get feedback (<strong>long cycle time</strong>) -&gt; get it less frequently -&gt; more uncertain about your code -&gt; slower.</p>
 <p>Short time to get feedback (<strong>short cycle time</strong>) -&gt; get it more frequently -&gt; less uncertain about your code -&gt; faster.</p>
@@ -1693,7 +1700,7 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p>Test: Essay on understanding - 42k words as of December 23, 2017. Feel like just throwing it away and building a new model from scratch using my latest format for unit tests and such. Experimental method! - But no, that would make me forget or have to re-generate hard-won evidence from over the last 8 months. (Roughly 100 hours of work - 155 words in commit 5116ad9 took 22 minutes @ 422 words per hour - where I was exposed to a variety of information such as causality math, biology text, category theory proofs, programming experiments on myself and others, and my Purdue course work - most of which would be hard to reproduce.) You do <strong>not</strong> want to lose that processed evidence. – Better to use it as a reference model and assimilate its evidence into a new model.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: January  4, 2018</div>
+<div class="info">Last modified: January  5, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
