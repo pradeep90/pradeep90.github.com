@@ -1090,6 +1090,11 @@ QuickCheck property</code></pre>
 <hr />
 <p>Observation: Feeling like shit right now because I didn’t zoom through the problem.</p>
 <p><strong>Hypothesis</strong>: Don’t overpromise, keep improving -&gt; you will get the most utilons you can and you will be happy with that. No need to worry about what others might say.</p>
+<h3 id="inverse-oriented-programming">Inverse-Oriented Programming</h3>
+<p><strong>Acceptance test</strong>: Clean up your phone number example and publish it.</p>
+<p><strong>Acceptance test</strong>: Use inverse functions to solve Sudoku using its property.</p>
+<p><strong>Acceptance test</strong>: Test your algorithm on the number to digits problem.</p>
+<p><strong>Acceptance test</strong>: Collect examples from Bird.</p>
 <h3 id="acceptance-test-fix-bugs-in-os-hw3">Acceptance Test: Fix Bugs in OS HW3</h3>
 <p>That project involves legacy code and takes a while to compile and test as well.</p>
 <h3 id="acceptance-test-write-tests-for-and-refactor-os-hw1">Acceptance Test: Write Tests for and Refactor OS HW1</h3>
@@ -1698,6 +1703,36 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 </blockquote>
 <p>Explanation: Would lose bug fixes.</p>
 <p>Test: Essay on understanding - 42k words as of December 23, 2017. Feel like just throwing it away and building a new model from scratch using my latest format for unit tests and such. Experimental method! - But no, that would make me forget or have to re-generate hard-won evidence from over the last 8 months. (Roughly 100 hours of work - 155 words in commit 5116ad9 took 22 minutes @ 422 words per hour - where I was exposed to a variety of information such as causality math, biology text, category theory proofs, programming experiments on myself and others, and my Purdue course work - most of which would be hard to reproduce.) You do <strong>not</strong> want to lose that processed evidence. – Better to use it as a reference model and assimilate its evidence into a new model.</p>
+<h2 id="inverse">Inverse</h2>
+<p><strong>Hypothesis</strong>: <code>unfoldr f' . foldr f z = id</code> when f’ can recover x and xs from the given value and replace f with <code>(,)</code>. Also f’ z must be the empty list.</p>
+<p>Test: Basic - get inverse for <code>foldr (:) []</code> aka the identity function.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> <span class="kw">let</span> g [] <span class="fu">=</span> <span class="dt">Nothing</span>; g (x<span class="fu">:</span>xs) <span class="fu">=</span> <span class="dt">Just</span> (x,xs)
+<span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> unfoldr g [<span class="dv">1</span><span class="fu">..</span><span class="dv">5</span>]
+[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>]</code></pre></div>
+<p>Test: Get inverse for <code>foldr (+) 0 $ [1..5]</code>. The answer is 15. We need to recover the original list using that value. Can’t be done.</p>
+<p>Explanation: Can’t replace (+) with (,) in 15 because it could be (3 + 12) or (8 + 7) or whatever.</p>
+<p>Test: Get inverse for <code>foldr raiseAndAdd 0 $ [3, 8, 4]</code> (which converts the decimal representation of 483 (<code>[3, 8, 4]</code>) into the natural number 483.)</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">raiseAndAdd n d <span class="fu">=</span> <span class="dv">10</span> <span class="fu">*</span> d <span class="fu">+</span> n</code></pre></div>
+<p>When it comes to raiseAndAdd n d = v, we need to replace raiseAndAdd with (,) using just v. Can we recover n and d from v? We know that n &lt; 10. And 10 * d is a multiple of 10, so we can get n using v % 10. And d = v / 10.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> <span class="kw">let</span> g <span class="dv">0</span> <span class="fu">=</span> <span class="dt">Nothing</span>; g v <span class="fu">=</span> <span class="dt">Just</span> (v <span class="ot">`mod`</span> <span class="dv">10</span>, v <span class="ot">`div`</span> <span class="dv">10</span>)
+<span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> unfoldr g <span class="dv">384</span>
+[<span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">3</span>]</code></pre></div>
+<p>Test: exponent - No idea.</p>
+<p>Test: Sudoku</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">checkSudokuSolution mx <span class="fu">=</span> and <span class="fu">$</span> liftA2 notElem mx (peers mx)
+(checkSudokuSolution <span class="fu">.</span> solveSudoku <span class="fu">$</span> inputMatrix) <span class="fu">==</span> <span class="dt">True</span></code></pre></div>
+<p>We can infer that for every index x of the matrix, <code>notElem (at x mx) (at x (peers mx)) = True</code>.</p>
+<p>Now, we need to get an equation for mx (which is the output of <code>solveSudoku inputMatrix</code>).</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">notElem x xs <span class="fu">=</span> foldr ((<span class="fu">&amp;&amp;</span>) <span class="fu">.</span> (<span class="fu">/=</span> x)) <span class="dt">True</span> xs</code></pre></div>
+<p>We can tell that x must belong to <code>[1..9] \\ xs</code>.</p>
+<p>That just gives us the brute-force combinatorial solution where we generate all possible Sudoku matrices.</p>
+<p>No, wait. We get to choose which x gets assigned a value first. We can choose cells that have the least number of possible values (hopefully, just one) and go in increasing order of choices.</p>
+<p>The above equation doesn’t actually capture the case where each cell has multiple choices filled in. (Basically, that would be the output of your Sudoku solver when there aren’t enough initial numbers.)</p>
+<p>The real equation should consider your choices and your peers’ choices. For example, if you could have 2 or 3 but a peer has just one value 3, then you know your value is 2.</p>
+<p>Not sure.</p>
+<p>Hypothesis: Maybe the problem is that I don’t have xs on the right-hand side of the equation.</p>
+<p>When it came to the phone number problem, I had <code>(foo . bar) xs = ys</code>. Then, I could say <code>xs = (foo . bar)' ys</code>.</p>
+<p>Here I have only <code>True</code> on the RHS, which may not be enough.</p>
 
 <div class="info">Created: October 20, 2017</div>
 <div class="info">Last modified: January  5, 2018</div>
