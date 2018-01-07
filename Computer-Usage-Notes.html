@@ -74,9 +74,30 @@ alias -g awksum=&quot;awknum '{sum+=\$1}END{print sum}'&quot;</code></pre>
 <pre><code>diff &lt;(sort foo.txt) &lt;(sort -u foo.txt)</code></pre>
 <h1 id="zip">Zip</h1>
 <pre><code>zip -r foo.zip foo-directory</code></pre>
+<h1 id="pass-input-to-two-commands">Pass Input to Two Commands</h1>
+<p>I want lines with “Foo” to be displayed before the rest. Also, those two sections should be sorted within themselves.</p>
+<pre><code>Baz
+Foo: Ball
+Yoboyz
+Foo: Apple
+Bar</code></pre>
+<p>should show as</p>
+<pre><code>Foo: Apple
+Foo: Baz
+Bar
+Baz
+Yoboyz</code></pre>
+<p>How to do this?</p>
+<p>One <a href="https://unix.stackexchange.com/questions/28503/how-can-i-send-stdout-to-multiple-commands">trick</a>: zsh allows you to redirect output to multiple files (or processes). This uses the MULTIOS option, which is turned on by default.</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span class="kw">cat</span> input.txt <span class="kw">&gt;</span> <span class="kw">&gt;(grep</span> Foo <span class="kw">|</span> <span class="kw">sort)</span> <span class="kw">&gt;</span> <span class="kw">&gt;(grep</span> -v Foo <span class="kw">|</span> <span class="kw">sort)</span></code></pre></div>
+<p>However, the output is non-deterministic. On some runs, I get the Foo section on top; on some other runs, I get it on the bottom.</p>
+<h2 id="sort-on-an-intermediate-data-structure">Sort on an Intermediate Data Structure</h2>
+<p><strong>Lesson</strong>: Whenever you want to sort on some special feature that you will compute from each line (or paragraph or section), create an intermediate stream with that value explicit, sort it, and then delete that value.</p>
+<p>Here you go:</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span class="kw">awk</span> <span class="st">'$0=($0 ~ /Foo/)&quot;\t&quot;$0'</span> sort-on-pass.txt <span class="kw">|</span> <span class="kw">sort</span> -k1,1nr -k2,2 <span class="kw">|</span> <span class="kw">cut</span> -f 2-</code></pre></div>
 
 <div class="info">Created: August 19, 2015</div>
-<div class="info">Last modified: January  1, 2018</div>
+<div class="info">Last modified: January  7, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes</div>
 

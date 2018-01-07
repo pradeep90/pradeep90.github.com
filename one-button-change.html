@@ -1299,6 +1299,14 @@ nextPStates ts' (_, ts) <span class="fu">=</span> map (fmap (<span class="fu">:<
 <p>Test: No high-level integration test - current refactoring of causal hypothesis essay. Just refactoring pieces here and there. – No idea how it all fits together and may have a poor design that isn’t related to any real-world problem. Definitely won’t have a working product for like 50 hours or so! Can’t test the overall picture.</p>
 <p>Test: [2017-12-27 Wed] My one-button change essay. No really idea how it all fits together - the old random notes, the newer well-tested little ideas that still run up to a 11k-word tangle, and then some ideas from my journal and phone. – no high-level integration test; add new ideas like “follow the values -&gt; narrow the causes” without an overarching test -&gt; <strong>poor design for sure</strong>; won’t have a working product for a while since I’m not running any integration tests; infrequent release of integration tests (maybe when I write a 2-hour program like TicTacToe or something - which I approach intuitively anyway).</p>
 <p>Test: Duplication - causal hypothesis - a bazillion explanations for how we understand things - hierarchical categories, stories, grammar, etc. – no integration test.</p>
+<h2 id="continuous-deployment">Continuous Deployment</h2>
+<p>Hypothesis: Continuous deployment -&gt; low risk and low tension when it comes to release day.</p>
+<hr />
+<p>Test: JWZ about Netscape - they released their browser for all platforms at the same time, whereas the conventional practice was to release Windows first and handle Mac later. – That’s what failed companies did.</p>
+<blockquote>
+<p>The other big thing was we always shipped all platforms simultaneously; that was another thing they thought was just stupid. “Oh, 90 percent of people are using Windows, so we’ll focus on the Windows side of things and then we’ll port it later.” Which is what many other failed companies have done. If you’re trying to ship a cross-platform product, history really shows that’s how you don’t do it. If you want it to really be cross-platform, you have to do them simultaneously. The porting thing results in a crappy product on the second platform.</p>
+<p>– JWZ, Coders at Work</p>
+</blockquote>
 <h2 id="short-cycle-time---integration-tests">Short Cycle Time &lt;- Integration Tests</h2>
 <p><strong>Corollary</strong>: Have detailed integration tests -&gt; short cycle time, especially if you consider fleshing out a function to be progress.</p>
 <p>Don’t have integration tests -&gt; long cycle time.</p>
@@ -1310,6 +1318,7 @@ nextPStates ts' (_, ts) <span class="fu">=</span> map (fmap (<span class="fu">:<
 <p>New scenario that your past acceptance tests don’t cover, search your techniques (aka weapons) -&gt; hopefully respond correctly; add as an acceptance test.</p>
 <p>Corollary: Scenario not in integration test, go online and add the technique to an integration test first -&gt; every technique you needed to look up will be in an integration test for easy lookup later; quicker way to test the new technique.</p>
 <p><strong>Corollary</strong>: We can easily remember integration tests (even if we don’t remember the answers). We struggle to remember generic text.</p>
+<p>Hypothesis: Maybe all you need are tests for real-world scenarios, even if they don’t make an end-to-end acceptance test. That way you can still look up what to do in any given situation. (But an end-to-end representative test lets you induce the whole function. Still useful.)</p>
 <hr />
 <p>Test: Want to use a pre-commit hook to run lint - look at the how the demo repo does it with Ruby. – done. quick - no need to search 30k words of my programming notes. got one single function - exactly what I wanted. up-to-date in terms of versions and quality; DRY - didn’t have to decide between two different techniques.</p>
 <p>Test: No integration test - wanted to write OS HW3 paging faster. Didn’t know what to do. There were around 15k words of programming notes. Kind of stuck. – Could see that I would have to read through a lot to get back to my idea of toggling behind an interface and minimizing interface by coding everything in separate files and stuff. Saw lots of techniques like one-button change and minimum interface and one branch at a time and program to an interface and so on.</p>
@@ -1317,6 +1326,7 @@ nextPStates ts' (_, ts) <span class="fu">=</span> map (fmap (<span class="fu">:<
 <p>Test: Have to make a Beamer presentation using Org mode - look it up in my demo Org Beamer presentation, not online. – have a default Org Beamer template I can use anywhere; can experiment on a simple template.</p>
 <p>Test: C pointer details - hard to remember the abstract knowledge about <code>p + i</code> and <code>(void *) p</code> and <code>(struct foo *) p</code> and so on. Easier to remember a test I ran on all these examples, from where I can easily get the answers I want. – done.</p>
 <p>Test: New scenario - Milo against Avada Kedavra - none of his usual spells worked; use the <a href="https://www.fanfiction.net/s/8096183/25/Harry-Potter-and-the-Natural-20">Skeletal Troll</a>. – he probably searched the rule book for something like this. He could then use it against anyone who cast the killing spell against him.</p>
+<p>Test: YBAW - overwhelmed by a project plan - use a story board to represent a few big ideas. – it’s not a full story, just a sketch.</p>
 <h2 id="spec-or-integration-test-quick-feedback-about-high-level-design">Spec or Integration Test: Quick Feedback about High-level Design</h2>
 <p><strong>Corollary</strong>: Writing a spec (or better, a prototype) = coming up with integration tests (with feedback from the user).</p>
 <p><strong>Hypothesis</strong>: Spec or integration test, change your high-level design -&gt; can set the input configuration (aka your program) quickly and get feedback from user (who is the mechanism you’re testing).</p>
@@ -1391,11 +1401,13 @@ nextPStates ts' (_, ts) <span class="fu">=</span> map (fmap (<span class="fu">:<
 <p><strong>Hypothesis</strong>: Failing acceptance test -&gt; you know exactly what needs to be done; you know it matters; need to remember only your current failing acceptance tests.</p>
 <p>No failing acceptance test, write unit tests or just implement code -&gt; you don’t know exactly what <strong>needs</strong> to be done; you don’t know if it matters; have to remember a lot of TODOs.</p>
 <p><strong>Lesson</strong>: Writing a TODO - instead, make a failing acceptance test for it.</p>
+<p><strong>Lesson</strong>: What to do next - make a failing acceptance test pass.</p>
 <p><strong>Question</strong>: What is the ideal behaviour for programming (on, say, the phone number problem)?</p>
 <hr />
 <p>Test: Phone number problem - I knew that <code>10/783--5: neu o&quot;d 5</code> wasn’t working yet and I needed to get on it. – No need to waste time on pointless “design” of beautiful types. Get that test passing ASAP. And I knew it mattered because that was they would test. Just needed to focus on that failing acceptance test.</p>
 <p>Test: Scheduler OS HW1 - no failing acceptance test (no real tests at all, in fact) – didn’t know if I was working on the right thing; didn’t know exactly what to do next (?). Had to remember a lot of to-do items in my Org file.</p>
 <p>Test: Want to write a to-do item for “handle multiple processes accessing the same virtual memory address” – instead, just add a failing acceptance test and set it aside. Don’t need to keep track of lots of to-do items.</p>
+<p>Test: Unsure what to work on right now - take up a failing acceptance test - such as “how to refactor ideas from different essays I’ve written”. – know exactly what to do.</p>
 <h2 id="acceptance-tests-vs-unit-tests-done-when-acceptance-tests-pass">Acceptance Tests vs Unit Tests: Done when Acceptance Tests Pass</h2>
 <p>Hypothesis: Can write “working product” without writing or passing all unit tests -&gt; may go faster without them.</p>
 <p>Can’t write “working product” without passing all acceptance tests (even if implicitly) -&gt; may go faster by writing them explicitly.</p>
@@ -1730,12 +1742,19 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p>The above equation doesn’t actually capture the case where each cell has multiple choices filled in. (Basically, that would be the output of your Sudoku solver when there aren’t enough initial numbers.)</p>
 <p>The real equation should consider your choices and your peers’ choices. For example, if you could have 2 or 3 but a peer has just one value 3, then you know your value is 2.</p>
 <p>Not sure.</p>
-<p>Hypothesis: Maybe the problem is that I don’t have xs on the right-hand side of the equation.</p>
+<p><strong>Hypothesis</strong>: The property equation for f has both the input and the output -&gt; can get an inverse for f.</p>
+<p>Test: <code>(checkSudokuSolution . solveSudoku $ inputMatrix) == True</code> - you don’t have an equation relating the input and output of <code>checkSudokuSolution</code>. – How are you supposed to get its inverse?</p>
 <p>When it came to the phone number problem, I had <code>(foo . bar) xs = ys</code>. Then, I could say <code>xs = (foo . bar)' ys</code>.</p>
 <p>Here I have only <code>True</code> on the RHS, which may not be enough.</p>
+<p>Test: RPN calculator</p>
+<p>Couldn’t get a property that the final solution must satisfy.</p>
+<p>Hypothesis: Maybe use <code>f xs@(x ++ y ++ operator) = operator (f x) (f y)</code> where x and y are guaranteed to be in RPN. Solve for f.</p>
+<p>One solution is to remove the operator from the end and try different splits for x and y such that they are well-formed and satisfy the equation. How to narrow that down to one solution?</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">f xs <span class="fu">=</span> head <span class="fu">.</span> map (\[x, y, operator] <span class="ot">-&gt;</span> apply operator (f x) (f y)) <span class="fu">.</span> filter (\[x, y, operator] <span class="ot">-&gt;</span> isOperator operator <span class="fu">&amp;&amp;</span> isRPN x <span class="fu">&amp;&amp;</span> isRPN y) <span class="fu">.</span> allSplits <span class="fu">$</span> xs</code></pre></div>
+<p>This will work. However, we want something faster. Can we split such that the x, y, and operator are guaranteed to be in the desired format?</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: January  5, 2018</div>
+<div class="info">Last modified: January  7, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
