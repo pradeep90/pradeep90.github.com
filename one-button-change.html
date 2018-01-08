@@ -1175,10 +1175,12 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p><strong>Corollary</strong>: Went from not confused to confused, get the specific changes (<strong>diffs</strong>) that caused the problem -&gt; need to learn about the effects of a very few variables.</p>
 <p>Went from not confused to confused, don’t know which specific changes caused the problem -&gt; feel like you need to learn about a lot of variables.</p>
 <p><strong>Lesson</strong>: Start with something you’re not confused about and take it from there.</p>
+<p><strong>Hypothesis</strong>: Confused, ask for a positive and negative exemplar -&gt; get clear about the inputs and outputs.</p>
 <hr />
 <p>Test: Was following along the causal RL lecture till the q_i’s started coming in. Basically, I went from “not confused” to “confused”. Earlier, my mental model - my program - passed the tests of predicting the correct answer. But now, it couldn’t. So, I needed to look at the diff and figure out which change broke my model. – Got the specific diff that broke my model.</p>
 <p>Test: Confused about all causality papers. Don’t think I’ve been un-confused about “all causality papers”. Feel like I will have to read a lot of papers to become un-confused about “causality papers”.</p>
 <p>Test: OS HW3 - really, really confused about what to do. No clear idea about how to proceed. – Okay. Narrow down the diff. What worked, I think, was to have a concrete walk-through. That told me where there could be potential hotspots (for example, if there were no free frame available, I’d have to replace a page).</p>
+<p>Test: Goals for 2018 - didn’t know what caused my indecisiveness. Tried to think of a case where I wasn’t indecisive. Got it. – Realized that I was changing too many variables.</p>
 <h2 id="differing-predictions-well-look-at-the-diffs">Differing predictions: Well, Look at the Diffs!</h2>
 <p><strong>Hypothesis</strong>: Don’t know the cause of something, don’t have the source code and can’t run interventions, come up with possible causes - get their differing predictions -&gt; figure out the right cause.</p>
 <p>Want to know where I know more than others - get their differing predictions (by taking the diffs of our proposed explanations or just the books we’ve read) -&gt; figure out problems that they just can’t solve.</p>
@@ -1752,6 +1754,16 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p>One solution is to remove the operator from the end and try different splits for x and y such that they are well-formed and satisfy the equation. How to narrow that down to one solution?</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">f xs <span class="fu">=</span> head <span class="fu">.</span> map (\[x, y, operator] <span class="ot">-&gt;</span> apply operator (f x) (f y)) <span class="fu">.</span> filter (\[x, y, operator] <span class="ot">-&gt;</span> isOperator operator <span class="fu">&amp;&amp;</span> isRPN x <span class="fu">&amp;&amp;</span> isRPN y) <span class="fu">.</span> allSplits <span class="fu">$</span> xs</code></pre></div>
 <p>This will work. However, we want something faster. Can we split such that the x, y, and operator are guaranteed to be in the desired format?</p>
+<h3 id="inverse-reduce-duplication-of-work">Inverse: Reduce Duplication of Work</h3>
+<p>Corollary: If inverse-oriented programming works out, then it would reduce a lot of our work.</p>
+<p>Right now, we seem to be duplicating work instead of reusing old code.</p>
+<hr />
+<p>Test: We can see that <code>toNat = foldr raiseAndAdd 0</code>. Now, given that <code>toDec</code> is the inverse of <code>toNat</code>, why should we search anew for a function that exactly satisfies the equation <code>toNat . toDec = id</code>? – We are disregarding the valuable information we have in terms of <code>toNat</code>’s definition.</p>
+<h3 id="inverse-algebra---solve-for-the-unknown-variables">Inverse: Algebra - Solve for the Unknown Variables</h3>
+<p>Hypothesis: <code>f . g . foo . bar $ x = y</code> - you want to solve for <code>foo</code> and <code>bar</code>. But since you have only one equation, you can’t solve them uniquely. You need one more property.</p>
+<p>Corollary: Programming becomes like algebra. Holy crap! Algebra of Programming!</p>
+<hr />
+<p>Test: Paging - <code>pageReplacement . pageFaultHandling $ addressStream = outputStream</code> - you have two unknowns. – One equation won’t suffice.</p>
 
 <div class="info">Created: October 20, 2017</div>
 <div class="info">Last modified: January  7, 2018</div>
