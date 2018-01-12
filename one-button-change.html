@@ -1024,7 +1024,7 @@ QuickCheck property</code></pre>
 <p><strong>Acceptance test</strong>: ATDD by example: the parking charge calculator - they wrote an end-to-end test for the calculator in the browser [integration test] that initially checked just one branch of valet parking [short cycle time].</p>
 <p><strong>Acceptance test</strong>: Milo against Avada Kedavra - he has never fought such a curse before. None of his “acceptance tests” (aka past experience or secondhand knowledge) has anything like this [no precedent in current acceptance tests].</p>
 <p>He searched his rule book of techniques (or just his memory) [search techniques] and came up with the Skeletal Troll [new acceptance test].</p>
-<p><strong>Acceptance test</strong>: Anagrams</p>
+<p><strong>Acceptance test</strong>: [PASS] Anagrams</p>
 <p>I tested it once with a small “dictionary”</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">&gt;</span> anagrams [<span class="st">&quot;yo&quot;</span>, <span class="st">&quot;boyz&quot;</span>] <span class="st">&quot;yoboyz&quot;</span>
 [<span class="st">&quot;yoboyz&quot;</span>,<span class="st">&quot;boyzyo&quot;</span>]</code></pre></div>
@@ -1269,6 +1269,34 @@ nextPStates ts' (_, ts) <span class="fu">=</span> map (fmap (<span class="fu">:<
 <p>Test: Contrast that to my current code (which isn’t beautiful or anything) TODO</p>
 <p>Test: Reading Applied Behavioural Analysis - constantly got stopped in my tracks by the definitions they kept laying out - “respondent conditioning”, “modeling”, and other things. I didn’t <strong>know</strong> what those labels referred to and I had to struggle to figure it out. – can’t move forward without knowing those terms; hard to follow. Have to keep looking up the definitions.</p>
 <p>Test: Category theory book or Bird book - full of unknown types like “initial object”, “group”, “product”, “coproduct”, “functional refinement”, “catamorphism”, etc. – can’t move forward unless you know; have to keep looking up the definition.</p>
+<h3 id="types-prevent-you-from-following-values">Types prevent you from Following Values</h3>
+<p><strong>Hypothesis</strong>: Types -&gt; stop you from following values and thus stop you from inducing the types and mechanisms of different parts.</p>
+<hr />
+<p>Test: Trying to apply the “fusion law” for folds to a practical problem. Not able to get through because of the maddeningly-similar <code>fold</code> and <code>listFold</code>. They have the types <code>fold :: (a -&gt; b -&gt; b, b) -&gt; [a] -&gt; b</code> and <code>listFold :: LAlg a b -&gt; ListF a b -&gt; b</code>.</p>
+<p>Note that I first have to unpack <code>LAlg</code>, which is <code>type LAlg a b = (a -&gt; b -&gt; b, b)</code>. So, the first arguments are <strong>literally</strong> the same type. Then, I have to unpack <code>ListF</code>, which is <code>data ListF a r = NilF | ConsF a r</code>. That just seems like the List type with extra steps.</p>
+<p>I can’t see any substantial difference between <code>listFold</code> and <code>fold</code>. But the condition and result of the law include both, so there <em>must</em> be some difference.</p>
+<p>Explanation: I can’t see any values passing around. Hard to induce the work being done.</p>
+<p>I mean, take the fusion law itself:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">h <span class="fu">.</span> listFold f <span class="fu">=</span> listFold g <span class="fu">.</span> listMap h
+<span class="fu">==&gt;</span>
+h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre></div>
+<p>What is the type of h? What are the types of f and g? Are they of the same type? Not at all sure.</p>
+<p>What I need is an actual concrete exemplar.</p>
+<p><strong>Test</strong>: Let’s look at a concrete <a href="http://myhaskelljournal.com/an-optimization-using-foldr-fusion-law/">practical example</a>.</p>
+<p>Immediately, I got some ideas.</p>
+<p>(Paraphrased to name f, g, and h as per standard usage.)</p>
+<blockquote>
+<p>If we have the following properties:</p>
+<ol style="list-style-type: lower-roman">
+<li>h is a strict function.</li>
+<li>h (f x y) = g x (h y), for all x and y in the appropriate ranges</li>
+</ol>
+<p>Put b = h(a).</p>
+<p>Then: h . foldr f a = foldr g b.</p>
+</blockquote>
+<p>Not yet a concrete example, though.</p>
+<p>Let’s try it with the ascending lists example.</p>
+<p>Explanation: Could see what was happening to each element of the list being folded.</p>
 <h2 id="dont-debug-fall-back-to-a-positive-exemplar">Don’t Debug: Fall back to a Positive Exemplar</h2>
 <p><strong>Hypothesis</strong>: Test passes -&gt; positive exemplar (hopefully with all necessary causes).</p>
 <p>Test fails, create a smaller exemplar that is positive and extend it to the larger exemplar -&gt; know what works (necessary causes) and what doesn’t; faster.</p>
@@ -1606,10 +1634,12 @@ nextPStates ts' (_, ts) <span class="fu">=</span> map (fmap (<span class="fu">:<
 <h2 id="extend-representative-test-with-every-diff">Extend Representative Test with every Diff</h2>
 <p><strong>Hypothesis</strong>: Extend your representative test with every diff. Either the diff will extend a chain or it will add a branch (or do some other thing). Your representative test should capture that.</p>
 <p>Test: Super Mario - v1.0 - just jumping around. Next, moving forward too. – initial representative test is whether you can jump around; next test checks if you can move forward too (which is a different branch).</p>
-<h2 id="acceptance-tests-must-transform-input-to-output">Acceptance Tests must transform Input to Output</h2>
+<h2 id="acceptance-tests-must-transform-input-to-output-for-a-positive-exemplar">Acceptance Tests must transform Input to Output for a Positive Exemplar</h2>
 <p><strong>Hypothesis</strong>: Output for some input -&gt; can use it as an acceptance test.</p>
 <p>Show how input is transformed into the output -&gt; can use it as a fully-specified acceptance test that helps you design your code.</p>
 <p>Don’t know the output for some input -&gt; can’t use it as a test.</p>
+<p>Question: What about situations for which I don’t know the right response?</p>
+<p><strong>Lesson</strong>: Don’t talk about a hypothesis until you have at least one positive exemplar.</p>
 <hr />
 <p>Test: Tried to get an integration test for my learning mechanism - “Digits of a Number section 6.1, Bird.” – I have the input. But I don’t have the output! Can’t use it as a test (and get a high-level design).</p>
 <p>Test: Phone number problem - just <code>10/783--5</code> to <code>neu o&quot;d 5</code> isn’t enough. – You need to show how you remove the punctuation, split the string, and lookup words in the dictionary. (fully-specified acceptance test)</p>
@@ -1779,9 +1809,28 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p>Test: Saw functor algebra as <code>((+), 0)</code> – really easy to understand. Do one thing for each case of the ADT.</p>
 <h3 id="inverse-resources">Inverse: Resources</h3>
 <p>https://courses.cs.ut.ee/2006/algebraofprog/Main/HomePage</p>
+<h1 id="algebra-of-programming">Algebra of Programming</h1>
+<h2 id="fold-fusion">Fold Fusion</h2>
+<p>Hypothesis: Fold fusion law:</p>
+<blockquote>
+<p>If we have the following properties:</p>
+<ol style="list-style-type: lower-roman">
+<li>h is a strict function.</li>
+<li>h (f x y) = g x (h y), for all x and y in the appropriate ranges</li>
+</ol>
+<p>Put b = h(a).</p>
+<p>Then: h . foldr f a = foldr g b.</p>
+</blockquote>
+<p>Don’t know why h has to be a strict function.</p>
+<p><strong>Hypothesis</strong>: <code>g x (h y) == h (f x y)</code> simply says that the outputs of (A) <code>h . foldr f a</code> and (B) <code>foldr g b</code> are the same for any suffix of the list.</p>
+<p>Base case: When it’s just the empty list, A returns h a and B returns b, which we set as h a. So, the claim holds.</p>
+<p>Induction step: Assume the claim holds for the suffix y, so that <code>h (foldr f a y) == foldr g b y</code>. When foldr moves to the first element x, A returns <code>h (f x (foldr f a y))</code> and B returns <code>g x (foldr g b y)</code>. The latter is <code>g x (h (foldr f a y))</code> by the induction hypothesis. By the second assumption, it becomes <code>h (f x (foldr f a y))</code>. Hence, proved.</p>
+<p>So, the two assumptions are enough to prove the claim for any list.</p>
+<p>Question: How to derive g?</p>
+<p><strong>Hypothesis</strong>: You can simply set <code>g x y = h (f x y)</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: January  9, 2018</div>
+<div class="info">Last modified: January 11, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
