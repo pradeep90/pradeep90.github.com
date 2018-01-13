@@ -1756,6 +1756,31 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 </blockquote>
 <p>Explanation: Would lose bug fixes.</p>
 <p>Test: Essay on understanding - 42k words as of December 23, 2017. Feel like just throwing it away and building a new model from scratch using my latest format for unit tests and such. Experimental method! - But no, that would make me forget or have to re-generate hard-won evidence from over the last 8 months. (Roughly 100 hours of work - 155 words in commit 5116ad9 took 22 minutes @ 422 words per hour - where I was exposed to a variety of information such as causality math, biology text, category theory proofs, programming experiments on myself and others, and my Purdue course work - most of which would be hard to reproduce.) You do <strong>not</strong> want to lose that processed evidence. – Better to use it as a reference model and assimilate its evidence into a new model.</p>
+<h2 id="dry-dont-expose-irrelevant-things">DRY: Don’t Expose Irrelevant Things</h2>
+<p>Type: Change in interface -&gt; amount of work needed, amount of uncertainty (and thus possible errors).</p>
+<p><strong>Hypothesis</strong>: Interface needed for goal, expose interface that’s just as small -&gt; have to change only when the interface changes; guaranteed to be consistent.</p>
+<p>Interface needed for goal, expose interface that’s larger -&gt; have to change even when the change in the interface is outside the interface needed; outside changes may make things inconsistent.</p>
+<hr />
+<p>Test: Magic constant “1024” in paging - it has the same cause everywhere (it’s the size of a page and a page table and a page directory). – If that changed to 2048, I’d have to change a lot of code manually. (Ideally, I should have a separate variable for the size of a page, a page table, and a page directory and, if necessary, assert that they were all equal.) Here, it’s a value (1024) that has the same cause everywhere. Basically, the code doesn’t care about the actual value of the constant, but it uses it anyway. So, when the constant changes, the code has to as well. Also, I might forget to update the constant everywhere (maintain the correlation between all of the values) and thus introduce bugs.</p>
+<p>Test: Function <code>spk-split-paragraph-by-semicolon</code> - if I repeat the algorithm in the doc string (split the string by “;” and then join with newlines), then if I have to change the algorithm for speed, then I would have to change the doc string as well. – duplication of effort because of same cause. Here, it’s the documentation and implementation that have the same cause (the algorithm). The algorithm is needed for the function implementation. Ideally, the documentation should not even know what algorithm is under the hood. But if it does, then it will have to change each time the implementation changes.</p>
+<p>Test: For-loop to initialize a page table - caused by the structure of the page table. – If the structure changes, I’d have to update in a lot of places. The user code doesn’t need to know about the structure, but it does anyway. May set some values the wrong way - inconsistency and thus bugs.</p>
+<p>Test: From The Pragmatic Programmer - line segment class with fields start, end, and length. – When a user changes the start and end of a line segment, he also has to change the length. So, you’re exposing too much information. The user code doesn’t need to know about all three (as fields). It should just have a constructor and a <code>length</code> method (or field - it shouldn’t know the difference). Also, may set length to an inconsistent value - bugs.</p>
+<h2 id="toggle-behind-an-interface-no-need-for-fine-grained-feedback">Toggle Behind an Interface: No Need for Fine-Grained Feedback</h2>
+<p><strong>Hypothesis</strong>: Change in the expected interface, have tests or type-checker that can validate each change, change all uses -&gt; feedback about every change -&gt; can change one at a time; no unnecessary changes; no inconsistent changes.</p>
+<p>Change in the expected interface, no tests or type-checker that can validate each change, change all uses naively -&gt; you’re changing outside the interface you <strong>expected</strong> -&gt; have to change things unnecessarily; have to change everything before you get the correct output; may make inconsistent changes.</p>
+<p>Change in the expected interface, toggle behind an interface -&gt; not changing the interface you expected -&gt; don’t have to change things; consistent; don’t need fine-grained feedback.</p>
+<p><strong>Corollary</strong>: Change lots of things -&gt; need fine-grained feedback to reduce uncertainty.</p>
+<p>Change behind an interface -&gt; don’t need fine-grained feedback.</p>
+<p><strong>Corollary</strong>: Toggle behind an interface or have some other source of fine-grained feedback (like a type-checker) -&gt; don’t need a huge number of unit tests.</p>
+<p>Don’t toggle behind an interface and don’t have some other source of fine-grained feedback (like a type-checker) -&gt; don’t need a huge number of unit tests.</p>
+<hr />
+<p>Test: Change 1024 to 2048 – have to change things unnecessarily. May miss some spots.</p>
+<p>Test: Suppose the name of the function <code>foldr</code> is changed to <code>reduce</code> - how much work would you have to do? – assume <code>foldr</code> is now not even available. So, your type-checker will point out every place where you still use <code>foldr</code>. Easy enough. No inconsistent or unnecessary changes.</p>
+<p>Test: Want to change page directory from the global page directory to a per-process page directory. Change the <code>get_page_directory</code> function to return the per-process page directory. – don’t have to change code; guaranteed to cover all the places where it is used.</p>
+<p>Test: Want to change all uses of <code>initialize_page_directory</code> once you change its input parameters - can grep for the function – fine-grained feedback about every use.</p>
+<p>Test: Ruby guys have tons of unit tests. – no type checker to warn you about inconsistently-used function names or arguments or return values - so changing a function’s type signature is pretty risky. (Can’t they toggle behind an interface? I guess you have to abstract things well for that. Not sure.)</p>
+<p>Test: Haskell guys usually don’t have tons of unit tests. – type checker tells you about each use of a function; changing a function’s type signature is not risky. Can abstract well into conventional interfaces - <code>sort</code> wants just an <code>Ord</code>, <code>fmap</code> needs just a <code>Functor</code>, and most common functions deal with just lists. (Not fully sure of this.)</p>
+<h1 id="algebra-of-programming">Algebra of Programming</h1>
 <h2 id="inverse">Inverse</h2>
 <p><strong>Hypothesis</strong>: <code>unfoldr f' . foldr f z = id</code> when f’ can recover x and xs from the given value and replace f with <code>(,)</code>. Also f’ z must be the empty list.</p>
 <p>Test: Basic - get inverse for <code>foldr (:) []</code> aka the identity function.</p>
@@ -1809,7 +1834,6 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p>Test: Saw functor algebra as <code>((+), 0)</code> – really easy to understand. Do one thing for each case of the ADT.</p>
 <h3 id="inverse-resources">Inverse: Resources</h3>
 <p>https://courses.cs.ut.ee/2006/algebraofprog/Main/HomePage</p>
-<h1 id="algebra-of-programming">Algebra of Programming</h1>
 <h2 id="fold-fusion">Fold Fusion</h2>
 <p>Hypothesis: Fold fusion law:</p>
 <blockquote>
@@ -1830,7 +1854,7 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p><strong>Hypothesis</strong>: You can simply set <code>g x y = h (f x y)</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: January 11, 2018</div>
+<div class="info">Last modified: January 13, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
