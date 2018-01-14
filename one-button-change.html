@@ -701,6 +701,11 @@ boxes3x3' <span class="fu">=</span> fmap concat <span class="fu">.</span> overMa
 <h2 id="tests-2">Tests</h2>
 <p>Test: <code>get_features_strike_rate</code> and <code>get_features_average</code> with <em>roughly the same code</em> except for <code>strike_rate</code> and <code>average</code> – accept a stat_fn and have a common abstract function.</p>
 <h1 id="rewriting-refactoring-prose">Rewriting: Refactoring Prose</h1>
+<h3 id="refactoring-prose">Refactoring Prose</h3>
+<p><strong>Acceptance test</strong>: Refactoring - default out instead of default in.</p>
+<p>Given that I have 100k+ words in different essays with almost no acceptance tests</p>
+<p>when I start with a fresh, small positive exemplar that I can make sense of and then bring in untested prose only when they pass some acceptance test</p>
+<p>then I will have a working product at each time and be able to make sense of things and have everything well-tested.</p>
 <h2 id="disjoint-hypotheses">Disjoint Hypotheses</h2>
 <p><strong>Corollary</strong>: Two hypotheses, different output variables -&gt; disjoint.</p>
 <p>Two hypotheses, same output variables -&gt; overlapping.</p>
@@ -722,6 +727,23 @@ boxes3x3' <span class="fu">=</span> fmap concat <span class="fu">.</span> overMa
 <p>Most of the output variables are the same.</p>
 <p>Test: decisiveness - had three sections talking about it, collected them all under my newest explanation (indecisiveness is caused by optimizing for too many variables), was able to cover them all, shrank my prose. – I ignored the hypotheses and collected the tests.</p>
 <p>Test: “Stuff not up to standards, insult -&gt; negative reinforcement for better action” – it’s in the form of [situation, action -&gt; result].</p>
+<h2 id="refactoring-algorithm">Refactoring Algorithm</h2>
+<p>Question: Can you just ignore the hypotheses and just take the representative tests (if the prose was well-written?)</p>
+<p>Observation: [2018-01-13 Sat] Haven’t refactored any essay in years. Have just been piling on idea after idea. (Haven’t released them either, which usually forces me to clean them up.)</p>
+<h2 id="default-out-not-default-in">Default Out, not Default In</h2>
+<p>TODO: Refactor above prose on tests to show all of their effects in one place (like no overlapping hypotheses, short cycle time, etc.)</p>
+<p><strong>Hypothesis</strong>: Have lots of untested prose -&gt; no tests or type signatures; not refactored into small functions -&gt; hard to find existing functions for your use case -&gt; hypotheses may overlap; hard to use or reuse; hard to change.</p>
+<p>No tests or type signatures, but refactored into small functions -&gt; TODO.</p>
+<p><strong>Hypothesis</strong>: Try to change large untested prose in place -&gt; still lots of prose with no tests or type signature -&gt; may still have the above problems; have to wait till everything is fixed before you can use it “as a whole”.</p>
+<p>Try to change large untested prose in place -&gt; still lots of prose with no tests or type signature -&gt; may still have the above problems.</p>
+<hr />
+<p><strong>Test</strong>: Causal hypothesis essay - lots of scattered ideas; haven’t explained the old evidence using my latest hypotheses like induction or categories as equivalence classes; no “overall structure” - when I’m given a new problem, I don’t have a clear algorithm with which to attack it. I don’t know which idea to use. All those ideas lying in there are useless if I can’t get at them when I need to.</p>
+<p>145 level 1 headings, 188 level 2 headings, 54k words. That is not a sane organization of my ideas.</p>
+<p>Explanation: It’s too large because I haven’t explained all the evidence using my latest evidence and rather have some obsolete hypotheses lying around.</p>
+<p>It’s hard to use because I don’t have concrete acceptance tests (or type signatures) to guide me through each scenario I may be in.</p>
+<p>It’s hard to reuse in my future essays too, because I simply don’t remember what ideas I have had.</p>
+<p>It’s hard to change because I don’t know where to insert a new test and add some hypothesis explaining it.</p>
+<p>Also, there are wrong, untested hypotheses.</p>
 <h1 id="hypotheses-about-hypotheses-model-of-the-domain">Hypotheses about Hypotheses: Model of the Domain</h1>
 <p>Hypothesis: My state-transition <em>model</em> of programming seems to cover all the hypotheses that talk about amount of uncertainty about your program’s correctness or the amount of work required to fix bugs.</p>
 <p><strong>Hypothesis</strong>: One type of hypothesis: move from concrete inputs to an abstract model, make abstract predictions, and then convert them to concrete predictions.</p>
@@ -1127,6 +1149,21 @@ QuickCheck property</code></pre>
 <p>Given that I had an Awk script to get acceptance tests but it occasionally printed stuff beyond the current section</p>
 <p>when I broke the input Markdown files into sections [type: sections, not free-form text]</p>
 <p>then I could handle it effortlessly. [simple type]</p>
+<h3 id="interview-question">Interview Question</h3>
+<p><strong>Acceptance test</strong>: Interview question - subset sums</p>
+<p>Given the problem statement “Given a set of candidate numbers (C) (without duplicates) and a target number (T), find all unique combinations in C where the candidate numbers sums to T. The same repeated number may be chosen from C unlimited number of times.”</p>
+<p>when I try to figure out the algorithm</p>
+<p>then I should get</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> combinationSum(candidates, target):
+	xs <span class="op">=</span> [[] <span class="cf">for</span> _ <span class="op">in</span> <span class="bu">range</span>(<span class="dv">0</span>, target<span class="dv">+1</span>)]
+	xs[<span class="dv">0</span>] <span class="op">=</span> [[]]
+	<span class="cf">for</span> x <span class="op">in</span> candidates:
+		<span class="cf">for</span> i <span class="op">in</span> <span class="bu">range</span>(target, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>):
+			k <span class="op">=</span> <span class="dv">1</span>
+			<span class="cf">while</span> i <span class="op">&gt;=</span> k <span class="op">*</span> x:
+				xs[i] <span class="op">+=</span> [ys <span class="op">+</span> [x] <span class="op">*</span> k <span class="cf">for</span> ys <span class="op">in</span> xs[i <span class="op">-</span> k <span class="op">*</span> x]]
+				k <span class="op">+=</span> <span class="dv">1</span>
+	<span class="cf">return</span> xs[target]</code></pre></div>
 <h3 id="more-acceptance-tests">More Acceptance Tests</h3>
 <p><strong>Acceptance test</strong>: Grammar for problem statement of programming problem.</p>
 <h2 id="programming-algorithm">Programming Algorithm</h2>
@@ -1635,14 +1672,31 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <p><strong>Hypothesis</strong>: Extend your representative test with every diff. Either the diff will extend a chain or it will add a branch (or do some other thing). Your representative test should capture that.</p>
 <p>Test: Super Mario - v1.0 - just jumping around. Next, moving forward too. – initial representative test is whether you can jump around; next test checks if you can move forward too (which is a different branch).</p>
 <h2 id="acceptance-tests-must-transform-input-to-output-for-a-positive-exemplar">Acceptance Tests must transform Input to Output for a Positive Exemplar</h2>
-<p><strong>Hypothesis</strong>: Output for some input -&gt; can use it as an acceptance test.</p>
-<p>Show how input is transformed into the output -&gt; can use it as a fully-specified acceptance test that helps you design your code.</p>
+<p><strong>Hypothesis</strong>: Start with a minimal positive exemplar where the input uses only one or two features -&gt; can get feedback quickly; know exactly what to change in your code, therefore quick.</p>
+<p>Start with a positive exemplar where the input uses lots of features -&gt; can’t get feedback until you have all features working; don’t know what to change when debugging, therefore slow.</p>
+<p>Positive exemplar where you can see how the input is transformed into the output -&gt; can use it as a fully-specified acceptance test that helps you design your code; takes long to get feedback; hard to debug; slow. However, this might give you function-wise tests that produce quick feedback.</p>
 <p>Don’t know the output for some input -&gt; can’t use it as a test.</p>
-<p>Question: What about situations for which I don’t know the right response?</p>
-<p><strong>Lesson</strong>: Don’t talk about a hypothesis until you have at least one positive exemplar.</p>
+<p><strong>Lesson</strong>: Don’t talk about a hypothesis until you have at least one positive exemplar (ideally a minimal positive exemplar).</p>
 <hr />
 <p>Test: Tried to get an integration test for my learning mechanism - “Digits of a Number section 6.1, Bird.” – I have the input. But I don’t have the output! Can’t use it as a test (and get a high-level design).</p>
 <p>Test: Phone number problem - just <code>10/783--5</code> to <code>neu o&quot;d 5</code> isn’t enough. – You need to show how you remove the punctuation, split the string, and lookup words in the dictionary. (fully-specified acceptance test)</p>
+<p><strong>Test</strong>: Minimal positive exemplar - just enable paging with a global page directory and five global page tables and no per-process page directory - simple program; useful feature. Hmm… The output of the paging program could be pretty “complicated”. It may have involved page-fault handling, per-process page tables, page replacement, FIFO, backing store, etc. But we chose to target a small subset of that.</p>
+<p>So, the challenge was to come up with an input that didn’t invoke page-fault handling or per-process page tables or page replacement or backing store accesses. The input was a string of memory references.</p>
+<p>I could see that accessing an address beyond the first 4096 pages would cause a page fault because it wouldn’t have been in the global page tables and would need to be handled by the page fault handler, which I didn’t have. So, that was out.</p>
+<p>Similarly, switching between processes and writing to the same virtual memory address would need to lead to different values. So, that was out too.</p>
+<p>Ditto for reading so many different pages that I had to replace one of them or for reading from some page that had been evicted (and presumably saved to the backing store).</p>
+<p>Explanation: Program + simple input should give simple output. However, if it gives some other output, then you know that you have to change something about the program. And because you’re changing just one feature in the program, you know exactly what to change and so can quickly implement the feature. Also, you can tell what functionality is added by that feature alone.</p>
+<p>Test: Mario MVP - just jumping and moving. No princess or turtles or spiky pits. – can get feedback about that feature alone; quick because you know that any problems with the output must be due to the one feature you changed.</p>
+<p>Test: Lots of features - scheduler - tried to change lots of things and was mired in debugging output. – slow to get final feedback; hard to debug. Basically had to change all parts of the default scheduler, instead of changing one thing at a time.</p>
+<h2 id="programming-vs-induction">Programming vs Induction</h2>
+<p>Question: How is programming different from induction?</p>
+<p>In induction, you start from a positive exemplar and shave off variables using focus-gambling and accept necessary causes using conservative-focusing.</p>
+<p>In programming, you start with a simple acceptance test, one that tests just one feature, and then add bigger tests and code that passes them.</p>
+<p>Hypothesis: In induction, you have a mechanism that gives you the output for any input (though not always; sometimes you have to work with limited evidence, like astronomers studying the Big Bang).</p>
+<p>You’re writing code in both of them.</p>
+<hr />
+<p>Test: Paging - start with just the global page directory, then add page fault handling, then per-process page directory, and so on.</p>
+<p>Test: Induction - Semmelweiss - initially, any of the hospital location, the kinds of patients who came to that maternity ward, the other patients in the hospital, and so on could have caused “childbed fever”. But he narrowed it down to the doctor’s hands by looking at the doctor who died after getting nicked by the autopsy knife. At the end, he had a hypothesis - a function - that explained when somebody would get “childbed fever”.</p>
 <h2 id="small-interface-expose-only-one-thing-at-a-time">Small Interface: Expose Only One Thing at a Time</h2>
 <p><strong>Hypothesis</strong>: Small interface -&gt; easier to use.</p>
 <p>Large interface -&gt; harder to use.</p>
@@ -1781,6 +1835,34 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p>Test: Ruby guys have tons of unit tests. – no type checker to warn you about inconsistently-used function names or arguments or return values - so changing a function’s type signature is pretty risky. (Can’t they toggle behind an interface? I guess you have to abstract things well for that. Not sure.)</p>
 <p>Test: Haskell guys usually don’t have tons of unit tests. – type checker tells you about each use of a function; changing a function’s type signature is not risky. Can abstract well into conventional interfaces - <code>sort</code> wants just an <code>Ord</code>, <code>fmap</code> needs just a <code>Functor</code>, and most common functions deal with just lists. (Not fully sure of this.)</p>
 <h1 id="algebra-of-programming">Algebra of Programming</h1>
+<p><strong>Acceptance test</strong>: Algebra of programming - maximum segment sum (from Bird, Thinking Functionally with Haskell).</p>
+<p>Given the problem statement “get the segment with maximum sum”</p>
+<p>when I calculate the program</p>
+<p>then I should get</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">mss ::</span> [<span class="dt">Int</span>] <span class="ot">-&gt;</span> <span class="dt">Int</span>
+mss <span class="fu">=</span> maximum <span class="fu">.</span> map sum <span class="fu">.</span> segments
+<span class="co">-- This is O(n^3).</span>
+<span class="fu">=</span> maximum <span class="fu">.</span> map sum <span class="fu">.</span> concat <span class="fu">.</span> map inits <span class="fu">.</span> tails
+<span class="co">-- map f . concat = concat . map (map f) [fusion law?]</span>
+<span class="fu">=</span> maximum <span class="fu">.</span> concat <span class="fu">.</span> map (map sum) <span class="fu">.</span> map inits <span class="fu">.</span> tails
+<span class="co">-- functor law</span>
+<span class="fu">=</span> maximum <span class="fu">.</span> concat <span class="fu">.</span> map (map sum <span class="fu">.</span> inits) <span class="fu">.</span> tails
+<span class="co">-- maximum . concat = maximum . map maximum [??; where the input is a non-empty list of non-empty lists]</span>
+<span class="fu">=</span> maximum <span class="fu">.</span> map maximum <span class="fu">.</span> map (map sum <span class="fu">.</span> inits) <span class="fu">.</span> tails
+<span class="co">-- functor law [this is O(n^3) because of map (map sum)]</span>
+<span class="fu">=</span> maximum <span class="fu">.</span> map (maximum <span class="fu">.</span> map sum <span class="fu">.</span> inits) <span class="fu">.</span> tails
+<span class="co">-- map sum . inits = scanl (+) 0 [scanl law]</span>
+<span class="fu">=</span> maximum <span class="fu">.</span> map (maximum <span class="fu">.</span> scanl (<span class="fu">+</span>) <span class="dv">0</span>) <span class="fu">.</span> tails
+<span class="co">-- scanl (@) e = foldr f [e] where f x xs = e:map (x@) xs [NOT SURE]</span>
+<span class="co">-- So, maximum . scanl (+) 0 = foldr1 (&lt;&gt;) . foldr f [e] where f x xs = e:map (x@) xs</span>
+<span class="co">-- fusion law calculation</span>
+<span class="co">-- maximum . scanl (+) 0 = foldr (@) 0</span>
+<span class="fu">=</span> maximum <span class="fu">.</span> map (foldr (<span class="fu">@</span>) <span class="dv">0</span>) <span class="fu">.</span> tails, <span class="kw">where</span> x <span class="fu">@</span> y <span class="fu">=</span> <span class="dv">0</span> <span class="ot">`max`</span> (x <span class="fu">+</span> y)
+<span class="co">-- map (foldr f e) . tails = scanr f e</span>
+<span class="co">-- O(n)</span>
+<span class="fu">=</span> maximum <span class="fu">.</span> scanr (<span class="fu">@</span>) <span class="dv">0</span>, <span class="kw">where</span> x <span class="fu">@</span> y <span class="fu">=</span> <span class="dv">0</span> <span class="ot">`max`</span> (x <span class="fu">+</span> y)</code></pre></div>
+<p><strong>Acceptance test</strong>: Fusion law</p>
+<p>Given TODO</p>
 <h2 id="inverse">Inverse</h2>
 <p><strong>Hypothesis</strong>: <code>unfoldr f' . foldr f z = id</code> when f’ can recover x and xs from the given value and replace f with <code>(,)</code>. Also f’ z must be the empty list.</p>
 <p>Test: Basic - get inverse for <code>foldr (:) []</code> aka the identity function.</p>
@@ -1834,7 +1916,12 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p>Test: Saw functor algebra as <code>((+), 0)</code> – really easy to understand. Do one thing for each case of the ADT.</p>
 <h3 id="inverse-resources">Inverse: Resources</h3>
 <p>https://courses.cs.ut.ee/2006/algebraofprog/Main/HomePage</p>
+<h3 id="inverse-interview-questions">Inverse: Interview Questions</h3>
+<p>Test: Subset sums problem.</p>
+<p>Property:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">all (\xs <span class="ot">-&gt;</span> ((<span class="fu">==</span> target) <span class="fu">.</span> sum) xs <span class="fu">&amp;&amp;</span> all (elem target) (nub xs)) <span class="fu">$</span> subsetsWithSum target candidates <span class="fu">=</span> <span class="dt">True</span></code></pre></div>
 <h2 id="fold-fusion">Fold Fusion</h2>
+<h3 id="my-attempts">My Attempts</h3>
 <p>Hypothesis: Fold fusion law:</p>
 <blockquote>
 <p>If we have the following properties:</p>
@@ -1852,9 +1939,49 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p>So, the two assumptions are enough to prove the claim for any list.</p>
 <p>Question: How to derive g?</p>
 <p><strong>Hypothesis</strong>: You can simply set <code>g x y = h (f x y)</code>.</p>
+<h2 id="fusion-law-bird">Fusion Law: Bird</h2>
+<p><strong>Hypothesis</strong>: Fusion law: <code>f . foldr g a = foldr h b</code> where f is a strict function, <code>b = f a</code>, and <code>f (g x y) = h x (f y) for all x and y</code>.</p>
+<p>Has to be strict because we need <code>f undefined = undefined</code>.</p>
+<p><code>b = f a</code> is for the empty list case.</p>
+<p>When the list is (x:xs),</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">LHS</span> <span class="fu">=</span> f (g x (foldr g a xs))
+<span class="dt">RHS</span> <span class="fu">=</span> h x (foldr h b xs)
+<span class="dt">Assume</span> the induction hypothesis holds for xs
+<span class="dt">So</span>, f (foldr g a xs) <span class="fu">=</span> foldr h b xs<span class="fu">.</span>
+<span class="dt">Therefore</span>, <span class="kw">if</span> h x (f y) <span class="fu">=</span> f (g x y) for all x and y, the law will hold<span class="fu">.</span></code></pre></div>
+<p><strong>Corollary</strong>: <code>foldr f a . map g = foldr (f . g) a</code>.</p>
+<hr />
+<p>Test:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">foldr f a <span class="fu">.</span> map g
+<span class="fu">=</span> foldr f a <span class="fu">.</span> foldr ((<span class="fu">:</span>) <span class="fu">.</span> g) []
+<span class="co">-- We want the output of the form `foldr h b`.</span>
+<span class="co">-- (i) b = foldr f a [] = a</span>
+<span class="co">-- (ii) foldr f a is a strict function (?).</span>
+<span class="co">-- (iii) h x (f y) = f (g x y) for all x and y.</span>
+
+<span class="co">-- We have handled the cases where the input is undefined or an empty list.</span>
+<span class="co">-- Now for (x:xs).</span>
+<span class="co">-- Condition (iii) means f (g x xs) = h x (f xs)</span>
+<span class="co">-- foldr f a (((:) . g) x xs) = h x (foldr f a xs) for all x and xs.</span>
+<span class="co">-- foldr f a (g x : xs) = h x (foldr f a xs) for all x and xs.</span>
+<span class="co">-- (f (g x) (foldr f a xs)) = h x (foldr f a xs) for all x and xs.</span>
+
+<span class="co">-- h x y = f (g x) y [Note: This f is different from the f in the equation.]</span>
+<span class="co">-- h = f . g</span></code></pre></div>
+<p>Test: double . sum = foldr ((+) . double) 0</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">double <span class="fu">.</span> sum</code></pre></div>
+<p>Test: length . concat = foldr ((+) . length) 0</p>
+<h2 id="birds-approach-in-functional-pearls">Bird’s Approach in Functional Pearls</h2>
+<blockquote>
+<p>I was interested in the specific task of taking a clear but inefficient functional program, a program that acted as a specification of the problem in hand, and using equational reasoning to calculate a more efficient one.</p>
+<p>– Bird, Preface, Pearls of Functional Algorithm Design</p>
+</blockquote>
+<p>I’d like to know how to derive a program using just the contract properties and not necessarily a working inefficient model.</p>
+<p>For example, given <code>(checkSudoku . solveSudoku) grid == True</code> and the definition of <code>checkSudoku</code>, write <code>solveSudoku</code>.</p>
+<p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: January 13, 2018</div>
+<div class="info">Last modified: January 14, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
