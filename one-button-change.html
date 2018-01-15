@@ -727,15 +727,159 @@ boxes3x3' <span class="fu">=</span> fmap concat <span class="fu">.</span> overMa
 <p>Most of the output variables are the same.</p>
 <p>Test: decisiveness - had three sections talking about it, collected them all under my newest explanation (indecisiveness is caused by optimizing for too many variables), was able to cover them all, shrank my prose. – I ignored the hypotheses and collected the tests.</p>
 <p>Test: “Stuff not up to standards, insult -&gt; negative reinforcement for better action” – it’s in the form of [situation, action -&gt; result].</p>
-<h2 id="refactoring-algorithm">Refactoring Algorithm</h2>
-<p>Question: Can you just ignore the hypotheses and just take the representative tests (if the prose was well-written?)</p>
+<h1 id="refactoring-algorithm-for-prose">Refactoring Algorithm for Prose</h1>
+<h2 id="refactoring-algorithm-for-prose-hypothesis">Refactoring Algorithm for Prose: Hypothesis</h2>
+<p><strong>Hypothesis</strong>: Refactoring algorithm for prose</p>
+<p>Basically, refactor disjunctive hypotheses of the same type to get an inverse hierarchy of conjunctive hypotheses with criteria to choose among alternatives. Start with the topmost alternatives - the high-level variables like induction or goals or learning experiments. Figure out their effects and invert them to get the inverse lookup. Then recurse.</p>
+<p>Compose hypotheses of different types to pass the acceptance tests you care about.</p>
+<p>Steps:</p>
+<p>Collect sections that talk about a common output variable.</p>
+<p>For one output variable, refactor disjunctive hypotheses into a category hierarchy of inverse conjunctive hypotheses with criteria.</p>
+<p>Compose hypotheses and test using acceptance tests.</p>
+<p>Question: What about isolating and importing? Doesn’t that give you feedback quicker?</p>
+<p>Hypothesis: Input - a bunch of sections talking about different types.</p>
+<p>Desired output - acceptance tests that show key surprising insights; decoupled prose that explains those acceptance tests; unit tests for each function.</p>
+<p>Properties: No “duplication” among the imported functions. Every function should be used in some acceptance test. Every function should have unit tests for its branches.</p>
+<p>Don’t those properties hold now? No. Multiple sections talking about conservative focusing. Lots of concrete sections using the scientific method or the Baconian method.</p>
+<p>Question: But refactoring usually means that you <strong>change the code but not the behaviour</strong>. So you need tests. (Or, at a minimum, you check that their type remains the same.)</p>
+<p>But can’t you refactor purely on the level of expressions? <code>map f . map g = map (f . g)</code>. Also, <code>A, B -&gt; C; A, B' -&gt; C =&gt; A -&gt; C</code>.</p>
+<p><strong>Question</strong>: Do I need to write acceptance tests first? Do I need to bring in one section at a time or a bunch of sections on the same topic? Have to toggle the variables and find out.</p>
+<hr />
+<p>Test: Not sure. Let’s just try with one label.</p>
+<p><strong>Test</strong>: Experiment - Bring in all sections on category hierarchy. No tests. See if you get refactored code anyway.</p>
+<p>What does the input look like? What is its structure?</p>
+<p>23 section headings. 119 paragraphs. 40 of them are hypotheses or corollaries or continuations of hypotheses. 31 are tests. 10 observations. 5 examples. 27 are random lines. The rest are break lines.</p>
+<p>How many hypotheses can you reduce that to?</p>
+<p>(Imagine that. I have 30-40 functions lying around in ~2k words of prose.)</p>
+<p>You can’t get rid of the tests or observations or examples. They are valuable pieces of evidence.</p>
+<p><strong>Test</strong>: My “hypotheses” don’t look <strong>composable</strong> at all. They have arbitrary inputs and arbitrary outputs.</p>
+<blockquote>
+<p>Write function definition -&gt; get closer to the problem domain.</p>
+<p>Input to a causal model is in the form of an AST governed by a grammar &lt;- designed by the possible outputs.</p>
+<p>Object, output of causal model -&gt; category property.</p>
+</blockquote>
+<p>I suspect <strong>reductionism</strong> - describing everything in terms of some core building blocks (like say functions) and avoiding unnecessary new <strong>categories</strong> will clear things up.</p>
+<p><strong>Test</strong>: Some of it is better predicted by my latest hypotheses.</p>
+<blockquote>
+<p><strong>Hypothesis</strong>: Mysterious category = set of inputs for which you can’t predict the output of a model (when given just that category).</p>
+<p>Test: Can’t make predictions - “magic” – Harry can’t say what will happen the next time (or what can be done and what can’t).</p>
+</blockquote>
+<p>After reading Skinner, I now believe that mysterious explanation means treating the cause as some hidden variable (to which you can as much detail as you please) and ignoring relevant external factors. For example, when Minerva tells Harry it’s “magic”, she fails to mention that you need to have a wand and not be a Muggle or a Squib and know the spells and concentrate and stuff.</p>
+<p>Test: Output variables -</p>
+<p>size of code size of grammar number of design options number of errors first-class categories for certain patterns how close you are to the problem domain mysterious category different label can reuse category hierarchy can use the same action on lower-level objects granularity of categories goal categorize according to your goal use extreme cases to test the label concrete cue for the technique notice abstractions more</p>
+<h2 id="refactoring-prose-all-i-care-about-is-the-algorithm">Refactoring Prose: All I care about is the Algorithm</h2>
+<p>Hypothesis: Maybe types or acceptance tests make things decoupled. You can change the functions implementing those tests without affecting the outward behaviour.</p>
+<p><strong>Hypothesis</strong>: The <strong>outward behaviour</strong> - the metacognitive algorithms - of my prose should remain the same. That is, I should get the same use out of them as before.</p>
+<p>So, how do I use my prose? (The answer is I don’t.) How do I want to use my prose?</p>
+<p>I want to have <strong>algorithms</strong> for thinking that I burn into my mind using practice. So, when I learn, I want to learn as quickly as possible, maybe by using a representative exemplar and following the values. When I research, I want to toggle variables as per conservative-focusing and focus-gambling. When I program, I want to do much of the same, along with using equational reasoning and acceptance tests and whatnot.</p>
+<p>Corollary: This means the functions and their unit tests can potentially go to hell. All I care about is my algorithm.</p>
+<p><strong>Corollary</strong>: If I’m going to do the same thing as ever, there’s no point in having billions of little unit-tested functions. They don’t add any value to me.</p>
+<p>Corollary: It should be easy to search for what to do in any situation.</p>
+<p>Lesson: Judge your prose by the value of its acceptance tests.</p>
+<p><strong>Hypothesis</strong>: Actually, I think the mysterious explanations section is pretty good (once you add my latest hypothesis). It’s got some great unit tests. Remember that your mental model is a bunch of small functions.</p>
+<p><strong>Hypothesis</strong>: I have been throwing out hypotheses like confetti in this section. How do I merge all of them?</p>
+<hr />
+<p>Test: Tons of text about categorization algorithm. Have I actually changed the way I categorize the books I read or the lectures I attend? – Oh, hell no. Useless.</p>
+<p>Test: Want to remember how to figure out a mechanism – look at my induction notes. Hard to remember. Also, lots of scattered sections.</p>
+<p>Test: Try to come up with a practical acceptance test where I use my categorization ideas. - <blank>.</p>
+<p>Test: (Need a positive exemplar for a practical acceptance test. Some situation where I performed better because I knew about categorization.)</p>
+<p>People use the trait “he is a problem child” instead of noticing how his tantrums have been shaped by the parents ignoring the current level and then giving in when he shouts louder. – people are ignoring the relevant factors in the environment and going for a mysterious explanation in the form of a hidden variable “problem child”.</p>
+<h2 id="refactoring-recognize-a-high-level-pattern-and-abstract-the-code">Refactoring: Recognize a High-level Pattern and Abstract the Code</h2>
+<p><strong>Hypothesis</strong>: Unique effect -&gt; can search for it by goal (i.e., can categorize it).</p>
+<p>Corollary: Come up with unique effects or diagnostic cues for all functions.</p>
+<p>Corollary: Want to merge a function with refactored functions, look at the diffs between their outputs, abstract both of them if possible -&gt; get merged refactored code.</p>
+<p><strong>Hypothesis</strong>: Recognize a higher-level pattern, use the higher-level function -&gt; simplify this definition (minimize interface) -&gt; easy to understand, easy to reuse, cheap to change.</p>
+<p>Can’t recognize a higher-level pattern, minimize inputs -&gt; get a high-level function, use it -&gt; simplify this definition -&gt; ditto.</p>
+<p><strong>Corollary</strong>: “Refactor” a function = recognize a high-level pattern and abstract.</p>
+<p>Corollary: Final code will have high-level functions and various applications.</p>
+<hr />
+<p>Test: Unique effect - confused about the explanation “problem child” - look at your notes on mysterious explanations.</p>
+<p>Test: Merge two functions - positive exemplar.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">sum [] <span class="fu">=</span> <span class="dv">0</span>
+sum (x<span class="fu">:</span>xs) <span class="fu">=</span> x <span class="fu">+</span> sum xs
+
+length [] <span class="fu">=</span> <span class="dv">0</span>
+length (x<span class="fu">:</span>xs) <span class="fu">=</span> <span class="dv">1</span> <span class="fu">+</span> length xs</code></pre></div>
+<p>Explanation: Their empty list branches are the same. And their cons list branches are similar. So, a branch by branch comparison is one way to go.</p>
+<p>The other way is to abstract <code>sum</code> fully.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">sum<span class="ot"> ::</span> (<span class="dt">Num</span> a, <span class="dt">Foldable</span> t) <span class="ot">=&gt;</span> t a <span class="ot">-&gt;</span> a
+sum <span class="fu">=</span> foldr (<span class="fu">+</span>) <span class="dv">0</span>
+
+length [] <span class="fu">=</span> <span class="dv">0</span>
+length (x<span class="fu">:</span>xs) <span class="fu">=</span> <span class="dv">1</span> <span class="fu">+</span> length xs</code></pre></div>
+<p>Now, you can no longer do a branch by branch comparison because <code>sum</code> doesn’t seem to have branches.</p>
+<p>Hmm… You have to abstract <code>length</code> using the pattern of your <code>foldr</code> function. So, you must know how to <strong>recognize</strong> the pattern of <code>foldr</code>.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">foldr<span class="ot"> ::</span> <span class="dt">Foldable</span> t <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> b <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> b <span class="ot">-&gt;</span> t a <span class="ot">-&gt;</span> b
+foldr f z [] <span class="fu">=</span> z
+foldr f z (x<span class="fu">:</span>xs) <span class="fu">=</span> x <span class="ot">`f`</span> foldr f z xs</code></pre></div>
+<p>Test: Man, that is non-trivial work. For example, <code>foo</code> wouldn’t have matched even though it’s almost identical:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">foo [] <span class="fu">=</span> <span class="dv">0</span>
+foo (x<span class="fu">:</span>xs) <span class="fu">=</span> <span class="dv">1</span> <span class="fu">+</span> foo (xs \\ [x])</code></pre></div>
+<p>You need to notice that the cons branch knows about not (:) and 1 and (+), but also about (\) &amp; []. Also, the recursive call to foo knows about three things.</p>
+<p>Explanation: Not really. All you’d have to notice is that it no longer satisfies the pattern of <code>foldr</code>.</p>
+<p>Test: sortInts - minimize inputs till you realize that it can be written as a polymorphic <code>sort</code>. sortStrings will be easy after that because you can match the pattern of <code>sort</code>. – got a high-level function.</p>
+<h2 id="search-backward-inference">Search = Backward Inference</h2>
+<p><strong>Hypothesis</strong>: Organize prose by topic -&gt; decouple the different sections -&gt; need to search less (? for what?).</p>
+<p><strong>Hypothesis</strong>: Search = backward inference. Need to eliminate variables that don’t cause the output. Basically, when you’re searching, you want to know which variables cause something. If you’ve organized your information poorly - that is, if you’re uncertain about it - then you will have to consider a lot of possible causes. If you’ve organized well, then you will know the exact causes.</p>
+<p><strong>Hypothesis</strong>: Lots of possible causes -&gt; may have to get a lot of instances to eliminate unnecessary variables.</p>
+<p><strong>Corollary</strong>: Collect sections that have similar effects (aka categorize them), induce the common causes -&gt; low uncertainty -&gt; fast search.</p>
+<p><strong>Hypothesis</strong>: Minimal interface = fewer causes of the output.</p>
+<p>TODO: Refactor the essay using your instincts and use the before and after to come up with hypotheses for refactoring. For example, is it the fewer comparisons thanks to the hierarchical structure that let you refactor things quicker or is that you’re merging one unrefactored function at a time with well-refactored functions? (A smaller example would be good too.)</p>
+<hr />
 <p>Observation: [2018-01-13 Sat] Haven’t refactored any essay in years. Have just been piling on idea after idea. (Haven’t released them either, which usually forces me to clean them up.)</p>
-<h2 id="default-out-not-default-in">Default Out, not Default In</h2>
+<p>Test: Collect sections with obvious headings - collect labels first (by going through the headings). Took about 18m.</p>
+<p>Test: Unrefactored vs refactored code - sum of numbers in a list of lists. What’s the difference?</p>
+<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c"><span class="kw">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n; i++){
+    <span class="kw">for</span>(<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; k; j++){
+	    sum += a[i][j];
+	}
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">sum <span class="fu">.</span> map sum</code></pre></div>
+<p>Explanation: In the C code, the output is caused by a lot of different things like the two for-loops, i, just, and <code>a</code>. – Have to get more evidence to eliminate those unnecessary causes (aka refactor the code). In the Haskell code, the output is caused by just the three things sum, (.), and map sum. These are necessary causes - no more work need be done.</p>
+<p>Test: Search causal hypothesis essay for stuff on category formation - have to go through a lot of sections. – Don’t know exactly which ones say something important about it.</p>
+<p>Test: Want to “refactor” ideas on programming - again, have to collect all the sections that mention programming (i.e., cause some insight about programming) – will take a lot of time because I don’t know which ones they are.</p>
+<h2 id="disjunctive-hypothesis---lots-of-search">Disjunctive Hypothesis -&gt; Lots of Search</h2>
+<p><strong>Hypothesis</strong>: Disjunctive hypothesis, want to get some output -&gt; have to look at all the possible causes of that output.</p>
+<p>Conjunctive hypothesis, want to get some output -&gt; have to look at one direct cause.</p>
+<p><strong>Hypothesis</strong>: Unrefactored code = disjunctive hypothesis.</p>
+<p><strong>Corollary</strong>: Refactoring = inducing a conjunctive hypothesis out of a disjunctive hypothesis.</p>
+<p><strong>Corollary</strong>: Programming to an interface, not an implementation = extracting a conjunctive hypothesis as an interface so that you have just one cause for the effect.</p>
+<p>Hypothesis: Disjunctive hypotheses are the root of all evil (uncertainty).</p>
+<hr />
+<p>Test: Binary search - want to find a value - if value == arr[mid], else if value &gt; arr[mid], etc. – Have to look at maybe three if conditions. Compare that to an encapsulated function <code>find (== value) :: [a] -&gt; Maybe a</code> - you don’t have to look at any other functions.</p>
+<p>Test: Want to learn how to solve the subset sums problem - could look it up on this website or that one or Wikipedia. Don’t know which ones will actually give you the “aha!” you’re looking for. – Lot of work.</p>
+<p>Test: for-loop to get sum of list; for-loop to get length of list. Feels like list + sum -&gt; one program; list + length -&gt; another program; list + map -&gt; another program. – Have to look at all those possible programs. But you can cover all of them using foldr.</p>
+<p>Test: for-loop in two places to initialize page directory - feels like a page directory can be created in two ways. When you want to create a page directory, you’ll have to look at both of them. – But it’s just one way - so, extract a initialize page directory function and make that explicit. Just <strong>one</strong> way to do it.</p>
+<h2 id="category-hierarchy-design-no-alternatives-unless-you-encode-their-criteria">Category Hierarchy Design: No Alternatives unless you encode their Criteria</h2>
+<p><strong>Corollary</strong>: Criteria to help you choose among alternatives -&gt; exactly one cause of each effect.</p>
+<p>No criteria and free-form alternatives -&gt; lots of causes of each effect; have to test all of them.</p>
+<p><strong>Hypothesis</strong>: Hierarchy = inverse lookup from effects to causes for a particular type (<strong>not</strong> an inverse causal structure). It’s just a data structure to help look for the right function matching a contract.</p>
+<p><strong>Hypothesis</strong>: Hierarchy, want to do X and Y and Z -&gt; go “down” the hierarchy via backward inference.</p>
+<p><strong>Hypothesis</strong>: Different properties -&gt; may have different “hierarchies”</p>
+<p>Corollary: Want to get something that satisfies different properties -&gt; have to unify output sets from different hierarchies. (Not sure.)</p>
+<hr />
+<p>Test: Sort with guaranteed O(nlogn) time + extra space - merge sort; sort quickly on average - quicksort; sort almost sorted list - insertion sort; sort integer list - radix sort. – choices governed by options; not free-form.</p>
+<p>Test: Drive a car - could be a Ferrari or a Toyota Camry or a Tesla or whatever. – unstructured choices; have to test all of them.</p>
+<p>Test: Want to sort - use the sort algorithms hierarchy; need it to be in-place - look at quick sort and other algorithms; need it to work well for almost-sorted lists - look at insertion sort. – backward inference.</p>
+<p>Test: Get the right function matching a contract - function to get a sorted list in O(nlogn) worst-case time with O(n) additional space - merge sort. Function to get O(nlogn) average time and in-place - quicksort. – they have the same type signature (<code>Ord a =&gt; [a] -&gt; [a]</code>).</p>
+<p>Test: Want to get the best restaurant in town - ask certain friend and not others. Want to get the best textbook for botany - ask some other friend. – different hierarchies.</p>
+<h2 id="category-hierarchy-inverse-lookup">Category Hierarchy: Inverse Lookup</h2>
+<p><strong>Question</strong>: If we do backward inference so often, why not represent our programs so as to make it easier? (Wait. Isn’t that just a type signature?)</p>
+<hr />
+<p>Test: Speed of sorting algorithm - O(n) - radix sort, etc.; O(nlogn) - quick sort (average case), merge sort, etc.; O(n^2) - insertion sort, etc. – You need to construct that inverse list explicitly (unless two-way associations already do that for you).</p>
+<p>Test: House - milky tears and compulsive behaviour and been around an earthquake =&gt; spores in the brain – inverse lookup.</p>
+<h2 id="acceptance-tests-show-how-functions-compose-to-do-what-you-want">Acceptance Tests: Show how Functions Compose to do what you Want</h2>
+<p>Hypothesis: Acceptance tests -&gt; show how functions compose to do the things you care about.</p>
+<hr />
+<p>Test: Maximum segment sum – we can see how to compose the individual functions to do what we want.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">mss <span class="fu">=</span> maximum <span class="fu">.</span> scanr (<span class="fu">@</span>) <span class="dv">0</span>, <span class="kw">where</span> x <span class="fu">@</span> y <span class="fu">=</span> <span class="dv">0</span> <span class="ot">`max`</span> (x <span class="fu">+</span> y)</code></pre></div>
+<h2 id="separate-tested-and-untested-prose">Separate Tested and Untested Prose</h2>
 <p>TODO: Refactor above prose on tests to show all of their effects in one place (like no overlapping hypotheses, short cycle time, etc.)</p>
 <p><strong>Hypothesis</strong>: Have lots of untested prose -&gt; no tests or type signatures; not refactored into small functions -&gt; hard to find existing functions for your use case -&gt; hypotheses may overlap; hard to use or reuse; hard to change.</p>
 <p>No tests or type signatures, but refactored into small functions -&gt; TODO.</p>
-<p><strong>Hypothesis</strong>: Try to change large untested prose in place -&gt; still lots of prose with no tests or type signature -&gt; may still have the above problems; have to wait till everything is fixed before you can use it “as a whole”.</p>
-<p>Try to change large untested prose in place -&gt; still lots of prose with no tests or type signature -&gt; may still have the above problems.</p>
+<p><strong>Hypothesis</strong>: Try to change large untested prose in place -&gt; still lots of prose with no tests or type signature; don’t know which parts work and which parts don’t -&gt; may still have the above problems; have not compared functions for duplicated code; have to wait till everything is fixed before you can use it “as a whole” (no overall flow?); not clear how much work is left.</p>
+<p>Import only those functions that have been tested and refactored -&gt; all prose has tests or type signatures; is refactored; know exactly which parts work and which parts don’t -&gt; easy to find existing functions for your use case -&gt; hypotheses won’t overlap; confident that every function has been compared against other functions for duplicated code; easy to use or reuse; easy to change; clear how much work is left.</p>
+<p><strong>Lesson</strong>: Stop treating your untested prose as if it is actually worth anything. Sequester it and bring in only clean tested prose.</p>
 <hr />
 <p><strong>Test</strong>: Causal hypothesis essay - lots of scattered ideas; haven’t explained the old evidence using my latest hypotheses like induction or categories as equivalence classes; no “overall structure” - when I’m given a new problem, I don’t have a clear algorithm with which to attack it. I don’t know which idea to use. All those ideas lying in there are useless if I can’t get at them when I need to.</p>
 <p>145 level 1 headings, 188 level 2 headings, 54k words. That is not a sane organization of my ideas.</p>
@@ -744,6 +888,26 @@ boxes3x3' <span class="fu">=</span> fmap concat <span class="fu">.</span> overMa
 <p>It’s hard to reuse in my future essays too, because I simply don’t remember what ideas I have had.</p>
 <p>It’s hard to change because I don’t know where to insert a new test and add some hypothesis explaining it.</p>
 <p>Also, there are wrong, untested hypotheses.</p>
+<p>Finally, I don’t know how much work I have left. Nothing I do seems to make a dent.</p>
+<h2 id="refactoring-merge-one-at-a-time">Refactoring: Merge One at a Time</h2>
+<p><strong>Hypothesis</strong>: Merge n unrefactored functions all at once -&gt; don’t get feedback until you’ve covered them all - slow; don’t know the impact made by each section (by looking at the prose before and after toggling it); hard to debug - which section is getting you stuck?; have to <strong>compare</strong> each section with every other section for duplication because you don’t have tests or types - laborious.</p>
+<p>Merge one unrefactored function at a time with refactored functions -&gt; get feedback after every function - quick; know the impact of each section as you toggle it; easy to debug; have to compare only with a few sections of the same type - quick.</p>
+<p>Corollary: When summarizing a book or some other prose sources, merge sections one at a time with your current clean hypothesis -&gt; quick.</p>
+<p>Lesson: Algorithms win. Don’t fret about the “complexity” of “managing your code”. Ask instead how long it takes to merge n sections all at once vs one at a time.</p>
+<hr />
+<p><strong>Test</strong>: If I think of refactoring the essay right now, it feels like I’ll have to compare each section against each of the other sections for duplicated code and thus take O(n^2) time (?). Maybe 15 of the 145 sections will combine to give a new section and, to figure out which they are, I have to read the essay over and over. Plus I won’t know how much progress I’m making or whether I’ve actually covered all the ideas that I should have.</p>
+<p>If I try to refactor (or start testing) prose by importing an untested, unrefactored section into an essay full of tested and well-refactored code, where each function is guaranteed to have no code in common with any other, then I can simply split it into parts if needed and merge them with whichever clean functions I need. At each point, I’ll know exactly how much progress I’ve made. And I’ll know that the essay (or program) is clean in the sense of having no duplicated code among its functions.</p>
+<p>Plus, if the clean code was written, well, cleanly, then you can merge new unrefactored code pretty quickly.</p>
+<p>Explanation: Have to compare each section against every other section - time-consuming; don’t get feedback until it’s all “done”; don’t know the contribution of each section.</p>
+<h2 id="hierarchy-gives-you-fast-lookup">Hierarchy gives you Fast Lookup</h2>
+<p><strong>Hypothesis</strong>: Hierarchy by topic -&gt; have to search only through a little (ideally, don’t have to search at all). Roughly O(log n) lookup (?).</p>
+<p>No clear hierarchy by topic -&gt; have to search through a lot to get what you want. Basically, O(n) lookup.</p>
+<p>Corollary: Man, lookup takes a lot of time. Well, it is a function of your uncertainty about the prose. The more unstructured your prose is, the more uncertain you will be about it, and thus the more you will have to search.</p>
+<p>Corollary: Section headings give you a lot of clues about their contents.</p>
+<hr />
+<p><strong>Test</strong>: Try to get sections that are covered by one test - had to walk through a <strong>lot</strong> of sections just to look for those that talk about refactoring prose. Just reading the headings of the 145 sections (around 800 words) took me around 15 minutes. Not cool. – Have to narrow it down even further. O(n) lookup.</p>
+<p>Test: “Forward and backward inference” - straightforward enough. “mathematical research” - ditto. – Nice.</p>
+<p>Test: causal hypothesis essay - which sections talk about goals? I can use imenu to get the four sections that have “goal” in their headings. That doesn’t mean I’ve exhausted all goal-related sections, though.</p>
 <h1 id="hypotheses-about-hypotheses-model-of-the-domain">Hypotheses about Hypotheses: Model of the Domain</h1>
 <p>Hypothesis: My state-transition <em>model</em> of programming seems to cover all the hypotheses that talk about amount of uncertainty about your program’s correctness or the amount of work required to fix bugs.</p>
 <p><strong>Hypothesis</strong>: One type of hypothesis: move from concrete inputs to an abstract model, make abstract predictions, and then convert them to concrete predictions.</p>
@@ -1981,7 +2145,7 @@ mss <span class="fu">=</span> maximum <span class="fu">.</span> map sum <span cl
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: January 14, 2018</div>
+<div class="info">Last modified: January 15, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
