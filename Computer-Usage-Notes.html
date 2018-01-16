@@ -95,9 +95,12 @@ Yoboyz</code></pre>
 <p><strong>Lesson</strong>: Whenever you want to sort on some special feature that you will compute from each line (or paragraph or section), create an intermediate stream with that value explicit, sort it, and then delete that value.</p>
 <p>Here you go:</p>
 <div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span class="kw">awk</span> <span class="st">'$0=($0 ~ /Foo/)&quot;\t&quot;$0'</span> sort-on-pass.txt <span class="kw">|</span> <span class="kw">sort</span> -k1,1nr -k2,2 <span class="kw">|</span> <span class="kw">cut</span> -f 2-</code></pre></div>
+<h1 id="ssh-port-forwarding">SSH: Port forwarding</h1>
+<p>Don’t know how to use it with FoxyProxy yet. Works with <code>www-browser</code> in the terminal.</p>
+<p>Could use <code>mc08 56 $ www-browser cs527-vm0.cs.purdue.edu:8000</code> after doing <code>ssh -D 8085 &lt;username&gt;@mc08.cs.purdue.edu</code>.</p>
 
 <div class="info">Created: August 19, 2015</div>
-<div class="info">Last modified: January  7, 2018</div>
+<div class="info">Last modified: January 16, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes</div>
 

@@ -788,10 +788,13 @@ boxes3x3' <span class="fu">=</span> fmap concat <span class="fu">.</span> overMa
 <p><strong>Hypothesis</strong>: Unique effect -&gt; can search for it by goal (i.e., can categorize it).</p>
 <p>Corollary: Come up with unique effects or diagnostic cues for all functions.</p>
 <p>Corollary: Want to merge a function with refactored functions, look at the diffs between their outputs, abstract both of them if possible -&gt; get merged refactored code.</p>
-<p><strong>Hypothesis</strong>: Recognize a higher-level pattern, use the higher-level function -&gt; simplify this definition (minimize interface) -&gt; easy to understand, easy to reuse, cheap to change.</p>
+<p><strong>Hypothesis</strong>: Recognize a higher-level pattern, use the higher-level function -&gt; simplify this definition (minimize interface) -&gt; easy to understand, easy to reuse, cheap to change. easy to recognize in future code.</p>
 <p>Can’t recognize a higher-level pattern, minimize inputs -&gt; get a high-level function, use it -&gt; simplify this definition -&gt; ditto.</p>
 <p><strong>Corollary</strong>: “Refactor” a function = recognize a high-level pattern and abstract.</p>
 <p>Corollary: Final code will have high-level functions and various applications.</p>
+<p><strong>Hypothesis</strong>: Large pre-existing functions, try to recognize them in new function -&gt; take a lot of time; probably won’t remember them.</p>
+<p>Small pre-existing functions, try to recognize them in new function -&gt; quick; probably will remember them.</p>
+<p><strong>Hypothesis</strong>: Goal of refactoring = get a bunch of functions whose patterns are easy to <strong>recognize</strong> in new code or new problems.</p>
 <hr />
 <p>Test: Unique effect - confused about the explanation “problem child” - look at your notes on mysterious explanations.</p>
 <p>Test: Merge two functions - positive exemplar.</p>
@@ -818,6 +821,22 @@ foo (x<span class="fu">:</span>xs) <span class="fu">=</span> <span class="dv">1<
 <p>You need to notice that the cons branch knows about not (:) and 1 and (+), but also about (\) &amp; []. Also, the recursive call to foo knows about three things.</p>
 <p>Explanation: Not really. All you’d have to notice is that it no longer satisfies the pattern of <code>foldr</code>.</p>
 <p>Test: sortInts - minimize inputs till you realize that it can be written as a polymorphic <code>sort</code>. sortStrings will be easy after that because you can match the pattern of <code>sort</code>. – got a high-level function.</p>
+<p>Test: Try to recognize <code>map</code> - effortless. – Any time you want to do something to all elements of a list, use map.</p>
+<p>Test: Try to recognize a nested for-loop calculating subsets in a new code, or even <code>sum (x:xs) = x + sum xs</code> – hard to see the pattern.</p>
+<h3 id="refactoring-case-study-causal-hypothesis">Refactoring Case Study: Causal Hypothesis</h3>
+<p><strong>Hypothesis</strong>: Algorithm - Bring in one <strong>important</strong> hypothesis. (Ignore low-value corollaries.)</p>
+<p>Refactor it as much as you can by minimizing its interface and trying to reuse older functions. Rinse and repeat.</p>
+<hr />
+<p>Test: Variables - bring in ideas one at a time into a fresh essay.</p>
+<p>Make sure that the ideas in the essay are small and clean and easy to recognize in new prose.</p>
+<p>Let’s see how long it takes to cover 145 sections and 54k words.</p>
+<p>Stumbling blocks:</p>
+<p>Don’t know what to do with a side corollary that may or may not be important. Don’t want to lose it.</p>
+<blockquote>
+<p><strong>Corollary</strong>: ATDD by example (page 143): divide input into equivalence classes and pick test cases “exactly at the boundary, at least one right in the middle, and one value right before the next boundary”. For multiple input variables, consider all combinations of their boundary tests.</p>
+</blockquote>
+<p>Maybe just leave it in the original essay. We’ll dig it up if we need it.</p>
+<p>Test: I’d been acting like I had to cover <strong>all</strong> the ideas I’d ever jotted down in my essay. – Nope. Life’s too short for that.</p>
 <h2 id="search-backward-inference">Search = Backward Inference</h2>
 <p><strong>Hypothesis</strong>: Organize prose by topic -&gt; decouple the different sections -&gt; need to search less (? for what?).</p>
 <p><strong>Hypothesis</strong>: Search = backward inference. Need to eliminate variables that don’t cause the output. Basically, when you’re searching, you want to know which variables cause something. If you’ve organized your information poorly - that is, if you’re uncertain about it - then you will have to consider a lot of possible causes. If you’ve organized well, then you will know the exact causes.</p>
