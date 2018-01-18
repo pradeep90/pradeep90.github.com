@@ -96,11 +96,29 @@ Yoboyz</code></pre>
 <p>Here you go:</p>
 <div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span class="kw">awk</span> <span class="st">'$0=($0 ~ /Foo/)&quot;\t&quot;$0'</span> sort-on-pass.txt <span class="kw">|</span> <span class="kw">sort</span> -k1,1nr -k2,2 <span class="kw">|</span> <span class="kw">cut</span> -f 2-</code></pre></div>
 <h1 id="ssh-port-forwarding">SSH: Port forwarding</h1>
-<p>Don’t know how to use it with FoxyProxy yet. Works with <code>www-browser</code> in the terminal.</p>
-<p>Could use <code>mc08 56 $ www-browser cs527-vm0.cs.purdue.edu:8000</code> after doing <code>ssh -D 8085 &lt;username&gt;@mc08.cs.purdue.edu</code>.</p>
+<p>First, do:</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span class="kw">ssh</span> -L 31337:cs527-vm0.cs.purdue.edu:8000 mc08.cs.purdue.edu -l <span class="kw">&lt;</span>username<span class="kw">&gt;</span></code></pre></div>
+<p>Then open localhost:31337 in your browser. No need for FoxyProxy.</p>
+<h1 id="gnupg">GnuPG</h1>
+<p>Tutorial: https://hashrocket.com/blog/posts/encryption-with-gpg-a-story-really-a-tutorial</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span class="co"># --armor makes the gpg output ASCII.</span>
+<span class="kw">echo</span> <span class="st">&quot;hello world&quot;</span> <span class="kw">|</span> gpg --armor --encrypt -r gohanpra@gmail.com <span class="kw">&gt;</span> ~/test/hello-world.gpg
+gpg --output ~/test/hello-world-gpg-output.txt ~/test/hello-world.gpg
+
+<span class="co"># Export public key.</span>
+gpg --export --armor foo@gmail.com
+<span class="co"># Export private key.</span>
+gpg --export-secret-keys --armor foo@gmail.com</code></pre></div>
+<p>Emacs tutorial: https://www.masteringemacs.org/article/keeping-secrets-in-emacs-gnupg-auth-sources</p>
+<p>To read a GPG-encrypted file in Emacs, just visit it and enter your passphrase.</p>
+<p>To create a GPG file in Emacs, just save it as <code>foo.gpg</code>.</p>
+<p>To create a new encrypted version of a file, use <code>: e</code> in Dired (or <code>; e</code> with Evil).</p>
+<p>Since I have only one private key in my keyring, Emacs knows which key to use. I guess that if you have more than one key, you have to mention that at the top of the file.</p>
+<p>Note: You will have to enter your passphrase every time you open a file (after closing it).</p>
+<p>TODO: How to import your private key on a new computer? (Otherwise all your encrypted data will be lost once you lose or format your current hard drive.)</p>
 
 <div class="info">Created: August 19, 2015</div>
-<div class="info">Last modified: January 16, 2018</div>
+<div class="info">Last modified: January 17, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes</div>
 
