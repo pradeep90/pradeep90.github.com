@@ -728,6 +728,7 @@ boxes3x3' <span class="fu">=</span> fmap concat <span class="fu">.</span> overMa
 <p>Test: decisiveness - had three sections talking about it, collected them all under my newest explanation (indecisiveness is caused by optimizing for too many variables), was able to cover them all, shrank my prose. – I ignored the hypotheses and collected the tests.</p>
 <p>Test: “Stuff not up to standards, insult -&gt; negative reinforcement for better action” – it’s in the form of [situation, action -&gt; result].</p>
 <h1 id="refactoring-algorithm-for-prose">Refactoring Algorithm for Prose</h1>
+<p><strong>TODO</strong>: Meta: This is subsumed by backward inference using category hierarchy.</p>
 <h2 id="refactoring-algorithm-for-prose-hypothesis">Refactoring Algorithm for Prose: Hypothesis</h2>
 <p><strong>Hypothesis</strong>: Refactoring algorithm for prose</p>
 <p>Basically, refactor disjunctive hypotheses of the same type to get an inverse hierarchy of conjunctive hypotheses with criteria to choose among alternatives. Start with the topmost alternatives - the high-level variables like induction or goals or learning experiments. Figure out their effects and invert them to get the inverse lookup. Then recurse.</p>
@@ -2152,8 +2153,99 @@ mss <span class="fu">=</span> maximum <span class="fu">.</span> map sum <span cl
 <span class="co">-- h x y = f (g x) y [Note: This f is different from the f in the equation.]</span>
 <span class="co">-- h = f . g</span></code></pre></div>
 <p>Test: double . sum = foldr ((+) . double) 0</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">double <span class="fu">.</span> sum</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">double <span class="fu">.</span> sum
+<span class="co">-- somehow (I'm guessing by a natural transformation, even though it's Num a, not a)</span>
+<span class="fu">=</span> sum <span class="fu">.</span> map double
+<span class="fu">=</span> sum <span class="fu">.</span> foldr ((<span class="fu">:</span>) <span class="fu">.</span> double) []
+<span class="co">-- fusion law for foldr . map</span>
+<span class="co">-- (i) sum is strict</span>
+<span class="co">-- (ii) z = sum []</span>
+<span class="co">-- (iii) sum (((:) . double) x xs) == g x (sum xs)</span>
+<span class="co">-- WRONG =&gt; g x xs = double x : xs</span>
+<span class="co">-- sum (double x : xs) == g x (sum xs)</span>
+<span class="co">-- foldr (+) 0 (double x : xs) == g x (sum xs)</span>
+<span class="co">-- double x + foldr (+) 0 xs == g x (sum xs)</span>
+<span class="co">-- double x + sum xs == g x (sum xs)</span>
+<span class="co">-- double x + ys == g x ys</span>
+<span class="fu">=</span> foldr ((<span class="fu">+</span>) <span class="fu">.</span> double) <span class="dv">0</span></code></pre></div>
 <p>Test: length . concat = foldr ((+) . length) 0</p>
+<p>concat :: [[a]] -&gt; [a] length :: [a] -&gt; Int</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">length <span class="fu">.</span> concat
+<span class="co">-- HOW?!</span>
+<span class="fu">=</span> sum <span class="fu">.</span> map length
+<span class="fu">=</span> foldr (<span class="fu">+</span>) <span class="dv">0</span> <span class="fu">.</span> map length
+<span class="fu">=</span> foldr ((<span class="fu">+</span>) <span class="fu">.</span> length) <span class="dv">0</span></code></pre></div>
+<p>Test: <code>length . cp</code></p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">length <span class="fu">.</span> cp
+<span class="fu">=</span> length <span class="fu">.</span> foldr (liftA2 (<span class="fu">:</span>)) [[]]
+<span class="co">-- fusion law</span>
+<span class="co">-- (i) length is strict</span>
+<span class="co">-- (ii) z = length [[]] = 1</span>
+<span class="co">-- (iii) length (liftA2 (:) x xs) = g x (length xs)</span>
+<span class="co">-- length x * length xs = g x (length xs)</span>
+<span class="co">-- length x * ys = g x ys</span>
+<span class="co">-- g = (*) . length</span>
+<span class="fu">=</span> foldr ((<span class="fu">*</span>) <span class="fu">.</span> length) <span class="dv">1</span>
+<span class="fu">=</span> foldr (<span class="fu">*</span>) <span class="dv">1</span> <span class="fu">.</span> map length
+<span class="fu">=</span> product <span class="fu">.</span> map length</code></pre></div>
+<p>Test: <code>maximum . map sum . subseqs</code></p>
+<p>Naively - <code>subseqs</code> will take O(2^n) time. <code>map sum</code> will take O(2^n * n/2) time.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">maximum <span class="fu">.</span> map sum <span class="fu">.</span> subseqs
+<span class="fu">=</span> maximum <span class="fu">.</span> map sum <span class="fu">.</span> foldr f [[]] <span class="kw">where</span> f x xss <span class="fu">=</span> xss <span class="fu">++</span> map (x<span class="fu">:</span>) xss
+<span class="co">-- fusion law</span>
+<span class="co">-- (i) map sum is strict</span>
+<span class="co">-- (ii) z = map sum [[]] = [0]</span>
+<span class="co">-- (iii) map sum (f x xss) == g x (map sum xss)</span>
+<span class="co">-- = map sum (xss ++ map (x:) xss) == g x (map sum xss)</span>
+<span class="co">-- Naturality of map!</span>
+<span class="co">-- = map sum xss ++ map sum (map (x:) xss) = g x (map sum xss)</span>
+<span class="co">-- = map sum xss ++ map (\yss -&gt; sum (x:yss)) xss = g x (map sum xss)</span>
+<span class="co">-- = map sum xss ++ map (\yss -&gt; sum ([x] ++ yss)) xss = g x (map sum xss)</span>
+<span class="co">-- = map sum xss ++ map (\yss -&gt; sum [x] + sum yss) xss = g x (map sum xss)</span>
+<span class="co">-- = map sum xss ++ map ((sum [x] +) . sum) xss = g x (map sum xss)</span>
+<span class="co">-- = map sum xss ++ map (sum [x] +) (map sum xss) = g x (map sum xss)</span>
+<span class="co">-- = zss ++ map (sum [x] +) zss = g x zss</span>
+<span class="co">-- g x xs = xs ++ map (sum [x] +) xs</span>
+<span class="co">-- g x xs = xs ++ map (x +) xs</span>
+<span class="fu">=</span> foldr (\x xs <span class="ot">-&gt;</span> xs <span class="fu">++</span> map (x <span class="fu">+</span>) xs) [<span class="dv">0</span>]</code></pre></div>
+<p>This will take: O(1) time for the base case. T(n+1) = 2 * T(n) =&gt; T(n) = O(2^n). Not fully sure.</p>
+<p>Bird to the fucking rescue:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">=</span> maximum <span class="fu">.</span> foldr (\x xs <span class="ot">-&gt;</span> xs <span class="fu">++</span> map (x <span class="fu">+</span>) xs) [<span class="dv">0</span>]
+<span class="co">-- fusion law</span>
+<span class="co">-- (i) maximum is strict</span>
+<span class="co">-- (ii) z = maximum [0] = 0</span>
+<span class="co">-- (iii) maximum (f x xs) == g x (maximum xs)</span>
+<span class="co">-- maximum (xs ++ map (x+) xs) == g x (maximum xs)</span>
+<span class="co">-- maximum xs `max` maximum (map (x+) xs) == g x (maximum xs)</span>
+<span class="co">-- maximum xs `max` (x + maximum xs) == g x (maximum xs)</span>
+<span class="co">-- ys `max` (x + ys) == g x ys</span>
+<span class="co">-- g x y = y `max` (x + y)</span>
+<span class="fu">=</span> foldr g <span class="dv">0</span></code></pre></div>
+<p>An O(fucking N) algorithm!</p>
+<p>(And, as he notes, you can simply drop negative numbers :P - <code>sum . filter (&gt; 0)</code>).</p>
+<h2 id="universal-property-of-fold">Universal Property of Fold</h2>
+<p><strong>Hypothesis</strong>: <code>foldr f e (xs ++ ys) = foldr f e xs @ foldr f e ys</code></p>
+<p>It holds when <code>f = (@)</code> with identity <code>e</code>.</p>
+<p><strong>Corollary</strong>: When you have map f (xs ++ ys), you can simply distribute it: map f xs ++ map f ys.</p>
+<hr />
+<p>Test: <code>map sum (xss ++ map (x:) xss) = map sum xss ++ map sum (map (x:) xss)</code> – yeah.</p>
+<h2 id="natural-transformation">Natural Transformation</h2>
+<p><strong>Hypothesis</strong>: When the types are polymorphic, you can do stuff to the type before or after without affecting the result.</p>
+<hr />
+<p>Types:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">head<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> a
+tail<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]
+concat<span class="ot"> ::</span> [[a]] <span class="ot">-&gt;</span> [a]
+reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code></pre></div>
+<p>Test: <code>f . head = head . map f</code> – yeah.</p>
+<p>Test: <code>map f . tail = tail . map f</code> – yeah.</p>
+<p>Test: <code>map f . concat = concat . map (map f)</code> – yeah.</p>
+<p>Test: <code>map f . reverse = reverse . map f</code> – yeah.</p>
+<p>Test: <code>concat . map concat = concat . concat</code> – yeah.</p>
+<p>Test: <code>filter p . map f = map f . filter (p . f)</code> - don’t know how you came to that.</p>
+<p>Test: <code>map (map f) . cp = cp . map (map f)</code> – ok. Understandable.</p>
+<p>where <code>cp :: [[a]] -&gt; [[a]]</code>.</p>
+<p>Test: <code>filter (all p) . cp = cp . map (filter p)</code> – did it by intuition.</p>
 <h2 id="birds-approach-in-functional-pearls">Bird’s Approach in Functional Pearls</h2>
 <blockquote>
 <p>I was interested in the specific task of taking a clear but inefficient functional program, a program that acted as a specification of the problem in hand, and using equational reasoning to calculate a more efficient one.</p>
@@ -2164,7 +2256,7 @@ mss <span class="fu">=</span> maximum <span class="fu">.</span> map sum <span cl
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: January 15, 2018</div>
+<div class="info">Last modified: January 19, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
