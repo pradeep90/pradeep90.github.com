@@ -1391,6 +1391,7 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p><strong>Hypothesis</strong>: don’t know the cause of something, have the source code and can run interventions (aka <strong>debugging</strong>), look at your <strong>diff</strong>, list all your assumptions or toggle your diff till you get a “yes” -&gt; figure out which assumption is causing your error.</p>
 <p>debugging - read your diffs line by line -&gt; notice what changes you made that could have caused the error.</p>
 <p>debugging - just try different inputs without looking at the diff -&gt; find it harder to come up with the right inputs.</p>
+<p>Hypothesis: If you’re not sure where your program fails, set printfs at different points. That will narrow it down faster than one printf at a time.</p>
 <hr />
 <p>Test: Tried writing at an address but the CR2 value showed some other address. Turned out that I had interpreted the output as hex when it was actually a long int! – toggling my diff would have helped.</p>
 <p>Test: Re-read my buggy page directory setup code - discovered my errors. – read the diff line by line.</p>
@@ -1779,6 +1780,7 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <p>Write stuff just for “internal use” -&gt; just go with what you feel is the output of the mechanism, can hand-wave over details -&gt; don’t specify your model, don’t get the feedback you could have got.</p>
 <p>So, writing for yourself is like writing a 200-line function that you’ve never been tested. Writing for others is like writing a function that you will test pretty soon.</p>
 <p><strong>Lesson</strong>: Consider your casual judgment to be a poor source of feedback. Instead, prefer the feedback of a reader (even if it’s an imaginary one that pipes up as you’re writing). So, write as close to the final medium as possible. That’s how you’ll force yourself to think like a reader.</p>
+<p><strong>Hypothesis</strong>: Publishing online differentially reinforces clean writing.</p>
 <hr />
 <p>Test: Surrogate endpoints - stuck for nearly six hours on the one-to-one mapping proof for a simple n=1 inducing path. Wrote about it in the report. Found out that I was <strong>not</strong> going into an infinite recursion as I had thought. My approach was actually right. Why did this work when I was writing it out? – When I was writing the report, I was looking at it from the viewpoint of my professor, who’d be reviewing it. So, I wanted to make everything understandable.</p>
 <h2 id="specs-and-estimation">Specs and Estimation</h2>
@@ -1842,6 +1844,17 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <p>Test: Didn’t hide procent behind an interface when toggling the feature “no page_directory field” to “page_directory field” -&gt; missed places where it was used (like create, initialize, and global initialize).</p>
 <p>Test: I forgot to update nullproc’s page directory. Why? Because I updated procent without hiding it behind an interface. So, I didn’t catch all its users, in particular <code>initialize</code>. I should have looked for everything that initialized procent (since nothing would read or write to <code>page_directory</code> yet). – Caused errors.</p>
 <p>Test: When toggling global page directory with per-process page directory, I have to toggle the definition of procent, which requires me to seek all uses of procent. Similarly, toggling memlist involves toggling meminit, which requires finding out all the places where meminit is called.</p>
+<h3 id="old---modularity-make-changes-behind-an-interface">OLD - Modularity: Make Changes behind an Interface</h3>
+<p><strong>Hypothesis</strong>: Identify what changes you want to make and turn those hotspots into an interface. Then, implement the new module you want behind that interface. Nothing in the rest of the system has to change.</p>
+<p><strong>Hypothesis</strong>: List of changes -&gt; properties for the category definition.</p>
+<p>For example, we define the categories of “greedysubset” and “forwardfitting” by what they do in their inner loops. (Otherwise, they’re both the same.)</p>
+<p>Corollary: Don’t anticipate making any changes -&gt; no need to use an interface.</p>
+<p>Question: What about code reuse?</p>
+<p><strong>Hypothesis</strong>: Coding in a modular program -&gt; you will change stuff <em>only</em> behind the interface. Won’t have to touch the rest of the system.</p>
+<p>Hypothesis: Refactoring -&gt; will change the rest of the system to use your new interface.</p>
+<p>Observation: OS HW1 - I changed only the scheduler code and looked only at the scheduling output (not the memory usage or pipe behaviour).</p>
+<p><strong>Hypothesis</strong>: Change behaviour of a big system &lt;- choose output property, narrow down the parts you want to change into an interface, toggle to your heart’s content.</p>
+<p><strong>Hypothesis</strong>: Focus on just one small property (like being unreactive) and figure out what you need to change to get it -&gt; minimum interface (wrt that property).</p>
 <h2 id="representative-test-cannot-be-passed-by-any-existing-function">Representative Test: Cannot be Passed by Any Existing Function</h2>
 <p><strong>Hypothesis</strong>: Representative test = something that cannot be passed by any existing function.</p>
 <p>(What if it could be passed by some other function in the future? I suspect that function would be longer and thus have its prior probability penalized.)</p>
@@ -1911,6 +1924,17 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <p>The main question is why, here, you think everything untested is possible when, in general, you assume that everything untested is impossible?</p>
 <p>Maybe the mechanism you’re trying to test is “what would beat him?”. So, anything untested is considered to be incapable of beating him. (Not exactly sure of this argument.)</p>
 <p>Test: Only positive exemplars - undefeated team like Australia in the early 00s - feel like you would need to be a god to defeat them. – only negative exemplars for beating them. Felt like anything untested would also fail to beat them.</p>
+<h2 id="allow-only-short-diffs-using-close-exemplars">Allow only Short Diffs using Close Exemplars</h2>
+<p><strong>Corollary</strong>: Compare between a positive and negative exemplar with few changed variables -&gt; short, specific diff -&gt; can narrow down the cause of the change.</p>
+<p>Compare between a positive and negative exemplar with a lot of changed variables -&gt; large, vague diff -&gt; can’t narrow down the cause of the change.</p>
+<p><strong>Lesson</strong>: Allow yourself to use only short diffs. No comparison between different people - there are too many variables that could be different. Comparison between two things that have few changes - his OS setup and mine.</p>
+<hr />
+<p>Test: “Linear programming and causal reinforcement learning” -&gt; “I’m confused” vs “I’m confused about X” – don’t know which specific things confused you. Don’t have a close positive exemplar.</p>
+<p>Test: Asking smart questions - specify all kinds of details about your problem vs “Emacs keeps crashing. HELP!” – which branch failed? Otherwise you will think your entire system is broken. If you changed your Emacs version in the last week, that’s a strong clue. Need a close positive exemplar.</p>
+<p>Test: “I had a blast in Europe” vs “I visited lots of cool ski resorts” - will think “Europe” will cause “great time” vs “going skiing with friends”. Were you happy or sad before Europe? Basically, was it Europe that did the trick or was it being with your friends? Saying that other people who are not in Europe are unhappy isn’t a helpful comparison - too many variable changes. Need a close negative exemplar.</p>
+<p>Test: Compare with others - he could understand the lecture, I couldn’t. So, <strong>I</strong> am the cause for confusion. I suck. – vague high-level diff. Need a close positive exemplar.</p>
+<p>Test: Compare with yourself - I could understand five minutes ago, now I can’t. So, something that happened in the last five minutes must be the cause. – specific low-level diff. Close positive exemplar.</p>
+<p>Test: Someone wrote great code. Thought I couldn’t do it. But then a friend did it. Goddammit, if he can do it, so can I! – close positive exemplar to my negative exemplar of not making progress on a tough project.</p>
 <h2 id="to-know-what-to-change-get-fine-grained-tests-aka-controlled-experiments">To Know what to Change, get Fine-grained Tests (aka Controlled Experiments)</h2>
 <p><strong>Corollary</strong>: If you can run a fine-grained test (toggle just a few variables) -&gt; small diff -&gt; know exactly which branch of my code to change -&gt; less work.</p>
 <p>If you can run only a coarse-grained test -&gt; large diff -&gt; don’t know exactly which branches to change -&gt; more work; have to write multi-variable branches and later refactor.</p>
@@ -2256,7 +2280,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: January 19, 2018</div>
+<div class="info">Last modified: January 21, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
