@@ -123,9 +123,13 @@ Wrong type argument: commandp, nil</code></pre>
 <p><strong>Lesson</strong>: Run your proposed elisp code in an isolated Emacs instance so that you see which dependencies you need.</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">emacs</span> -Q -l org-autoclock.el</code></pre></div>
 <p>Observation: When Emacs doesn’t know the definition of some function, it just skips it or something.</p>
+<h1 id="opening-files-as-root">Opening Files as Root</h1>
+<p>To manipulate a file (say <code>/etc/apt/sources.list</code>) with sudo permissions:</p>
+<pre><code># ido will provide completion.
+C-x C-f RET /sudo:root@localhost:/etc/apt/sources.list/</code></pre>
 
 <div class="info">Created: August  6, 2015</div>
-<div class="info">Last modified: January  5, 2018</div>
+<div class="info">Last modified: January 24, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, emacs</div>
 

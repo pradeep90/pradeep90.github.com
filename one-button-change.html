@@ -1563,12 +1563,14 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <p>Test: Duplication - causal hypothesis - a bazillion explanations for how we understand things - hierarchical categories, stories, grammar, etc. – no integration test.</p>
 <h2 id="continuous-deployment">Continuous Deployment</h2>
 <p>Hypothesis: Continuous deployment -&gt; low risk and low tension when it comes to release day.</p>
+<p>Release only the day before -&gt; high risk and high tension.</p>
 <hr />
 <p>Test: JWZ about Netscape - they released their browser for all platforms at the same time, whereas the conventional practice was to release Windows first and handle Mac later. – That’s what failed companies did.</p>
 <blockquote>
 <p>The other big thing was we always shipped all platforms simultaneously; that was another thing they thought was just stupid. “Oh, 90 percent of people are using Windows, so we’ll focus on the Windows side of things and then we’ll port it later.” Which is what many other failed companies have done. If you’re trying to ship a cross-platform product, history really shows that’s how you don’t do it. If you want it to really be cross-platform, you have to do them simultaneously. The porting thing results in a crappy product on the second platform.</p>
 <p>– JWZ, Coders at Work</p>
 </blockquote>
+<p>Test: CS373 HW1 - Note how much time I’m spending just <strong>wrestling</strong> with R and CSV. I haven’t done any actual work yet. – Need to release a hello world before you do anything else. Here, it would have been a simple installation of R itself, then reading CSV in R, CSV with arrays, converting JSON to CSV, and then other stuff. All because I didn’t release sooner.</p>
 <h2 id="short-cycle-time---integration-tests">Short Cycle Time &lt;- Integration Tests</h2>
 <p><strong>Corollary</strong>: Have detailed integration tests -&gt; short cycle time, especially if you consider fleshing out a function to be progress.</p>
 <p>Don’t have integration tests -&gt; long cycle time.</p>
@@ -1687,6 +1689,24 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <p>Hypothesis: Acceptance test - must go from end to end, not merely test some intermediate state -&gt; fewer overall tests, more likely to cover highly-likely money-making paths, no unused paths.</p>
 <hr />
 <p>Test: “Journey test” - Jez Humble - shopping website - login, add 3 items to cart, checkout, add delivery address, pay, logout – highly likely path; one that actually makes the money; not unused.</p>
+<p>Test: Could Gambling Save Science?</p>
+<blockquote>
+<p>NEUTRINO MASS Betting markets could also function in the absence of overt controversy, as in the following (hypothetical) story.</p>
+<p>Once upon a time the Great Science Foundation decided it would be a “good thing” to know the mass of the electron neutrino. Instead of trying to figure out who would be a good person to work on this, or what a good research strategy would be, they decided to just subsidize betting markets on the neutrino mass. They spent millions.</p>
+<p>Soon the market odds were about 5% that the mass was above 0.1eV, and Gung Ho Labs became intrigued by the profits to be made. They estimated that for about $300K spent on two researchers over 3 years, they could make a high confidence measurement of whether the mass was above 0.1eV. So they went ahead with the project, and later got their result, which they kept very secret. While the market now estimated the chance of a mass over 0.1eV at 4%, their experiment said the chance was at most 0.1%.</p>
+<p>So they quietly bought bets against a high mass, moving the price down to 2.5% in the process. They then revealed their results to the world, and tried their best to convince people that their experiment was solid. After a few months they mostly succeeded, and when the price had dropped to 0.7% they began to sell they bets they had made. They made $400K off of the information they had created, which more than covered their expenses to get that information.</p>
+<p>Or course if Gung Ho Labs had failed to convince the world of their results, they would have faced the difficult choice of quitting at a loss, or holding out for the long-term. No doubt a careful internal review would be conducted before making such a decision.</p>
+<p>Gung Ho would be free to use peer review, tenure, and fixed salaries internally, if they are effective ways to organize workers. The two researchers need not risk their life savings to be paid for their efforts. But the discipline of the external market should keep these internal institutions from degenerating into mere popularity contests.</p>
+<p>– <a href="http://mason.gmu.edu/~rhanson/gamble.html"></a></p>
+</blockquote>
+<p>Explanation: He actually walked through a concrete, made-up, end-to-end scenario, just like Joel Spolsky recommends:</p>
+<blockquote>
+<p>When you’re writing a spec, an easy place to be funny is in the examples. Every time you need to tell a story about how a feature works, instead of saying:</p>
+<pre><code>The user types Ctrl+N to create a new Employee table and starts entering the names of the employees.</code></pre>
+<p>write something like:</p>
+<pre><code>Miss Piggy, poking at the keyboard with a eyeliner stick because her chubby little fingers are too fat to press individual keys, types Ctrl+N to create a new Boyfriend table and types in the single record &quot;Kermit.&quot;</code></pre>
+<p>– <a href="https://www.joelonsoftware.com/2000/10/15/painless-functional-specifications-part-4-tips/"></a></p>
+</blockquote>
 <h2 id="acceptance-test-high-level-decoupling">Acceptance Test: High-level Decoupling</h2>
 <p>Hypothesis: Acceptance test -&gt; high-level decoupling; everything unmentioned gives you degrees of freedom.</p>
 <hr />
@@ -2349,7 +2369,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: January 22, 2018</div>
+<div class="info">Last modified: January 24, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 

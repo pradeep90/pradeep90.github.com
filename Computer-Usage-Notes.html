@@ -99,7 +99,7 @@ Yoboyz</code></pre>
 <p>First, do:</p>
 <div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span class="kw">ssh</span> -L 31337:cs527-vm0.cs.purdue.edu:8000 mc08.cs.purdue.edu -l <span class="kw">&lt;</span>username<span class="kw">&gt;</span></code></pre></div>
 <p>Then open localhost:31337 in your browser. No need for FoxyProxy.</p>
-<h1 id="gnupg">GnuPG</h1>
+<h1 id="gnupg-or-gpg">GnuPG or GPG</h1>
 <p>Tutorial: https://hashrocket.com/blog/posts/encryption-with-gpg-a-story-really-a-tutorial</p>
 <div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span class="co"># --armor makes the gpg output ASCII.</span>
 <span class="kw">echo</span> <span class="st">&quot;hello world&quot;</span> <span class="kw">|</span> gpg --armor --encrypt -r gohanpra@gmail.com <span class="kw">&gt;</span> ~/test/hello-world.gpg
@@ -116,9 +116,29 @@ gpg --export-secret-keys --armor foo@gmail.com</code></pre></div>
 <p>Since I have only one private key in my keyring, Emacs knows which key to use. I guess that if you have more than one key, you have to mention that at the top of the file.</p>
 <p>Note: You will have to enter your passphrase every time you open a file (after closing it).</p>
 <p>TODO: How to import your private key on a new computer? (Otherwise all your encrypted data will be lost once you lose or format your current hard drive.)</p>
+<h2 id="gpg-agent">gpg-agent</h2>
+<p>Installed <code>gpg-agent</code>.</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span class="co"># Add to .zshrc.</span>
+<span class="ot">GPG_TTY=$(</span>tty<span class="ot">)</span>
+<span class="kw">export</span> <span class="ot">GPG_TTY</span></code></pre></div>
+<p>Test: It doesn’t work right now even after I do <code>gpg-agent --daemon</code>. I’m guessing that’s because I have gpg v1.4 and gpg-agent v2.1.</p>
+<p>For example,</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">gpg -vvv --use-agent -d hello-world.txt.gpg</code></pre></div>
+<p>asked me for my passphrase twice.</p>
+<p>Test: However, when I evaluated the code printed by <code>gpg-agent</code>, then it works. It asks me for my passphrase the first time and then works without it the next time.</p>
+<p>You need to do <code>eval</code> because <code>gpg-agent --daemon</code> prints code to export the value of <code>GPG_AGENT_INFO</code>. Source: https://unix.stackexchange.com/a/407849/</p>
+<p>Test: Check if it gets started automatically on bootup.</p>
+<p>Test: Check if you need to add <code>eval $(gpg-agent --daemon)</code> to <code>.xsessionrc</code>. But won’t I be starting gpg-agent twice if gpg starts it too?</p>
+<p>TODO: How to make Emacs know about the agent?</p>
+<h1 id="json-to-csv">JSON to CSV</h1>
+<p>Use <code>jq</code> (h/t http://bigdatums.net/2017/09/30/convert-json-to-csv-with-jq/):</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span class="kw">echo</span> <span class="st">'{&quot;key1&quot;:&quot;val1&quot;, &quot;myarray&quot;:[&quot;abc&quot;, &quot;def&quot;, &quot;ghi&quot;]}'</span> <span class="kw">|</span> jq <span class="st">'[.key1, .myarray[0], .myarray[1]] | @csv'</span></code></pre></div>
+<p>To process an array of objects:</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span class="co"># The quotes are necessary, AFAICS.</span>
+<span class="kw">echo</span> <span class="st">'[{&quot;yo&quot;: {&quot;boyz&quot;: 1}, &quot;foo&quot;: 3}, {&quot;yo&quot;: {&quot;boyz&quot;: 2}, &quot;foo&quot;: 4}]'</span> <span class="kw">|</span> jq -r <span class="st">'.[] | [.yo.boyz, .foo] | @csv'</span></code></pre></div>
 
 <div class="info">Created: August 19, 2015</div>
-<div class="info">Last modified: January 17, 2018</div>
+<div class="info">Last modified: January 25, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes</div>
 
