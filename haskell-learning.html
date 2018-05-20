@@ -60,12 +60,26 @@
     <span class="dt">Parser</span> (join <span class="fu">.</span> fmap (\(f, s') <span class="ot">-&gt;</span> runParser (fmap f xp) s') <span class="fu">.</span> pf)</code></pre></div>
 <h1 id="why-algebraic-data-types-matter">Why Algebraic Data Types Matter</h1>
 <p>Will Kurt gives a <a href="https://medium.com/@willkurt/why-sum-types-matter-in-haskell-ba2c1ab4e372#.2kmp91qss">good example</a> for ADTs vs OOP class hierarchies by trying to represent names.</p>
+<h1 id="xmonad">XMonad</h1>
+<p>To get the classname for an application, run:</p>
+<pre><code>xprop | grep WM_CLASS</code></pre>
+<p>and click on the application window. Use the second term. The first one doesn’t seem to work.</p>
+<pre><code>WM_CLASS(STRING) = &quot;emacs25&quot;, &quot;Emacs&quot;</code></pre>
+<p>So, use “Emacs”, not “emacs25”.</p>
+<h1 id="turtle">Turtle</h1>
+<p>[2018-03-15 Thu] First impressions: pretty cool!</p>
+<p>Each utility like <code>ls</code> or <code>grep</code> is basically a function that takes a stream of lines (<code>Shell Line</code>) and returns a stream of lines. Mix and match to your heart’s delight.</p>
+<h1 id="odds-and-ends">Odds and Ends</h1>
+<h2 id="int-to-hex">Int to Hex</h2>
+<blockquote>
+<p>Prelude Data.Bits Numeric Data.Char&gt; let showIntAsHex n = showIntAtBase 16 intToDigit n “”</p>
+</blockquote>
 <h1 id="useful-haskell-resources">Useful Haskell Resources</h1>
 <p>Thinking Functionally with Haskell by Richard Bird. The Sudoku implementation is compact and epic. Reminds me of PG.</p>
 <p>TODO: Check out http://haskellbook.com/</p>
 
 <div class="info">Created: February 17, 2017</div>
-<div class="info">Last modified: January  1, 2018</div>
+<div class="info">Last modified: May 14, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, haskell</div>
 

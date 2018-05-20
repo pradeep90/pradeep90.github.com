@@ -127,9 +127,49 @@ Wrong type argument: commandp, nil</code></pre>
 <p>To manipulate a file (say <code>/etc/apt/sources.list</code>) with sudo permissions:</p>
 <pre><code># ido will provide completion.
 C-x C-f RET /sudo:root@localhost:/etc/apt/sources.list/</code></pre>
+<h1 id="calc">Calc</h1>
+<h2 id="recompute-an-expression-for-different-values">Recompute an Expression for Different Values</h2>
+<p>To calculate the compound interest formula <code>a * (1 + r / 100)^t</code> for different values of r and t and a, do</p>
+<pre><code>'a * (1 + r/100)^t =&gt;</code></pre>
+<p>The <code>=&gt;</code> tells Calc that you want it to recompute that expression every time you set a value to one of its variables.</p>
+<p>So, you can do</p>
+<pre><code>ss a = 3336
+ss t = 10
+ss r = 10</code></pre>
+<p>to see</p>
+<pre><code>1:  a*(r / 100 + 1)^t =&gt; 8652.72484689</code></pre>
+<p>Change the rate r</p>
+<pre><code>ss r = 20</code></pre>
+<p>to see</p>
+<pre><code>1:  a*(r / 100 + 1)^t =&gt; 20655.6327051</code></pre>
+<h2 id="financial-functions">Financial functions</h2>
+<p>h/t: Andrew Hyatt’s post at https://plus.google.com/+AndrewHyatt/posts/YdwsbNmZ4NL</p>
+<p>The examples are from the excellent Emacs Calc manual. And, yes, they were right - I suddenly got a better grasp of present value after reading the manual pages (8.6.3 Present Value)</p>
+<p>If you start out with a lump sum of $6479 and get 9% interest for 4 years, you would end up with a final amount of $9146. So, the “future value of a lump sum” of $6479 at 9% after 4 years is $9146.</p>
+<pre><code>fvl(9%, 4, 6479.44) =&gt; 9146.2583471</code></pre>
+<p>If get $2000 each year from an investment (and then put it in a bank at 9%) for 4 years, you would have to start out with $6479 to get what that would earn in 4 years from something earning 9% interest. Put differently, the “present value of benefits” of $2000 each year for 4 years at an interest rate of 9% is $6479.</p>
+<pre><code>pv(9%, 4, 2000) =&gt; 6479.44</code></pre>
+<p>If you pay $2000 each year for 4 years and get 9% interest, then your final amount would be $9146. This is probably “future value of installments”.</p>
+<pre><code>fv(9%, 4, 2000) =&gt; 9146.258</code></pre>
+<p>If you take a loan of $6479 right now, you would have to pay $2000 each year so that the lender would get that much at the end of 4 years by saving it from the beginning at 9%. Basically, the present value of your periodic payments is $6479. Use <code>pmt</code> to calculate the periodic payments.</p>
+<pre><code>pmt(9%, 4, 6479.44) =&gt; 2000.0000759</code></pre>
+<p>Number of periodic payments needed to make the present value of $2000 per year equal $6479: use <code>nper</code>.</p>
+<pre><code>nper(9%, 2000, 6479) =&gt;  3.99967586385</code></pre>
+<p>Rate at which you would have got a present value of $6479 from payments of $2000 for 4 years: use <code>rate</code>.</p>
+<pre><code>rate(4, 2000, 6479) =&gt;  0.0900309222001 (9%)</code></pre>
+<p>Rate at which you would get $9146 from a lump sum $6479 after 4 years: use <code>ratel</code>.</p>
+<pre><code>ratel(4, 9146, 6479) =&gt;  0.0900108081676 (9%)</code></pre>
+<p>Net present value of a series of irregular investments when you could have invested them at 9%: use <code>npv</code>. (Here I’m copying the example for 4 equal payments of $2000.)</p>
+<pre><code>npv(9%, [2000, 2000, 2000, 2000]) =&gt;  6479.43975411</code></pre>
+<p>Rate of interest that would have got you the same final amount as a bunch of irregular payments: use <code>irr</code>.</p>
+<pre><code>[ERROR - Don't know why.]
+Unable to bracket root: (1e-4 .. 199261560.80331)</code></pre>
+<h2 id="useful-links">Useful links</h2>
+<p>http://nullprogram.com/blog/2009/06/23/ - Walks you through useful Calc commands - data formats like hex, complex numbers, HMS; matrix division; plotting graphs with a few keystrokes!; unit conversion.</p>
+<p>https://truongnghiem.wordpress.com/common-calculations-in-emacscalc/ - showed me how to automatically recompute an expression by setting different values to a variable.</p>
 
 <div class="info">Created: August  6, 2015</div>
-<div class="info">Last modified: January 24, 2018</div>
+<div class="info">Last modified: February 17, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, emacs</div>
 

@@ -127,18 +127,31 @@ gpg --export-secret-keys --armor foo@gmail.com</code></pre></div>
 <p>asked me for my passphrase twice.</p>
 <p>Test: However, when I evaluated the code printed by <code>gpg-agent</code>, then it works. It asks me for my passphrase the first time and then works without it the next time.</p>
 <p>You need to do <code>eval</code> because <code>gpg-agent --daemon</code> prints code to export the value of <code>GPG_AGENT_INFO</code>. Source: https://unix.stackexchange.com/a/407849/</p>
-<p>Test: Check if it gets started automatically on bootup.</p>
-<p>Test: Check if you need to add <code>eval $(gpg-agent --daemon)</code> to <code>.xsessionrc</code>. But won’t I be starting gpg-agent twice if gpg starts it too?</p>
-<p>TODO: How to make Emacs know about the agent?</p>
+<p>Test: Check if it gets started automatically on bootup. – It doesn’t.</p>
+<p>Test: Check if you need to add <code>eval $(gpg-agent --daemon)</code> to <code>.xsessionrc</code>. But won’t I be starting gpg-agent twice if gpg starts it too? – Seems to work fine for now.</p>
+<p>Test: How to make Emacs know about the agent? Even when gpg-agent worked in the terminal, Emacs still kept asking me for a passphrase. I’m guessing it’s because it doesn’t know about the agent since I started it before the agent set its environment variables. – Update: It worked without trouble once I changed my <code>.xsessionrc</code>.</p>
+<p>Test: Emacs - if I type in the password from within Emacs, then it asks me again when I open a new file. But if I type in the password outside, it doesn’t ask me again. [Not true. It didn’t ask me again now when I closed and opened a gpg file. Maybe it’s because the agent timed out last time?]</p>
+<p>Test: Continued – it’s been 6 hours since I typed in the password and now I have to type it again. Probably a time-out.</p>
 <h1 id="json-to-csv">JSON to CSV</h1>
 <p>Use <code>jq</code> (h/t http://bigdatums.net/2017/09/30/convert-json-to-csv-with-jq/):</p>
 <div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span class="kw">echo</span> <span class="st">'{&quot;key1&quot;:&quot;val1&quot;, &quot;myarray&quot;:[&quot;abc&quot;, &quot;def&quot;, &quot;ghi&quot;]}'</span> <span class="kw">|</span> jq <span class="st">'[.key1, .myarray[0], .myarray[1]] | @csv'</span></code></pre></div>
 <p>To process an array of objects:</p>
 <div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span class="co"># The quotes are necessary, AFAICS.</span>
 <span class="kw">echo</span> <span class="st">'[{&quot;yo&quot;: {&quot;boyz&quot;: 1}, &quot;foo&quot;: 3}, {&quot;yo&quot;: {&quot;boyz&quot;: 2}, &quot;foo&quot;: 4}]'</span> <span class="kw">|</span> jq -r <span class="st">'.[] | [.yo.boyz, .foo] | @csv'</span></code></pre></div>
+<h1 id="firefox">Firefox</h1>
+<p>“To play audio, you may need to install the required PulseAudio software” error sometimes when I play videos (after upgrading to FF58).</p>
+<p>Fix: Run <code>start-pulseaudio-x11</code> when starting your X session.</p>
+<h1 id="bash">Bash</h1>
+<p>Command without spaces:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">	<span class="dt">{cat,foo.txt}</span><span class="kw">|head</span>
+	<span class="kw">cat</span><span class="ot">${IFS%</span>?<span class="ot">}</span>foo.txt</code></pre></div>
+<h1 id="change-time-zone-from-the-command-line">Change Time Zone from the Command-line</h1>
+<blockquote>
+<p>$ sudo dpkg-reconfigure tzdata</p>
+</blockquote>
 
 <div class="info">Created: August 19, 2015</div>
-<div class="info">Last modified: January 25, 2018</div>
+<div class="info">Last modified: May 13, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes</div>
 

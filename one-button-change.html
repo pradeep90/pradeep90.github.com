@@ -47,14 +47,14 @@
 
             <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
 
-<h1 id="one-change-at-a-time">One Change at a Time</h1>
+<h1 id="one-change-at-a-time">One Change at a Time (??)</h1>
 <p>Hypothesis: We get evidence about our program by running it on some input or by type-checking it.</p>
 <p>Hypothesis: We can process evidence about one variable at a time. Beyond that, we get confused.</p>
 <p>(Yes, we can get lucky with multiple changes, but that won’t pay off on average.)</p>
 <p><strong>Hypothesis</strong>: One key factor in programming efficiently - aka processing evidence about our program - is to make one high-level change at a time before you get evidence.</p>
 <p>This means that you should be able to choose between your two design choices, say process scheduler A and process scheduler B with just one small change. No changing variable assignments in three different places, not hasty commenting of 15 lines of code, no tweaking of multiple configuration files - just one button press.</p>
 <p>(Why would this weird condition help write programs faster? We’ll see.)</p>
-<h1 id="how-to-program-with-one-button-changes">How to Program with One-Button Changes</h1>
+<h1 id="how-to-program-with-one-button-changes">How to Program with One-Button Changes (??)</h1>
 <p>How will this affect the way you code?</p>
 <p>For one, you can’t change multiple lines of code within some other function. Because then, if you wanted to roll back those changes, you would have to edit multiple lines.</p>
 <p><strong>Corollary</strong>: Any change you make must be encapsulated within a new function before you run the program.</p>
@@ -893,6 +893,67 @@ foo (x<span class="fu">:</span>xs) <span class="fu">=</span> <span class="dv">1<
 <hr />
 <p>Test: Maximum segment sum – we can see how to compose the individual functions to do what we want.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">mss <span class="fu">=</span> maximum <span class="fu">.</span> scanr (<span class="fu">@</span>) <span class="dv">0</span>, <span class="kw">where</span> x <span class="fu">@</span> y <span class="fu">=</span> <span class="dv">0</span> <span class="ot">`max`</span> (x <span class="fu">+</span> y)</code></pre></div>
+<h2 id="acceptance-tests-get-an-algorithm-for-it">Acceptance Tests: Get an Algorithm for it</h2>
+<p>(Notes from Continuous Delivery, chapter 8)</p>
+<p><strong>Concept</strong>: Acceptance test = “verify that the acceptance criteria have been met”.</p>
+<p><strong>Concept</strong>: Functional acceptance criteria = input-output behaviour of a program.</p>
+<p><strong>Concept</strong>: Non-functional acceptance criteria = “capacity, performance, modifiability, availability, security, usability, and so forth”.</p>
+<p>Hypothesis: Acceptance tests pass -&gt; you do what the customer wants (and has specified); have not regressed.</p>
+<p>Hypothesis: Acceptance tests -&gt; less costly to create and maintain than frequent manual acceptance testing and regression testing and less costly than releasing poor-quality software.</p>
+<p>Hypothesis: Acceptance tests -&gt; catch serious problems that unit or component test suites could never catch.</p>
+<p><strong>Hypothesis</strong>: Want to know when to use acceptance tests or want to design a new method of testing or want to convince others - need to learn all the reasons why you should use acceptance tests.</p>
+<p>Simply want to use acceptance tests - need to learn how to use acceptance tests.</p>
+<p>Basically, learning all the reasoning behind acceptance tests does nothing for passing your one acceptance test, which is to write good acceptance tests for your projects.</p>
+<p><strong>Corollary</strong>: What I want is an algorithm, not a causal model.</p>
+<hr />
+<p>Test: 25 sentences per page x 30 pages per chapter = 750 sentences per chapter. If we assume that one sentence corresponds to one branch of a causal model, that’s 750 branches.</p>
+<p>Test: First, he gave the high-level reason why acceptance tests are worth implementing. Then, he dived into the detailed reasons.</p>
+<p>Test: No negative exemplar for acceptance tests.</p>
+<p>Test: Manual acceptance testing - if it is not done every time it is released, defects will be released.</p>
+<p>Test: Manual acceptance testing - if it is done every time it is released, defects will not be released.</p>
+<p>Test: Manual acceptance testing is costly (positive exemplar - $3mn per release).</p>
+<p>Test: Release is costly -&gt; can’t release frequently.</p>
+<p>Test: Manual acceptance testing - needs to be performed after dev-complete and as a release is approaching.</p>
+<p>Test: Time between dev-complete and a release is a time when teams are under extreme pressure to get software out of the door.</p>
+<p><strong>Test</strong>: Implement your test in the domain language; otherwise it will be brittle. A change in the UI would break many of your tests.</p>
+<p>Test: Ideally, we should test using the user interface of the system; otherwise, we’re not using the same code paths as the users.</p>
+<h2 id="acceptance-test-format-test-your-mental-model">Acceptance test format: Test your Mental Model</h2>
+<p><strong>Hypothesis</strong>: If it’s a technique or concept, test your mental model on a real-world problem (that tests only one or two more features than before).</p>
+<p>If it’s a project, examine it with a reader’s eye.</p>
+<p>If it’s a habit, check that your rate of action isn’t regressing.</p>
+<hr />
+<p>Test: [2018-03-08 Thu] Currently, my acceptance tests just lie there inertly, all 260 of them, without me doing the slightest bit to run them. – takes too long to run them all.</p>
+<p>Test:</p>
+<blockquote>
+<p><strong>Acceptance test</strong>: Behaviour - watching YouTube videos when I’m tired.</p>
+<p>Given that I don’t “feel” like working (or it has not been reinforced)</p>
+<p>when I feel like spending time on YouTube</p>
+<p>then I will review flashcards instead.</p>
+</blockquote>
+<p>Explanation: How will I know if I have passed that test? Many hypotheses are hand to falsify; this one is hard to confirm (and yes, getting a hypothesis up to 99% posterior probability is enough to call it “confirmed”). [go by rate of videos instead]</p>
+<p>Test:</p>
+<blockquote>
+<p><strong>Acceptance test</strong>: Algebra of programming - greedy algorithm.</p>
+<p>Given the shortest path problem</p>
+<p>when I try to use algebra to get the answer</p>
+<p>then I should get Dijkstra’s.</p>
+</blockquote>
+<p>Explanation: This one’s just too hard.</p>
+<p>Test:</p>
+<blockquote>
+<p><strong>Acceptance test</strong>: TA recitation 1 - content.</p>
+<p>When I look at the presentation</p>
+<p>then I must have an overall structure.</p>
+<p>When I look at each point in my slides</p>
+<p>then I must have a real-world example.</p>
+<p>When I think of noise in data vs outlier</p>
+<p>then I must have an answer.</p>
+</blockquote>
+<p>Explanation: This one takes a really long time to run. I have to go over the whole presentation each time I change it. [go over your final presentation with a reader’s eye]</p>
+<p>Test: [2018-03-08 Thu] Currently, my tests are too hard, take too long to run, or are ambiguous. – bad.</p>
+<p>Test: My Python tests for softsec, on the other hand, were easy to pass, quick, and unambiguous. – better.</p>
+<p>Test: Real-world problem to test my technique on - solve problems from past assignments or the textbook exercises – good test of your mental model.</p>
+<p>Test: Only slightly harder (add just one feature) - have learned what min-cut means (but not Dinic’s algorithm) - so test yourself on a minute-cut problem – just one new feature.</p>
 <h2 id="separate-tested-and-untested-prose">Separate Tested and Untested Prose</h2>
 <p>TODO: Refactor above prose on tests to show all of their effects in one place (like no overlapping hypotheses, short cycle time, etc.)</p>
 <p><strong>Hypothesis</strong>: Have lots of untested prose -&gt; no tests or type signatures; not refactored into small functions -&gt; hard to find existing functions for your use case -&gt; hypotheses may overlap; hard to use or reuse; hard to change.</p>
@@ -1352,7 +1413,7 @@ QuickCheck property</code></pre>
 <p><strong>Acceptance test</strong>: Grammar for problem statement of programming problem.</p>
 <h2 id="programming-algorithm">Programming Algorithm</h2>
 <p><strong>Hypothesis</strong>:</p>
-<p>Get a “representative” integration test from the problem statement with input and output at every step. <a href="#fully-specified-representative-test">fully-specified representative test</a></p>
+<p>Get a “representative” integration test from the problem statement with input and output at every step. [fully-specified representative test]</p>
 <p>Follow the values step-by-step to get a high-level design along with type signatures (by looking at what values the output depends on). [follow the values]</p>
 <p>Start on top of a working hello-world program. [hello-world]</p>
 <p>Set up and pass the integration test with stubs. [stubs]</p>
@@ -1362,7 +1423,7 @@ QuickCheck property</code></pre>
 <p>Add unit tests for each of the functions. [unit tests] Then refactor. [refactoring hat]</p>
 <p>If you need to use some technique, look it up in a Haskell integration test. [look it up in integration test]</p>
 <p>If you get a failing test or compilation error, narrow down the causes. [narrow down the causes by backward inference on top of the last working version - look at the diff]</p>
-<h2 id="look-at-the-input-configurations">Look at the Input Configurations</h2>
+<h2 id="look-at-the-input-configurations-todo---flashcards">Look at the Input Configurations (TODO - flashcards)</h2>
 <p><strong>Hypothesis</strong>: pure function, know all possible input configurations for which the output is different -&gt; know test cases; clear how to proceed.</p>
 <p>pure function, don’t know all possible input configurations for which the output is different -&gt; don’t know all test cases; not clear how to proceed.</p>
 <p>impure function, know exactly where it will be called and what you expect (thus, know all possible input configurations for which the output is different) -&gt; know test cases; clear how to proceed.</p>
@@ -1422,6 +1483,8 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p><strong>Hypothesis</strong>: adding a new feature, one long chain of function calls -&gt; will pass the test case (one branch), very little time, will not overengineer. Refactor -&gt; easier to test going forward -&gt; quick. h/t Kent Beck.</p>
 <p>adding a new feature, abstract code (using separate functions or classes) -&gt; will pass the test case (one branch), will take more time because you’re changing the design too, may overengineer. Debugging -&gt; slow.</p>
 <p>adding a new feature, optimized code (low-memory quick functions or detailed, convincing examples) -&gt; will pass the test case (one branch), will take more time because you’re changing the design at the same time you’re making it faster; may overengineer. Debugging -&gt; slow.</p>
+<p>Tests that already pass, ugly code, refactor -&gt; really quick.</p>
+<hr />
 <p><strong>Test</strong>: [2017-11-05 Sun] Tried to write quick and dirty code to pass one simple unit test. Nearly got a heart attack in the process. Here it is:</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> batsman_total(match, player):
 	d <span class="op">=</span> match.match_details[<span class="st">'innings'</span>][<span class="st">'1st innings'</span>][<span class="st">'deliveries'</span>]
@@ -1437,6 +1500,51 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Test: Spent the last one hour coming up with a crystal-clear model that would show how <span class="math inline">\(U_Z\)</span> and Y are related even though that’s not the point of my proof. Dammit. – I was trying to abstract? Was I? I was trying to optimize for a <strong>great</strong> proof - one that would convince any snotty critics. But I didn’t really need that. This isn’t my final draft; this is just a proof of concept.</p>
 <p><strong>Test</strong>: Others seem to finish assignments sooner than me. Is it because they’re writing different code than me or because they’re writing the same code faster?</p>
 <p>Test: OS HW3 - I’m taking a long time to pass each test. Is it some essential difficulty of the problem (with respect to my current skill) or am I just being slow somehow?</p>
+<p>Test: Refactoring is really cheap! - it’s taking me a matter of 2-4 minutes to extract functions from what looked like irredeemably-tangled code (that actually passed the tests). – huh. One thing at a time.</p>
+<h3 id="what-the-really-fast-coders-do-run-the-program-in-your-mind">What the Really Fast Coders Do: Run the Program in your Mind</h3>
+<p>Hypothesis: Fast coders -&gt; get feedback sparingly.</p>
+<p><strong>Hypothesis</strong>: Focus-gamble - try more than one thing at a time.</p>
+<p><strong>Hypothesis</strong>: Me and people who do TDD - we’re getting <strong>dependent</strong> on fine-grained feedback. Right now, I’m running tests after every couple of lines or so. I feel like I don’t know what would happen otherwise. But I’m missing out on the feedback that I would get by simply looking at the code without running it. Maybe that’s faster. That’s probably how fast coders do it.</p>
+<p>When you run tests every few minutes, you don’t think about how your code works. You don’t <strong>have</strong> to, and that can save you time and prevent bugs. But you’re probably losing the skill of analyzing code without running it.</p>
+<p>You don’t need to test each new library call separately. That’s wasted feedback. Once you know the general interface of that library call, you should be ready to use it.</p>
+<p><strong>Hypothesis</strong>: Fast coders, 20 lines of code -&gt; can predict the output without running it.</p>
+<p>People who have gotten used to running unit tests continuously, 20 lines of code -&gt; can’t predict the output; have to run it.</p>
+<p>Corollary: If that is true, then people who run the code frequently like that would get overwhelmed pretty easily by moderately large code. They would go around looking for understandable <strong>outputs</strong> instead of trying to understand the <strong>code</strong> itself.</p>
+<p><strong>Corollary</strong>: Basically, get feedback from your mental model instead of waiting for feedback from the mechanism itself.</p>
+<p><strong>Hypothesis</strong>: Depend on feedback from others or from tests -&gt; don’t build a full model of the code in your head -&gt; feel that there are some missing magical pieces that only others have.</p>
+<p>Don’t depend on feedback from others -&gt; build a full model of the code in your head -&gt; feel that there are no missing magical pieces, that it is mundane and solvable.</p>
+<p>Remember, mysterious explanations are formed when you ignore some external factors and start postulating some hidden causes.</p>
+<p><strong>Hypothesis</strong>: Dependent on feedback from the computer, write “complicated” code -&gt; feel the urge to test each part of it in isolation because anything could go wrong.</p>
+<p>Dependent on feedback from other people (like TAs), work on a tough problem -&gt; feel the urge to get feedback about each part of your work because anything could go wrong.</p>
+<p>Not dependent on external feedback, write “complicated” code -&gt; don’t feel the urge to test each part of it; wait till you write a reasonable amount of code and then test it.</p>
+<hr />
+<p>Test: Saw a guy write a simple JS snake game in 4m30s. He had obviously done this several times before. But the main thing was that he didn’t run the code even once. – He got no feedback.</p>
+<p>Test: New library - wasn’t able to follow the code at first go - kept looking for an understandable output of some function – kind of lost the habit of understanding code itself.</p>
+<p>Test: Wanted to add my multiple-command exploit to the project - delayed because I was afraid I wouldn’t be able to integrate it correctly – All I had to do was read the code and build a half-decent model of it.</p>
+<p>Test: Negative exemplar - interview answer - have to judge it by myself. Was pretty surprised at how far I was able to get when I <strong>actually</strong> walked through each line of my function with a trivial input. – your mental model can give you a <strong>lot</strong> of feedback.</p>
+<p><strong>Test</strong>: Wanted to replace each string in a one-liner with its minified counterpart. Wrote this in the Emacs Lisp minibuffer:</p>
+<pre class="elisp"><code>(r-evil-map (region-beginning) (region-end) (lambda (line) (s-replace-all '((&quot;before_string&quot; . &quot;bs&quot;) (&quot;ebp_minus_4&quot; . &quot;m4&quot;) (&quot;ebp_value&quot; . &quot;ev&quot;) (&quot;ebp_plus_4&quot; . &quot;p4&quot;) (&quot;after_ebp&quot; . &quot;ae&quot;) (&quot;main_address&quot; . &quot;ma&quot;)) line)))</code></pre>
+<p>(I wanted to minify the Python one-liner since it was getting too long to run on the remote computer, if you want to know the purpose. Don’t think you can write a loop in a Python one-liner. Sucks.)</p>
+<p>I immediately felt the urge to run <code>r-evil-map</code> on a simple line to make sure it worked the way I thought it did (urge #1). Then, when I added the lambda, I felt the urge to test whether it could handle just one single string (urge #2). When I made myself keep going, I felt like I had to test whether the strings would overlap with each other somehow and mangle the result (urge #3). Finally, I felt like transforming my Python one-liner and running it locally to make sure that it still worked like before. (urge #4. I gave in here and tested it locally.)</p>
+<p>Explanation: When I ultimately transformed the one-liner I was using on the remote computer, it worked instantly! I didn’t have to give into any of the above four urges for feedback.</p>
+<p><strong>Test</strong>: Every time I think of asking for the TA for help, I feel like there’s some mysterious essence of the problem that I simply cannot grasp and that he can help me with. But the last few times, when I’ve stopped myself from posting a message and instead tried to solve my problem myself, I found that the answer turned out to be pretty mundane (as it always is).</p>
+<p>I had to use a different <code>$ebp</code> address on the remote server or brute-force different offsets to figure out where it might be or use Python wrapper for libc to generate random numbers the way C does or use a different shell code. It’s usually a problem that I <strong>can</strong> solve. But notice how easily I impute a mysterious solution to the problem.</p>
+<p>(Yes, sometimes the TA does hold a missing piece that I couldn’t have known by myself, such as the fact that you have to use <code>env - $(pwd)/a.out</code> to clear the environment and get a better idea of the stack addresses or that <code>%n</code> writes to the address pointed to by the location on the stack, not to the location itself (even though I could figure this out in theory). But those are pretty rare, I think.)</p>
+<p>Explanation: In short, I ignore certain external factors that I could have easily accounted for and instead postulate some mysterious missing piece that only people with the true vision know.</p>
+<p>Test: Positive exemplar - turnaround - did it all by myself. – I know it inside out.</p>
+<p>Test: Negative exemplar - bof - still not 100% sure – asked for a lot for help.</p>
+<h3 id="math-get-answers-without-getting-empirical-feedback">Math: Get Answers without Getting Empirical Feedback</h3>
+<p><strong>Hypothesis</strong>: Math is how you get answers without getting empirical feedback.</p>
+<p><strong>Hypothesis</strong>: Holy crap. Is this our surrogate endpoint? Is this how we get answers without running costly real-world trials?</p>
+<hr />
+<p>Test: Decision tree - reduced error pruning - what if you go top-down and decide whether to split at a node based on the validation set? – either run the experiment or use your logic.</p>
+<p>Test: Negative exemplar - empiricists like Newton and others would probably prefer to run the experiments, especially if they are cheap. – depend on feedback.</p>
+<p>Test: Is my surrogate endpoints theorem right? Have to judge based on the math proof. – need to use math.</p>
+<p>Test: Will the Haskell program work? – can reason equationally.</p>
+<p>Test: Will my change to my Python data mining script work? Can’t wait five hours for the script to finish all the processing, reach that step, and crash. Would like to know right now. – have to reason using logic.</p>
+<p>Test: “Armchair” economics - produce answers to real-world questions using economic models instead of actual reality. For example, Tim Harford predicted that most of the coffee shop profits would go to the landlords because what was scarce was their corner store location, not the coffee. – reason.</p>
+<p><strong>Test</strong>: Algorithms - cycle property - the costliest edge in a cycle can never be part of an MST. – logic.</p>
+<p><strong>Test</strong>: Algorithms - cut property - the cheapest edge in a cutset is part of the MST. – logic.</p>
 <h2 id="high-level-design-needs-an-integration-test-maybe-with-mocking">High-level Design needs an Integration Test (maybe with Mocking)</h2>
 <p><strong>Corollary</strong>: Have integration test with expected output (maybe mocking out each lower-level function for the particular test input), get high-level design -&gt; low uncertainty.</p>
 <p>Don’t have integration test, get high-level design -&gt; high uncertainty.</p>
@@ -1468,7 +1576,7 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Explanation: Didn’t have the output value for the unfamiliar function call “least solutions coincide” and couldn’t see a concrete example showing me the output value.</p>
 <p>Test: Follow the values to decouple - paging - when switching processes, you need to have different page directories and page tables; when accessing a virtual memory address, you need to have a page fault handler that can get a new frame for that page (and possibly its page table); when replacing a page, you need to have a free frame list with FIFO information and a backing store that has the data for the incoming page and can store data for the evicted page. – know the causes of paging during process-switching, page-fault handling, and page replacement.</p>
 <p>Test: How to create a one-to-one mapping (and more importantly, how to get <code>P(y = 0 | z = 0)</code> from <code>y = fy(z, uy)</code>) - test on Shpitser’s paper - got it. – technique: one-to-one mapping; known working example: Shpitser’s paper; clear feedback - what his proof said (as opposed to my vague incomplete attempts).</p>
-<h3 id="minimum-interface-try-alternative-values-and-abstract">Minimum Interface: Try Alternative Values and Abstract</h3>
+<h3 id="minimum-interface-try-alternative-values-and-abstract">Minimum Interface: Try Alternative Values and Abstract (??)</h3>
 <p><strong>Hypothesis</strong>: Follow the values, try alternative values (toggle it), no change -&gt; abstract that value; reuse known functions.</p>
 <hr />
 <p>Test: Want to convert roman numerals to decimals. Use Parser. – I broke down the concrete problem of reading a roman number to the known technique of parsing.</p>
@@ -1492,7 +1600,7 @@ nextPStates ts' (_, ts) <span class="fu">=</span> map (fmap (<span class="fu">:<
 <p>Test: Contrast that to my current code (which isn’t beautiful or anything) TODO</p>
 <p>Test: Reading Applied Behavioural Analysis - constantly got stopped in my tracks by the definitions they kept laying out - “respondent conditioning”, “modeling”, and other things. I didn’t <strong>know</strong> what those labels referred to and I had to struggle to figure it out. – can’t move forward without knowing those terms; hard to follow. Have to keep looking up the definitions.</p>
 <p>Test: Category theory book or Bird book - full of unknown types like “initial object”, “group”, “product”, “coproduct”, “functional refinement”, “catamorphism”, etc. – can’t move forward unless you know; have to keep looking up the definition.</p>
-<h3 id="types-prevent-you-from-following-values">Types prevent you from Following Values</h3>
+<h3 id="types-prevent-you-from-following-values">Types prevent you from Following Values (??)</h3>
 <p><strong>Hypothesis</strong>: Types -&gt; stop you from following values and thus stop you from inducing the types and mechanisms of different parts.</p>
 <hr />
 <p>Test: Trying to apply the “fusion law” for folds to a practical problem. Not able to get through because of the maddeningly-similar <code>fold</code> and <code>listFold</code>. They have the types <code>fold :: (a -&gt; b -&gt; b, b) -&gt; [a] -&gt; b</code> and <code>listFold :: LAlg a b -&gt; ListF a b -&gt; b</code>.</p>
@@ -1520,11 +1628,28 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <p>Not yet a concrete example, though.</p>
 <p>Let’s try it with the ascending lists example.</p>
 <p>Explanation: Could see what was happening to each element of the list being folded.</p>
-<h2 id="dont-debug-fall-back-to-a-positive-exemplar">Don’t Debug: Fall back to a Positive Exemplar</h2>
+<h3 id="follow-the-values-in-the-final-program-induce-program-design-principles">Follow the Values in the Final Program: Induce Program Design Principles (??)</h3>
+<p><strong>Hypothesis</strong>: Follow the values in the representative test, follow the values in the final program, induce -&gt; model for representative test to high-level design.</p>
+<p>Corollary: Get model for representative test to high-level design -&gt; store that technique on that concrete cue.</p>
+<hr />
+<p>Test: Paging - could see that page faults needed to go through the page fault handler, look up stuff in the page directory and page table, evict a page, and so on. Those concepts remained in the final program too. – So, I could have designed the system like that right from the beginning.</p>
+<h2 id="abstract-from-concrete-representative-exemplars">Abstract from Concrete Representative Exemplars</h2>
+<p><strong>Hypothesis</strong>: Start with a concrete example -&gt; know it will work; can abstract quickly.</p>
+<p>Start with an abstract function -&gt; don’t know if it will work; slow.</p>
+<hr />
+<p>Test: Elisp function to compile and run this C/C++ file. – Took me 10 minutes. Writing the function itself took only 5 minutes or so. Binding the key took up the rest of the time. Helped to abstract my way to the ideal function. First, I simply ran “g++ popen-try.cpp &amp;&amp; ./a.out” by hand. That worked. Then, I wrote a simple function that did that. Worked. Then, I abstracted that function to work with arbitrary file names (and use the buffer file name if there was no argument). Worked like a charm. When the keybinding was giving me some trouble, I reverted to a simple non-Evil keybinding that worked, then tried an Evil keybinding that worked, and finally used my desired key.</p>
+<h2 id="minimum-interface-gives-you-a-small-diff">Minimum Interface gives you a Small Diff</h2>
+<p><strong>Hypothesis</strong>: Don’t think of the interface of each part -&gt; feel that you have to do a lot of things at once (large diff) -&gt; overwhelmed.</p>
+<p>Think of the interface of each part -&gt; few things at a time (small diff) -&gt; can do it.</p>
+<p><strong>Corollary</strong>: Have a detailed end-to-end acceptance test -&gt; can induce the interface of the different parts from it.</p>
+<hr />
+<p>Test: Struggled to write the get and put functions. Why? Got intimidated because I didn’t think of the interface for each part. In short, I didn’t use locality of causality. – I thought it had to be some big feature to be implemented all at once. It seemed like I had to implement a large diff before I could get any feedback.</p>
+<p><strong>Test</strong>: Acceptance test for the get command (wow, I didn’t think even once about the actual flow of data) - they enter “get foo.txt” - you send that to the server - it checks the file, creates a new port, and sends it to you “get port: 13355 size: 205” - you then connect to that port and receive the contents and test whether you’ve got 205 bytes. You close the port (as far as this test is concerned). The end. – how fucking <strong>clear</strong> was that?!</p>
+<h2 id="dont-debug-fall-back-to-a-positive-exemplar-duplicate">Don’t Debug: Fall back to a Positive Exemplar (duplicate)</h2>
 <p><strong>Hypothesis</strong>: Test passes -&gt; positive exemplar (hopefully with all necessary causes).</p>
 <p>Test fails, create a smaller exemplar that is positive and extend it to the larger exemplar -&gt; know what works (necessary causes) and what doesn’t; faster.</p>
 <p>Test fails, debug by toggling here and there -&gt; don’t know what works (necessary causes) and what doesn’t; slow.</p>
-<h2 id="refactoring-write-direct-tests-before-you-refactor">Refactoring: Write Direct Tests before you Refactor</h2>
+<h2 id="refactoring-write-direct-tests-before-you-refactor---lower-cycle-time">Refactoring: Write Direct Tests before you Refactor (- lower cycle time)</h2>
 <p><strong>Hypothesis</strong>: Don’t have direct tests, refactor -&gt; may break the code; hard to debug.</p>
 <p>Don’t have tests, refactor -&gt; reasonably confident; easy to debug (narrow causes).</p>
 <hr />
@@ -1549,7 +1674,7 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <span class="ot">combineToken ::</span> <span class="dt">Token</span> <span class="ot">-&gt;</span> [<span class="dt">Phrase</span>] <span class="ot">-&gt;</span> [<span class="dt">Phrase</span>]</code></pre></div>
 <p>See how much cleaner that is! And, of course, I would make the types abstract (for example, <code>allSplits</code> doesn’t need to know if the argument is a <code>PhoneNumber</code> or anything; it can work on a simple list).</p>
 <p>You can follow the computation from the types. The only way to get a <code>[Phrase]</code> is through <code>combineToken</code>, which needs a <code>Token</code>. We get that from <code>encodeToken</code>, which in turn takes inputs from <code>allSplits</code>. – They compose well with each other.</p>
-<h2 id="deployment-pipeline-flesh-out-the-integration-test">Deployment Pipeline: Flesh out the Integration Test</h2>
+<h2 id="deployment-pipeline-flesh-out-the-integration-test-duplicate">Deployment Pipeline: Flesh out the Integration Test (?? duplicate)</h2>
 <p><strong>Hypothesis</strong>: Deployment pipeline for hypotheses or programs = add a high-level integration test with function calls mocked out so that it all flows; fill out mocked-out functions using inputs and outputs from the integration test; release by running integration tests + unit tests; you’re done passing that integration test when you no longer have any mocks in the integration test -&gt; decoupled high-level design by following the values; isolated implementation for the inner functions by using real-world tests; working product at every point as certified by the integration test; frequent releases by implementing inner functions quickly and running the integration test + unit tests;</p>
 <p>don’t have high-level integration test; add functions without an overarching test -&gt; may commit to poor design; isolated implementation for functions; won’t have a working product for a while since there are no integration tests passed; infrequent high-level releases.</p>
 <p><strong>Corollary</strong>: Deploy using integration test -&gt; no duplicate or overlapping hypotheses because you can only implement something that has been mocked out in the integration test.</p>
@@ -1571,7 +1696,7 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <p>– JWZ, Coders at Work</p>
 </blockquote>
 <p>Test: CS373 HW1 - Note how much time I’m spending just <strong>wrestling</strong> with R and CSV. I haven’t done any actual work yet. – Need to release a hello world before you do anything else. Here, it would have been a simple installation of R itself, then reading CSV in R, CSV with arrays, converting JSON to CSV, and then other stuff. All because I didn’t release sooner.</p>
-<h2 id="short-cycle-time---integration-tests">Short Cycle Time &lt;- Integration Tests</h2>
+<h2 id="short-cycle-time---integration-tests-duplicate">Short Cycle Time &lt;- Integration Tests (duplicate)</h2>
 <p><strong>Corollary</strong>: Have detailed integration tests -&gt; short cycle time, especially if you consider fleshing out a function to be progress.</p>
 <p>Don’t have integration tests -&gt; long cycle time.</p>
 <hr />
@@ -1591,7 +1716,7 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <p>Test: C pointer details - hard to remember the abstract knowledge about <code>p + i</code> and <code>(void *) p</code> and <code>(struct foo *) p</code> and so on. Easier to remember a test I ran on all these examples, from where I can easily get the answers I want. – done.</p>
 <p>Test: New scenario - Milo against Avada Kedavra - none of his usual spells worked; use the <a href="https://www.fanfiction.net/s/8096183/25/Harry-Potter-and-the-Natural-20">Skeletal Troll</a>. – he probably searched the rule book for something like this. He could then use it against anyone who cast the killing spell against him.</p>
 <p>Test: YBAW - overwhelmed by a project plan - use a story board to represent a few big ideas. – it’s not a full story, just a sketch.</p>
-<h2 id="spec-or-integration-test-quick-feedback-about-high-level-design">Spec or Integration Test: Quick Feedback about High-level Design</h2>
+<h2 id="spec-or-integration-test-quick-feedback-about-high-level-design">Spec or Integration Test: Quick Feedback about High-level Design (??)</h2>
 <p><strong>Corollary</strong>: Writing a spec (or better, a prototype) = coming up with integration tests (with feedback from the user).</p>
 <p><strong>Hypothesis</strong>: Spec or integration test, change your high-level design -&gt; can set the input configuration (aka your program) quickly and get feedback from user (who is the mechanism you’re testing).</p>
 <p>Write fully-tested code, change your high-level design -&gt; lot of work to change the input configuration (your program).</p>
@@ -1643,7 +1768,7 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <hr />
 <p>Test: Writing a research report in LaTeX - production-like environment is the LaTeX PDF (not your handwritten sheaf of papers); running acceptance tests - getting feedback from yourself by looking at it from the eye of a reader and from others. – yup.</p>
 <p>Test: Negative exemplar - continuous integration where you simply run unit tests – that is not a production-like environment nor are they acceptance tests.</p>
-<h2 id="committing-partially-working-code-or-partially-correct-ideas">Committing Partially-Working Code or Partially-Correct Ideas</h2>
+<h2 id="committing-partially-working-code-or-partially-correct-ideas">Committing Partially-Working Code or Partially-Correct Ideas (??)</h2>
 <p>Hypothesis: If I commit ideas that I will soon subsume with another idea, then I will have trouble finding them. – Not true. I can always look at the git log and diff.</p>
 <p>But then my repo will no longer satisfy the property that, at any point, every function exists for a purpose - that is, it helps pass an acceptance test that wouldn’t be passed otherwise.</p>
 <p>Won’t it, though? At the previous state in the repo, the acceptance test would be passed thanks to the old idea. After you’ve subsumed the idea, the acceptance test would be passed thanks to your new idea. At no point is there a function that doesn’t pull its weight.</p>
@@ -1657,10 +1782,21 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <p>For example, I’m writing about reductionism and behaviorists and observable consequences and how you should have definitions that make more than one prediction and so on. I know that my final hypothesis will tie up all these loose ends elegantly pretty soon, so I don’t want to commit the rest before that.</p>
 <p><strong>Test</strong>: Tried committing partially-correct ideas - felt unclean, somehow. Didn’t like it at all. Felt like the log message would be misleading for future Pradeep. It would say “advance predictions &lt;- testable definitions”, which isn’t the whole story, especially because of what I’m working on next. – It’s extra work for him. If he had the obsolete ideas lying around uncommitted, he would know exactly what to change instead of having to trawl the essay or revision log. (There might still be other old ideas that could be subsumed, but at least this extra work would be avoided for the given ideas.)</p>
 <h2 id="acceptance-test-talk-only-about-domain-variables">Acceptance Test: Talk only about Domain Variables</h2>
-<p><strong>Hypothesis</strong>: Acceptance test, talk only about domain variables -&gt; simple test; decoupled from implementation details.</p>
-<p>Acceptance test, talk about implementation variables too -&gt; complicated test; coupled to implementation details.</p>
+<p><strong>Hypothesis</strong>: Domain variables -&gt; necessary for all use cases; so start with this.</p>
+<p>Fancy stuff like the type of messaging protocol or the database type -&gt; not necessary for all use cases; do it later.</p>
 <hr />
-<p>Test: Auction sniper example - “Given auction, when I join and don’t bid, then I will lose” - nothing about XMPP or Swing or anything else. – simple test; can change the protocol and such.</p>
+<p>Test: Auction sniper example - “Given auction, when I join and don’t bid, then I will lose” - nothing about XMPP or Swing or anything else. – simple test; can change the protocol and such. Start with the domain stuff.</p>
+<h2 id="compare-with-the-past-our-acceptance-tests-are-implicit">Compare with the Past: Our Acceptance Tests are Implicit</h2>
+<p><strong>Hypothesis</strong>: Humans don’t carry around an explicit checklist of features they want to have in their next project. They simply compare it to the set of features they have seen in a successful project (and not seen in failed projects).</p>
+<p><strong>Corollary</strong>: Types of acceptance tests - compare with a similar past project to make sure you have all its features; compare with a similar failed project to make sure you don’t repeat your mistakes.</p>
+<p><strong>Corollary</strong>: So the similar projects we have <em>are</em> our acceptance tests.</p>
+<hr />
+<p><strong>Test</strong>: Designing a homework assignment - given previous assignment and current assignment, when you compare each part of their structure (like the submission instructions, the dataset details, the heading, points adding up to 100, examples of the intended output, specifying whether you want the code or just the answers in the PDF, etc.), then you should have covered everything they did – your assignment should have all the features the previous one did.</p>
+<p><strong>Test</strong>: Writing a programming project - given that I sucked at the first OS homework and didn’t have any unit tests, when I check my second OS homework, then I should have (something resembling) unit tests for my functions. – don’t repeat your mistakes.</p>
+<p><strong>Test</strong>: Algos midterm 2 - given that I blew some stupid questions in the first one and ran out of time, when I prepare for the second one, then I must clarify simple concepts (and perhaps add them to my cheat sheet) and hurry up in the exam – don’t repeat your mistakes.</p>
+<p>Test: Classmate uses an automation tool that I didn’t know about and that starts, interacts with, and stops the OS on a remote computer without any human interaction - given that I am working on an OS project or some other project that requires manually entering commands, when I look at what I’m doing, then I should be using that automation tool – learn from others’ successes.</p>
+<p>Test: Preparing for my midterm - looked at past midterm notes to know how I’d done it – acceptance test.</p>
+<p><strong>Test</strong>: Forgot that this chilli powder is extra hot and that I should use less of it – forgotten acceptance test.</p>
 <h2 id="acceptance-test-clear-focus-on-what-matters">Acceptance Test: Clear Focus on What Matters</h2>
 <p><strong>Hypothesis</strong>: Failing acceptance test -&gt; you know exactly what needs to be done; you know it matters; need to remember only your current failing acceptance tests.</p>
 <p>No failing acceptance test, write unit tests or just implement code -&gt; you don’t know exactly what <strong>needs</strong> to be done; you don’t know if it matters; have to remember a lot of TODOs.</p>
@@ -1672,6 +1808,15 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <p>Test: Scheduler OS HW1 - no failing acceptance test (no real tests at all, in fact) – didn’t know if I was working on the right thing; didn’t know exactly what to do next (?). Had to remember a lot of to-do items in my Org file.</p>
 <p>Test: Want to write a to-do item for “handle multiple processes accessing the same virtual memory address” – instead, just add a failing acceptance test and set it aside. Don’t need to keep track of lots of to-do items.</p>
 <p>Test: Unsure what to work on right now - take up a failing acceptance test - such as “how to refactor ideas from different essays I’ve written”. – know exactly what to do.</p>
+<h2 id="what-to-do-next-unfinished">What to do Next? (?? Unfinished)</h2>
+<p><strong>Hypothesis</strong>: Have a dynamically updated list of acceptance tests, choose something that is easy to do -&gt; can find out what to do next.</p>
+<hr />
+<p><strong>Acceptance test</strong>: What to do next?</p>
+<p>Given that I have a bunch of acceptance tests, some of them failing and some of them already passed</p>
+<p>when I look for something to do next</p>
+<p>then I must be able to find it quickly</p>
+<p>when I pick a next action [get techniques from HW1]</p>
+<p>then it shouldn’t be a risky decision. If I get it wrong, I should be able to get quick feedback and change within an hour or so. [used ESS to reduce my cycle time.]</p>
 <h2 id="acceptance-tests-vs-unit-tests-done-when-acceptance-tests-pass">Acceptance Tests vs Unit Tests: Done when Acceptance Tests Pass</h2>
 <p>Hypothesis: Can write “working product” without writing or passing all unit tests -&gt; may go faster without them.</p>
 <p>Can’t write “working product” without passing all acceptance tests (even if implicitly) -&gt; may go faster by writing them explicitly.</p>
@@ -1685,7 +1830,7 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <p>– <a href="https://gigamonkeys.wordpress.com/2009/10/05/coders-unit-testing/"></a></p>
 </blockquote>
 <p>Explanation: Can write what matters without writing or passing all unit tests.</p>
-<h2 id="acceptance-test-go-from-end-to-end">Acceptance Test: Go from End to End</h2>
+<h2 id="acceptance-test-go-from-end-to-end-no-negative-exemplar">Acceptance Test: Go from End to End (?? no negative exemplar)</h2>
 <p>Hypothesis: Acceptance test - must go from end to end, not merely test some intermediate state -&gt; fewer overall tests, more likely to cover highly-likely money-making paths, no unused paths.</p>
 <hr />
 <p>Test: “Journey test” - Jez Humble - shopping website - login, add 3 items to cart, checkout, add delivery address, pay, logout – highly likely path; one that actually makes the money; not unused.</p>
@@ -1707,15 +1852,33 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <pre><code>Miss Piggy, poking at the keyboard with a eyeliner stick because her chubby little fingers are too fat to press individual keys, types Ctrl+N to create a new Boyfriend table and types in the single record &quot;Kermit.&quot;</code></pre>
 <p>– <a href="https://www.joelonsoftware.com/2000/10/15/painless-functional-specifications-part-4-tips/"></a></p>
 </blockquote>
-<h2 id="acceptance-test-high-level-decoupling">Acceptance Test: High-level Decoupling</h2>
-<p>Hypothesis: Acceptance test -&gt; high-level decoupling; everything unmentioned gives you degrees of freedom.</p>
+<h2 id="acceptance-test-high-level-decoupling-refile-to-the-domain-variables-section">Acceptance Test: High-level Decoupling (?? refile to the domain variables section)</h2>
+<p>Corollary: Acceptance test -&gt; you put the domain variables first -&gt; high-level decoupling; everything unmentioned gives you degrees of freedom as per your design choices.</p>
 <hr />
 <p>Test: ATM example - doesn’t say which model of the keyboard or monitor or card reader or even bank you’re using. You can vary that as you please. All that matters is that when I have $100 in my account and ask for $20, I should get $20 and have $80 left in my account. – your high-level design shouldn’t worry about the low-level model types. You have to assume that the use will have those high-level actions. For example, you can assume that the user can enter “$20” on any keyboard - whether it’s a touchscreen, a numeric keypad, or a QWERTY keyboard (or even that he can enter it via a voice-recognition machine).</p>
-<h2 id="given-when-then-direct-causes">Given-When-Then = Direct Causes</h2>
+<h2 id="acceptance-test-merge-old-tests-for-speed">Acceptance Test: Merge Old Tests for Speed</h2>
+<p><strong>Hypothesis</strong>: Starting out, test one feature at a time -&gt; fine-grained feedback.</p>
+<p>Pretty sure your code works, test one feature at a time -&gt; slow.</p>
+<p>Pretty sure your code works, merge tests into most valuable paths -&gt; quick.</p>
+<p>Pretty sure your code works, error cases, keep them vs don’t -&gt; ??.</p>
+<hr />
+<p>Test: Softsec project - lots of single command scripts like <code>whoami\n</code>, etc. – pretty slow; not of much use.</p>
+<h2 id="write-notes-in-acceptance-tests-format">Write Notes in Acceptance Tests Format</h2>
+<p><strong>Hypothesis</strong>: Add notes and to-do items in the form of acceptance tests -&gt; collect ideas by scenario and goal; know exactly where an idea is needed and thus how important it is.</p>
+<p>Add free-form notes and to-do items -&gt; don’t collect ideas by scenario and goal; don’t know where an idea is needed or how important it is.</p>
+<hr />
+<p>Test: When writing acceptance tests for a presentation, I found myself moving material from my free-form notes to the tests. For example, seeds for k-means clustering - I moved in notes about a visualization tool I found online. Similarly, for weaknesses of k-means - I moved in notes from Wikipedia. – could tell the scenario for which each note was useful. It wasn’t lying around without a home.</p>
+<p>Test: Negative exemplar - free-form notes - my essays - 200k words lying around just like that – don’t know where each idea is needed or how important it is.</p>
+<h2 id="given-when-then-direct-causes-category-hierarchy">Given-When-Then = Direct Causes (?? category hierarchy)</h2>
 <p>Hypothesis: “Given X, when Y, then Z” -&gt; X and Y cause Z; you can induce that function by looking at the values.</p>
 <hr />
 <p>Test: BDD YT channel - bike kickstart - Given battery charged, gear neutral, when I kickstart, then the bike starts. – bike starting is caused by battery being charged, gear being neutral, and the bike being kickstarted.</p>
-<h2 id="rapid-prototyping-figure-out-the-high-level-design-before-the-low-level-details">Rapid Prototyping: Figure out the High-level Design before the Low-level Details</h2>
+<h2 id="dsl-only-what-you-need">DSL: Only What you Need</h2>
+<p><strong>Label</strong>: DSL = Set of features that will be needed in a set of use cases.</p>
+<hr />
+<p>Test: R - will be doing a lot of matrix multiplication and vector manipulation – add that feature.</p>
+<p>Test: Negative exemplar - Haskell matrix multiplication - cool, but you also have all these other language features that you don’t need for matrix algebra – extraneous features.</p>
+<h2 id="rapid-prototyping-figure-out-the-high-level-design-before-the-low-level-details-valuable-features-first-others-come-later-based-on-experience">Rapid Prototyping: Figure out the High-level Design before the Low-level Details (?? Valuable features first; others come later based on experience)</h2>
 <p><strong>Question</strong>: Why is it better to pass one integration test with a 120-line program written in three hours than to pass all kinds of tests with a spec implemented in three weeks?</p>
 <p>Observation: The differing variables are: number of tests passed, number of lines of code, and time taken. Also, the first one gets feedback about the design immediately.</p>
 <p><strong>Hypothesis</strong>: You’re uncertain about the integration tests you actually want to pass. And even if you know precisely which tests you wanted to pass, you’re still uncertain about the high-level design you should use for your code.</p>
@@ -1733,13 +1896,36 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <p>Explanation: His initial integration test was passed by a 120-line program. He then added more integration tests and improved the design of the program as needed. – He figured out exactly which pieces he needed - the high-level design - before he implemented them in detail. For example, he needed macros to wrap HTML code in different tags, etc.</p>
 <p>Test: Haskell programmers use type signatures to do this kind of thing. Sudoku - get a matrix filled with possibilities for each cell, give each cell the possibilities of its row, column, and box neighbours, remove certain possibilities, repeat till you get either a solved matrix or a matrix that doesn’t improve anymore. Each of these steps is doable. – you’ve got the high-level design for passing the test of “solving a Sudoku grid”.</p>
 <p>Test: PG web page generator - if it initially created just one set of web pages, he may want to have code that generates new pages on demand, based on clicks. That would be a new integration test that he may not have thought of beforehand. – empirical usage gives you new ideas.</p>
-<h2 id="integration-test-followed-by-unit-tests">Integration Test followed by Unit Tests</h2>
+<h2 id="integration-test-followed-by-unit-tests-write-unit-tests-as-demanded-by-your-new-features">Integration Test followed by Unit Tests (?? write unit tests as demanded by your new features)</h2>
 <p><strong>Corollary</strong>: Write one failing integration test that doesn’t have any branches anywhere, come up with high-level design, write unit tests for each module, put it together -&gt; high-level design at speed, module design at speed, correctness.</p>
 <p>Write just the failing integration test, no unit tests -&gt; may not handle certain cases - errors, high uncertainty about modules - slow, hesitate to change code.</p>
 <p>No integration test, write just unit tests -&gt; uncertainty about design - slow, don’t know how to proceed.</p>
 <hr />
 <p>Test: OS HW3 - obtaining a free frame - if page was dirty, write it to the backing store. – got the high-level design, but don’t know if my <code>get_new_frame</code> function handle possible cases well. Hesitant to make global changes like adding a new field to <code>invpt_entry</code>.</p>
-<h2 id="test-your-mechanism-in-isolation-no-need-to-change-the-rest">Test your Mechanism in Isolation: No Need to Change the Rest</h2>
+<h2 id="actually-writing-acceptance-tests">Actually Writing Acceptance Tests</h2>
+<p><strong>Hypothesis</strong>: Use an actual, slightly-comical person in your acceptance test -&gt; make it more lively.</p>
+<blockquote>
+<p>When you’re writing a spec, an easy place to be funny is in the examples. Every time you need to tell a story about how a feature works, instead of saying:</p>
+<pre><code>The user types Ctrl+N to create a new Employee table and starts entering the names of the employees.</code></pre>
+<p>write something like:</p>
+<pre><code>Miss Piggy, poking at the keyboard with a eyeliner stick because her chubby little fingers are too fat to press individual keys, types Ctrl+N to create a new Boyfriend table and types in the single record &quot;Kermit.&quot;</code></pre>
+<p>– <a href="https://www.joelonsoftware.com/2000/10/15/painless-functional-specifications-part-4-tips/"></a></p>
+</blockquote>
+<hr />
+<p>Test: Instead of saying</p>
+<blockquote>
+<p>Given that this is just after the command “login foo” and the password for foo is bar</p>
+<p>when foo types “pass bar”</p>
+<p>then foo must be successfully “authenticated”.</p>
+</blockquote>
+<p>I said:</p>
+<blockquote>
+<p>Given that this is just after the command “login j0hn_5m17h” and the password for j0hn_5m17h is j0hn_5m17h123</p>
+<p>when the user types “pass j0hn_5m17h123”</p>
+<p>then j0hn_5m17h is successfully “authenticated”.</p>
+</blockquote>
+<p>Explanation: There’s no semantic difference between the two. And yet, the latter feels like it’s talking about an actual person, complete with a super-weak password.</p>
+<h2 id="test-your-mechanism-in-isolation-no-need-to-change-the-rest-refactor-using-short-cycle-time">Test your Mechanism in Isolation: No Need to Change the Rest (?? refactor using “short cycle time”)</h2>
 <p><strong>Hypothesis</strong>: Work needed to test all branches of a mechanism = work needed to set the desired inputs, get the outputs, and understand the outputs. Everything else is screened off by the input.</p>
 <p><strong>Corollary</strong>: Unit tests -&gt; minimum work to set the inputs, minimum time to get the outputs, minimum work to understand the outputs.</p>
 <p>Integration tests -&gt; need to do extra work to set the desired inputs because you have to <strong>change</strong> the rest of the program, lot of time to get the outputs since there may be other code before the final output, harder to understand the outputs because they could be caused by any part of the program.</p>
@@ -1751,12 +1937,14 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <p>Test: OS HW3 - inverted page table – had to do a lot of work to get its inputs (in fact, I didn’t even separate its interface; I just used it inline wherever I wanted); had to wait for the whole program to run before I could see the output; and had to parse the whole table output to see what was going on.</p>
 <p>Test: OS HW3 - FIFO order – didn’t write any unit tests. Had to set inputs only via the tests I ran; had to wait for the output; couldn’t understand the output directly because I wasn’t using first-class reference strings. 1 hour 50 minutes right there.</p>
 <p>Test: rectangle numbering in Emacs - wanted it to start from 1 instead of 0, but kept putting it off because it felt like it wouldn’t be worth it to dive into some foreign code and change what I wanted. Just realized that it’s <em>my</em> code that starts from 0. Changed it in a jiffy. – somebody else’s code - have to do a lot of work to set the input (in case configuration variables don’t exist). my code - can just dive in and change whatever I want.</p>
+<p>Test: When trying to figure out how to send in a function pointer to my benchmark function, I decided to test it in a stand-alone program first. Fewer changes. In contrast, lots of stuff could go wrong in the benchmark code. – Faster output.</p>
 <h2 id="first-class-inputs-and-outputs-fast-direct-feedback">First-Class Inputs and Outputs: Fast, Direct Feedback</h2>
 <p><strong>Hypothesis</strong>: First-class input -&gt; can set the input without doing any other work.</p>
 <p>No first-class input -&gt; have to set the input by changing a lot of other variables.</p>
 <p><strong>Hypothesis</strong>: First-class output -&gt; can test the output without doing much work.</p>
 <p>No first-class output -&gt; have to test in a round-about manner.</p>
 <p>Corollary: Impure function (it can do <strong>I/O</strong>) -&gt; input and output are obviously not first-class.</p>
+<p><strong>Corollary</strong>: Extract code into a function -&gt; forced to make your input and output first-class.</p>
 <hr />
 <p>Test: OS HW1 scheduler – couldn’t test it with a particular configuration of ready processes with different priorities. Had to change the whole system just to get that configuration right.</p>
 <p>Test: pipputc – couldn’t really test with first-class inputs. Had to set up processes. Work.</p>
@@ -1764,9 +1952,17 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <p>Test: OS HW1 scheduler – no first-class output of (next process, next ready list) that I could test directly. Had to run all the processes for several seconds and observe their steady-state CPU usage ratio.</p>
 <p>Test: pipgetc – could test the output of the pipe without even using another process.</p>
 <p>Test: org drill - get session data - it inserts stuff into a buffer instead of returning a string (no first-class output). It also uses <code>(current-time)</code> - not a first-class input. – have to run the whole drill session to set the input; have to look at the log file to check the output.</p>
+<p><strong>Test</strong>: Python - had a for-loop in main to try different things with print statements. Extracted it into a function - had to think about building and returning a string instead of just printing to standard output. – first-class outputs.</p>
+<h2 id="explaining-to-others-makes-your-input-and-output-explicit">Explaining to Others makes your Input and Output Explicit</h2>
+<p><strong>Hypothesis</strong>: Explain to others -&gt; force you to categorize your situation, i.e., label the input and output variables; know exactly which variables you’re uncertain about (by looking at the positive and negative exemplars); can toggle those variables in an experiment or learn about their behaviour online.</p>
+<hr />
+<p><strong>Test</strong>: Was going to post a question to the TA online. Was going to say “the program crashes in gdb after the strcpy call”. But then I thought, come on, maybe that’s not the case. Try stepping to the next instruction (didn’t work) or try setting a breakpoint after the call. And that worked! – that simple experiment fixed a lot of things. All because I made my hypothesis explicit - “strcpy makes my program crash”. Immediately, I could think, “what if it isn’t strcpy?” and test it.</p>
+<p>Test: Another question to the TA - wrote down a <a href="https://stackoverflow.com/help/mcve">“minimum, verifiable, complete”</a> description of my problem. – made it easy to see that the main reason why my program worked in gdb (positive exemplar) but not in the terminal (negative exemplar) was because of the environment (the diff between the two).</p>
+<p>Test: Another example - wanted to ask a question about how to get two addresses from a program. Realized that I just needed one address. – all because I wrote it out.</p>
+<p>Test: Another question to the TA - how to get the same random number in Python as from C’s rand(). Search online several times. Didn’t get it. Typed my question into the forum and decided to search one last time. Got it! – making my question explicit seemed to help. My vague half-hour’s worth of struggles boiled down to one simple query - “how to get the output of rand() using Python?”. Google for it and get the answer. (Narrowed down my uncertainty to one variable.)</p>
 <h2 id="to-refactor-an-impure-function-make-it-pure">To Refactor an Impure Function, Make it Pure</h2>
 <p>Inference: Refactoring needs tests.</p>
-<p>Hypothesis: Make it a pure function, observe the inputs and outputs for a sample execution -&gt; acceptance test -&gt; can refactor easily.</p>
+<p>Hypothesis: Make it a pure function, observe the inputs and outputs for a sample execution -&gt; acceptance test -&gt; can induce easily.</p>
 <hr />
 <p>Test: <code>my-org-drill-insert-last-session-data</code> – took half an hour but it was much cleaner once I made it a pure function.</p>
 <h2 id="cycle-time-time-it-takes-to-toggle-and-get-feedback">Cycle Time: Time it takes to Toggle and get Feedback</h2>
@@ -1785,6 +1981,7 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <p>– <a href="https://www.joelonsoftware.com/2001/01/27/daily-builds-are-your-friend/"></a></p>
 </blockquote>
 <p>Test: Math proofs - long time to get the output. You have to be the human interpreter and run the proof line by line. Sometimes you may not know either way and may have to wait for an experienced mathematician to give you feedback. You can’t (without automatic theorem provers, which I don’t think most mathematicians use) get the output in an instant. In this regard, we programmers are fortunate. – more uncertain about your math proofs. That’s why they have more than one proof for the same theorem (according to Terence Tao).</p>
+<p>Test: OS HW1 - tons of output data. – Can’t really observe variables I care about. Hard to parse the output.</p>
 <h2 id="frequent-automated-releases-low-effort-low-cycle-time">Frequent, Automated Releases: Low Effort, Low Cycle Time</h2>
 <p><strong>Hypothesis</strong>: One-button change (or one-button execution) -&gt; set inputs with little work. (Zero-button -&gt; zero work!)</p>
 <p>Automated release -&gt; get output with little work. It may take time, but you don’t have to do anything manually.</p>
@@ -1812,6 +2009,7 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <p>Number three giant important reason to have a spec is that without a detailed spec, it’s impossible to make a schedule. Not having a schedule is OK if it’s your PhD and you plan to spend 14 years on the thing, or if you’re a programmer working on the next Duke Nukem and we’ll ship when we’re good and ready. But for almost any kind of real business, you just have to know how long things are going to take, because developing a product costs money. You wouldn’t buy a pair of jeans without knowing what the price is, so how can a responsible business decide whether to build a product without knowing how long it will take and, therefore, how much it will cost? For more on scheduling, read Painless Software Schedules.</p>
 <p>– <a href="https://www.joelonsoftware.com/2000/10/02/painless-functional-specifications-part-1-why-bother/"></a></p>
 </blockquote>
+<p>Test: CS373 HW1 - can’t seem to estimate how long it will take me. Feels like it will take a very, very long time and that I will surely fail to do a “good job” (even though I’m not clear about what that is).</p>
 <h2 id="scenarios-make-something-users-want">Scenarios: Make Something Users Want</h2>
 <p>Hypothesis: Come up with scenarios (not input-output specifications) -&gt; make something users want.</p>
 <p>Come up with input-output specifications -&gt; make something that works as per your specification but which nobody may want.</p>
@@ -1822,27 +2020,34 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <p>– <a href="https://www.joelonsoftware.com/2000/10/03/painless-functional-specifications-part-2-whats-a-spec/"></a></p>
 </blockquote>
 <h2 id="have-working-code-at-each-point-no-unstructured-notes">Have Working Code at Each Point: No Unstructured Notes</h2>
-<p>Hypothesis: Have working code, add a feature -&gt; go from pass to fail, and then from fail to pass -&gt; know that your addition was useful.</p>
-<p>Have a mess, add some more -&gt; go from fail to fail -&gt; don’t know if your addition was useful.</p>
+<p><strong>Hypothesis</strong>: Have working code (passes tests and is well-refactored), add a test and then a feature -&gt; go from pass to fail, and then from fail to pass -&gt; know that the latest change passed the test.</p>
+<p>Have a mess, add a feature -&gt; go from fail to fail -&gt; can’t narrow down the causes; can’t tell whether the latest change helped.</p>
+<p>Corollary: Start a project from scratch without dumping unstructured stuff -&gt; pass tests at each point.</p>
+<p>Start a project by dumping unstructured stuff from somewhere -&gt; don’t pass tests at each point.</p>
 <hr />
 <p>Test: [2017-12-12 Tue] My current presentation draft is a mess. No idea of how much work really remains and how much doesn’t. – Don’t know if my additions really cut through.</p>
+<p>Test: Negative exemplar - CS373 HW3 - I initially dumped all the text from my notes and the past assignment - had a tough time deciding how to go ahead – hard to tell if you’re making progress (fail to fail).</p>
+<p>Test: CS373 HW3 - when I removed the old stuff, I could tell what was happening and what needed to be done and whether I was making progress – pass to fail or pass to pass.</p>
+<p>Test: Cleaned causal hypothesis - started from scratch - easy to tell how things fit together – pass to pass.</p>
+<p>Test: Causal hypothesis - a giant dump of ideas - hard to tell how things fit together – fail to fail.</p>
+<p>Test: Current notes in this essay - pretty unstructured - hard to tell how much I’ve improved by adding one more idea – fail to fail.</p>
 <h2 id="have-a-hello-world-program-one-button-installation">Have a Hello-World Program: One-Button Installation</h2>
 <p><strong>Hypothesis</strong>: Some workflow you want to have for your projects, have a blank project that has all the necessary stuff and just works -&gt; have to work only on adding our project-related features -&gt; less uncertainty, less work.</p>
 <p>Some workflow you want to have for your projects, have to install it manually using several steps -&gt; have to work on getting it to run and on adding our desired features -&gt; more uncertainty, more work.</p>
 <hr />
 <p>Test: Wanted to test <code>pre-commit</code>. Could download their <strong>demo repo</strong> and test the pre-commit hooks with zero fuss. – easy.</p>
 <p>Test: Node JS, wanted to use RESTful API, no working blank project - stuck for hours. Abandoned it. – spent all our time trying to get the RESTful API to work even though that wasn’t really the point of our project.</p>
-<h2 id="understanding-testing-it-with-different-inputs">Understanding = Testing it with Different Inputs?</h2>
+<h2 id="understanding-testing-it-with-different-inputs">Understanding = Testing it with Different Inputs? (??)</h2>
 <p><strong>Hypothesis</strong>: Some output depends on a lot of other variables or takes a long time to give the output or gives output that is hard to isolate -&gt; have to do a lot of work to test and understand it with different inputs (aka “understand” it).</p>
 <p>Some output depends on just a few other variables and takes a short while to produce output and gives isolated output -&gt; have to do less work to test it with different inputs.</p>
 <p><strong>Corollary</strong>: If that is true, then the explanations that will lead to a lot of understanding will be those that let you change inputs without much effort, get the output quickly, and isolate the cause easily. They would let you answer “what if” questions easily.</p>
-<h2 id="implementing-a-spec-focus-gambling">Implementing a Spec: Focus-Gambling</h2>
+<h2 id="implementing-a-spec-acceptance-tests-vs-unit-tests">Implementing a Spec: Acceptance tests vs Unit tests (??)</h2>
 <p><strong>Hypothesis</strong>: Given high-level design, pseudo-code that you know is correct, implement first, write tests later, put only as much confidence in your program as the number of tests you pass -&gt; get correctness first and good module-level design later -&gt; low uncertainty about each function because you already know the pseudo-code, quick.</p>
 <p>Given high-level design, pseudo-code that you know is correct, test-driven design -&gt; get correctness and good module-level design at the same time -&gt; low uncertainty, but slow because you have to code step-by-step.</p>
 <hr />
 <p><strong>Test</strong>: OS HW3 - I’m given the pseudo-code for page fault handling and free frame obtaining. But I’m still taking a long time to “design” the free-frame obtaining code correctly. – slow because you’re trying to get correctness and good design at the same time.</p>
 <p><strong>Test</strong>: pipcreate - all possible configurations handled, but it took a long time (~25 hours) before I could pass even one shell integration test. – was going test by test.</p>
-<h2 id="red-green-refactor-vs-focus-gambling">Red-Green-Refactor vs Focus-Gambling</h2>
+<h2 id="red-green-refactor-vs-focus-gambling">Red-Green-Refactor vs Focus-Gambling (??)</h2>
 <p>Test: Implementing the pseudo-code first and then covering branches with tests violates red-green-refactor. Then again, focus-gambling itself violates red-green-refactor. You’re concluding first and running tests later.</p>
 <h2 id="remember-to-refactor">Remember to Refactor</h2>
 <p><strong>Hypothesis</strong>: After passing the test, reminder to refactor -&gt; refactor.</p>
@@ -1865,7 +2070,7 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <p>Test: Didn’t hide procent behind an interface when toggling the feature “no page_directory field” to “page_directory field” -&gt; missed places where it was used (like create, initialize, and global initialize).</p>
 <p>Test: I forgot to update nullproc’s page directory. Why? Because I updated procent without hiding it behind an interface. So, I didn’t catch all its users, in particular <code>initialize</code>. I should have looked for everything that initialized procent (since nothing would read or write to <code>page_directory</code> yet). – Caused errors.</p>
 <p>Test: When toggling global page directory with per-process page directory, I have to toggle the definition of procent, which requires me to seek all uses of procent. Similarly, toggling memlist involves toggling meminit, which requires finding out all the places where meminit is called.</p>
-<h3 id="old---modularity-make-changes-behind-an-interface">OLD - Modularity: Make Changes behind an Interface</h3>
+<h3 id="old---modularity-make-changes-behind-an-interface">OLD - Modularity: Make Changes behind an Interface (??)</h3>
 <p><strong>Hypothesis</strong>: Identify what changes you want to make and turn those hotspots into an interface. Then, implement the new module you want behind that interface. Nothing in the rest of the system has to change.</p>
 <p><strong>Hypothesis</strong>: List of changes -&gt; properties for the category definition.</p>
 <p>For example, we define the categories of “greedysubset” and “forwardfitting” by what they do in their inner loops. (Otherwise, they’re both the same.)</p>
@@ -1950,14 +2155,14 @@ z <span class="fu">=</span> (<span class="dt">B</span> (<span class="dt">L</span
 
 <span class="dt">Damn</span>, they're equal<span class="fu">.</span> <span class="dt">I</span> thought my definition <span class="kw">of</span> <span class="dt">AT</span> was wrong (because it seemed to nest the right<span class="fu">-</span>hand <span class="dt">B</span> <span class="kw">in</span> <span class="dt">B</span> <span class="fu">&lt;*&gt;</span> <span class="dt">B</span><span class="fu">.</span>)<span class="fu">.</span></code></pre></div>
 <p>Observation: I didn’t even use the case where it’s B &lt;*&gt; B. But that isn’t part of the Applicative definition. It’s covered under the case <code>B fx fy &lt;*&gt; x</code>.</p>
-<h2 id="fully-specified-representative-test">Fully-Specified Representative Test</h2>
+<h2 id="fully-specified-representative-test">Fully-Specified Representative Test (??)</h2>
 <p><strong>Hypothesis</strong>: Test that sounds simple enough, but the implementation is pretty “complex” &lt;- lots of other conditions not specified in the test.</p>
 <hr />
 <p>Test: Pipes for XINU - sounds simple enough - just send the output of the writer as the input of the reader. – Problem: conditions like writer may be killed at any time, as can reader, the buffer may become full, one of them may starve due to low priority, etc. Your pipes implementation must handle all of these cases.</p>
-<h2 id="extend-representative-test-with-every-diff">Extend Representative Test with every Diff</h2>
+<h2 id="extend-representative-test-with-every-diff">Extend Representative Test with every Diff (??)</h2>
 <p><strong>Hypothesis</strong>: Extend your representative test with every diff. Either the diff will extend a chain or it will add a branch (or do some other thing). Your representative test should capture that.</p>
 <p>Test: Super Mario - v1.0 - just jumping around. Next, moving forward too. – initial representative test is whether you can jump around; next test checks if you can move forward too (which is a different branch).</p>
-<h2 id="acceptance-tests-must-transform-input-to-output-for-a-positive-exemplar">Acceptance Tests must transform Input to Output for a Positive Exemplar</h2>
+<h2 id="acceptance-tests-must-transform-input-to-output-for-a-positive-exemplar">Acceptance Tests must transform Input to Output for a Positive Exemplar (??)</h2>
 <p><strong>Hypothesis</strong>: Start with a minimal positive exemplar where the input uses only one or two features -&gt; can get feedback quickly; know exactly what to change in your code, therefore quick.</p>
 <p>Start with a positive exemplar where the input uses lots of features -&gt; can’t get feedback until you have all features working; don’t know what to change when debugging, therefore slow.</p>
 <p>Positive exemplar where you can see how the input is transformed into the output -&gt; can use it as a fully-specified acceptance test that helps you design your code; takes long to get feedback; hard to debug; slow. However, this might give you function-wise tests that produce quick feedback.</p>
@@ -1974,7 +2179,7 @@ z <span class="fu">=</span> (<span class="dt">B</span> (<span class="dt">L</span
 <p>Explanation: Program + simple input should give simple output. However, if it gives some other output, then you know that you have to change something about the program. And because you’re changing just one feature in the program, you know exactly what to change and so can quickly implement the feature. Also, you can tell what functionality is added by that feature alone.</p>
 <p>Test: Mario MVP - just jumping and moving. No princess or turtles or spiky pits. – can get feedback about that feature alone; quick because you know that any problems with the output must be due to the one feature you changed.</p>
 <p>Test: Lots of features - scheduler - tried to change lots of things and was mired in debugging output. – slow to get final feedback; hard to debug. Basically had to change all parts of the default scheduler, instead of changing one thing at a time.</p>
-<h2 id="programming-vs-induction">Programming vs Induction</h2>
+<h2 id="programming-vs-induction">Programming vs Induction (??)</h2>
 <p>Question: How is programming different from induction?</p>
 <p>In induction, you start from a positive exemplar and shave off variables using focus-gambling and accept necessary causes using conservative-focusing.</p>
 <p>In programming, you start with a simple acceptance test, one that tests just one feature, and then add bigger tests and code that passes them.</p>
@@ -1983,7 +2188,7 @@ z <span class="fu">=</span> (<span class="dt">B</span> (<span class="dt">L</span
 <hr />
 <p>Test: Paging - start with just the global page directory, then add page fault handling, then per-process page directory, and so on.</p>
 <p>Test: Induction - Semmelweiss - initially, any of the hospital location, the kinds of patients who came to that maternity ward, the other patients in the hospital, and so on could have caused “childbed fever”. But he narrowed it down to the doctor’s hands by looking at the doctor who died after getting nicked by the autopsy knife. At the end, he had a hypothesis - a function - that explained when somebody would get “childbed fever”.</p>
-<h2 id="small-interface-expose-only-one-thing-at-a-time">Small Interface: Expose Only One Thing at a Time</h2>
+<h2 id="small-interface-expose-only-one-thing-at-a-time">Small Interface: Expose Only One Thing at a Time (??)</h2>
 <p><strong>Hypothesis</strong>: Small interface -&gt; easier to use.</p>
 <p>Large interface -&gt; harder to use.</p>
 <hr />
@@ -1993,12 +2198,13 @@ z <span class="fu">=</span> (<span class="dt">B</span> (<span class="dt">L</span
   <span class="fu">=</span> <span class="dt">ReaderT</span> {<span class="ot">runReaderT ::</span> r <span class="ot">-&gt;</span> m a}</code></pre></div>
 <p>But look at its interface: you can use it as a functor or an applicative or a monad. So, if you want to use <code>applyDiscount :: Float -&gt; ReaderT Config m Float</code> twice, you can just say <code>applyDiscount &lt;=&lt; applyDiscount</code> without worrying about anything else because <code>ReaderT Config m Float</code> is just <code>m1 Float</code>.</p>
 <p>Also, when defining <code>applyDiscount</code>, if you have a function <code>discount :: Float -&gt; Float -&gt; Float</code> that accepts an amount and reduces it by the given discount rate, then you can use <code>asks discountRate :: Monad m =&gt; ReaderT Config m Float</code> and then <code>fmap (discount givenAmount)</code> over the value to get the discounted amount within the ReaderT monad. You’re programming to the interface of functors and monads.</p>
-<h2 id="large-diff---high-uncertainty">Large Diff -&gt; High Uncertainty!</h2>
+<h2 id="large-diff---high-uncertainty-need-to-update-based-on-the-question">Large Diff -&gt; High Uncertainty! (?? need to update based on the question)</h2>
 <p><strong>Hypothesis</strong>: Large diff (change a lot of variables), fail -&gt; think that any of those variables would make you fail; so, lots of possibly-wrong beliefs (high uncertainty).</p>
 <p>Small diff (change one variable), fail -&gt; think that that one variable makes you fail, which is true; very few possibly-wrong beliefs (low uncertainty).</p>
 <p><strong>Corollary</strong>: Keep your diffs small -&gt; have fewer possibly-wrong beliefs.</p>
 <p><strong>Corollary</strong>: No positive exemplar, only negative exemplars -&gt; super-large diff -&gt; lots of possibly-wrong beliefs about what is possible.</p>
 <p><strong>Corollary</strong>: Only positive exemplars, no negative exemplars -&gt; consider the opposite viewpoint that you’ve seen only negative exemplars for <em>beating</em> the thing and will thus think that anything untested will still not be able to beat it.</p>
+<p><strong>Question</strong>: Large diff, correct output -&gt; will you think that all the variables in the diff were necessary? (when you haven’t seen any small diff work?). Think about how I got intimidated by big words.</p>
 <hr />
 <p>Test: Right now, when trying to test my representative test idea on causal decision theory, I was going for a massive negative exemplar and getting completely confused. – didn’t know which variable (difficulty, subject matter, amount of text, etc.) caused my confusion. Felt like “representative tests” were useless. Like they would fail on any input - no matter how small the text or what the subject matter or how difficult the topic. But I didn’t really have evidence for all of those other beliefs - they were possibly wrong.</p>
 <p>Test: Ran on a treadmill when I was young. Completely out of breath. Felt like cardio was not for me. – Jumped to the conclusion that the target variable (me) could not do any cardio at all, even though I had changed other variables like difficulty, duration, etc. That is, [Pradeep + tough cardio -&gt; couldn’t do it] became [Pradeep + any cardio -&gt; can’t do it]. Felt that any type of cardio would be too hard for me.</p>
@@ -2036,13 +2242,14 @@ z <span class="fu">=</span> (<span class="dt">B</span> (<span class="dt">L</span
 <p>Desired output, abstract the inputs using the possible outputs (deal with an abstract type) -&gt; have to deal with fewer input configurations.</p>
 <hr />
 <p>Test: <code>findPerson</code> vs <code>find</code>. – Have to deal with Person being male or female.</p>
-<h2 id="abstract-as-much-as-the-goal-allows">Abstract as much as the Goal allows</h2>
+<h2 id="abstract-as-much-as-the-goal-allows-use-cases---new-hypothesis">Abstract as much as the Goal allows (?? use cases - new hypothesis)</h2>
 <p><strong>Hypothesis</strong>: Goal doesn’t ask about the specifics of the input type, abstract the input type -&gt; simpler, more reusable, easily changeable code; think the answer is pretty simple.</p>
 <p>Goal doesn’t ask about the specifics of the input type, keep the input type concrete -&gt; more “complex”, less reusable, hard-to-change code; think the answer must be “complex” and try weird stuff.</p>
+<p><strong>Hypothesis</strong>: The use cases are determined by the goal. If in no use case you will need part of the input, ignore it. Or if you can apply a function that will cover all of the uses cases for that part, use it.</p>
 <hr />
-<p>Test: Wanted to concatenate all the <code>Parser [a]</code> in a list <code>[Parser [a]]</code>. Was stuck for 24 minutes doing that because I got confused by the <code>Parser</code> bit and thought that the solution would be something “complex” like <code>(fmap . fmap . fmap ) concat pxs</code> (Yes, I actually tried that). – Got unnecessarily intimidated.</p>
+<p>Test: Wanted to concatenate all the <code>Parser [a]</code> in a list <code>[Parser [a]]</code>. Was stuck for 24 minutes doing that because I got confused by the <code>Parser</code> bit and thought that the solution would be something “complex” like <code>(fmap . fmap . fmap ) concat pxs</code> (Yes, I actually tried that). – Got unnecessarily intimidated. Once you abstract <code>Parser</code> as <code>Monad m</code>, your job was much easier.</p>
 <p>Test: But the moment I thought of the problem above as concatenating all the lists within <code>[m [a]]</code>, I got the answer immediately: <code>sequence</code>. – Felt pretty simple.</p>
-<h2 id="decompose-the-input">Decompose the Input</h2>
+<h2 id="decompose-the-input">Decompose the Input (??)</h2>
 <p><strong>Hypothesis</strong>: Input, treat it like some monolithic data structure -&gt; have to deal with a lot of input configurations.</p>
 <p>Input, treat it like some decomposable data structure (where the parts are decoupled) -&gt; fewer input configurations.</p>
 <p><strong>Hypothesis</strong>: Sum-product type, decompose -&gt; easily done.</p>
@@ -2054,7 +2261,7 @@ z <span class="fu">=</span> (<span class="dt">B</span> (<span class="dt">L</span
 m <span class="fu">=</span> M.fromList <span class="fu">.</span> map ((\[x, y] <span class="ot">-&gt;</span> (x, y)) <span class="fu">.</span> splitOn <span class="st">&quot;=&quot;</span>) <span class="fu">.</span> splitOn <span class="st">&quot;&amp;&quot;</span> <span class="fu">$</span>  <span class="st">&quot;name1=value1&amp;name2=value2&amp;name3=value3&quot;</span></code></pre></div>
 <p>Maybe these were well-worn paths that many programmers had already trodden. It would be a mistake to write fresh unit tests for them, as if you were completely uncertain as to their behaviour.</p>
 <p>Observation: <code>parseQuery</code> is way too specific. What you really have is a bunch of a’s with delimiters. Writing a specific function for that is just stupid.</p>
-<h2 id="chain-decompose-transform-compose">Chain = Decompose, Transform, Compose</h2>
+<h2 id="chain-decompose-transform-compose">Chain = Decompose, Transform, Compose (??)</h2>
 <p><strong>Hypothesis</strong>: Chain of functions -&gt; each function either decomposes the previous data structure or composes it into something bigger or transforms each part without composing it.</p>
 <hr />
 <p>Test:</p>
@@ -2077,7 +2284,7 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p>Test: Website - it lasts. – final medium, full feedback (if you release), but at least partial feedback if you write it up (as compared to your journal notes); skilled - so it’s natural by now (see this essay).</p>
 <p>Test: Memory via spaced repetition (or just frequency testing) - it lasts. – you get full feedback in the future.</p>
 <p>Test: org-autoclock within my Emacs vs a blank Emacs. – got misleading feedback by running it in my Emacs; got full feedback from the user.</p>
-<h2 id="minimum-interface-at-speed-more-hypotheses">Minimum Interface at Speed: More Hypotheses</h2>
+<h2 id="minimum-interface-at-speed-more-hypotheses">Minimum Interface at Speed: More Hypotheses (??)</h2>
 <p>want to handle a new input configuration (add a new feature) - get a failing test first -&gt; speed (no abstract thinking).</p>
 <p>new feature, pure function, write automated failing test -&gt; speed.</p>
 <p>new feature, impure function, manual failing test -&gt; speed.</p>
@@ -2086,7 +2293,7 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p>manual test passed - write automated test -&gt; speed, quality. (??)</p>
 <p>writing code - do you have a failing test for it? -&gt; write useful code.</p>
 <p>question about one small part, write a test in a scratch file -&gt; get answer quickly (since you’re only changing a few variables instead of the whole original program).</p>
-<h2 id="other-tests">Other Tests</h2>
+<h2 id="other-tests">Other Tests (??)</h2>
 <p>Test: page table code in HW3 - wrote hopelessly buggy pointer arithmetic code. Zero tests.</p>
 <p>Test: Wasn’t sure how to condition on a variable when there were two factors. Did the derivation in a scratch page - got the answer!</p>
 <p>Test: Wasn’t sure how to do pointer arithmetic on an array. Ditto for bit shifting. Results were shocking! – yup.</p>
@@ -2107,7 +2314,7 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 </blockquote>
 <p>Explanation: Would lose bug fixes.</p>
 <p>Test: Essay on understanding - 42k words as of December 23, 2017. Feel like just throwing it away and building a new model from scratch using my latest format for unit tests and such. Experimental method! - But no, that would make me forget or have to re-generate hard-won evidence from over the last 8 months. (Roughly 100 hours of work - 155 words in commit 5116ad9 took 22 minutes @ 422 words per hour - where I was exposed to a variety of information such as causality math, biology text, category theory proofs, programming experiments on myself and others, and my Purdue course work - most of which would be hard to reproduce.) You do <strong>not</strong> want to lose that processed evidence. – Better to use it as a reference model and assimilate its evidence into a new model.</p>
-<h2 id="dry-dont-expose-irrelevant-things">DRY: Don’t Expose Irrelevant Things</h2>
+<h2 id="dry-dont-expose-irrelevant-things">DRY: Don’t Expose Irrelevant Things (??)</h2>
 <p>Type: Change in interface -&gt; amount of work needed, amount of uncertainty (and thus possible errors).</p>
 <p><strong>Hypothesis</strong>: Interface needed for goal, expose interface that’s just as small -&gt; have to change only when the interface changes; guaranteed to be consistent.</p>
 <p>Interface needed for goal, expose interface that’s larger -&gt; have to change even when the change in the interface is outside the interface needed; outside changes may make things inconsistent.</p>
@@ -2124,6 +2331,8 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p>Change behind an interface -&gt; don’t need fine-grained feedback.</p>
 <p><strong>Corollary</strong>: Toggle behind an interface or have some other source of fine-grained feedback (like a type-checker) -&gt; don’t need a huge number of unit tests.</p>
 <p>Don’t toggle behind an interface and don’t have some other source of fine-grained feedback (like a type-checker) -&gt; don’t need a huge number of unit tests.</p>
+<p><strong>Hypothesis</strong>: Basically, you’re not changing the mechanism at all. So, you don’t need feedback to make sure you aren’t breaking it.</p>
+<p><strong>Hypothesis</strong>: Least number of tests (feedback) needed - well-decoupled code.</p>
 <hr />
 <p>Test: Change 1024 to 2048 – have to change things unnecessarily. May miss some spots.</p>
 <p>Test: Suppose the name of the function <code>foldr</code> is changed to <code>reduce</code> - how much work would you have to do? – assume <code>foldr</code> is now not even available. So, your type-checker will point out every place where you still use <code>foldr</code>. Easy enough. No inconsistent or unnecessary changes.</p>
@@ -2131,6 +2340,126 @@ callGrep p fs <span class="fu">=</span> fmap (concat <span class="fu">.</span> m
 <p>Test: Want to change all uses of <code>initialize_page_directory</code> once you change its input parameters - can grep for the function – fine-grained feedback about every use.</p>
 <p>Test: Ruby guys have tons of unit tests. – no type checker to warn you about inconsistently-used function names or arguments or return values - so changing a function’s type signature is pretty risky. (Can’t they toggle behind an interface? I guess you have to abstract things well for that. Not sure.)</p>
 <p>Test: Haskell guys usually don’t have tons of unit tests. – type checker tells you about each use of a function; changing a function’s type signature is not risky. Can abstract well into conventional interfaces - <code>sort</code> wants just an <code>Ord</code>, <code>fmap</code> needs just a <code>Functor</code>, and most common functions deal with just lists. (Not fully sure of this.)</p>
+<h2 id="efficient-processing-how-often-do-you-get-feedback">Efficient Processing: How often do you get Feedback? (??)</h2>
+<p><strong>Hypothesis</strong>: Measure how many times you run commands in the interpreter or run your tests -&gt; learn how efficiently you process information.</p>
+<h2 id="quick-and-dirty-vs-carefully-planned-the-fear-of-future-change">Quick and Dirty vs Carefully Planned: The Fear of Future Change (??)</h2>
+<p><strong>Hypothesis</strong>: Change is costly, fear that my code or “understanding” of some subject might change -&gt; don’t commit to it (don’t create flashcards, don’t practice the technique, don’t build other ideas on top of it).</p>
+<p>Change is costly, feel 100% sure that this fact will remain this way forever -&gt; commit to it (create flashcards, practice the technique, build other ideas on top of it).</p>
+<p>Change is cheap, _ -&gt; commit to it.</p>
+<p>Question: Why is change so costly? (“Asked in such fashion, the question answers itself.”)</p>
+<p><strong>Hypothesis</strong>: High coupling between modules -&gt; change is costly.</p>
+<p>Low coupling between modules -&gt; change is cheap.</p>
+<p><strong>Hypothesis</strong>: Not completely clean -&gt; I hesitate to commit it (literally).</p>
+<p>Completely clean -&gt; I commit it.</p>
+<p><strong>Hypothesis</strong>: I need to <strong>reinforce</strong> the action of getting and quick and dirty results for a test, and just as importantly, the action of <strong>refactoring</strong> that code afterwards.</p>
+<p><strong>Corollary</strong>: I need to split up my essays into decoupled modules. Instead of saying “don’t couple unrelated things”, make it so that I “can’t couple unrelated things”.</p>
+<hr />
+<p>Test: My current flashcards - why use salted hash [permanent information] – willing to commit.</p>
+<p>Test: how to run an <code>HUnit</code> unit test [permanent information] – willing to commit.</p>
+<p>Test: why I dislike do-blocks [permanent information] – willing to commit. Pretty solid theory.</p>
+<p>Test: keybinding for <code>find-tag</code> [permanent information] – willing to commit. Pretty solid keybinding.</p>
+<p>Test: Negative exemplar - impermanent information - category hierarchy - still not sure how exactly to build a “category hierarchy” and whether that will “really work”. (Only recently figured out how category formation and concept attainment really work. Still not memorized that like hell.)</p>
+<p>I seem to have a major block around using any technique I don’t understand <em>completely</em>. So I keep procrastinating till I have refactored each technique to within an inch of its life and placed it in its proper home in a global, flexible, easy-to-remember category hierarchy. This. Is. Retarded.</p>
+<p>Explanation: My main worry: what if I change my idea tomorrow of how to form a “category hierarchy”? Then… Then what? Then I would have to narrow down and update the flashcards I created on this topic. (Easy fix: just delete the old ones.)</p>
+<p>What else? Not much.</p>
+<p>Minimize the effect of a <strong>change</strong> in one model on the other models. Dude, this is basic software engineering. Deal with it. Minimize your interfaces and move on. Decouple your models. Don’t write giant-ass essays.</p>
+<p>Test: Decoupled models that I fail to separate - category hierarchy and … everything else. But it still feels like it’s intimately connected. Doesn’t your thinking algorithm affect everything you think?</p>
+<p>But category hierarchy and, say, minimizing interface are 100% decoupled. No matter how we humans categorize things, minimizing interface is still going to be the ideal way to decouple a function from other functions, make it easier to understand, easier to reuse, and easier to change. That part really is pretty solid. – I act like I can’t proceed with flashcards for minimizing interface and other programming techniques until I get a handle on category hierarchy.</p>
+<p>Test: Hesitated to commit this section because I felt like it could be cleaned up even more. – suggests that submitting not-completely-clean code has been punished, somehow.</p>
+<h2 id="carry-the-source-and-mechanism-along-with-the-output">Carry the Source and Mechanism along with the Output</h2>
+<p>(h/t The Pragmatic Programmer, chapter 5)</p>
+<p><strong>Label</strong>: Source plus mechanism for an output = mechanism that produces the desired output when given the source.</p>
+<p><strong>Hypothesis</strong>: Have the generating mechanism and source for an output, lose the output -&gt; can regenerate it (at some cost).</p>
+<p>Have the generating mechanism and source for an output, have the output -&gt; can change the source to get different outputs.</p>
+<p>Don’t have the generating mechanism or the source for an output, have just the output -&gt; can’t get a different output.</p>
+<p>Don’t have the generating mechanism, have the source, have just the output -&gt; can try to port the source.</p>
+<p>Hypothesis: One-button change -&gt; force you to carry the generating mechanism along with the output.</p>
+<hr />
+<p>Test: Source plus mechanism - positive exemplar - LaTeX file plus the pdflatex program – can generate various outputs.</p>
+<p>Test: Source plus mechanism - negative exemplar - old homework assignment – have the mechanism <code>pdflatex</code> and even the output, but not the source.</p>
+<p>Test: Source plus mechanism - negative exemplar - my old Turbo-C++ Breakout clone - have the source for the game but not the mechanism – can’t recreate the game (without looking up some modern port of <code>graphics.h</code>).</p>
+<p>Test: Presentation – pretty useless if you lose the source. Have to work hard to recreate the slides (and muck around with image-editing tools).</p>
+<p>Test: Presentation - have the professor’s slide - want to include some of the slides or pictures – have to work hard to recreate them. Need to do a Google image search for the pictures.</p>
+<p>Test: LaTeX - lost the source for the original homework assignment – had to copy the text and wrestle with the formatting till I got it looking right again.</p>
+<p>Test: Plots generated for the output of k-means or other clustering algorithms – can’t change the input slightly (maybe have five clusters or try a modification of the algorithm).</p>
+<p>Test: Gifs generated to visualize the steps of the k-means algorithm – can’t change the input slightly, just like above. Don’t have the mechanism either.</p>
+<p>Test: Dendrogram generated from hierarchical clustering – can’t change one variable (the distance measured used) to get another dendrogram because I don’t have the source or the mechanism.</p>
+<p>Test: Negative exemplar - have a text file containing the number of points I’ve got. Want to change it – can do it effortlessly because I have the source and the mechanism (which is just a text editor to change the text and view it or a shell command to do the same).</p>
+<p>Test: What about my mental model of something? – may not have the source books and lectures and personal experiments that formed my mental model; still have the generating mechanism though (my mental learning algorithm), even if it has changed after experience. It’s not a first-class output either. So, I can’t recreate the output in some other mind and I can’t give them the source material for them to recreate it themselves.</p>
+<p>Test: Citations in a book or paper backing some fact – can re-read the paper and get the actual fact.</p>
+<p>Test: Citations plus quotation – don’t even have to re-read the cited paper (unless you’re suspicious); you can read the source quote itself.</p>
+<h2 id="minimum-interface">Minimum Interface</h2>
+<p><strong>Hypothesis</strong>: Get just the relationship between the input and the desired output -&gt; minimum interface.</p>
+<hr />
+<p>Test: Lines from <code>BufferedReader</code> – don’t care about anything else it might produce.</p>
+<p>Test: List of <code>TransactionOperation</code> from list of strings – don’t care about how to get a permutation of that list or whatever.</p>
+<p>Test: Negative exemplar - have the raw <code>BufferedReader</code> itself – large interface.</p>
+<h2 id="induce-necessary-causes-for-an-output-using-positive-and-negative-exemplars">Induce Necessary Causes for an Output using Positive and Negative Exemplars</h2>
+<p><strong>Hypothesis</strong>: Look at different kinds of functions that satisfy contract X -&gt; induce necessary causes for X.</p>
+<p><strong>Corollary</strong>: Have seen a positive exemplar for X that does not need a particular variable Y -&gt; Y is not a narrow cause of X.</p>
+<hr />
+<p>Test: Saw people do something to each element of a list using just <code>map f</code> – that became my necessary cause for transforming each element of a list; a for-loop became an unnecessary cause.</p>
+<p>Test: Elisp regex - saw <code>(s-match regexp s)</code> – those are the two necessary causes for a regex match.</p>
+<p>Test: Python regex - saw <code>self.assertIsNotNone(re.search(regex, s))</code> – felt like the <code>assertIsNotNone</code> was an unnecessary cause because there should be a function that simply returns true if the fucking regex matches the string.</p>
+<p>Test: C regex - <code>r = regcomp(&amp;regex, regex_string.c_str(), REG_NOSUB|REG_EXTENDED)</code> and <code>regexec(&amp;regex, s, 0, NULL, 0)</code> – felt like the whole compiling regex thing and the matching flags and all the extra arguments to <code>regexec</code> were unnecessary. All I want is something that can tell me whether the string matches the regex!</p>
+<p>Test: HTML output - have seen people get it without database access – database access is not a necessary cause.</p>
+<p>Test: Negative exemplar - haven’t seen people get lines from a C++ socket without using a loop – feel like the loop is a necessary cause.</p>
+<h2 id="isolate-the-features-youre-most-uncertain-about">Isolate the Features you’re Most Uncertain about</h2>
+<p>Hypothesis: Isolate the features you’re most uncertain about and implement them in reverse order -&gt; minimum time and worry.</p>
+<hr />
+<p>Test: For example, I’m super-uncertain about the theoretical questions in my assignment – wait until later.</p>
+<p>Test: Also not sure about how to use pandas or how to prune. Not fully sure how to handle missing attributes either. – wait.</p>
+<p>Test: Negative exemplar - I know exactly how to implement the vanilla version – do it right now.</p>
+<h2 id="work-on-a-project-to-get-positive-and-negative-exemplars">Work on a Project to get Positive and Negative Exemplars</h2>
+<p><strong>Hypothesis</strong>: Work on a project -&gt; get lots of evidence about how to do things better.</p>
+<p>Haven’t coded in a while -&gt; not much evidence.</p>
+<hr />
+<p>Test: Working on OS homework - figured out that I needed to implement my code in isolation – ideas.</p>
+<p>Test: Working on OS pipes - realized that the time I took was proportional to the number of tests I passed – evidence.</p>
+<p>Test: Negative exemplar - last week - hadn’t coded – kind of lost touch with programming and had a tough time of it.</p>
+<p>Test: XP fellows - seemed to have got their ideas working on some consulting project – evidence.</p>
+<p>Test: Continuous delivery guy - got his ideas after struggling with a project where the cycle time was measured in months or something – evidence.</p>
+<h2 id="log-note-the-configurations-for-each-output">Log: Note the Configurations for each Output</h2>
+<p><strong>Hypothesis</strong>: Note the configurations when logging your output -&gt; can tell which configuration changes caused what.</p>
+<p><strong>Corollary</strong>: Make your configuration a first-class variable -&gt; can print it easily, can change it with a single button.</p>
+<p><strong>Corollary</strong>: Oh, and by the way, have a log file. It’s awesome. You don’t have to rely on just your memory for the past outputs of your program.</p>
+<hr />
+<p><strong>Test</strong>: ML - decision trees - helped to note down whether I was shuffling the data or not, whether I was using 80% of the training set or 90%, what the depth and size of the resulting tree was, the time taken, the timestamp, the test set accuracy (obviously), the training set accuracy, and the maximum depth allowed for the tree – could effortlessly see how accuracy decreased with increasing size and so on.</p>
+<p>Test: Can toggle whether to shuffle the data or not by just toggling the configuration variable – easy.</p>
+<p><strong>Test</strong>: Negative exemplar - didn’t note down the configuration information – had to remember what had happened with the previous runs; whether accuracy had gone up or down; couldn’t even tell whether my code gave the same results after a refactoring (no unit tests :P).</p>
+<p>Test: Log file - decision trees – helped a lot, as mentioned above.</p>
+<p>Test: Log file - XINU – helped a lot for me to keep track of what was going on. Had to save separate files, though, because the output was pretty huge. (Could have noted down only the variables I cared about.)</p>
+<p><strong>Test</strong>: Negative exemplar - log file - didn’t have any for the IPL dataset – didn’t have a good idea of what was going on, especially when trying something new.</p>
+<h1 id="refactoring-decoupling-the-problem">Refactoring: Decoupling the Problem</h1>
+<h2 id="case-study-input-for-format-string-exploit">Case Study: Input for Format String Exploit</h2>
+<p><strong>Hypothesis</strong>: Extract a function with explicit free arguments -&gt; encapsulate its contents, i.e., make it clear that its contents are decoupled from other things.</p>
+<p>Hypothesis: Local variables clutter things up (h/t Martin Fowler). Not exactly sure why.</p>
+<p>Hypothesis: Without local variables, a function is easy to parse. You know that you put all the inputs together using a final function call.</p>
+<p>With local variables, however, a function gets harder to parse because there is no clear, final flourish.</p>
+<p>(I suspect this also makes the code harder to invert.)</p>
+<hr />
+<p>Test:</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">format_writes <span class="op">=</span> <span class="st">''</span>.join([p[<span class="dv">0</span>] <span class="cf">for</span> p <span class="op">in</span> pairs] <span class="op">+</span> [p[<span class="dv">1</span>] <span class="cf">for</span> p <span class="op">in</span> pairs])</code></pre></div>
+<p>Need a better way to do that. (Can’t find any. <code>operator.add(*zip(*xs))</code> is too obscure.)</p>
+<p>In Haskell, it’s <code>uncurry (++) . unzip</code>.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> <span class="kw">let</span> xs <span class="fu">=</span> [(<span class="st">&quot;yo&quot;</span>, <span class="st">&quot;boyz&quot;</span>), (<span class="st">&quot;I&quot;</span>, <span class="st">&quot;am&quot;</span>), (<span class="st">&quot;sing&quot;</span>, <span class="st">&quot;song&quot;</span>)]
+<span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> unzip xs
+([<span class="st">&quot;yo&quot;</span>,<span class="st">&quot;I&quot;</span>,<span class="st">&quot;sing&quot;</span>],[<span class="st">&quot;boyz&quot;</span>,<span class="st">&quot;am&quot;</span>,<span class="st">&quot;song&quot;</span>])
+<span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> uncurry (<span class="fu">++</span>) <span class="fu">.</span> unzip <span class="fu">$</span> xs
+[<span class="st">&quot;yo&quot;</span>,<span class="st">&quot;I&quot;</span>,<span class="st">&quot;sing&quot;</span>,<span class="st">&quot;boyz&quot;</span>,<span class="st">&quot;am&quot;</span>,<span class="st">&quot;song&quot;</span>]</code></pre></div>
+<p><strong>Test</strong>: Need to abstract every concrete value and every free variable in the expression.</p>
+<p>For example, in</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">(<span class="st">'</span><span class="sc">%s%s</span><span class="st">'</span> <span class="op">%</span> (pack(<span class="st">'&lt;L'</span>, address), pack(<span class="st">'&lt;L'</span>, address <span class="op">+</span> <span class="dv">2</span>)), <span class="st">'</span><span class="sc">%%%d</span><span class="st">c</span><span class="sc">%%%d</span><span class="st">$n</span><span class="sc">%%%d</span><span class="st">c</span><span class="sc">%%%d</span><span class="st">$n'</span> <span class="op">%</span> (<span class="bn">0x00000</span> <span class="op">+</span> least_significant_half(value) <span class="op">-</span> <span class="dv">25</span> <span class="op">-</span> <span class="dv">12</span>, <span class="dv">344</span>, <span class="bn">0x10000</span> <span class="op">+</span> most_significant_half(value) <span class="op">-</span> least_significant_half(value), <span class="dv">345</span>))</code></pre></div>
+<p>we have the value <code>0x00000</code>, the offset <code>-25 - 12</code>, the printf index <code>344</code>, and <code>0x10000</code>.</p>
+<p>Test: I’m naming each part of the program the way I think about it in my mind.</p>
+<p>Test: Type-checking errors or run-time errors tell you what dependencies you haven’t handled yet.</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">  File <span class="st">&quot;input-for-fsa2.py&quot;</span>, line 26, <span class="kw">in</span> get_format_string_setters
+    setter_pairs, <span class="kw">(</span>[], initial_state<span class="kw">)</span>
+NameError: global name <span class="st">'setter_pairs'</span> is not defined</code></pre></div>
+<p>So I forgot to pass in the argument <code>setter_pairs</code> to <code>get_format_string_setters</code>.</p>
+<p>Test: Overall, there are too many variables to pass around. Do I just create a first-class object containing all of them? They are uncorrelated. – it was tough. Still don’t know the best answer.</p>
+<p>Test: Assumptions - least significant half is <code>(hexval % (1 &lt;&lt; 16))</code>; that <code>%n</code> is how you write to different locations; that <code>0x10000 + least_significant_half(value) - num_chars_so_far</code> will write the least significant bytes of the value to the given address; etc. (Wow. It’s been a long time since I’ve had the space to reflect on my code.)</p>
+<p>Test: How would I test my code? What properties am I testing for? I’m testing that the final format string will write to the 12 bytes starting at RIP and that it won’t overwrite the stack cookie.</p>
 <h1 id="algebra-of-programming">Algebra of Programming</h1>
 <p><strong>Acceptance test</strong>: Algebra of programming - maximum segment sum (from Bird, Thinking Functionally with Haskell).</p>
 <p>Given the problem statement “get the segment with maximum sum”</p>
@@ -2158,8 +2487,10 @@ mss <span class="fu">=</span> maximum <span class="fu">.</span> map sum <span cl
 <span class="co">-- map (foldr f e) . tails = scanr f e</span>
 <span class="co">-- O(n)</span>
 <span class="fu">=</span> maximum <span class="fu">.</span> scanr (<span class="fu">@</span>) <span class="dv">0</span>, <span class="kw">where</span> x <span class="fu">@</span> y <span class="fu">=</span> <span class="dv">0</span> <span class="ot">`max`</span> (x <span class="fu">+</span> y)</code></pre></div>
-<p><strong>Acceptance test</strong>: Fusion law</p>
-<p>Given TODO</p>
+<p><strong>Acceptance test</strong>: Algebra of programming - greedy algorithm.</p>
+<p>Given the shortest path problem</p>
+<p>when I try to use algebra to get the answer</p>
+<p>then I should get Dijkstra’s.</p>
 <h2 id="inverse">Inverse</h2>
 <p><strong>Hypothesis</strong>: <code>unfoldr f' . foldr f z = id</code> when f’ can recover x and xs from the given value and replace f with <code>(,)</code>. Also f’ z must be the empty list.</p>
 <p>Test: Basic - get inverse for <code>foldr (:) []</code> aka the identity function.</p>
@@ -2369,7 +2700,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: January 24, 2018</div>
+<div class="info">Last modified: April  8, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 

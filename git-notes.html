@@ -47,8 +47,12 @@
 
             <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
 
-<h1 id="clone-from-another-computer">Clone from another computer</h1>
-<pre><code>git clone username@foo.cs.purdue.edu:/homes/username/repo-name/</code></pre>
+<h1 id="share-a-repo-between-your-laptop-and-another-computer">Share a Repo between your Laptop and Another Computer</h1>
+<p>Create a bare git repository on the remote computer:</p>
+<pre><code>git init --bare</code></pre>
+<p>Push the commits on your local computer:</p>
+<pre><code>git push username@foo.cs.purdue.edu:/homes/username/Bare-Repo master -u</code></pre>
+<p>You can now clone that remote git repository on the remote computer and make any changes if needed.</p>
 <h1 id="add-a-submodule">Add a submodule</h1>
 <p>Add a submodule: Using Magit, I could just clone (or start) a new repository in a subdirectory and add the directory. It automatically added the required lines to .gitmodules and got things working.</p>
 <h1 id="treat-binary-file-as-text">Treat “binary” file as text</h1>
@@ -78,9 +82,14 @@ git rev-list HEAD --count -- one-button-change.md</code></pre>
 <h1 id="checkout-commit-by-date">Checkout Commit by Date</h1>
 <p>To checkout the commit you were at one year ago (helpful for nostalgic recollections and stats-gathering on New Year’s Eve):</p>
 <pre><code>git checkout `git rev-list -n 1 --before=&quot;1 year ago&quot; master`</code></pre>
+<h1 id="github-api">GitHub API</h1>
+<p>Get all data with authentication:</p>
+<blockquote>
+<p>curl -u “username” https://api.github.com/repos/username</p>
+</blockquote>
 
 <div class="info">Created: December 13, 2017</div>
-<div class="info">Last modified: January  1, 2018</div>
+<div class="info">Last modified: March 27, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes</div>
 
