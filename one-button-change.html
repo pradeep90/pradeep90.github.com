@@ -1276,7 +1276,7 @@ QuickCheck property</code></pre>
 <p><strong>Hypothesis</strong>: Also, figure out - response &lt;- programming situation.</p>
 <p>Why did I not toggle all the variables when tracking down that Markdown <code>mark-paragraph</code> bug? Where did I go wrong?</p>
 <p>If you think programming time is caused by past experience, access to interpreter, and other things, then toggle them. Remove the effect of past experience somehow. (How? Maybe make them program in a new language.)</p>
-<h1 id="programming-for-minimum-interface-at-speed">Programming for Minimum Interface at Speed</h1>
+<h1 id="vague-stuff">Vague Stuff</h1>
 <h2 id="programming-acceptance-test">Programming: Acceptance Test</h2>
 <p><strong>Acceptance test</strong>: CS527 - CTF problems.</p>
 <p>Given a CTF problem</p>
@@ -1423,6 +1423,7 @@ QuickCheck property</code></pre>
 <p>Add unit tests for each of the functions. [unit tests] Then refactor. [refactoring hat]</p>
 <p>If you need to use some technique, look it up in a Haskell integration test. [look it up in integration test]</p>
 <p>If you get a failing test or compilation error, narrow down the causes. [narrow down the causes by backward inference on top of the last working version - look at the diff]</p>
+<h1 id="testing">Testing</h1>
 <h2 id="look-at-the-input-configurations-todo---flashcards">Look at the Input Configurations (TODO - flashcards)</h2>
 <p><strong>Hypothesis</strong>: pure function, know all possible input configurations for which the output is different -&gt; know test cases; clear how to proceed.</p>
 <p>pure function, don’t know all possible input configurations for which the output is different -&gt; don’t know all test cases; not clear how to proceed.</p>
@@ -1448,37 +1449,7 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Test: OS HW3 - don’t know whether hsize can be more than 1600 or not. Every other doubt stems from this uncertainty. – if hsize is only within 1600, then I know what to do. If not, then I don’t know what to do, but I can find out. Clear.</p>
 <p>Test: OS HW3 - What worked, I think, was to have a concrete walk-through. That told me where there could be potential hotspots.</p>
 <p>“You want to read from some address in your private heap. [might want read from elsewhere] (You’ve already used vgetmem to allocate the memory. [might not have used vgetmem yet]). First, there will be a page fault because you’ve never accessed that page before [might have accessed that page before and it might be present or not]. So, you will allocate one frame for the page table and then one frame for the page itself [may not need to allocate one frame for the page table]. And then copy that page from the backing store [or just don’t]. There will always be a free frame available, so no problem [there may not be a free frame available, in which case, problem].” – Input configurations - want to access memory within your private heap or not; have used vgetmem or not; have accessed page before; is present in memory; need to allocate frame for page table; copy from backing store or don’t; free frame available or not. Also, it’s one process right now. What if you have multiple processes?</p>
-<h2 id="debugging-look-at-the-diffs">Debugging: Look at the Diffs!</h2>
-<p><strong>Hypothesis</strong>: don’t know the cause of something, have the source code and can run interventions (aka <strong>debugging</strong>), look at your <strong>diff</strong>, list all your assumptions or toggle your diff till you get a “yes” -&gt; figure out which assumption is causing your error.</p>
-<p>debugging - read your diffs line by line -&gt; notice what changes you made that could have caused the error.</p>
-<p>debugging - just try different inputs without looking at the diff -&gt; find it harder to come up with the right inputs.</p>
-<p>Hypothesis: If you’re not sure where your program fails, set printfs at different points. That will narrow it down faster than one printf at a time.</p>
-<hr />
-<p>Test: Tried writing at an address but the CR2 value showed some other address. Turned out that I had interpreted the output as hex when it was actually a long int! – toggling my diff would have helped.</p>
-<p>Test: Re-read my buggy page directory setup code - discovered my errors. – read the diff line by line.</p>
-<p>Test: Process wasn’t receiving message from parent. Tried lots of variations. Finally realized that I wasn’t even resuming the process. – didn’t look at the diff.</p>
-<h2 id="complex-diffs-toggling-a-lot-of-variables">“Complex” Diffs: Toggling a Lot of Variables</h2>
-<p><strong>Hypothesis</strong>: Diff toggles a lot of variables -&gt; hard to predict what the output will be.</p>
-<p>Diff toggles a few variables -&gt; easier to predict what the output will be.</p>
-<hr />
-<p>Test: Lots of changes in my Emacs folder - don’t know what leads to what. – lots of variables changed - I took .emacs.d/ off the load-path, moved my personal elisp files into one folder, deleted the old lisp packages I was storing manually and instead got them from the package manager, and used <code>(require 'foo-feature)</code> instead of loading its file manually. Any of them in any combination could cause problems!</p>
-<p>Test: Exactly one section changed in my one-button change essay - I know exactly what that does to the essay. – “look at diffs” - ok that affects my model of how to debug something, but not my ideas about refactoring or programming to an interface.</p>
-<h2 id="confusion-look-at-the-diffs">Confusion: Look at the Diffs!</h2>
-<p><strong>Corollary</strong>: Went from not confused to confused, get the specific changes (<strong>diffs</strong>) that caused the problem -&gt; need to learn about the effects of a very few variables.</p>
-<p>Went from not confused to confused, don’t know which specific changes caused the problem -&gt; feel like you need to learn about a lot of variables.</p>
-<p><strong>Lesson</strong>: Start with something you’re not confused about and take it from there.</p>
-<p><strong>Hypothesis</strong>: Confused, ask for a positive and negative exemplar -&gt; get clear about the inputs and outputs.</p>
-<hr />
-<p>Test: Was following along the causal RL lecture till the q_i’s started coming in. Basically, I went from “not confused” to “confused”. Earlier, my mental model - my program - passed the tests of predicting the correct answer. But now, it couldn’t. So, I needed to look at the diff and figure out which change broke my model. – Got the specific diff that broke my model.</p>
-<p>Test: Confused about all causality papers. Don’t think I’ve been un-confused about “all causality papers”. Feel like I will have to read a lot of papers to become un-confused about “causality papers”.</p>
-<p>Test: OS HW3 - really, really confused about what to do. No clear idea about how to proceed. – Okay. Narrow down the diff. What worked, I think, was to have a concrete walk-through. That told me where there could be potential hotspots (for example, if there were no free frame available, I’d have to replace a page).</p>
-<p>Test: Goals for 2018 - didn’t know what caused my indecisiveness. Tried to think of a case where I wasn’t indecisive. Got it. – Realized that I was changing too many variables.</p>
-<h2 id="differing-predictions-well-look-at-the-diffs">Differing predictions: Well, Look at the Diffs!</h2>
-<p><strong>Hypothesis</strong>: Don’t know the cause of something, don’t have the source code and can’t run interventions, come up with possible causes - get their differing predictions -&gt; figure out the right cause.</p>
-<p>Want to know where I know more than others - get their differing predictions (by taking the diffs of our proposed explanations or just the books we’ve read) -&gt; figure out problems that they just can’t solve.</p>
-<hr />
-<p>Test: Why did Goldenfold say “5 more minutes of this and I’ll get mad”. Two possible causes. We can look at their differing predictions to get feedback. – don’t have the source code and can’t run interventions; but can look at differing predictions.</p>
-<p>Test: What do I know about “cognitive psychology” that others don’t? How to get differing predictions? They talk about “complex neural networks” and “network of ideas”. I don’t (I know about how it’s cue-memory associations all the way down). They talk about how forgetful they are, I don’t (I know about the exponential decay curve). They think re-reading is good enough. I don’t (I know that you need to test for recall). – Their proposed explanations are different from mine in these ways. From these, I can come up with differing predictions - people who test themselves will actually learn things.</p>
+<h1 id="programming-at-speed-cycle-time">Programming at Speed: Cycle Time</h1>
 <h2 id="speed-coding-hat-vs-refactoring-hat">Speed: Coding Hat vs Refactoring Hat</h2>
 <p><strong>Hypothesis</strong>: adding a new feature, one long chain of function calls -&gt; will pass the test case (one branch), very little time, will not overengineer. Refactor -&gt; easier to test going forward -&gt; quick. h/t Kent Beck.</p>
 <p>adding a new feature, abstract code (using separate functions or classes) -&gt; will pass the test case (one branch), will take more time because you’re changing the design too, may overengineer. Debugging -&gt; slow.</p>
@@ -1545,6 +1516,60 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Test: “Armchair” economics - produce answers to real-world questions using economic models instead of actual reality. For example, Tim Harford predicted that most of the coffee shop profits would go to the landlords because what was scarce was their corner store location, not the coffee. – reason.</p>
 <p><strong>Test</strong>: Algorithms - cycle property - the costliest edge in a cycle can never be part of an MST. – logic.</p>
 <p><strong>Test</strong>: Algorithms - cut property - the cheapest edge in a cutset is part of the MST. – logic.</p>
+<h2 id="continuous-deployment">Continuous Deployment</h2>
+<p>Hypothesis: Continuous deployment -&gt; low risk and low tension when it comes to release day.</p>
+<p>Release only the day before -&gt; high risk and high tension.</p>
+<hr />
+<p>Test: JWZ about Netscape - they released their browser for all platforms at the same time, whereas the conventional practice was to release Windows first and handle Mac later. – That’s what failed companies did.</p>
+<blockquote>
+<p>The other big thing was we always shipped all platforms simultaneously; that was another thing they thought was just stupid. “Oh, 90 percent of people are using Windows, so we’ll focus on the Windows side of things and then we’ll port it later.” Which is what many other failed companies have done. If you’re trying to ship a cross-platform product, history really shows that’s how you don’t do it. If you want it to really be cross-platform, you have to do them simultaneously. The porting thing results in a crappy product on the second platform.</p>
+<p>– JWZ, Coders at Work</p>
+</blockquote>
+<p>Test: CS373 HW1 - Note how much time I’m spending just <strong>wrestling</strong> with R and CSV. I haven’t done any actual work yet. – Need to release a hello world before you do anything else. Here, it would have been a simple installation of R itself, then reading CSV in R, CSV with arrays, converting JSON to CSV, and then other stuff. All because I didn’t release sooner.</p>
+<h2 id="short-cycle-time---integration-tests-duplicate">Short Cycle Time &lt;- Integration Tests (duplicate)</h2>
+<p><strong>Corollary</strong>: Have detailed integration tests -&gt; short cycle time, especially if you consider fleshing out a function to be progress.</p>
+<p>Don’t have integration tests -&gt; long cycle time.</p>
+<hr />
+<p>Test: Bird theorem - could get to the end quickly and understand something useful from it when just trying to follow the values, which makes for an impromptu integration test. – short cycle time.</p>
+<h1 id="modifiability">Modifiability</h1>
+<h1 id="debugging-1">Debugging</h1>
+<h2 id="debugging-look-at-the-diffs">Debugging: Look at the Diffs!</h2>
+<p><strong>Hypothesis</strong>: don’t know the cause of something, have the source code and can run interventions (aka <strong>debugging</strong>), look at your <strong>diff</strong>, list all your assumptions or toggle your diff till you get a “yes” -&gt; figure out which assumption is causing your error.</p>
+<p>debugging - read your diffs line by line -&gt; notice what changes you made that could have caused the error.</p>
+<p>debugging - just try different inputs without looking at the diff -&gt; find it harder to come up with the right inputs.</p>
+<p>Hypothesis: If you’re not sure where your program fails, set printfs at different points. That will narrow it down faster than one printf at a time.</p>
+<hr />
+<p>Test: Tried writing at an address but the CR2 value showed some other address. Turned out that I had interpreted the output as hex when it was actually a long int! – toggling my diff would have helped.</p>
+<p>Test: Re-read my buggy page directory setup code - discovered my errors. – read the diff line by line.</p>
+<p>Test: Process wasn’t receiving message from parent. Tried lots of variations. Finally realized that I wasn’t even resuming the process. – didn’t look at the diff.</p>
+<h2 id="dont-debug-fall-back-to-a-positive-exemplar-duplicate">Don’t Debug: Fall back to a Positive Exemplar (duplicate)</h2>
+<p><strong>Hypothesis</strong>: Test passes -&gt; positive exemplar (hopefully with all necessary causes).</p>
+<p>Test fails, create a smaller exemplar that is positive and extend it to the larger exemplar -&gt; know what works (necessary causes) and what doesn’t; faster.</p>
+<p>Test fails, debug by toggling here and there -&gt; don’t know what works (necessary causes) and what doesn’t; slow.</p>
+<h1 id="uncertainty-about-the-program-output">Uncertainty about the Program Output</h1>
+<h2 id="complex-diffs-toggling-a-lot-of-variables">“Complex” Diffs: Toggling a Lot of Variables</h2>
+<p><strong>Hypothesis</strong>: Diff toggles a lot of variables -&gt; hard to predict what the output will be.</p>
+<p>Diff toggles a few variables -&gt; easier to predict what the output will be.</p>
+<hr />
+<p>Test: Lots of changes in my Emacs folder - don’t know what leads to what. – lots of variables changed - I took .emacs.d/ off the load-path, moved my personal elisp files into one folder, deleted the old lisp packages I was storing manually and instead got them from the package manager, and used <code>(require 'foo-feature)</code> instead of loading its file manually. Any of them in any combination could cause problems!</p>
+<p>Test: Exactly one section changed in my one-button change essay - I know exactly what that does to the essay. – “look at diffs” - ok that affects my model of how to debug something, but not my ideas about refactoring or programming to an interface.</p>
+<h2 id="confusion-look-at-the-diffs">Confusion: Look at the Diffs!</h2>
+<p><strong>Corollary</strong>: Went from not confused to confused, get the specific changes (<strong>diffs</strong>) that caused the problem -&gt; need to learn about the effects of a very few variables.</p>
+<p>Went from not confused to confused, don’t know which specific changes caused the problem -&gt; feel like you need to learn about a lot of variables.</p>
+<p><strong>Lesson</strong>: Start with something you’re not confused about and take it from there.</p>
+<p><strong>Hypothesis</strong>: Confused, ask for a positive and negative exemplar -&gt; get clear about the inputs and outputs.</p>
+<hr />
+<p>Test: Was following along the causal RL lecture till the q_i’s started coming in. Basically, I went from “not confused” to “confused”. Earlier, my mental model - my program - passed the tests of predicting the correct answer. But now, it couldn’t. So, I needed to look at the diff and figure out which change broke my model. – Got the specific diff that broke my model.</p>
+<p>Test: Confused about all causality papers. Don’t think I’ve been un-confused about “all causality papers”. Feel like I will have to read a lot of papers to become un-confused about “causality papers”.</p>
+<p>Test: OS HW3 - really, really confused about what to do. No clear idea about how to proceed. – Okay. Narrow down the diff. What worked, I think, was to have a concrete walk-through. That told me where there could be potential hotspots (for example, if there were no free frame available, I’d have to replace a page).</p>
+<p>Test: Goals for 2018 - didn’t know what caused my indecisiveness. Tried to think of a case where I wasn’t indecisive. Got it. – Realized that I was changing too many variables.</p>
+<h2 id="differing-predictions-well-look-at-the-diffs">Differing predictions: Well, Look at the Diffs!</h2>
+<p><strong>Hypothesis</strong>: Don’t know the cause of something, don’t have the source code and can’t run interventions, come up with possible causes - get their differing predictions -&gt; figure out the right cause.</p>
+<p>Want to know where I know more than others - get their differing predictions (by taking the diffs of our proposed explanations or just the books we’ve read) -&gt; figure out problems that they just can’t solve.</p>
+<hr />
+<p>Test: Why did Goldenfold say “5 more minutes of this and I’ll get mad”. Two possible causes. We can look at their differing predictions to get feedback. – don’t have the source code and can’t run interventions; but can look at differing predictions.</p>
+<p>Test: What do I know about “cognitive psychology” that others don’t? How to get differing predictions? They talk about “complex neural networks” and “network of ideas”. I don’t (I know about how it’s cue-memory associations all the way down). They talk about how forgetful they are, I don’t (I know about the exponential decay curve). They think re-reading is good enough. I don’t (I know that you need to test for recall). – Their proposed explanations are different from mine in these ways. From these, I can come up with differing predictions - people who test themselves will actually learn things.</p>
+<h1 id="high-level-design-decomposing-the-output">High-level Design: Decomposing the Output</h1>
 <h2 id="high-level-design-needs-an-integration-test-maybe-with-mocking">High-level Design needs an Integration Test (maybe with Mocking)</h2>
 <p><strong>Corollary</strong>: Have integration test with expected output (maybe mocking out each lower-level function for the particular test input), get high-level design -&gt; low uncertainty.</p>
 <p>Don’t have integration test, get high-level design -&gt; high uncertainty.</p>
@@ -1645,35 +1670,6 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <hr />
 <p>Test: Struggled to write the get and put functions. Why? Got intimidated because I didn’t think of the interface for each part. In short, I didn’t use locality of causality. – I thought it had to be some big feature to be implemented all at once. It seemed like I had to implement a large diff before I could get any feedback.</p>
 <p><strong>Test</strong>: Acceptance test for the get command (wow, I didn’t think even once about the actual flow of data) - they enter “get foo.txt” - you send that to the server - it checks the file, creates a new port, and sends it to you “get port: 13355 size: 205” - you then connect to that port and receive the contents and test whether you’ve got 205 bytes. You close the port (as far as this test is concerned). The end. – how fucking <strong>clear</strong> was that?!</p>
-<h2 id="dont-debug-fall-back-to-a-positive-exemplar-duplicate">Don’t Debug: Fall back to a Positive Exemplar (duplicate)</h2>
-<p><strong>Hypothesis</strong>: Test passes -&gt; positive exemplar (hopefully with all necessary causes).</p>
-<p>Test fails, create a smaller exemplar that is positive and extend it to the larger exemplar -&gt; know what works (necessary causes) and what doesn’t; faster.</p>
-<p>Test fails, debug by toggling here and there -&gt; don’t know what works (necessary causes) and what doesn’t; slow.</p>
-<h2 id="refactoring-write-direct-tests-before-you-refactor---lower-cycle-time">Refactoring: Write Direct Tests before you Refactor (- lower cycle time)</h2>
-<p><strong>Hypothesis</strong>: Don’t have direct tests, refactor -&gt; may break the code; hard to debug.</p>
-<p>Don’t have tests, refactor -&gt; reasonably confident; easy to debug (narrow causes).</p>
-<hr />
-<p>Test: Phone number - trying to refactor <code>g</code> (yeah). The overall tests for <code>encode</code> keep failing. That’s because I don’t know the contract for <code>g</code> - I don’t have direct tests for it. So, I should see what behaviour it currently produces before I try to clean it up. – broke the code; hard to debug.</p>
-<h3 id="refactoring-make-the-types-compose">Refactoring: Make the Types Compose</h3>
-<p><strong>Hypothesis</strong>: Type signatures -&gt; can see which functions you can compose (and which you can’t and must rewrite); doesn’t take a genius.</p>
-<p>No explicit type signatures -&gt; hard to see which functions you can compose; feels like it takes a genius.</p>
-<hr />
-<p>Test: Type of g:</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">g ::</span> [<span class="dt">String</span>] <span class="ot">-&gt;</span> <span class="dt">M.Map</span> <span class="dt">Char</span> <span class="dt">Char</span> <span class="ot">-&gt;</span> (<span class="dt">String</span>, <span class="dt">String</span>) <span class="ot">-&gt;</span> [<span class="dt">String</span>]</code></pre></div>
-<p>It’s not composable at all. It’s just a jumble of types. Specifically, it’s not <strong>closed</strong>. But I’d like to use it over and over, so I want it to be closed (either in the category of functions <code>a -&gt; a</code> or in the category of monads <code>a -&gt; m a</code>). – You can’t compose it with the external type of any other function.</p>
-<p>Test: Hmm… Haskell programs generally express one unit of computation with their function types.</p>
-<p>Representing the whole computation of phrases as <code>(PrefixDigits, SuffixDigits) -&gt; [Phrase]</code> hides the inner computations. We don’t know what’s happening underneath.</p>
-<p>What are we actually doing? We want (a) <code>PhoneNumber -&gt; [Phrase]</code>. So, we are (b) breaking it into <code>(PrefixDigits, SuffixDigits)</code> pairs and then (c) encoding <code>PrefixDigits</code> as a <code>Token</code> (which could be a <code>WordToken</code> or a <code>DigitToken</code>) and then (d) recursively encoding <code>SuffixDigits</code> as <code>[Phrase]</code> and then (e) combining the <code>Token</code> and the <code>[Phrase]</code> such that there are no consecutive digits.</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- (a) and (c)</span>
-<span class="ot">encode ::</span> <span class="dt">PhoneNumber</span> <span class="ot">-&gt;</span> [<span class="dt">Phrase</span>]
-<span class="co">-- (b)</span>
-<span class="ot">allSplits ::</span> <span class="dt">PhoneNumber</span> <span class="ot">-&gt;</span> [(<span class="dt">PrefixDigits</span>, <span class="dt">SuffixDigits</span>)]
-<span class="co">-- (c)</span>
-<span class="ot">encodeToken ::</span> <span class="dt">PrefixDigits</span> <span class="ot">-&gt;</span> <span class="dt">Token</span>
-<span class="co">-- (e)</span>
-<span class="ot">combineToken ::</span> <span class="dt">Token</span> <span class="ot">-&gt;</span> [<span class="dt">Phrase</span>] <span class="ot">-&gt;</span> [<span class="dt">Phrase</span>]</code></pre></div>
-<p>See how much cleaner that is! And, of course, I would make the types abstract (for example, <code>allSplits</code> doesn’t need to know if the argument is a <code>PhoneNumber</code> or anything; it can work on a simple list).</p>
-<p>You can follow the computation from the types. The only way to get a <code>[Phrase]</code> is through <code>combineToken</code>, which needs a <code>Token</code>. We get that from <code>encodeToken</code>, which in turn takes inputs from <code>allSplits</code>. – They compose well with each other.</p>
 <h2 id="deployment-pipeline-flesh-out-the-integration-test-duplicate">Deployment Pipeline: Flesh out the Integration Test (?? duplicate)</h2>
 <p><strong>Hypothesis</strong>: Deployment pipeline for hypotheses or programs = add a high-level integration test with function calls mocked out so that it all flows; fill out mocked-out functions using inputs and outputs from the integration test; release by running integration tests + unit tests; you’re done passing that integration test when you no longer have any mocks in the integration test -&gt; decoupled high-level design by following the values; isolated implementation for the inner functions by using real-world tests; working product at every point as certified by the integration test; frequent releases by implementing inner functions quickly and running the integration test + unit tests;</p>
 <p>don’t have high-level integration test; add functions without an overarching test -&gt; may commit to poor design; isolated implementation for functions; won’t have a working product for a while since there are no integration tests passed; infrequent high-level releases.</p>
@@ -1686,22 +1682,7 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <p>Test: No high-level integration test - current refactoring of causal hypothesis essay. Just refactoring pieces here and there. – No idea how it all fits together and may have a poor design that isn’t related to any real-world problem. Definitely won’t have a working product for like 50 hours or so! Can’t test the overall picture.</p>
 <p>Test: [2017-12-27 Wed] My one-button change essay. No really idea how it all fits together - the old random notes, the newer well-tested little ideas that still run up to a 11k-word tangle, and then some ideas from my journal and phone. – no high-level integration test; add new ideas like “follow the values -&gt; narrow the causes” without an overarching test -&gt; <strong>poor design for sure</strong>; won’t have a working product for a while since I’m not running any integration tests; infrequent release of integration tests (maybe when I write a 2-hour program like TicTacToe or something - which I approach intuitively anyway).</p>
 <p>Test: Duplication - causal hypothesis - a bazillion explanations for how we understand things - hierarchical categories, stories, grammar, etc. – no integration test.</p>
-<h2 id="continuous-deployment">Continuous Deployment</h2>
-<p>Hypothesis: Continuous deployment -&gt; low risk and low tension when it comes to release day.</p>
-<p>Release only the day before -&gt; high risk and high tension.</p>
-<hr />
-<p>Test: JWZ about Netscape - they released their browser for all platforms at the same time, whereas the conventional practice was to release Windows first and handle Mac later. – That’s what failed companies did.</p>
-<blockquote>
-<p>The other big thing was we always shipped all platforms simultaneously; that was another thing they thought was just stupid. “Oh, 90 percent of people are using Windows, so we’ll focus on the Windows side of things and then we’ll port it later.” Which is what many other failed companies have done. If you’re trying to ship a cross-platform product, history really shows that’s how you don’t do it. If you want it to really be cross-platform, you have to do them simultaneously. The porting thing results in a crappy product on the second platform.</p>
-<p>– JWZ, Coders at Work</p>
-</blockquote>
-<p>Test: CS373 HW1 - Note how much time I’m spending just <strong>wrestling</strong> with R and CSV. I haven’t done any actual work yet. – Need to release a hello world before you do anything else. Here, it would have been a simple installation of R itself, then reading CSV in R, CSV with arrays, converting JSON to CSV, and then other stuff. All because I didn’t release sooner.</p>
-<h2 id="short-cycle-time---integration-tests-duplicate">Short Cycle Time &lt;- Integration Tests (duplicate)</h2>
-<p><strong>Corollary</strong>: Have detailed integration tests -&gt; short cycle time, especially if you consider fleshing out a function to be progress.</p>
-<p>Don’t have integration tests -&gt; long cycle time.</p>
-<hr />
-<p>Test: Bird theorem - could get to the end quickly and understand something useful from it when just trying to follow the values, which makes for an impromptu integration test. – short cycle time.</p>
-<h2 id="fast-index-for-your-techniques-integration-tests">Fast Index for your Techniques: Integration Tests</h2>
+<h2 id="fast-index-for-your-techniques-integration-tests-categorize-the-output">Fast Index for your Techniques: Integration Tests (Categorize the Output)</h2>
 <p><strong>Corollary</strong>: Real-world scenario, can’t remember which technique to use, look <strong>only</strong> at your integration tests for a similar scenario -&gt; have to remember just the integration tests and will automatically have concrete discriminating cues; quickly get the single function you want; guaranteed up-to-date since you will replace old techniques with better ones; DRY because you can’t have multiple hypotheses for the same scenario.</p>
 <p>Real-world scenario, can’t remember which technique to use, no integration tests -&gt; have to remember a lot of context-less techniques for whom I don’t have discriminating cues; slow; may not be up-to-date; not DRY because I may see several techniques for the same (poorly-categorized) scenario.</p>
 <p>New scenario that your past acceptance tests don’t cover, search your techniques (aka weapons) -&gt; hopefully respond correctly; add as an acceptance test.</p>
@@ -1716,7 +1697,7 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <p>Test: C pointer details - hard to remember the abstract knowledge about <code>p + i</code> and <code>(void *) p</code> and <code>(struct foo *) p</code> and so on. Easier to remember a test I ran on all these examples, from where I can easily get the answers I want. – done.</p>
 <p>Test: New scenario - Milo against Avada Kedavra - none of his usual spells worked; use the <a href="https://www.fanfiction.net/s/8096183/25/Harry-Potter-and-the-Natural-20">Skeletal Troll</a>. – he probably searched the rule book for something like this. He could then use it against anyone who cast the killing spell against him.</p>
 <p>Test: YBAW - overwhelmed by a project plan - use a story board to represent a few big ideas. – it’s not a full story, just a sketch.</p>
-<h2 id="spec-or-integration-test-quick-feedback-about-high-level-design">Spec or Integration Test: Quick Feedback about High-level Design (??)</h2>
+<h2 id="spec-or-integration-test-quick-feedback-about-high-level-design-decompose-the-output">Spec or Integration Test: Quick Feedback about High-level Design (??) (Decompose the Output?)</h2>
 <p><strong>Corollary</strong>: Writing a spec (or better, a prototype) = coming up with integration tests (with feedback from the user).</p>
 <p><strong>Hypothesis</strong>: Spec or integration test, change your high-level design -&gt; can set the input configuration (aka your program) quickly and get feedback from user (who is the mechanism you’re testing).</p>
 <p>Write fully-tested code, change your high-level design -&gt; lot of work to change the input configuration (your program).</p>
@@ -1762,6 +1743,34 @@ h <span class="fu">.</span> fold f <span class="fu">=</span> fold g</code></pre>
 <p>CORAL: All business plans for startups turn out to be wrong, but you still need them - and not just as works of fiction. They represent the written form of your current beliefs about your key assumptions. Writing down your business plan checks whether your current beliefs can possibly be coherent, and suggests which critical beliefs to test first, and which results should set off alarms, and when you are falling behind key survival thresholds. The idea isn’t that you stick to the business plan; it’s that having a business plan (a) checks that it seems possible to succeed in any way whatsoever, and (b) tells you when one of your beliefs is being falsified so you can explicitly change the plan and adapt. Having a written plan that you intend to rapidly revise in the face of new information is one thing. NOT HAVING A PLAN is another.</p>
 <p>– <a href="https://intelligence.org/2017/11/26/security-mindset-and-the-logistic-success-curve/"></a></p>
 </blockquote>
+<h1 id="refactoring">Refactoring</h1>
+<h2 id="refactoring-write-direct-tests-before-you-refactor---lower-cycle-time">Refactoring: Write Direct Tests before you Refactor (- lower cycle time)</h2>
+<p><strong>Hypothesis</strong>: Don’t have direct tests, refactor -&gt; may break the code; hard to debug.</p>
+<p>Don’t have tests, refactor -&gt; reasonably confident; easy to debug (narrow causes).</p>
+<hr />
+<p>Test: Phone number - trying to refactor <code>g</code> (yeah). The overall tests for <code>encode</code> keep failing. That’s because I don’t know the contract for <code>g</code> - I don’t have direct tests for it. So, I should see what behaviour it currently produces before I try to clean it up. – broke the code; hard to debug.</p>
+<h3 id="refactoring-make-the-types-compose">Refactoring: Make the Types Compose</h3>
+<p><strong>Hypothesis</strong>: Type signatures -&gt; can see which functions you can compose (and which you can’t and must rewrite); doesn’t take a genius.</p>
+<p>No explicit type signatures -&gt; hard to see which functions you can compose; feels like it takes a genius.</p>
+<hr />
+<p>Test: Type of g:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">g ::</span> [<span class="dt">String</span>] <span class="ot">-&gt;</span> <span class="dt">M.Map</span> <span class="dt">Char</span> <span class="dt">Char</span> <span class="ot">-&gt;</span> (<span class="dt">String</span>, <span class="dt">String</span>) <span class="ot">-&gt;</span> [<span class="dt">String</span>]</code></pre></div>
+<p>It’s not composable at all. It’s just a jumble of types. Specifically, it’s not <strong>closed</strong>. But I’d like to use it over and over, so I want it to be closed (either in the category of functions <code>a -&gt; a</code> or in the category of monads <code>a -&gt; m a</code>). – You can’t compose it with the external type of any other function.</p>
+<p>Test: Hmm… Haskell programs generally express one unit of computation with their function types.</p>
+<p>Representing the whole computation of phrases as <code>(PrefixDigits, SuffixDigits) -&gt; [Phrase]</code> hides the inner computations. We don’t know what’s happening underneath.</p>
+<p>What are we actually doing? We want (a) <code>PhoneNumber -&gt; [Phrase]</code>. So, we are (b) breaking it into <code>(PrefixDigits, SuffixDigits)</code> pairs and then (c) encoding <code>PrefixDigits</code> as a <code>Token</code> (which could be a <code>WordToken</code> or a <code>DigitToken</code>) and then (d) recursively encoding <code>SuffixDigits</code> as <code>[Phrase]</code> and then (e) combining the <code>Token</code> and the <code>[Phrase]</code> such that there are no consecutive digits.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- (a) and (c)</span>
+<span class="ot">encode ::</span> <span class="dt">PhoneNumber</span> <span class="ot">-&gt;</span> [<span class="dt">Phrase</span>]
+<span class="co">-- (b)</span>
+<span class="ot">allSplits ::</span> <span class="dt">PhoneNumber</span> <span class="ot">-&gt;</span> [(<span class="dt">PrefixDigits</span>, <span class="dt">SuffixDigits</span>)]
+<span class="co">-- (c)</span>
+<span class="ot">encodeToken ::</span> <span class="dt">PrefixDigits</span> <span class="ot">-&gt;</span> <span class="dt">Token</span>
+<span class="co">-- (e)</span>
+<span class="ot">combineToken ::</span> <span class="dt">Token</span> <span class="ot">-&gt;</span> [<span class="dt">Phrase</span>] <span class="ot">-&gt;</span> [<span class="dt">Phrase</span>]</code></pre></div>
+<p>See how much cleaner that is! And, of course, I would make the types abstract (for example, <code>allSplits</code> doesn’t need to know if the argument is a <code>PhoneNumber</code> or anything; it can work on a simple list).</p>
+<p>You can follow the computation from the types. The only way to get a <code>[Phrase]</code> is through <code>combineToken</code>, which needs a <code>Token</code>. We get that from <code>encodeToken</code>, which in turn takes inputs from <code>allSplits</code>. – They compose well with each other.</p>
+<h1 id="which-technique-to-use">Which Technique to Use</h1>
+<h1 id="programming-for-minimum-interface-at-speed">Programming for Minimum Interface at Speed</h1>
 <h2 id="continuous-delivery-run-acceptance-tests-in-a-production-like-environment">Continuous Delivery: Run Acceptance Tests in a Production-Like Environment</h2>
 <p><strong>Hypothesis</strong>: Continuous delivery = running acceptance tests in a production-like environment.</p>
 <p>(You still have to build and stage all the way to a production-like environment, running unit tests and integration tests along the way).</p>
@@ -2700,7 +2709,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: April  8, 2018</div>
+<div class="info">Last modified: May 20, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
