@@ -1982,7 +1982,30 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p><strong>Test</strong>: Negative exemplar - didn’t note down the configuration information – had to remember what had happened with the previous runs; whether accuracy had gone up or down; couldn’t even tell whether my code gave the same results after a refactoring (no unit tests :P).</p>
 <p>Test: Log file - decision trees – helped a lot, as mentioned above.</p>
 <p>Test: Log file - XINU – helped a lot for me to keep track of what was going on. Had to save separate files, though, because the output was pretty huge. (Could have noted down only the variables I cared about.)</p>
-<p><strong>Test</strong>: Negative exemplar - log file - didn’t have any for the IPL dataset – didn’t have a good idea of what was going on, especially when trying something new. # High-level Design: Decomposing the Output</p>
+<p><strong>Test</strong>: Negative exemplar - log file - didn’t have any for the IPL dataset – didn’t have a good idea of what was going on, especially when trying something new.</p>
+<h1 id="high-level-design-decomposing-the-output">High-level Design: Decomposing the Output</h1>
+<h2 id="clear-your-mind-and-see-the-matrix">Clear your Mind and See the Matrix</h2>
+<p><strong>Hypothesis</strong>: We decompose an output in terms of input factors by first inducing away all irrelevant factors and then recognizing patterns we’ve seen before. Basically, we decompose by inducing and understanding.</p>
+<p><strong>Corollary</strong>: You can’t decompose something you haven’t seen.</p>
+<p>Corollary: You can’t decompose something if you haven’t cleared the noise.</p>
+<p>Lesson: Think about each output variable in isolation and clear your mind of all irrelevant input factors.</p>
+<p>Corollary: Tests help you decompose the output (in terms of the input factors).</p>
+<p>Corollary: As do types.</p>
+<p>Lesson: See the first-class output of whatever you’re doing so that you can decompose it and thus decompose the input.</p>
+<hr />
+<p>Test: Negative exemplar - Ents for tasks - I don’t have an idea of the Ent subgraph I want as output. – can’t decompose the output!</p>
+<p>Test: Positive exemplar - I have an idea about the final product for the task planner – can decompose (???).</p>
+<p>Test: <code>website-join-paragraphs</code> - had a clear idea of the input and output – could decompose the output in terms of the inputs.</p>
+<p><strong>Test</strong>: Didn’t realize I could decompose - FB uses Duo Mobile - so that’s a state-of-the-art security system (at least for ordinary tech companies) - basically, I had seen a company that probably employs some of the best security guys out there and I had seen the security measures it uses. But I had failed to connect the two, to realize that this meant that two-factor authentication was probably a pretty strong security measure. – failure to induce. (I should have recognized the general pattern “Advanced tech company - whatever methods it uses are at least state-of-the-art for ordinary people”.)</p>
+<h2 id="decompose-the-output-and-you-have-decomposed-the-input">Decompose the Output and You have Decomposed the Input</h2>
+<p><strong>Hypothesis</strong>: Once you’ve decomposed your output in terms of the input factors, you know that you only have to implement whatever code is necessary to produce those individual pieces (and to put them together). Now you can tell how far behind you are and exactly what stuff you have to work on.</p>
+<p>If you haven’t broken your output into pieces, you can’t tell how much work is left and will think you have to do a ton of work. So, you will probably procrastinate on it (because there are obviously too many constraints).</p>
+<p><strong>TODO</strong>: Labels: “can tell how far behind you are”, “can narrow down the stuff you have to work on”, “think you have to do a ton of work”, “procrastinate” (how much?).</p>
+<hr />
+<p>Test: Negative exemplar - Ents for tasks - I don’t have an idea of the Ent subgraph I want as output. – So I can’t tell how far behind I am.</p>
+<p>Test: Super Mario - can jump and run but can’t score points – you can tell how much of the “final product” is done.</p>
+<p>Test: Negative exemplar - I have an idea about the final product for the task planner and I’m still stuck on the Ent design because I don’t have an idea about its final product (the Ent subgraph along with the privacy policies, etc.). – can’t see my lack of progress.</p>
+<p>Test: <code>website-join-paragraphs</code> - had a clear idea of the input and output – easy to move ahead.</p>
 <h2 id="figure-out-the-exact-part-of-the-output-you-want-to-change">Figure out the Exact Part of the Output you want to Change</h2>
 <p><strong>Hypothesis</strong>: Figure out the exact part of the output you want to change, know the corresponding input factor -&gt; can get the change you want with little effort.</p>
 <p>Figure out the exact part of the output you want to change (assuming you know the categories), can’t figure out the corresponding input factor (perhaps because it’s not written in terms of your intentions) -&gt; can’t get the result you want with little effort.</p>
@@ -2701,7 +2724,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: May 21, 2018</div>
+<div class="info">Last modified: May 22, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
