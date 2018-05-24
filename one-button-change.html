@@ -1542,6 +1542,25 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <h2 id="red-green-refactor-vs-focus-gambling">Red-Green-Refactor vs Focus-Gambling (??)</h2>
 <p>Test: Implementing the pseudo-code first and then covering branches with tests violates red-green-refactor. Then again, focus-gambling itself violates red-green-refactor. You’re concluding first and running tests later.</p>
 <h1 id="programming-at-speed-cycle-time">Programming at Speed: Cycle Time</h1>
+<h2 id="speed-is-determined-by-the-number-of-constraints">Speed is Determined by the Number of Constraints</h2>
+<p><strong>Hypothesis</strong>: Time taken to complete some task is proportional to the number and severity of constraints.</p>
+<p>TODO: Labels: “severity of constraint” - give me positive and negative exemplars; how does it affect the time taken?</p>
+<p>Corollary: Start with as few constraints as you can get away with to work at maximum speed. This is the MVP.</p>
+<p>For example, get correctness before you get quality. Further, get correctness in some aspects before you get in others.</p>
+<hr />
+<p>Test: Positive exemplar - constraint - food must taste good – positive.</p>
+<p>Test: Negative exemplar - constraint - doesn’t matter how much of the zero-calorie drinks I drink – negative (within reason).</p>
+<p>Test: Cooking right now - wanted it to taste great, be nutritious, finish as quickly as possible, and leave minimal trash. – too many constraints. Would rather not do it at all.</p>
+<p>Test: Friends - don’t have as many constraints on what you can say or do together – lower constraints.</p>
+<p>Test: Learn about different types of people who read your blog – lots of constraints, blocks you (h/t Stevey).</p>
+<p>Test: Try to write a perfect schema the first time around - take really long – lots of constraints.</p>
+<h2 id="how-to-get-an-mvp">How to Get an MVP?</h2>
+<p>Hypothesis: Imagine the product without certain features (or with relaxed constraints). If it still satisfies some <strong>valuable acceptance tests</strong>, then those features are not part of your MVP.</p>
+<p>Or maybe it’s about the end-to-end acceptance tests that you choose not to pass.</p>
+<p>Hypothesis: Decide how much value you want in your MVP and then pack in as many high-value acceptance tests (or easy acceptance tests) as needed to produce that value.</p>
+<p>TODO: Labels: “value you want in your MVP”, “value of acceptance test” - need positive and negative exemplars.</p>
+<hr />
+<p>Test: Super Mario - the game “works pretty well” even without the princess. Well, decompose the output (in this case, your gaming experience). You are entertained by the jumping and running.</p>
 <h2 id="speed-coding-hat-vs-refactoring-hat">Speed: Coding Hat vs Refactoring Hat</h2>
 <p><strong>Hypothesis</strong>: adding a new feature, one long chain of function calls -&gt; will pass the test case (one branch), very little time, will not overengineer. Refactor -&gt; easier to test going forward -&gt; quick. h/t Kent Beck.</p>
 <p>adding a new feature, abstract code (using separate functions or classes) -&gt; will pass the test case (one branch), will take more time because you’re changing the design too, may overengineer. Debugging -&gt; slow.</p>
@@ -2724,7 +2743,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: May 22, 2018</div>
+<div class="info">Last modified: May 23, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
