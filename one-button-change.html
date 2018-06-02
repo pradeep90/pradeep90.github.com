@@ -1918,6 +1918,11 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Test fails, create a smaller exemplar that is positive and extend it to the larger exemplar -&gt; know what works (necessary causes) and what doesn’t; faster.</p>
 <p>Test fails, debug by toggling here and there -&gt; don’t know what works (necessary causes) and what doesn’t; slow.</p>
 <h1 id="understanding-uncertainty-about-the-program-output">Understanding: Uncertainty about the Program Output</h1>
+<h2 id="how-to-tackle-a-daunting-problem">How to Tackle a Daunting Problem</h2>
+<p><strong>Hypothesis</strong>: Get as close a positive exemplar as you can and take a diff to do what you want to do. You will be able to solve your problem more easily than if you try to figure it all out from scratch (?).</p>
+<p>I suspect you have to know how to change the input based on a change in the desired output.</p>
+<hr />
+<p>Test: Need to implement a bunch of classes and methods. Feel like it’ll take a ton of work to do it all. But I suspect that if I can do just one of them right, then the rest of them would be easy to do just by comparison. Also, I can get the first one done by comparison with the sample program mentioned in the wiki (even though I don’t have a executable program for that one). – get as close a positive exemplar as you can.</p>
 <h2 id="complex-diffs-toggling-a-lot-of-variables">“Complex” Diffs: Toggling a Lot of Variables</h2>
 <p><strong>Hypothesis</strong>: Diff toggles a lot of variables -&gt; hard to predict what the output will be.</p>
 <p>Diff toggles a few variables -&gt; easier to predict what the output will be.</p>
@@ -2747,7 +2752,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: May 30, 2018</div>
+<div class="info">Last modified: May 31, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
