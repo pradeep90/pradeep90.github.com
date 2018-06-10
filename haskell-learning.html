@@ -69,6 +69,23 @@
 <h1 id="turtle">Turtle</h1>
 <p>[2018-03-15 Thu] First impressions: pretty cool!</p>
 <p>Each utility like <code>ls</code> or <code>grep</code> is basically a function that takes a stream of lines (<code>Shell Line</code>) and returns a stream of lines. Mix and match to your heart’s delight.</p>
+<h1 id="row-polymorphism">Row Polymorphism</h1>
+<p>From <a href="https://brianmckenna.org/blog/row_polymorphism_isnt_subtyping">Brian McKenna’s blog</a>:</p>
+<blockquote>
+<p>Here’s a simple example of where the row instantiation can cause differences:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">let</span> f x <span class="fu">=</span> x with {sum<span class="fu">:</span> x<span class="fu">.</span>a <span class="fu">+</span> x<span class="fu">.</span>b}
+<span class="kw">let</span> answer <span class="fu">=</span> f {a<span class="fu">:</span> <span class="dv">1</span>, b<span class="fu">:</span> <span class="dv">2</span>, c<span class="fu">:</span> <span class="dv">100</span>}</code></pre></div>
+<p>With structural subtyping, the type is upcast to what f needs and we get back:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">answer ::</span> {a<span class="fu">:</span> <span class="dt">Number</span>, b<span class="fu">:</span> <span class="dt">Number</span>, sum<span class="fu">:</span> <span class="dt">Number</span>}</code></pre></div>
+<p>But with row polymorphism, the row variable <span class="math inline">\(\rho\)</span> gets instantiated to contain the c field:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">answer ::</span> {a<span class="fu">:</span> <span class="dt">Number</span>, b<span class="fu">:</span> <span class="dt">Number</span>, c<span class="fu">:</span> <span class="dt">Number</span>, sum<span class="fu">:</span> <span class="dt">Number</span>}</code></pre></div>
+</blockquote>
+<p>My hypothesis: You need row polymorphism only because you’re changing <strong>data types</strong> on the fly without specifying in advance which parts you want to change.</p>
+<p>The idiomatic way to do this would be to build a data structure that explicitly <strong>allows for change</strong>.</p>
+<p>A simple example is <code>data Tree a = Leaf a | Branch (Tree a) (Tree a)</code>. This data structure allows you to change the data type stored at each node from <code>Person</code> to <code>String</code> or <code>Int</code> without any other changes, i.e., <code>Tree Person</code> to <code>Tree String</code>. The type parameter <code>a</code> in the type definition makes it explicit that changes in the data type are orthogonal to changes in the structure of the tree. Moreover, it does not allow for any other ad hoc changes.</p>
+<p>That’s my problem with row polymorphism! It doesn’t restrict the changes you can make to the data type. It seems to act like you have no idea how you will change the data type and like it must therefore be open to anything you might do.</p>
+<p>(I haven’t gone deep into this topic. These are just my initial thoughts.)</p>
+<p>The only good argument I’ve heard so far for row polymorphism has been “extensible effects” as seen in PureScript. I’m not sure how useful that is but it seems cool and I’ll look into it soon.</p>
 <h1 id="odds-and-ends">Odds and Ends</h1>
 <h2 id="int-to-hex">Int to Hex</h2>
 <blockquote>
@@ -79,7 +96,7 @@
 <p>TODO: Check out http://haskellbook.com/</p>
 
 <div class="info">Created: February 17, 2017</div>
-<div class="info">Last modified: May 14, 2018</div>
+<div class="info">Last modified: June  9, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, haskell</div>
 
