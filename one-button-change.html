@@ -1554,6 +1554,46 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Test: Friends - don’t have as many constraints on what you can say or do together – lower constraints.</p>
 <p>Test: Learn about different types of people who read your blog – lots of constraints, blocks you (h/t Stevey).</p>
 <p>Test: Try to write a perfect schema the first time around - take really long – lots of constraints.</p>
+<h2 id="why-do-i-hesitate-to-bite-the-bullet">Why do I Hesitate to Bite the Bullet?</h2>
+<p>Hypothesis: If you take on a problem that is too hard for you but refuse to admit it, then you won’t run enough tests (since they would be a waste of time for someone who actually was that skilled) and thus will take longer to debug your program.</p>
+<p>If you take on a problem that is too easy for you but don’t realize it, then you will run too many tests and waste your time while others zoom past you.</p>
+<p><strong>Hypothesis</strong>: Higher-level patterns are those for which you don’t need to test the intermediate outputs.</p>
+<p><strong>Hypothesis</strong>: The time taken to find the cleanest design possible is the time needed to go through <strong>every</strong> existing implementation! That’s why I take a long time to understand a code base. I feel like I need to understand the <strong>best</strong> design currently used (if not the best design possible).</p>
+<p>Corollary: That is the true cost of perfectionism. You have to go through all existing implementations to find the best current design.</p>
+<p><strong>Hypothesis</strong>: A satisficer would stop after the first positive exemplar. A perfectionist would have to go through all positive exemplars.</p>
+<p>Corollary:: When there’s more than one way to do it, I become paralyzed because I feel compelled to go through all of the possibilities and figure out the smallest set of sufficient factors.</p>
+<p>Corollary: This could also be why I try to decouple a new feature as much as possible so that there is just one way to implement it (since there are no extraneous factors) and I don’t have to waste time experimenting with a lot of the possibilities.</p>
+<hr />
+<p>Test: I have a decent solution for the frontend-backend connection idea. But I’m hesitating to actually go and implement it.</p>
+<p>I don’t know the best plan for testing - should I do just the frontend part and check if the middle part gets the data (and do the same with the middle part to the backend)? Or should I build a complete thing and test whether the real object was created (so that I need to run fewer tests)? Basically, running tests for each part feels like I’m wasting time, like a skilled programmer wouldn’t waste time running that many tests. But not running intermediate tests feels like I’m bound to end up with errors (given that there are so many moving parts) and will find it hard to debug because I don’t have a close positive exemplar.</p>
+<p>Huh. That’s a nice Catch 22. And it’s all because I’m not realistic about what problems I can solve comfortably. If the problem is realistically too hard for me, then it’d be a big mistake to wait to test until the end because I wouldn’t be able to debug my inevitable mistakes. However, if the problem is too easy for me, then it’d be a waste of time to test each part of my program because it’d probably work right most of the time. In short, tests would be highly informative in the former and uninformative in the latter.</p>
+<p>And we know that time taken to implement something increases with the number of tests. (Do we know that?)</p>
+<p>Test: Too easy a problem - it’d be stupid to test the output at each step of <code>grep -v foo.txt | wc -l</code> or <code>sort | uniq -c | sort -k1,1nr</code>. I <strong>know</strong> how the output relates to the input. That’s the whole point of having higher-level patterns - you don’t have to test their output. – waste of time to test.</p>
+<p>Test: Too hard a problem - (finding it hard to think of a reasonable problem that I would admit as hard) solving the phone number problem - took me a few hours the last time I tried it – need to test each part.</p>
+<p><strong>Test</strong>: Also, I fear that there is a cleaner way to do it, which I can find by reading even more code, and therefore I don’t go ahead with a half-assed design that would actually work.</p>
+<p>Basically, I won’t go ahead until I’ve found the <strong>cleanest</strong> way to do it. Which would require me to go through <strong>all</strong> the existing code and check all of their designs. If any of them has a cleaner design (which is my output variable), then I will ignore the other options and go with the better one.</p>
+<p><strong>This</strong> is why I am such a slow learner.</p>
+<h2 id="the-cost-of-induction-depends-on-the-cost-of-diffing">The Cost of Induction depends on the Cost of Diffing</h2>
+<p><strong>Hypothesis</strong>: The cost of inducing over several existing implementations to find out the smallest sufficient set of factors is the cost of diffing.</p>
+<p>You’re given two implementations spanning several files and their output features. You have to <strong>diff</strong> the two programs and match the diffs to the diffs of their output features. And humans take a while to diff.</p>
+<p>Corollary: Wow. Induction can be costly. This is why people should do it for you by abstracting the common parts and leaving only the specific details to each instance.</p>
+<p><strong>Corollary</strong>: Good abstractions shorten your code and thus speed up your diffing. This is why succinctness is power.</p>
+<p><strong>Corollary</strong>: A good grasp of high-level patterns also speeds up diffing because you can get away with shallow diffs.</p>
+<p>For example, if you know that the tests folder contains non-critical test code, you can skip it. If you know that the object fields will be defined in a particular place, you can compare those methods with each other only (instead of comparing everything with everything else).</p>
+<p><strong>Hypothesis</strong>: Structure eases diffing by telling you which parts to compare with which parts.</p>
+<hr />
+<p>Test: Paralyzed - had to check the different implementations of features because I didn’t want to miss out on a potentially way easier and way cleaner technique. Spent a hour and a half simply testing that hypothesis because I had to go over every function. – deep comparison to figure out which factors were similar and which different (including the output factors).</p>
+<p>For example, I wanted to check if implementation B gave any newer output features than implementation A. So I had to compare the output variables deeply too.</p>
+<p>Test: Good abstractions can save you time in comparing:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">sum [] <span class="fu">=</span> <span class="dv">0</span>
+sum (x<span class="fu">:</span>xs) <span class="fu">=</span> x <span class="fu">+</span> sum xs
+
+product [] <span class="fu">=</span> <span class="dv">1</span>
+product (x<span class="fu">:</span>xs) <span class="fu">=</span> x <span class="fu">*</span> product xs</code></pre></div>
+<p>vs</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">sum <span class="fu">=</span> foldr (<span class="fu">+</span>) <span class="dv">0</span>
+product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class="dv">1</span></code></pre></div>
+<p>Explanation: The differences are way more readily obvious in the latter.</p>
 <h2 id="how-to-get-an-mvp">How to Get an MVP?</h2>
 <p>Hypothesis: Imagine the product without certain features (or with relaxed constraints). If it still satisfies some <strong>valuable acceptance tests</strong>, then those features are not part of your MVP.</p>
 <p>Or maybe it’s about the end-to-end acceptance tests that you choose not to pass.</p>
@@ -2760,7 +2800,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: June  8, 2018</div>
+<div class="info">Last modified: June 17, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
