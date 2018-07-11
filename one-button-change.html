@@ -1658,6 +1658,7 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <h3 id="math-get-answers-without-getting-empirical-feedback">Math: Get Answers without Getting Empirical Feedback</h3>
 <p><strong>Hypothesis</strong>: Math is how you get answers without getting empirical feedback.</p>
 <p><strong>Hypothesis</strong>: Holy crap. Is this our surrogate endpoint? Is this how we get answers without running costly real-world trials?</p>
+<p>It’s the classical debate between empiricism and deduction. You can calculate 37 times 14 in two ways: lay out pebbles in 37 rows of 14 each and then count the total or simply use your grade school multiplication algorithm to get 518. The former is empiricism and the latter is deduction (or computation or whatever you want to call it). In empiricism, you assume (or realize) that you can’t compute the final answer by yourself and you want to outsource it to nature, which has vastly more computational power. In computation, you take on the burden of evaluating each step of the function yourself.</p>
 <hr />
 <p>Test: Decision tree - reduced error pruning - what if you go top-down and decide whether to split at a node based on the validation set? – either run the experiment or use your logic.</p>
 <p>Test: Negative exemplar - empiricists like Newton and others would probably prefer to run the experiments, especially if they are cheap. – depend on feedback.</p>
@@ -1729,6 +1730,7 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <p>Test: OS HW3 - FIFO order – didn’t write any unit tests. Had to set inputs only via the tests I ran; had to wait for the output; couldn’t understand the output directly because I wasn’t using first-class reference strings. 1 hour 50 minutes right there.</p>
 <p>Test: rectangle numbering in Emacs - wanted it to start from 1 instead of 0, but kept putting it off because it felt like it wouldn’t be worth it to dive into some foreign code and change what I wanted. Just realized that it’s <em>my</em> code that starts from 0. Changed it in a jiffy. – somebody else’s code - have to do a lot of work to set the input (in case configuration variables don’t exist). my code - can just dive in and change whatever I want.</p>
 <p>Test: When trying to figure out how to send in a function pointer to my benchmark function, I decided to test it in a stand-alone program first. Fewer changes. In contrast, lots of stuff could go wrong in the benchmark code. – Faster output.</p>
+<p>Test: Negative exemplar - wrote a long function when I could have easily extracted <code>hasFoo(post)</code> into its own function. – didn’t implement it in isolation.</p>
 <h2 id="first-class-inputs-and-outputs-fast-direct-feedback">First-Class Inputs and Outputs: Fast, Direct Feedback</h2>
 <p><strong>Hypothesis</strong>: First-class input -&gt; can set the input without doing any other work.</p>
 <p>No first-class input -&gt; have to set the input by changing a lot of other variables.</p>
@@ -1827,6 +1829,7 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <p>Have the generating mechanism and source for an output, have the output -&gt; can change the source to get different outputs.</p>
 <p>Don’t have the generating mechanism or the source for an output, have just the output -&gt; can’t get a different output.</p>
 <p>Don’t have the generating mechanism, have the source, have just the output -&gt; can try to port the source.</p>
+<p>(Basically, having the source means that you can set the inputs and having the mechanism means that you can generate the output. You have got low cycle time.)</p>
 <p>Hypothesis: One-button change -&gt; force you to carry the generating mechanism along with the output. Why? Because it’s easier to change the source material (like LaTeX) than the target material (final presentations).</p>
 <hr />
 <p>Test: Source plus mechanism - positive exemplar - LaTeX file plus the pdflatex program – can generate various outputs.</p>
@@ -1850,6 +1853,13 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <p>Test: Negative exemplar - I know exactly how to implement the vanilla version – do it right now.</p>
 <h2 id="dont-bite-off-more-than-you-can-chew">Don’t Bite Off More than You can Chew</h2>
 <p><strong>TODO</strong>: Write an essay about releasing early and how you try to optimize constraints that are not worth optimizing. How should you ideally approach the matter? How do you get stronger?</p>
+<h2 id="key-to-peace-of-mind-thorough-fine-grained-testing">Key to Peace of Mind: Thorough, Fine-grained Testing</h2>
+<p>Hypothesis: The way to be confident about a system is to test for exactly the properties you want it to have, including past behaviour. That way, if the tests pass, you know you’re golden.</p>
+<p>If you don’t test for your desired behaviour or don’t test for regression, you will always be worried.</p>
+<p>Why? Because the positive and negative exemplars from your tests would narrow down the causes of things for you and remove your ambient worry about everything else.</p>
+<hr />
+<p>Test: [2018-07-10 Tue] Earlier, I didn’t have positive exemplars of how to render a post. Full of worry.</p>
+<p>Test: [2018-07-10 Tue] Now, I do. No worries.</p>
 <h1 id="changing-a-program-and-reusing-code-minimize-the-interface">Changing a Program and Reusing Code: Minimize the Interface</h1>
 <h2 id="toggle-behind-an-interface-with-one-button">Toggle behind an Interface with One Button!</h2>
 <p><strong>Hypothesis</strong>: Feature you want to toggle, hide the current feature behind an interface and toggle completely with one button -&gt; handle each use of the interface (read or write), don’t mix and match between the features, quick -&gt; no uncertainty, no errors.</p>
@@ -2800,7 +2810,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: July  6, 2018</div>
+<div class="info">Last modified: July 10, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
