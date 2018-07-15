@@ -1541,6 +1541,9 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Explanation: There’s no semantic difference between the two. And yet, the latter feels like it’s talking about an actual person, complete with a super-weak password.</p>
 <h2 id="red-green-refactor-vs-focus-gambling">Red-Green-Refactor vs Focus-Gambling (??)</h2>
 <p>Test: Implementing the pseudo-code first and then covering branches with tests violates red-green-refactor. Then again, focus-gambling itself violates red-green-refactor. You’re concluding first and running tests later.</p>
+<h2 id="unit-testing-vs-regression-testing">Unit Testing vs Regression Testing</h2>
+<p><strong>Hypothesis</strong>: In any kind of testing, you have to provide the input for the (hopefully) representative test. In unit testing, you have to provide the desired output as well. In regression testing, the last good implementation provides the output.</p>
+<p>So, if you’re regression-testing a React component, you still have to construct representative test inputs. It’s just that the program will produce the output and Jest will save that snapshot.</p>
 <h1 id="programming-at-speed-cycle-time">Programming at Speed: Cycle Time</h1>
 <h2 id="speed-is-determined-by-the-number-of-constraints">Speed is Determined by the Number of Constraints</h2>
 <p><strong>Hypothesis</strong>: Time taken to complete some task is proportional to the number and severity of constraints.</p>
@@ -2461,6 +2464,15 @@ z <span class="fu">=</span> (<span class="dt">B</span> (<span class="dt">L</span
 <p>Explanation: Program + simple input should give simple output. However, if it gives some other output, then you know that you have to change something about the program. And because you’re changing just one feature in the program, you know exactly what to change and so can quickly implement the feature. Also, you can tell what functionality is added by that feature alone.</p>
 <p>Test: Mario MVP - just jumping and moving. No princess or turtles or spiky pits. – can get feedback about that feature alone; quick because you know that any problems with the output must be due to the one feature you changed.</p>
 <p>Test: Lots of features - scheduler - tried to change lots of things and was mired in debugging output. – slow to get final feedback; hard to debug. Basically had to change all parts of the default scheduler, instead of changing one thing at a time.</p>
+<h2 id="oop">OOP</h2>
+<p>Hypothesis: I find classes with lots of methods to be “complex” because the fields will probably end up being used in different places.</p>
+<p>Basically, the object is not being used as a <strong>whole</strong> during the data flow.</p>
+<p>For example, if you display a web post, you may get the title in one place, get the decorations in another place, and finally the contents in yet another place.</p>
+<p>Hypothesis: Your data flow should be such that an object is used as a whole at each point.</p>
+<p>Why? Minimum interface?</p>
+<p>Will every use case need every one of these methods? If not, you’re giving them too much information.</p>
+<p>Corollary: That means you’ll have as many interfaces as there are distinct use cases.</p>
+<p>I think an object allows each method access to all its fields. That probably leads to large interfaces.</p>
 <h1 id="refactoring-imposing-structure-on-your-code">Refactoring: Imposing Structure on your Code</h1>
 <h2 id="refactoring-write-direct-tests-before-you-refactor---lower-cycle-time">Refactoring: Write Direct Tests before you Refactor (- lower cycle time)</h2>
 <p><strong>Hypothesis</strong>: Don’t have direct tests, refactor -&gt; may break the code; hard to debug.</p>
@@ -2810,7 +2822,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: July 10, 2018</div>
+<div class="info">Last modified: July 15, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
