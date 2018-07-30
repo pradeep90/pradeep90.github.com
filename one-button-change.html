@@ -1863,6 +1863,29 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <hr />
 <p>Test: [2018-07-10 Tue] Earlier, I didn’t have positive exemplars of how to render a post. Full of worry.</p>
 <p>Test: [2018-07-10 Tue] Now, I do. No worries.</p>
+<h2 id="to-prevent-regression-change-only-within-your-if-condition">To Prevent Regression, Change only within your If-Condition</h2>
+<p><strong>Hypothesis</strong>: If you add code <strong>only</strong> within the conditional logic for your feature, you can be confident that you haven’t affected any other feature’s behaviour.</p>
+<p>If you add code without a conditional check for your feature, then you have to confirm that the other features aren’t affected too much by your change. The more features there are, the more time this takes.</p>
+<p>Corollary: This means that even when you have just one feature, you should add all your code inside the conditional check for your feature and keep all future feature logic inside a default condition. That way, when you do add a new feature, you could simply add a new condition check and be confident that you won’t affect the existing feature or any future features.</p>
+<p><strong>Lesson</strong>: Always add new code under an if-condition for your feature.</p>
+<p>Corollary: If you keep all your features under separate condition checks, you can switch among them with just one button.</p>
+<p>If you don’t, you have to go and manually change the shared code that must be different for each of them.</p>
+<p>Corollary: As long as you change code within an if-condition for your feature, you know you won’t regress other features. However, to ensure correctness for your feature, you still have to handle all possible paths that lead to your output. So, if there are two paths, you need to add your code under both of them. (Ideally you would merge them first.)</p>
+<p>Corollary: If you want to change common code, first move it under a default if-condition and then add your changed code in a new if-condition for your feature.</p>
+<p><strong>Corollary</strong>: Code is hard to change when it’s used by multiple features and when you don’t add separate if-conditions (or can’t add them because you don’t know the set of features that use this code).</p>
+<p>Corollary: OOP abstracts these if-checks by having the conditional logic for a particular feature at all points along the data flow within one class.</p>
+<p>Corollary: If you add debug code only under a DEBUG check, then you can be confident that that code will be run only when debugging is turned and will not affect the normal logic.</p>
+<hr />
+<p><strong>Test</strong>: [2018-07-29 Sun] If you want to disable a “Submit” button until the form data is valid, you have to worry not only about disabling it only for your feature but also not accidentally disabling or enabling it for other features that use the same form.</p>
+<p>If you add some conditions that apply only to your feature, then you can be confident that you’re not affecting any of the logic for the remaining features (since they will never even enter your code branch).</p>
+<p>However, if you add some code without checking specifically for your feature, then it would be executed even for other features and thus you might affect their behaviour.</p>
+<h2 id="change-only-data-that-this-feature-owns">Change Only Data that this Feature Owns</h2>
+<p>Question: What about side effects? Can’t you inadvertently affect other features by changing common variables?</p>
+<p><strong>Hypothesis</strong>: If you change data that belongs to your feature, you can be confident that you won’t affect the behaviour of other features.</p>
+<p>If you change common data, then you have to check that other features aren’t affected.</p>
+<p>Corollary: OOP separates data for different features by keeping all of a feature’s data within the same class.</p>
+<p>Corollary: Pure functions mean that you never change data used by other features.</p>
+<p>Global mutable variables mean that you change data used by other features.</p>
 <h1 id="changing-a-program-and-reusing-code-minimize-the-interface">Changing a Program and Reusing Code: Minimize the Interface</h1>
 <h2 id="toggle-behind-an-interface-with-one-button">Toggle behind an Interface with One Button!</h2>
 <p><strong>Hypothesis</strong>: Feature you want to toggle, hide the current feature behind an interface and toggle completely with one button -&gt; handle each use of the interface (read or write), don’t mix and match between the features, quick -&gt; no uncertainty, no errors.</p>
@@ -1956,6 +1979,8 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <p>Test: Negative exemplar - have the raw <code>BufferedReader</code> itself – large interface.</p>
 <h2 id="new-interfaces-considered-evil">New Interfaces Considered Evil</h2>
 <p><strong>TODO</strong>: Write an essay on “New Interfaces Considered Evil”. (Reference Gabriel.)</p>
+<h2 id="oop-gives-methods-too-much-information">OOP gives Methods Too Much Information</h2>
+<p>Hypothesis: An object allows each method access to all its fields. That probably leads to large interfaces and too much information that makes the methods hard to reason about.</p>
 <h1 id="debugging-1">Debugging</h1>
 <h2 id="debugging-look-at-the-diffs">Debugging: Look at the Diffs!</h2>
 <p><strong>Hypothesis</strong>: don’t know the cause of something, have the source code and can run interventions (aka <strong>debugging</strong>), look at your <strong>diff</strong>, list all your assumptions or toggle your diff till you get a “yes” -&gt; figure out which assumption is causing your error.</p>
@@ -2464,15 +2489,6 @@ z <span class="fu">=</span> (<span class="dt">B</span> (<span class="dt">L</span
 <p>Explanation: Program + simple input should give simple output. However, if it gives some other output, then you know that you have to change something about the program. And because you’re changing just one feature in the program, you know exactly what to change and so can quickly implement the feature. Also, you can tell what functionality is added by that feature alone.</p>
 <p>Test: Mario MVP - just jumping and moving. No princess or turtles or spiky pits. – can get feedback about that feature alone; quick because you know that any problems with the output must be due to the one feature you changed.</p>
 <p>Test: Lots of features - scheduler - tried to change lots of things and was mired in debugging output. – slow to get final feedback; hard to debug. Basically had to change all parts of the default scheduler, instead of changing one thing at a time.</p>
-<h2 id="oop">OOP</h2>
-<p>Hypothesis: I find classes with lots of methods to be “complex” because the fields will probably end up being used in different places.</p>
-<p>Basically, the object is not being used as a <strong>whole</strong> during the data flow.</p>
-<p>For example, if you display a web post, you may get the title in one place, get the decorations in another place, and finally the contents in yet another place.</p>
-<p>Hypothesis: Your data flow should be such that an object is used as a whole at each point.</p>
-<p>Why? Minimum interface?</p>
-<p>Will every use case need every one of these methods? If not, you’re giving them too much information.</p>
-<p>Corollary: That means you’ll have as many interfaces as there are distinct use cases.</p>
-<p>I think an object allows each method access to all its fields. That probably leads to large interfaces.</p>
 <h1 id="refactoring-imposing-structure-on-your-code">Refactoring: Imposing Structure on your Code</h1>
 <h2 id="refactoring-write-direct-tests-before-you-refactor---lower-cycle-time">Refactoring: Write Direct Tests before you Refactor (- lower cycle time)</h2>
 <p><strong>Hypothesis</strong>: Don’t have direct tests, refactor -&gt; may break the code; hard to debug.</p>
@@ -2822,7 +2838,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: July 15, 2018</div>
+<div class="info">Last modified: July 30, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
