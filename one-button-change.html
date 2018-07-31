@@ -1866,7 +1866,6 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <h2 id="to-prevent-regression-change-only-within-your-if-condition">To Prevent Regression, Change only within your If-Condition</h2>
 <p><strong>Hypothesis</strong>: If you add code <strong>only</strong> within the conditional logic for your feature, you can be confident that you haven’t affected any other feature’s behaviour.</p>
 <p>If you add code without a conditional check for your feature, then you have to confirm that the other features aren’t affected too much by your change. The more features there are, the more time this takes.</p>
-<p>Corollary: This means that even when you have just one feature, you should add all your code inside the conditional check for your feature and keep all future feature logic inside a default condition. That way, when you do add a new feature, you could simply add a new condition check and be confident that you won’t affect the existing feature or any future features.</p>
 <p><strong>Lesson</strong>: Always add new code under an if-condition for your feature.</p>
 <p>Corollary: If you keep all your features under separate condition checks, you can switch among them with just one button.</p>
 <p>If you don’t, you have to go and manually change the shared code that must be different for each of them.</p>
@@ -1886,6 +1885,9 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <p>Corollary: OOP separates data for different features by keeping all of a feature’s data within the same class.</p>
 <p>Corollary: Pure functions mean that you never change data used by other features.</p>
 <p>Global mutable variables mean that you change data used by other features.</p>
+<h2 id="to-prevent-overgeneralization-have-a-default-else-case">To Prevent Overgeneralization, Have a Default Else Case</h2>
+<p><strong>Hypothesis</strong>: Having a default else-case for your code will force you to specify the exact conditions under which your feature is applicable and, importantly, all the other conditions under which it is not known to be applicable. Even if you find out that it generalizes to other areas, you can expand the if-condition while still keeping the default else-case. This way you will prevent yourself from overgeneralizing.</p>
+<p>This is the same idea as eliminating potential factors only after seeing them toggled in some positive exemplar.</p>
 <h1 id="changing-a-program-and-reusing-code-minimize-the-interface">Changing a Program and Reusing Code: Minimize the Interface</h1>
 <h2 id="toggle-behind-an-interface-with-one-button">Toggle behind an Interface with One Button!</h2>
 <p><strong>Hypothesis</strong>: Feature you want to toggle, hide the current feature behind an interface and toggle completely with one button -&gt; handle each use of the interface (read or write), don’t mix and match between the features, quick -&gt; no uncertainty, no errors.</p>
@@ -1981,6 +1983,12 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <p><strong>TODO</strong>: Write an essay on “New Interfaces Considered Evil”. (Reference Gabriel.)</p>
 <h2 id="oop-gives-methods-too-much-information">OOP gives Methods Too Much Information</h2>
 <p>Hypothesis: An object allows each method access to all its fields. That probably leads to large interfaces and too much information that makes the methods hard to reason about.</p>
+<h2 id="lift-plain-functions-to-deal-with-legacy-code">Lift Plain Functions to deal with Legacy Code?</h2>
+<p>Hypothesis: To change some legacy code, maybe write plain functions (in isolation) and then insert them where necessary.</p>
+<hr />
+<p>Test: [2018-07-30 Mon] Disable the submit button unless the form is valid - if I had plain types, I could say just <code>if(!isValid(form)) disableButton = true; else disableButton = false;</code> or whatever. But I don’t have plain types. I have legacy code.</p>
+<p>First, I need to search for the part of the code that enables or disables the button. Then, I need to get into the branch that deals with my feature. And then I need to call the <code>isValid</code> function.</p>
+<p>So, the pure part of the feature change is the <code>isValid</code> function. I can write that without reference to any of the legacy code. It then becomes a question of where to insert that function call.</p>
 <h1 id="debugging-1">Debugging</h1>
 <h2 id="debugging-look-at-the-diffs">Debugging: Look at the Diffs!</h2>
 <p><strong>Hypothesis</strong>: don’t know the cause of something, have the source code and can run interventions (aka <strong>debugging</strong>), look at your <strong>diff</strong>, list all your assumptions or toggle your diff till you get a “yes” -&gt; figure out which assumption is causing your error.</p>
