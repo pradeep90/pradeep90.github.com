@@ -1888,6 +1888,8 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <h2 id="to-prevent-overgeneralization-have-a-default-else-case">To Prevent Overgeneralization, Have a Default Else Case</h2>
 <p><strong>Hypothesis</strong>: Having a default else-case for your code will force you to specify the exact conditions under which your feature is applicable and, importantly, all the other conditions under which it is not known to be applicable. Even if you find out that it generalizes to other areas, you can expand the if-condition while still keeping the default else-case. This way you will prevent yourself from overgeneralizing.</p>
 <p>This is the same idea as eliminating potential factors only after seeing them toggled in some positive exemplar.</p>
+<h2 id="editor-wars">Editor Wars</h2>
+<p>Observation: Atom (Nuclide) seemed highly adequate during my internship. No real complaints.</p>
 <h1 id="changing-a-program-and-reusing-code-minimize-the-interface">Changing a Program and Reusing Code: Minimize the Interface</h1>
 <h2 id="toggle-behind-an-interface-with-one-button">Toggle behind an Interface with One Button!</h2>
 <p><strong>Hypothesis</strong>: Feature you want to toggle, hide the current feature behind an interface and toggle completely with one button -&gt; handle each use of the interface (read or write), don’t mix and match between the features, quick -&gt; no uncertainty, no errors.</p>
@@ -2846,7 +2848,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: July 30, 2018</div>
+<div class="info">Last modified: August  2, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
