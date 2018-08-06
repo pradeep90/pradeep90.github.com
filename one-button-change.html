@@ -1544,6 +1544,36 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <h2 id="unit-testing-vs-regression-testing">Unit Testing vs Regression Testing</h2>
 <p><strong>Hypothesis</strong>: In any kind of testing, you have to provide the input for the (hopefully) representative test. In unit testing, you have to provide the desired output as well. In regression testing, the last good implementation provides the output.</p>
 <p>So, if you’re regression-testing a React component, you still have to construct representative test inputs. It’s just that the program will produce the output and Jest will save that snapshot.</p>
+<h2 id="shallow-testing-vs-deep-testing">Shallow Testing vs Deep Testing</h2>
+<p><strong>Hypothesis</strong>: Shallow tests distinguish between completely failing products and reasonably working products (especially if your code doesn’t game the test) and are quick to write.</p>
+<p>Deep tests distinguish between completely working products and any non-working products but are slow to write.</p>
+<p>Hypothesis: Shallow tests are better than nothing. And since they’re pretty quick to write, if use them early you will be able to measure partial progress.</p>
+<p>If you insist on using only deep tests, you will have to wait a long time before you can pass your test.</p>
+<p>Corollary: These are probably the tests that Harry was talking about. Run quick, easy checks to test whether your ideas are right or not.</p>
+<hr />
+<p>Test: Shallow test - check if the CSS class for a button is in the DOM – shallow test that distinguishes between a completely failing and a reasonably working product. Quick.</p>
+<p>Test: Deep test - check if the React component matches the previous snapshot – deep test that distinguishes between a completely working and any non-working product. Slow.</p>
+<h2 id="regression-tests-are-awesome">Regression Tests are Awesome!</h2>
+<p><strong>Observation</strong>: [2018-07-26 Thu] “8 volunteers needed” vs “8 more volunteers needed”. – May never have caught that!</p>
+<h2 id="testing-refactors-your-code">Testing Refactors your Code</h2>
+<p>Hypothesis: Testing forces you to think about the input and output of your function, at least for a representative example.</p>
+<p>Hypothesis: Testing makes you refactor your code by breaking out unnecessary dependencies.</p>
+<p>Wow. Testing forces you to <strong>decouple</strong> your code.</p>
+<p>For example, I just realized that the volunteering stuff had nothing to do with the rest of the to-do list. It was limited strictly to the row.</p>
+<p>Hypothesis: Snapshot testing turns your code’s behaviour into a first-class output. Easy to test.</p>
+<p><strong>Observation</strong>: <code>jest --watch</code> is super-sweet! Instantaneous feedback!</p>
+<hr />
+<p><strong>Test</strong>: [2018-07-10 Tue] Trying to Jest snapshot test a React component made me realize that it wasn’t pure. (It looked up some config stuff from a store.) – break the dependency.</p>
+<p>Test: Snapshot is a JSON file – first-class output. Easy to test.</p>
+<h2 id="testing-makes-you-think-of-the-different-branches">Testing makes you think of the Different Branches</h2>
+<p>Hypothesis: Testing makes you think of the different branches and thus the different representative tests you will need to understand the individual functions.</p>
+<p>(Note that understanding the system as a whole may take more representative exemplars. Or not.)</p>
+<p><strong>Corollary</strong>: That means that I need to think about the different branches in my own essays to figure out what tests I need. Right now, it’s all just a test-less mess.</p>
+<p>Hypothesis: Why I resist making sweeping changes here on the frontend - testing all the different branches again would be a massive pain.</p>
+<hr />
+<p><strong>Test</strong>: [2018-07-13 Fri] Testing a Flux store - realized that there were just around 10 actions and that they each had simple effects. There were practically no branches at all. So, all I would need would be 10 tests.</p>
+<p>Note, though, that there are still edge cases like adding an item at index -1 (which would currently put it at the front of the list) or removing an item at an index that doesn’t exist.</p>
+<p>Test: Just discovered a bug (several, in fact) - reset list doesn’t reset the last added index.</p>
 <h1 id="programming-at-speed-cycle-time">Programming at Speed: Cycle Time</h1>
 <h2 id="speed-is-determined-by-the-number-of-constraints">Speed is Determined by the Number of Constraints</h2>
 <p><strong>Hypothesis</strong>: Time taken to complete some task is proportional to the number and severity of constraints.</p>
@@ -1878,6 +1908,19 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <p><strong>Test</strong>: [2018-07-29 Sun] If you want to disable a “Submit” button until the form data is valid, you have to worry not only about disabling it only for your feature but also not accidentally disabling or enabling it for other features that use the same form.</p>
 <p>If you add some conditions that apply only to your feature, then you can be confident that you’re not affecting any of the logic for the remaining features (since they will never even enter your code branch).</p>
 <p>However, if you add some code without checking specifically for your feature, then it would be executed even for other features and thus you might affect their behaviour.</p>
+<h2 id="duplication-vs-regression">Duplication vs Regression</h2>
+<p>Observation: Duplication vs regression strikes again! Handling a new case by itself is pretty trivial (if tedious). But handling the new case without affecting the else case too much is very hard. No wonder I’ve been stuck on this.</p>
+<p>Observation: When you duplicate and change, you get to start from scratch. You have far fewer constraints. Much more peaceful.</p>
+<h2 id="coupled-tests-are-harder-to-pass">Coupled Tests are Harder to Pass</h2>
+<p>Hypothesis: When you have several tests you must pass but they don’t correspond to different branches in your code, you will find it harder to code because at each point you will have to satisfy multiple constraints.</p>
+<p>Hypothesis: When you satisfy multiple constraints with the same branch of code, it means that your solutions don’t <strong>compose</strong>.</p>
+<p>If you can handle the constraints separately, that means you can compose the results.</p>
+<hr />
+<p>Test: CSS - a single row in a form should handle short text, long text, hovering, clicking elsewhere, etc. with the same CSS config.</p>
+<p>Test: Applicative parser - handle the two sum types separately and compose using <code>&lt;|&gt;</code> – your solutions compose.</p>
+<p>Test: Constraint - the meta text has to align with the item text in a list. But the item text has to be centered in line with the circle at the start of the list. – couldn’t do it.</p>
+<h2 id="mocks-give-you-fine-grained-feedback-for-your-ui">Mocks give you Fine-grained Feedback for your UI</h2>
+<p>Hypothesis: Use the design mocks to get fine-grained feedback about your UI design.</p>
 <h2 id="change-only-data-that-this-feature-owns">Change Only Data that this Feature Owns</h2>
 <p>Question: What about side effects? Can’t you inadvertently affect other features by changing common variables?</p>
 <p><strong>Hypothesis</strong>: If you change data that belongs to your feature, you can be confident that you won’t affect the behaviour of other features.</p>
@@ -1890,6 +1933,8 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <p>This is the same idea as eliminating potential factors only after seeing them toggled in some positive exemplar.</p>
 <h2 id="editor-wars">Editor Wars</h2>
 <p>Observation: Atom (Nuclide) seemed highly adequate during my internship. No real complaints.</p>
+<h2 id="linters-gives-you-fast-feedback">Linters gives you Fast Feedback</h2>
+<p>Test: Stopped using a field in a Relay fragment – <em>immediately</em> got a lint warning saying that the field was unused!</p>
 <h1 id="changing-a-program-and-reusing-code-minimize-the-interface">Changing a Program and Reusing Code: Minimize the Interface</h1>
 <h2 id="toggle-behind-an-interface-with-one-button">Toggle behind an Interface with One Button!</h2>
 <p><strong>Hypothesis</strong>: Feature you want to toggle, hide the current feature behind an interface and toggle completely with one button -&gt; handle each use of the interface (read or write), don’t mix and match between the features, quick -&gt; no uncertainty, no errors.</p>
@@ -1991,6 +2036,23 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <p>Test: [2018-07-30 Mon] Disable the submit button unless the form is valid - if I had plain types, I could say just <code>if(!isValid(form)) disableButton = true; else disableButton = false;</code> or whatever. But I don’t have plain types. I have legacy code.</p>
 <p>First, I need to search for the part of the code that enables or disables the button. Then, I need to get into the branch that deals with my feature. And then I need to call the <code>isValid</code> function.</p>
 <p>So, the pure part of the feature change is the <code>isValid</code> function. I can write that without reference to any of the legacy code. It then becomes a question of where to insert that function call.</p>
+<h2 id="reversible-change-use-the-same-composition-operator-to-invert">Reversible Change: Use the Same Composition Operator to Invert</h2>
+<p><strong>Hypothesis</strong>: What makes a change easily reversible: you should be able to reverse it without learning a <strong>new interface</strong>. Basically, you should be able to revert it using the <strong>same</strong> composition operator.</p>
+<p>The key advantage of having an inverse is that a value <strong>within</strong> the same type is enough to invert your original value. You don’t need to create a new type. This is what you get when your operation is closed and invertible.</p>
+<hr />
+<p>Test: Positive exemplar - 1 + 2 = 3; 3 + -3 = 0. – you use the <strong>same</strong> composition operator to create or invert a value.</p>
+<p>Test: Positive exemplar - <code>reverse . reverse == id</code> – same composition operator to invert.</p>
+<p>Test: Early change - wanted to revert it. How? Removed the file alright, but I still had to run the rebuild command. Unnecessary new interface! (But that’s what I did to install it in the first place, so I can’t complain too much) – undecided.</p>
+<p>Test: Negative exemplar - <code>push</code> 3 on top of the stack. To remove 3, you have to use <code>pop</code>. – different interface to invert a value.</p>
+<p>What if you could use <code>push (inverse top)</code> or something? (But you would have to know the value on top to push its inverse.)</p>
+<p>Test: <code>comment-dwim</code> . <code>comment-dwim</code> == id – easy to invert.</p>
+<p>Test: What I’d like to invert effortlessly - added a bunch of debug statements. Now revert them all.</p>
+<p>Similarly, tried out one CSS combination. Now, get back to the original.</p>
+<p>Can’t you do that with version control?</p>
+<h2 id="types-narrow-your-interfaces">Types Narrow your Interfaces</h2>
+<p><strong>Hypothesis</strong>: Types narrow your interfaces.</p>
+<p>They turn “don’t do that” into “can’t do that”.</p>
+<p>For example, if all you know is that the React component tree is <code>Foldable a</code>, you can just fold over it with different monoids. That’s all. Can’t access just one part of the tree.</p>
 <h1 id="debugging-1">Debugging</h1>
 <h2 id="debugging-look-at-the-diffs">Debugging: Look at the Diffs!</h2>
 <p><strong>Hypothesis</strong>: don’t know the cause of something, have the source code and can run interventions (aka <strong>debugging</strong>), look at your <strong>diff</strong>, list all your assumptions or toggle your diff till you get a “yes” -&gt; figure out which assumption is causing your error.</p>
@@ -2499,6 +2561,33 @@ z <span class="fu">=</span> (<span class="dt">B</span> (<span class="dt">L</span
 <p>Explanation: Program + simple input should give simple output. However, if it gives some other output, then you know that you have to change something about the program. And because you’re changing just one feature in the program, you know exactly what to change and so can quickly implement the feature. Also, you can tell what functionality is added by that feature alone.</p>
 <p>Test: Mario MVP - just jumping and moving. No princess or turtles or spiky pits. – can get feedback about that feature alone; quick because you know that any problems with the output must be due to the one feature you changed.</p>
 <p>Test: Lots of features - scheduler - tried to change lots of things and was mired in debugging output. – slow to get final feedback; hard to debug. Basically had to change all parts of the default scheduler, instead of changing one thing at a time.</p>
+<h2 id="unify-interfaces-for-ease-of-use">Unify Interfaces for Ease of Use</h2>
+<p>Hypothesis: Common interface and common syntax means that you don’t have to learn different interfaces.</p>
+<p>Idiosyncratic interfaces mean that you have to keep learning superficially different interfaces for the same kind of thing.</p>
+<p>Corollary: Why text editors and shells rock - they provide the same interface to a ton of programs!</p>
+<p>Corollary: Why <strong>books</strong> rock - unified interface to a ton of different fields.</p>
+<hr />
+<p><strong>Test</strong>: Bunnylol - <code>id &lt;car-id&gt; | &lt;person-id&gt; | &lt;product-id&gt;</code> is super easy to use.</p>
+<p>This wouldn’t have been:</p>
+<p><code>car-id &lt;car-id&gt;</code> <code>person-id &lt;person-id&gt;</code> <code>product-id &lt;product-id&gt;</code></p>
+<p>And somebody would have been tempted to add specialized flags for each one. So, you would have to learn a whole new interface for each object you wanted to inspect.</p>
+<p>You want the same thing from - to observe their fields and edges - and you shouldn’t have to do anything different for each one.</p>
+<p><strong>Test</strong>: Ditto for <code>t Foo.php</code> and <code>t Foo</code> and <code>t foo/bar/</code> and <code>t foo/*</code> – I don’t have to remember different interfaces. (And t for running Hack tests and Jest tests and Python tests and whatnot.)</p>
+<p>They all provide the interface of a set of tests. Just run them!</p>
+<p><strong>Test</strong>: Note the <strong>meta</strong> interface of accessing <strong>all</strong> these tools from the same Chrome location bar! After all, why not?! – They all share the interface of taking some text and returning a web response.</p>
+<p><strong>Test</strong>: Emacs deals with ASCII key strokes as the unified interface to all kinds of editing tasks. Want to write code? Rebase your commit? Delete files? It can all be done with a few keystrokes! – unified interface.</p>
+<p><strong>Test</strong>: The shell deals with ASCII commands as the unified interface to all sorts of programs.</p>
+<p>Test: Negative exemplar - GUI - have to learn a <strong>new interface</strong> for each task you want to do! – lots of different interfaces.</p>
+<p><strong>Test</strong>: JFC! <strong>Books</strong> provide a unified interface to all kinds of knowledge! Want to learn about economics? Psychology? Programming? You can do all of that from the interface of a simple book. – unified interface.</p>
+<p>Test: Tasks for everything - coding projects, bugs, bike repair, facilities requests, bike loan. – Talk about a unified interface!</p>
+<p>Test: Diffs for everything - want to edit a gatekeeper? Have to get that diff reviewed! Cool! – unified interface for getting approval for things and for making changes first-class.</p>
+<p><strong>Test</strong>: [2018-07-31 Tue] Google Cloud printer - simple interface for uploading a file - just upload to <strong>the</strong> cloud (not to a particular printer near you, whose name you have to find out); simple interface for printing a file - just go to any printer and pick the file from <strong>the</strong> cloud (instead of going to the particular printer to which you sent the file).</p>
+<p>Printing with a cloud = upload to the cloud (easy), go to any printer you want (easy), and download from the cloud (pretty easy).</p>
+<p>Printing with a particular printer = search for that printer and download drivers if needed (pretty hard), go to that particular printer (ok if you’ve gone and found the name of the printer near you), and print whatever file you sent (easy).</p>
+<p>Basically, with specific printers, you have to learn a new interface each time you come across a new printer. With a cloud, you can reuse the same interface every time.</p>
+<p>Test: The same screen-sharing and video-conferencing software in every meeting room. Don’t need to learn new interface.</p>
+<p>Test: The same laptops and phones for everybody.</p>
+<p>Test: The same chat software throughout the organization.</p>
 <h1 id="refactoring-imposing-structure-on-your-code">Refactoring: Imposing Structure on your Code</h1>
 <h2 id="refactoring-write-direct-tests-before-you-refactor---lower-cycle-time">Refactoring: Write Direct Tests before you Refactor (- lower cycle time)</h2>
 <p><strong>Hypothesis</strong>: Don’t have direct tests, refactor -&gt; may break the code; hard to debug.</p>
@@ -2848,7 +2937,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: August  2, 2018</div>
+<div class="info">Last modified: August  5, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
