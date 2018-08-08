@@ -2053,6 +2053,8 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <p><strong>Hypothesis</strong>: Types narrow your interfaces.</p>
 <p>They turn “don’t do that” into “can’t do that”.</p>
 <p>For example, if all you know is that the React component tree is <code>Foldable a</code>, you can just fold over it with different monoids. That’s all. Can’t access just one part of the tree.</p>
+<h2 id="why-novel-interfaces-proliferate">Why Novel Interfaces Proliferate</h2>
+<p>Hypothesis: Because it gives you a competitive advantage over others and prevents you from becoming a commodity. And perhaps also because you can deliver new features.</p>
 <h1 id="debugging-1">Debugging</h1>
 <h2 id="debugging-look-at-the-diffs">Debugging: Look at the Diffs!</h2>
 <p><strong>Hypothesis</strong>: don’t know the cause of something, have the source code and can run interventions (aka <strong>debugging</strong>), look at your <strong>diff</strong>, list all your assumptions or toggle your diff till you get a “yes” -&gt; figure out which assumption is causing your error.</p>
@@ -2937,7 +2939,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: August  5, 2018</div>
+<div class="info">Last modified: August  6, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
