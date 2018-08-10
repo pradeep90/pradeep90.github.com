@@ -89,6 +89,31 @@
 <p>That’s my problem with row polymorphism! It doesn’t restrict the changes you can make to the data type. It seems to act like you have no idea how you will change the data type and like it must therefore be open to anything you might do.</p>
 <p>(I haven’t gone deep into this topic. These are just my initial thoughts.)</p>
 <p>The only good argument I’ve heard so far for row polymorphism has been “extensible effects” as seen in PureScript. I’m not sure how useful that is but it seems cool and I’ll look into it soon.</p>
+<h1 id="arrows">Arrows</h1>
+<p><strong>Hypothesis</strong>: Arrows allow you to compose disparate operations on a data structure so that it still seems like a single operation.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">(***) ::</span> <span class="dt">Arrow</span> a <span class="ot">=&gt;</span> a b c <span class="ot">-&gt;</span> a b' c' <span class="ot">-&gt;</span> a (b, b') (c, c')</code></pre></div>
+<p>You can, of course, compose arrows to get a single arrow:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">(<span class="fu">&lt;&lt;&lt;</span>) <span class="ot">::</span>
+  forall k (<span class="ot">cat ::</span> k <span class="ot">-&gt;</span> k <span class="ot">-&gt;</span> <span class="fu">*</span>) (<span class="ot">b ::</span> k) (<span class="ot">c ::</span> k) (<span class="ot">a ::</span> k)<span class="fu">.</span>
+  <span class="dt">Control.Category.Category</span> cat <span class="ot">=&gt;</span>
+  cat b c <span class="ot">-&gt;</span> cat a b <span class="ot">-&gt;</span> cat a c</code></pre></div>
+<p>(All arrows are categories.)</p>
+<p>Finally, you can raise a plain function into an arrow:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">arr ::</span> <span class="dt">Arrow</span> a <span class="ot">=&gt;</span> (b <span class="ot">-&gt;</span> c) <span class="ot">-&gt;</span> a b c</code></pre></div>
+<p>Arrow laws:</p>
+<p>Identity law: Raising an identity operation should just give you the identity arrow (I think).</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">arr id <span class="fu">===</span> id</code></pre></div>
+<p>Composition law: Composing two functions and then raising them to an arrow should be the same as raising them to arrows and then composing them.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">arr (f <span class="fu">.</span> g) <span class="fu">===</span> arr f <span class="fu">&lt;&lt;&lt;</span> arr g</code></pre></div>
+<p>For example:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">*</span><span class="dt">Main</span> <span class="dt">Control.Arrow</span><span class="fu">&gt;</span> arr (<span class="fu">+</span><span class="dv">1</span>) <span class="fu">&lt;&lt;&lt;</span> arr (<span class="fu">*</span> <span class="dv">2</span>) <span class="fu">$</span> <span class="dv">5</span>
+<span class="dv">11</span>
+<span class="fu">*</span><span class="dt">Main</span> <span class="dt">Control.Arrow</span><span class="fu">&gt;</span> arr ((<span class="fu">+</span><span class="dv">1</span>) <span class="fu">.</span> (<span class="fu">*</span><span class="dv">2</span>)) <span class="fu">$</span> <span class="dv">5</span>
+<span class="dv">11</span></code></pre></div>
+<p>How do arrows simplify code?</p>
+<p>This part of the wiki (https://en.wikibooks.org/wiki/Haskell/Understanding_arrows#Static_and_dynamic_parsers) talks about using static and dynamic parsers to prevent space leaks.</p>
+<p><strong>Hypothesis</strong>: Arrows allow you to combine two different types of parsers and treat them as one.</p>
+<p>Couldn’t you do that with monads? Not sure. Haven’t thought it through.</p>
 <h1 id="odds-and-ends">Odds and Ends</h1>
 <h2 id="int-to-hex">Int to Hex</h2>
 <blockquote>
@@ -99,7 +124,7 @@
 <p>TODO: Check out http://haskellbook.com/</p>
 
 <div class="info">Created: February 17, 2017</div>
-<div class="info">Last modified: July 29, 2018</div>
+<div class="info">Last modified: August  9, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, haskell</div>
 
