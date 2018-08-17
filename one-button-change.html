@@ -1908,7 +1908,10 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <p><strong>Test</strong>: [2018-07-29 Sun] If you want to disable a “Submit” button until the form data is valid, you have to worry not only about disabling it only for your feature but also not accidentally disabling or enabling it for other features that use the same form.</p>
 <p>If you add some conditions that apply only to your feature, then you can be confident that you’re not affecting any of the logic for the remaining features (since they will never even enter your code branch).</p>
 <p>However, if you add some code without checking specifically for your feature, then it would be executed even for other features and thus you might affect their behaviour.</p>
-<h2 id="duplication-vs-regression">Duplication vs Regression</h2>
+<h2 id="fast-correct-duplicated-code-vs-slow-regressive-succinct-code">Fast, Correct, Duplicated Code vs Slow, Regressive, Succinct Code</h2>
+<p><strong>Hypothesis</strong>: If you handle each type of input separately, you will make progress easily (because you will have few constraints at each point) and you won’t break existing features (because you won’t touch other branches) but you will duplicate code across the branches.</p>
+<p>If you try to handle multiple inputs in the same branch, you will have trouble making progress (because you will have a lot of constraints to handle) and you may break existing features (because a change within one branch will affect multiple existing features) but you will have succinct code.</p>
+<hr />
 <p>Observation: Duplication vs regression strikes again! Handling a new case by itself is pretty trivial (if tedious). But handling the new case without affecting the else case too much is very hard. No wonder I’ve been stuck on this.</p>
 <p>Observation: When you duplicate and change, you get to start from scratch. You have far fewer constraints. Much more peaceful.</p>
 <h2 id="coupled-tests-are-harder-to-pass">Coupled Tests are Harder to Pass</h2>
@@ -2939,7 +2942,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: August  6, 2018</div>
+<div class="info">Last modified: August 16, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
