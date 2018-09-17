@@ -2075,6 +2075,8 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <p><strong>Hypothesis</strong>: Test passes -&gt; positive exemplar (hopefully with all necessary causes).</p>
 <p>Test fails, create a smaller exemplar that is positive and extend it to the larger exemplar -&gt; know what works (necessary causes) and what doesn’t; faster.</p>
 <p>Test fails, debug by toggling here and there -&gt; don’t know what works (necessary causes) and what doesn’t; slow.</p>
+<hr />
+<p>Test: [2018-09-16 Sun] Spent half an hour debugging why I couldn’t clone a bare Git repository from the server. Turns out I used <code>/home/foo</code> instead of <code>/homes/foo</code>. Dammit! – A simple, detailed comparison with a past positive exemplar would have solved the problem.</p>
 <h1 id="understanding-uncertainty-about-the-program-output">Understanding: Uncertainty about the Program Output</h1>
 <h2 id="how-to-tackle-a-daunting-problem">How to Tackle a Daunting Problem</h2>
 <p><strong>Hypothesis</strong>: Get as close a positive exemplar as you can and take a diff to do what you want to do. You will be able to solve your problem more easily than if you try to figure it all out from scratch (?).</p>
@@ -2945,7 +2947,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: August 19, 2018</div>
+<div class="info">Last modified: September 16, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
