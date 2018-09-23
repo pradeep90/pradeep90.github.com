@@ -149,9 +149,15 @@ gpg --export-secret-keys --armor foo@gmail.com</code></pre></div>
 <blockquote>
 <p>$ sudo dpkg-reconfigure tzdata</p>
 </blockquote>
+<h1 id="send-in-stdin-where-a-file-is-expected">Send in Stdin where a File is expected</h1>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">echo</span> yo boyz <span class="kw">|</span> <span class="kw">foo</span> /dev/stdin</code></pre></div>
+<h1 id="get-parts-of-speech-pos-from-a-sentence">Get Parts of Speech (POS) from a Sentence</h1>
+<p>Use the <a href="https://nlp.stanford.edu/software/tagger.shtml">Stanford POS tagger</a>.</p>
+<p>Get verbs:</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">$ ./stanford-postagger.sh models/english-left3words-distsim.tagger foo.txt <span class="kw">|</span> <span class="kw">awk</span> <span class="st">'{for(i=1;i&lt;=NF;i++) if($i ~ /_V/) print $i}'</span></code></pre></div>
 
 <div class="info">Created: August 19, 2015</div>
-<div class="info">Last modified: May 13, 2018</div>
+<div class="info">Last modified: September 21, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes</div>
 
