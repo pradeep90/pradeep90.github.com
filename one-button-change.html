@@ -1634,8 +1634,10 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <p>Or maybe it’s about the end-to-end acceptance tests that you choose not to pass.</p>
 <p>Hypothesis: Decide how much value you want in your MVP and then pack in as many high-value acceptance tests (or easy acceptance tests) as needed to produce that value.</p>
 <p>TODO: Labels: “value you want in your MVP”, “value of acceptance test” - need positive and negative exemplars.</p>
+<p>Hypothesis: Ask yourself “what would I do if I had to release right now?”. That will give you a current positive exemplar, even if it is low-quality (as opposed to a nebulous ideal exemplar, which only leads to a negative exemplar right now).</p>
 <hr />
 <p>Test: Super Mario - the game “works pretty well” even without the princess. Well, decompose the output (in this case, your gaming experience). You are entertained by the jumping and running.</p>
+<p>Test: Low-quality but immediate positive exemplar - what benchmark would I use for my equational calculator? Probably programming challenges.</p>
 <h2 id="speed-coding-hat-vs-refactoring-hat">Speed: Coding Hat vs Refactoring Hat</h2>
 <p><strong>Hypothesis</strong>: adding a new feature, one long chain of function calls -&gt; will pass the test case (one branch), very little time, will not overengineer. Refactor -&gt; easier to test going forward -&gt; quick. h/t Kent Beck.</p>
 <p>adding a new feature, abstract code (using separate functions or classes) -&gt; will pass the test case (one branch), will take more time because you’re changing the design too, may overengineer. Debugging -&gt; slow.</p>
@@ -2949,7 +2951,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: September 30, 2018</div>
+<div class="info">Last modified: October 10, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
