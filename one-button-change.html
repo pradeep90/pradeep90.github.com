@@ -2184,6 +2184,19 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <p>Test: Log file - XINU – helped a lot for me to keep track of what was going on. Had to save separate files, though, because the output was pretty huge. (Could have noted down only the variables I cared about.)</p>
 <p><strong>Test</strong>: Negative exemplar - log file - didn’t have any for the IPL dataset – didn’t have a good idea of what was going on, especially when trying something new.</p>
 <h1 id="high-level-design-decomposing-the-output">High-level Design: Decomposing the Output</h1>
+<h2 id="programming-induction">Programming = Induction</h2>
+<p>Hypothesis: Tests are positive exemplars. So, they allow you to easily eliminate irrelevant factors or figure out the effect of a change.</p>
+<p>(h/t Michael Feathers’ Working Effectively with Legacy Code)</p>
+<p>Refactoring is nothing but eliminating irrelevant factors. And that is why refactoring needs tests.</p>
+<p>I suspect that category theory laws act as de facto tests. For example, I don’t seem to need a unit test to help me understand <code>fmap (+1) someMaybeValue</code>. Gabriel Gonzalez <a href>says</a> that he doesn’t usually write tests for his Haskell modules and yet his code works. When do you not need a unit test?</p>
+<p>Code with minimum interface is basically code with all the irrelevant factors eliminated. It’s easy to understand because it has only the relevant factors. It’s easy to reuse because a smaller set of conditions means that more inputs will match it. And it’s easy to modify along the predefined axes. For example, it’s easier to change <code>map square</code> to <code>map cube</code> than to go into a for-loop and modify the function call.</p>
+<p>Note that a “general” function isn’t one that can solve a ton of problems. It’s just the one with the minimum necessary factors for solving a particular problem. For example, <code>sort :: Ord a =&gt; [a] -&gt; [a]</code> is more general than <code>sortInts :: [Int] -&gt; [Int]</code> even though it solves the same problem. The latter was taking in unnecessary information (assuming that the sorting algorithm used just the ordering, not the integer values themselves).</p>
+<h2 id="change-transforming-a-concept">Change: Transforming a Concept</h2>
+<p>However, it’s harder to change minimized code when your purpose changes. For example, you turned a for-loop into a map because you assumed that you would just change each element of a list individually. Now if you want to also use the index variable in your calculation or, worse, refer to arbitrary elements in the list, you’re going to be screwed. You will have to use <code>zip [1..]</code> on the list first or do something else entirely. That’s the danger of premature optimization. Basically, there’s no possible configuration of the existing variables that will give you what you want. You have to include new variables like the index variable or the other elements of the list.</p>
+<p>Hmm… You basically want to shift from one concept to another <strong>without</strong> having to induce each factor from scratch! Ideally, if you wanted to use a map function that uses the index, you’d just write a new version <code>imap</code> that also provided the index. You would want a separate function for every version that you write. However, we just update our function and throw away the previous version.</p>
+<p>I suspect that you have transformed a concept when you have changed its type signature. For example, <code>map square</code> and <code>map cube</code> have the same type signature, whereas <code>map square</code> and <code>imap square</code> don’t.</p>
+<p>Question: How do we usually transform our concepts and how can we do so efficiently?</p>
+<p>For example, I changed Bird’s calculator to return a tree of rewrites instead of a chain. Most of the code, like the expression-parsing or the law-rewriting, remained untouched. All I had to change was the ultimate function <code>simplify</code>.</p>
 <h2 id="clear-your-mind-and-see-the-matrix">Clear your Mind and See the Matrix</h2>
 <p><strong>Hypothesis</strong>: We decompose an output in terms of input factors by first inducing away all irrelevant factors and then recognizing patterns we’ve seen before. Basically, we decompose by inducing and understanding.</p>
 <p><strong>Corollary</strong>: You can’t decompose something you haven’t seen.</p>
@@ -2951,7 +2964,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: October 10, 2018</div>
+<div class="info">Last modified: October 22, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
