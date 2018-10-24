@@ -74,6 +74,9 @@ alias -g awksum=&quot;awknum '{sum+=\$1}END{print sum}'&quot;</code></pre>
 <pre><code>diff &lt;(sort foo.txt) &lt;(sort -u foo.txt)</code></pre>
 <h1 id="zip">Zip</h1>
 <pre><code>zip -r foo.zip foo-directory</code></pre>
+<p>To uncompress a .Z file (which in my case has usually been a non-gzip file):</p>
+<pre><code>tar zxvf foo.Z</code></pre>
+<p>Don’t use <code>gzip -d foo.Z</code>. It gives some weird result.</p>
 <h1 id="pass-input-to-two-commands">Pass Input to Two Commands</h1>
 <p>I want lines with “Foo” to be displayed before the rest. Also, those two sections should be sorted within themselves.</p>
 <pre><code>Baz
@@ -157,7 +160,7 @@ gpg --export-secret-keys --armor foo@gmail.com</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">$ ./stanford-postagger.sh models/english-left3words-distsim.tagger foo.txt <span class="kw">|</span> <span class="kw">awk</span> <span class="st">'{for(i=1;i&lt;=NF;i++) if($i ~ /_V/) print $i}'</span></code></pre></div>
 
 <div class="info">Created: August 19, 2015</div>
-<div class="info">Last modified: September 21, 2018</div>
+<div class="info">Last modified: October 23, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes</div>
 
