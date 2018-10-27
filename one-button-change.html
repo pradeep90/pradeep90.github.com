@@ -1638,6 +1638,24 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <hr />
 <p>Test: Super Mario - the game “works pretty well” even without the princess. Well, decompose the output (in this case, your gaming experience). You are entertained by the jumping and running.</p>
 <p>Test: Low-quality but immediate positive exemplar - what benchmark would I use for my equational calculator? Probably programming challenges.</p>
+<h2 id="deployment-pipeline-automatically-get-output-from-input">Deployment Pipeline: Automatically get Output from Input</h2>
+<p>Hypothesis: A deployment pipeline is when you can get the output directly by setting the input.</p>
+<p>This is obvious for a program like <code>square</code>, where you can feed in <code>3</code> and get <code>9</code>.</p>
+<p>But it’s more subtle for a project where your output is a report. Any change you make to the project should create a new instance of the final report. For example, if you add more training data, that should obviously affect the report. If you add a new machine learning algorithm, that should too. In short, if you set up an automated pipeline, you can measure your progress simply through the final result (your report). Otherwise, you will have to judge a multi-factor project on things like the training data, the machine learning algorithms, and so on. It’s much harder than judging a single report.</p>
+<p>Corollary: You can design your next action by looking at the next thing you want to add to your report.</p>
+<h2 id="iterative-development-easy-to-change-high-level-design">Iterative Development: Easy to Change High-level Design</h2>
+<p>Hypothesis: If you release a simple version of your project, you can try out different high-level designs cheaply since you have small inputs.</p>
+<p>If you wait until you’ve done the rest of work before you try a different high-level design, you’ll have to work a lot to get it running since you have large inputs.</p>
+<p>Corollary: You can still get those benefits after you’ve begun by experimenting in a new blank project and moving in your old changes.</p>
+<p>Observation: I wanted to try different formats for a file that was going to be read by another program. Easy to do given that all I had in the file was one line.</p>
+<p>If I wanted to do it after I had a long file, I’d have to keep modifying the data in the file according to the new format.</p>
+<p>Observation: This is what writers call outlining.</p>
+<p>Observation: This is what filmmakers call story-boarding.</p>
+<h2 id="iterative-development-deal-with-migration-problems-one-at-a-time">Iterative Development: Deal with Migration Problems One at a Time</h2>
+<p>Hypothesis: If you settle on a high-level design up front, you can deal with migration problems one at a time.</p>
+<p>If you change your high-level design when you’re deep into your project, you will have to deal with migration problems all at once.</p>
+<p>Observation: Want to format a long LaTeX file like a research paper. All of a sudden, I have to deal with a lot of changes, like diagrams or tables or headings, all at once.</p>
+<p>If I’d started with an empty research paper template, then I would have had to deal with each problem one at a time.</p>
 <h2 id="speed-coding-hat-vs-refactoring-hat">Speed: Coding Hat vs Refactoring Hat</h2>
 <p><strong>Hypothesis</strong>: adding a new feature, one long chain of function calls -&gt; will pass the test case (one branch), very little time, will not overengineer. Refactor -&gt; easier to test going forward -&gt; quick. h/t Kent Beck.</p>
 <p>adding a new feature, abstract code (using separate functions or classes) -&gt; will pass the test case (one branch), will take more time because you’re changing the design too, may overengineer. Debugging -&gt; slow.</p>
@@ -2964,7 +2982,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: October 22, 2018</div>
+<div class="info">Last modified: October 26, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
