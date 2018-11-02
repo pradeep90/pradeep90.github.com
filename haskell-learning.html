@@ -114,6 +114,12 @@
 <p>This part of the wiki (https://en.wikibooks.org/wiki/Haskell/Understanding_arrows#Static_and_dynamic_parsers) talks about using static and dynamic parsers to prevent space leaks.</p>
 <p><strong>Hypothesis</strong>: Arrows allow you to combine two different types of parsers and treat them as one.</p>
 <p>Couldn’t you do that with monads? Not sure. Haven’t thought it through.</p>
+<h1 id="watch-tests">Watch Tests</h1>
+<blockquote>
+<p>stack test –file-watch –fast</p>
+</blockquote>
+<p><strong>Super-slow</strong>. Takes around 10 seconds to rebuild and test.</p>
+<p>Apparently, <a href="https://github.com/ndmitchell/ghcid">ghcid</a> can essentially reload ghci and check for errors. That works. However, I’m not able to get it to run tests upon reloading.</p>
 <h1 id="odds-and-ends">Odds and Ends</h1>
 <h2 id="int-to-hex">Int to Hex</h2>
 <blockquote>
@@ -124,7 +130,7 @@
 <p>TODO: Check out http://haskellbook.com/</p>
 
 <div class="info">Created: February 17, 2017</div>
-<div class="info">Last modified: August  9, 2018</div>
+<div class="info">Last modified: November  1, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, haskell</div>
 

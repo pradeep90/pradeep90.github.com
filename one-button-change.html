@@ -1580,7 +1580,7 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <h2 id="notes-on-the-art-of-software-testing">Notes on The Art of Software Testing</h2>
 <p>Hypothesis: Testing must falsify other plausible programs and thus provide strong evidence for your program.</p>
 <p>Other plausible programs are those that you can get by modifying different features in your program, like changing <code>&amp;&amp;</code> to <code>||</code>, changing the function applied to a value, or changing <code>X &gt; 1</code> to <code>X &gt; 0</code>. Of course, there are infinite such programs that you can construct. We want the ones that are most plausible.</p>
-<p>Stopped at decision coverage.</p>
+<p>Hypothesis: Branch coverage (or decision coverage) means that every condition must be set to true and to false at least once. (And if your code has multiple entry points, each must be invoked at least once.)</p>
 <h1 id="programming-at-speed-cycle-time">Programming at Speed: Cycle Time</h1>
 <h2 id="speed-is-determined-by-the-number-of-constraints">Speed is Determined by the Number of Constraints</h2>
 <p><strong>Hypothesis</strong>: Time taken to complete some task is proportional to the number and severity of constraints.</p>
@@ -2987,7 +2987,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: October 31, 2018</div>
+<div class="info">Last modified: November  1, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
