@@ -1578,9 +1578,21 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <h2 id="unit-tests-help-you-eliminate-irrelevant-factors-in-a-function">Unit Tests help you Eliminate Irrelevant Factors in a Function</h2>
 <p>Hypothesis: Unit tests are like instances that help you learn a hierarchy of relevant factors. In particular, they help you eliminate the parts of your functions that are irrelevant to your use cases (i.e., your category feedback).</p>
 <h2 id="notes-on-the-art-of-software-testing">Notes on The Art of Software Testing</h2>
+<h3 id="chapter-4-test-case-design">Chapter 4: Test-Case Design</h3>
+<h4 id="white-box-testing-all-about-code-coverage">White-box Testing: All about Code Coverage</h4>
 <p>Hypothesis: Testing must falsify other plausible programs and thus provide strong evidence for your program.</p>
 <p>Other plausible programs are those that you can get by modifying different features in your program, like changing <code>&amp;&amp;</code> to <code>||</code>, changing the function applied to a value, or changing <code>X &gt; 1</code> to <code>X &gt; 0</code>. Of course, there are infinite such programs that you can construct. We want the ones that are most plausible.</p>
-<p>Hypothesis: Branch coverage (or decision coverage) means that every condition must be set to true and to false at least once. (And if your code has multiple entry points, each must be invoked at least once.)</p>
+<p>Hypothesis: Branch coverage (or decision coverage) means that every decision must be set to true and to false at least once. (And if your code has multiple entry points, each must be invoked at least once.)</p>
+<p>Hypothesis: Condition coverage means that every condition must be set to true and to false at least once. (And entry points must be invoked at least once.)</p>
+<p>It may not always satisfy branch coverage because <code>if(A &amp;&amp; B)</code> may pass condition coverage with (A = true, B = false) and (A = false, B = true), which does not test the if-true branch.</p>
+<p>Hypothesis: “Decision/condition coverage” requires that each decision takes all possible outcomes, each condition takes all possible outcomes, and each entry point gets invoked.</p>
+<p><strong>Hypothesis</strong>: Multiple condition coverage means that each decision gets all possible combinations of condition outcomes.</p>
+<p>This seems to be the gold standard for white-box testing.</p>
+<p>I suspect that multiple-condition coverage is about getting a positive and negative exemplar for each condition so that we know it is indeed a relevant factor.</p>
+<h4 id="black-box-testing-check-the-spec">Black-box Testing: Check the Spec</h4>
+<p>They suggest having one test case cover as many valid equivalence classes as possible (like “mountain bike with front lights and helmet”, where “mountain bike”, “front lights”, and “helmet” are equivalence classes). I suspect this is so because the test case would pass only if all of them are implemented correctly, which means you need fewer tests to check a lot of features.</p>
+<p>They also suggest having one test case cover only one invalid equivalence class at a time (like “flying bike”, but not “flying bike with quantum-powered helmet”). I suspect that is because the latter may fail immediately after “flying bike” and thus you will never know if an invalid input like “quantum-powered helmet” is caught by your system.</p>
+<p>Stopped at the Fortran exercise problem.</p>
 <h1 id="programming-at-speed-cycle-time">Programming at Speed: Cycle Time</h1>
 <h2 id="speed-is-determined-by-the-number-of-constraints">Speed is Determined by the Number of Constraints</h2>
 <p><strong>Hypothesis</strong>: Time taken to complete some task is proportional to the number and severity of constraints.</p>
@@ -2987,7 +2999,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: November  2, 2018</div>
+<div class="info">Last modified: November  3, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
