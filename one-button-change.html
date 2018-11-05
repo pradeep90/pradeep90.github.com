@@ -1578,8 +1578,7 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <h2 id="unit-tests-help-you-eliminate-irrelevant-factors-in-a-function">Unit Tests help you Eliminate Irrelevant Factors in a Function</h2>
 <p>Hypothesis: Unit tests are like instances that help you learn a hierarchy of relevant factors. In particular, they help you eliminate the parts of your functions that are irrelevant to your use cases (i.e., your category feedback).</p>
 <h2 id="notes-on-the-art-of-software-testing">Notes on The Art of Software Testing</h2>
-<h3 id="chapter-4-test-case-design">Chapter 4: Test-Case Design</h3>
-<h4 id="white-box-testing-all-about-code-coverage">White-box Testing: All about Code Coverage</h4>
+<h3 id="white-box-testing-all-about-code-coverage">White-box Testing: All about Code Coverage</h3>
 <p>Hypothesis: Testing must falsify other plausible programs and thus provide strong evidence for your program.</p>
 <p>Other plausible programs are those that you can get by modifying different features in your program, like changing <code>&amp;&amp;</code> to <code>||</code>, changing the function applied to a value, or changing <code>X &gt; 1</code> to <code>X &gt; 0</code>. Of course, there are infinite such programs that you can construct. We want the ones that are most plausible.</p>
 <p>Hypothesis: Branch coverage (or decision coverage) means that every decision must be set to true and to false at least once. (And if your code has multiple entry points, each must be invoked at least once.)</p>
@@ -1589,10 +1588,111 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p><strong>Hypothesis</strong>: Multiple condition coverage means that each decision gets all possible combinations of condition outcomes.</p>
 <p>This seems to be the gold standard for white-box testing.</p>
 <p>I suspect that multiple-condition coverage is about getting a positive and negative exemplar for each condition so that we know it is indeed a relevant factor.</p>
-<h4 id="black-box-testing-check-the-spec">Black-box Testing: Check the Spec</h4>
+<p>Question: What if we combine all the if-blocks into one long if-block?</p>
+<p>You have to be careful to write tests that distinguish between the different branches of that block. For example, I had <code>if (a &amp;&amp; b) { if (c || d) {}}</code>. Now, I collapsed that into one block as <code>if (a &amp;&amp; b &amp;&amp; c) {} else if (a &amp;&amp; b &amp;&amp; d) {} ...</code>. But when I tried to test the second branch, I inadvertently gave an input that passed not just a, b, and d, but also passed c, which meant that the branch that got executed was the first one. Instead, I have to write <code>if (a &amp;&amp; b &amp;&amp; c) {} else if (a &amp;&amp; b &amp;&amp; !c &amp;&amp; d) {} ...</code>, so that my test is forced to pass a, b, and d but not c.</p>
+<p>Therefore, because <code>||</code> is short-circuiting, we get less than the full exponential number of configurations. Which tells us that the first condition of <code>||</code> is intended to be more important than the second, since the latter is checked only when the former fails.</p>
+<p>Hypothesis: What about all the possible configurations of the conditions?</p>
+<p>For example, you have to cover all branches like <code>A &gt; 1 &amp;&amp; B == 0 &amp;&amp; !(A == 2) &amp;&amp; !((X / A) &gt; 1)</code> and predict their value. However, your program treat many configurations the same way. For example, if it had <code>if (A &gt; 1) { return 3; }</code>, then for all combinations of the other three conditions, you would return the same value.</p>
+<p>However, the number of such configurations is obviously exponential.</p>
+<h3 id="what-does-white-box-testing-do">What does White-box Testing do?</h3>
+<p>Hypothesis: White-box testing checks that the target function does not use fewer or more conditions than your function. And when the target function uses the same number of conditions, white-box testing checks that your boolean logic is correct (for instance, you haven’t used <code>(&amp;&amp;)</code> instead of <code>(||)</code>, or <code>x &lt; 1</code> instead of <code>x &gt; 1</code>).</p>
+<p>Test: TODO.</p>
+<h3 id="black-box-testing-check-the-spec">Black-box Testing: Check the Spec</h3>
+<p>Hypothesis: Black-box testing checks whether your program implements the specification.</p>
+<p>Hypothesis: If your test passes, it should mean that the program matches the spec.</p>
+<h4 id="cover-the-equivalence-classes">Cover the Equivalence Classes</h4>
 <p>They suggest having one test case cover as many valid equivalence classes as possible (like “mountain bike with front lights and helmet”, where “mountain bike”, “front lights”, and “helmet” are equivalence classes). I suspect this is so because the test case would pass only if all of them are implemented correctly, which means you need fewer tests to check a lot of features.</p>
 <p>They also suggest having one test case cover only one invalid equivalence class at a time (like “flying bike”, but not “flying bike with quantum-powered helmet”). I suspect that is because the latter may fail immediately after “flying bike” and thus you will never know if an invalid input like “quantum-powered helmet” is caught by your system.</p>
-<p>Stopped at the Fortran exercise problem.</p>
+<p>Test: [2018-11-03 Sat] Fortran DIMENSION statement.</p>
+<table style="width:109%;">
+<colgroup>
+<col width="31%" />
+<col width="35%" />
+<col width="42%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">External condition</th>
+<th align="left">Valid equivalence classes</th>
+<th align="left">Invalid equivalence classes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">#array descriptors</td>
+<td align="left">1, &gt; 1</td>
+<td align="left">0</td>
+</tr>
+<tr class="even">
+<td align="left">symbolic name length</td>
+<td align="left">1 to 6</td>
+<td align="left">0, &gt; 6</td>
+</tr>
+<tr class="odd">
+<td align="left">symbolic first letter</td>
+<td align="left">letter</td>
+<td align="left">digit</td>
+</tr>
+<tr class="even">
+<td align="left">symbolic name contents</td>
+<td align="left">letter, digit</td>
+<td align="left">non-alphanumeric</td>
+</tr>
+<tr class="odd">
+<td align="left">#declarators</td>
+<td align="left">1 to 7</td>
+<td align="left">0, &gt; 7</td>
+</tr>
+<tr class="even">
+<td align="left">constant</td>
+<td align="left">-65534 to 65535</td>
+<td align="left">&lt; -65534, &gt; 65535</td>
+</tr>
+<tr class="odd">
+<td align="left">ub</td>
+<td align="left">constant, int var name</td>
+<td align="left">array elem name, something else</td>
+</tr>
+<tr class="even">
+<td align="left">lb</td>
+<td align="left">constant, int var name</td>
+<td align="left">array elem name, something else</td>
+</tr>
+<tr class="odd">
+<td align="left">lb specified</td>
+<td align="left">yes, no</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">ub</td>
+<td align="left">&gt;= lb</td>
+<td align="left">&lt; lb</td>
+</tr>
+<tr class="odd">
+<td align="left">lb</td>
+<td align="left">-ve, 0, +ve</td>
+<td align="left">non-number</td>
+</tr>
+<tr class="even">
+<td align="left">multiple lines</td>
+<td align="left">yes, no</td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<p>If I didn’t have separate equivalence classes for lower and upper bounds, then I may try (6:FOOINT), but not (FOOINT:6), which may crash the program.</p>
+<p>Note, however, that the book itself treats <code>integer variable name</code> as a separate equivalence class. So, it may not test whether <code>ub</code> could handle digits in the integer variable name. All your tests may have <code>ub</code> as an integer variable name with only letters. Even if you were clever enough to use <code>F3035X</code> as your example everywhere for the <code>integer variable name</code> class, you still aren’t testing <code>FX3035</code>. Maybe <code>ub</code> fails when there is an alphabet in the second letter. Or, worst of all, it fails <strong>only</strong> for the specific name <code>FAILZZ</code>. How can you guard against that? You can’t.</p>
+<p>So, you’re assuming that the programmer won’t create finer equivalence classes than the specification implies.</p>
+<p>Test cases to cover valid equivalence classes:</p>
+<p>First, we cover all the valid equivalence classes.</p>
+<blockquote>
+<p>Test 1: DIMENSION A393B(-6000:FOOINT)</p>
+<p>Test 2: DIMENSION FOO(5, 6:9, BARINT:9), BAR(0:4)</p>
+</blockquote>
+<p>Then, we cover the invalid equivalence classes.</p>
+<blockquote>
+<p>Test 3: DIMENSION Test 4: DIMENSION (3:4) Test 5: DIMENSION FOOOOOOOOOOOO(3:4) Test 6: DIMENSION 3FOO(3:4) Test 7: DIMENSION FOO!(3:4) Test 8: DIMENSION FOO() Test 9: DIMENSION FOO(1,2,3,4,5,6,7,8) Test 10: DIMENSION FOO(-1000000:3) Test 11: DIMENSION FOO(10000000) Test 12: DIMENSION FOO(BAR(3)) Test 13: DIMENSION FOO(BAR(3):9) Test 14: DIMENSION FOO(1 + 3) Test 15: DIMENSION FOO(3:2) Test 16: DIMENSION FOO(1+3:5)</p>
+</blockquote>
 <h1 id="programming-at-speed-cycle-time">Programming at Speed: Cycle Time</h1>
 <h2 id="speed-is-determined-by-the-number-of-constraints">Speed is Determined by the Number of Constraints</h2>
 <p><strong>Hypothesis</strong>: Time taken to complete some task is proportional to the number and severity of constraints.</p>
@@ -2999,7 +3099,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: November  3, 2018</div>
+<div class="info">Last modified: November  5, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
