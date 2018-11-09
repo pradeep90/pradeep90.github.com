@@ -1600,6 +1600,9 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <h3 id="black-box-testing-check-the-spec">Black-box Testing: Check the Spec</h3>
 <p>Hypothesis: Black-box testing checks whether your program implements the specification.</p>
 <p>Hypothesis: If your test passes, it should mean that the program matches the spec.</p>
+<h2 id="stateful-programs-assert-properties-about-the-state">Stateful Programs: Assert Properties about the State</h2>
+<p>Hypothesis: If you also mention what a function does to the state, then you can catch any unwanted side-effects. Otherwise, you can’t.</p>
+<p>Test: [2018-11-07 Wed] I tested that an <code>empty</code> method on a <code>Queue</code> would do the right thing for an empty, partially-filled, or full queue. I didn’t test, however, that it <strong>wouldn’t</strong> change the queue.</p>
 <h4 id="cover-the-equivalence-classes">Cover the Equivalence Classes</h4>
 <p>They suggest having one test case cover as many valid equivalence classes as possible (like “mountain bike with front lights and helmet”, where “mountain bike”, “front lights”, and “helmet” are equivalence classes). I suspect this is so because the test case would pass only if all of them are implemented correctly, which means you need fewer tests to check a lot of features.</p>
 <p>They also suggest having one test case cover only one invalid equivalence class at a time (like “flying bike”, but not “flying bike with quantum-powered helmet”). I suspect that is because the latter may fail immediately after “flying bike” and thus you will never know if an invalid input like “quantum-powered helmet” is caught by your system.</p>
@@ -3099,7 +3102,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: November  5, 2018</div>
+<div class="info">Last modified: November  8, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
