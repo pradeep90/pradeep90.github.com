@@ -2113,7 +2113,6 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <p><strong>Hypothesis</strong>: Focus on just one small property (like being unreactive) and figure out what you need to change to get it -&gt; minimum interface (wrt that property).</p>
 <h2 id="decouple-by-creating-an-explicit-interface">Decouple by creating an Explicit Interface</h2>
 <p>Hypothesis: If you have a bunch of code that is all mixed up, decouple one part of it by hiding it behind an explicit interface, testing that the interface covers all existing use cases, and then moving the code to another module. If you don’t have such an explicit interface, then, for all you know, the rest of the code <strong>might</strong> depend on any part of this code and thus you will remain uncertain about its actual effects.</p>
-<h2 id="refactoring-as-minimizing-interface">Refactoring as Minimizing Interface</h2>
 <h2 id="small-interface-expose-only-one-thing-at-a-time">Small Interface: Expose Only One Thing at a Time (??)</h2>
 <p><strong>Hypothesis</strong>: Small interface -&gt; easier to use.</p>
 <p>Large interface -&gt; harder to use.</p>
