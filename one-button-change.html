@@ -1758,6 +1758,14 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <hr />
 <p>Test: Super Mario - the game “works pretty well” even without the princess. Well, decompose the output (in this case, your gaming experience). You are entertained by the jumping and running.</p>
 <p>Test: Low-quality but immediate positive exemplar - what benchmark would I use for my equational calculator? Probably programming challenges.</p>
+<h2 id="amount-of-work-is-proportional-to-the-equivalence-classes">Amount of Work is Proportional to the Equivalence Classes</h2>
+<p><strong>Hypothesis</strong>: If you cover some equivalence classes with one implementation, even if you don’t try all combinations, you can abstract that code to allow you to do the other variations.</p>
+<p>If you try to implement all combinations at once, you’ll think you have to do a lot of work.</p>
+<p>For example, if I try to generate longer expressions with the identity laws, I can always abstract it to allow me to use the cascade laws. Similarly, if I implement graph generation for identity laws using just a few laws, I can always abstract it for the other types and the other numbers of laws.</p>
+<p>Corollary: If this is true, I don’t need to do a combinatorial amount of work. Cover the equivalence classes with a few implementations and abstract.</p>
+<p>Yes, running the code will take time proportional to the number of combinations, but implementing it will take time only proportional to the number of equivalence classes. I’m acting like implementing it will take a combinatorial amount of time.</p>
+<p>Corollary: To figure out how much work is left, look at the equivalence classes left (and the amount of abstraction you’ll have to do). For example, to know how much I’ve left undone in a messy essay, collect equivalence classes from it.</p>
+<p>Corollary: Abstraction means that you can implement something once and use it for n different cases.</p>
 <h2 id="deployment-pipeline-automatically-get-output-from-input">Deployment Pipeline: Automatically get Output from Input</h2>
 <p>Hypothesis: A deployment pipeline is when you can get the output directly by setting the input.</p>
 <p>This is obvious for a program like <code>square</code>, where you can feed in <code>3</code> and get <code>9</code>.</p>
@@ -3104,7 +3112,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: November 12, 2018</div>
+<div class="info">Last modified: November 30, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
