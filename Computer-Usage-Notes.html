@@ -68,6 +68,11 @@ alias -g awknum=&quot;awk -v FPAT='[0-9]+(\\\\.[0-9]+)?'&quot;
 
 # Sum of the first number on each line.
 alias -g awksum=&quot;awknum '{sum+=\$1}END{print sum}'&quot;</code></pre>
+<h1 id="pdf-from-text">PDF from Text</h1>
+<pre><code>enscript file.txt --output=- | ps2pdf - &gt; file.pdf</code></pre>
+<p>Useful when I need to create a simple one-page PDF with meta details for each folder so that when I collate all the PDFs, I can see the details for each one in order.</p>
+<p>With Pandoc:</p>
+<pre><code>echo 'Foo test' | pandoc -o foo.pdf</code></pre>
 <h1 id="shell">Shell</h1>
 <h2 id="diff-output-of-two-commands">Diff Output of Two Commands</h2>
 <p>Convoluted way to check if a file has duplicate lines (you could just do <code>sort | uniq -d</code>):</p>
@@ -160,7 +165,7 @@ gpg --export-secret-keys --armor foo@gmail.com</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">$ ./stanford-postagger.sh models/english-left3words-distsim.tagger foo.txt <span class="kw">|</span> <span class="kw">awk</span> <span class="st">'{for(i=1;i&lt;=NF;i++) if($i ~ /_V/) print $i}'</span></code></pre></div>
 
 <div class="info">Created: August 19, 2015</div>
-<div class="info">Last modified: November 24, 2018</div>
+<div class="info">Last modified: December 13, 2018</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes</div>
 
