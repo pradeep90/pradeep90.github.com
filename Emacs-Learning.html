@@ -67,6 +67,9 @@
 <p>Almost all the actions you can carry out in Magit is done through a one-key system that opens up a “command console” window at the bottom, letting you further refine your command before you carry it out. This is a fantastically well-done interface and is probably the killer feature that makes Magit so great. I like it so much that I have copied the underlying interface code for use in some of my own Emacs hackery. It’s really, really nice.</p>
 <p>– <a href="https://www.masteringemacs.org/article/introduction-magit-emacs-mode-git">Mastering Emacs</a></p>
 </blockquote>
+<h2 id="annoying-reverting-of-buffers-with-uncommitted-changes">Annoying Reverting of Buffers with Uncommitted Changes</h2>
+<p>[2018-12-31 Mon] When I edit and save some file and then commit some other file in the repository (using VC Git or Magit), then when I go back to the first buffer, it asks me to revert the buffer because it seems to have changed on disk.</p>
+<p>It happens even when the first buffer has disabled <code>magit-auto-revert-mode</code>.</p>
 <h1 id="helm">Helm</h1>
 <p>Looks awesome! I had my reservations, but it’s blowing my mind with the consistent interface to my files, buffers, bookmarks, imenu items, man entries, etc.</p>
 <h1 id="haskell">Haskell</h1>
@@ -169,7 +172,7 @@ Unable to bracket root: (1e-4 .. 199261560.80331)</code></pre>
 <p>https://truongnghiem.wordpress.com/common-calculations-in-emacscalc/ - showed me how to automatically recompute an expression by setting different values to a variable.</p>
 
 <div class="info">Created: August  6, 2015</div>
-<div class="info">Last modified: February 17, 2018</div>
+<div class="info">Last modified: January  1, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, emacs</div>
 
