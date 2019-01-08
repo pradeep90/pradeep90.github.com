@@ -59,20 +59,22 @@
 <p>I suspect that running some quick, incremental tests upon each new addition will keep your essay clean while not imposing too much when you make a small change. This is basically the idea behind continuous integration.</p>
 <p>For example, if one of the tests you run on each release is a refactoring check, where you make sure your code is well-organized and free of duplication, then each release will ensure that your code is still well-organized and free of duplication. If another thing you check is whether the new code has been well-tested, each release will again ensure that your entire code base is well-tested.</p>
 <p>Here are some tests I think will help clean up my essays if I run them every time I commit a new idea. Let’s see how it works.</p>
-<h2 id="structure-checklist-linting">Structure Checklist: Linting</h2>
-<p>The essay should flow at each level. That is, each section should represent one key idea and the ideas from a sequence of sections should combine to give you the key idea of the higher-level section. Note that I probably won’t have to check the structure of the entire essay; just that of the siblings of the new section. (A more drastic change to the essay should probably come in smaller pieces.)</p>
-<p>The new idea should not duplicate any existing idea either. Simply search for it in the existing model and replace or merge any prose that covers the same ground.</p>
-<p>(Note that this kind of style and structure analysis is called <strong>linting</strong> in the programming community.)</p>
-<p>Observation: Checking the flow took me around 20 minutes for this essay. Searching for a duplicate in existing essays took me around 15 minutes for this essay. (Wow. I rarely ever search through my essays in a deliberate fashion. No wonder I’ve never felt the need to organize them well.)</p>
-<h2 id="testing-checklist-coverage">Testing Checklist: Coverage</h2>
-<p>You should have considered all configurations of the input and output variables of each model. Even if you don’t have time to analyze all of them, simply note down the labels you haven’t defined completely so that you realize how much you haven’t explained yet.</p>
-<p>(This is called “coverage” in the programming community.)</p>
-<p>Observation: This took around 20 minutes on this essay.</p>
+<h2 id="structure-checklist">Structure Checklist</h2>
+<p>Check whether you’ve clustered the relevant factors for the same technique and the same output dimension. Remove any duplicates. Organize techniques for easy lookup using the output dimension and input factors.</p>
+<p>(Note that this kind of style and structure analysis is called “linting” in the programming community.)</p>
+<p>This will solve the problem of duplicating ideas due to the difficulty of searching for existing ideas because the only type of change I will be able to make is to add a new relevant factor for a known algorithm and output dimension or add a new algorithm or output dimension. So, there will be just one, easy-to-find home for each exemplar or factor or algorithm or output dimension I come up with. If the exemplar or factor is new, I will put it in its rightful place, and if it’s old, I won’t change anything.</p>
+<h2 id="testing-checklist">Testing Checklist</h2>
+<p>Check whether you’ve given a positive exemplar and close negative exemplar for something you claim is a relevant factor. If your output isn’t binary, give a positive exemplar for each output category. Also check if you’ve got a sufficient set of factors (somehow; haven’t yet figured this out).</p>
+<p>(This is called “equivalence partitioning” and “boundary testing” in the programming community.)</p>
+<p>This will solve the problem of rigorously testing my ideas, i.e., not accepting something as a causal factor when it has not been toggled in isolation.</p>
 <h2 id="flashcard-checklist">Flashcard Checklist</h2>
 <p>You should have written a flashcard for every input-output configuration you’ve added.</p>
+<p>This will help me remember my ideas when I’m away from my computer or when I need solutions quickly.</p>
+<h2 id="automate-the-checklist">Automate the Checklist</h2>
+<p>I’ve automated this by modifying the Git commit template so that I’m forced to think about the above dimensions every time I commit.</p>
 
 <div class="info">Created: May 19, 2018</div>
-<div class="info">Last modified: May 22, 2018</div>
+<div class="info">Last modified: January  8, 2019</div>
 <div class="info">Status: in-progress</div>
 <div class="info"><b>Tags</b>: clean, writing</div>
 
