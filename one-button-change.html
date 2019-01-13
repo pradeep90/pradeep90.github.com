@@ -1599,11 +1599,11 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>Test: TODO.</p>
 <h3 id="black-box-testing-check-the-spec">Black-box Testing: Check the Spec</h3>
 <p>Hypothesis: Black-box testing checks whether your program implements the specification.</p>
-<p>Hypothesis: If your test passes, it should mean that the program matches the spec.</p>
-<h2 id="stateful-programs-assert-properties-about-the-state">Stateful Programs: Assert Properties about the State</h2>
-<p>Hypothesis: If you also mention what a function does to the state, then you can catch any unwanted side-effects. Otherwise, you can’t.</p>
-<p>Test: [2018-11-07 Wed] I tested that an <code>empty</code> method on a <code>Queue</code> would do the right thing for an empty, partially-filled, or full queue. I didn’t test, however, that it <strong>wouldn’t</strong> change the queue.</p>
-<h4 id="cover-the-equivalence-classes">Cover the Equivalence Classes</h4>
+<p><strong>Hypothesis</strong>: Once you’ve got valid and invalid classes for each variable, cover the valid classes with some end-to-end examples and cover the invalid classes by toggling <strong>exactly one class</strong> from some valid example.</p>
+<p>Hypothesis: When you’re given a grammar for some data structure, get valid and invalid equivalence classes for each node.</p>
+<p>Corollary: If your valid test passes, it means that your program handles all the valid classes as they are supposed to. If your valid test fails, then your program doesn’t handle one or more valid classes. To narrow it down, you will have to write tests where you change just one valid class at a time.</p>
+<p>Corollary: A combined valid test will tell you whether something works in just a few tests, but will tell you only broadly if something failed. Unit tests will tell you whether all your features work but will take up a lot of tests, and if some things fail, they will tell you exactly which ones. So, combined tests are cheap for checking correctness, whereas unit tests are cheap for diagnosing failures.</p>
+<hr />
 <p>They suggest having one test case cover as many valid equivalence classes as possible (like “mountain bike with front lights and helmet”, where “mountain bike”, “front lights”, and “helmet” are equivalence classes). I suspect this is so because the test case would pass only if all of them are implemented correctly, which means you need fewer tests to check a lot of features.</p>
 <p>They also suggest having one test case cover only one invalid equivalence class at a time (like “flying bike”, but not “flying bike with quantum-powered helmet”). I suspect that is because the latter may fail immediately after “flying bike” and thus you will never know if an invalid input like “quantum-powered helmet” is caught by your system.</p>
 <p>Test: [2018-11-03 Sat] Fortran DIMENSION statement.</p>
@@ -1696,6 +1696,16 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <blockquote>
 <p>Test 3: DIMENSION Test 4: DIMENSION (3:4) Test 5: DIMENSION FOOOOOOOOOOOO(3:4) Test 6: DIMENSION 3FOO(3:4) Test 7: DIMENSION FOO!(3:4) Test 8: DIMENSION FOO() Test 9: DIMENSION FOO(1,2,3,4,5,6,7,8) Test 10: DIMENSION FOO(-1000000:3) Test 11: DIMENSION FOO(10000000) Test 12: DIMENSION FOO(BAR(3)) Test 13: DIMENSION FOO(BAR(3):9) Test 14: DIMENSION FOO(1 + 3) Test 15: DIMENSION FOO(3:2) Test 16: DIMENSION FOO(1+3:5)</p>
 </blockquote>
+<p>Test: [2019-01-12 Sat]</p>
+<blockquote>
+<p>We define a new language grammar: <addop> ::= ‘+’ | ‘-’ <term> ::= <number> <expression> ::= <term><addop><term></p>
+</blockquote>
+<p>For term, valid classes are 0-9 and invalid classes are +, space, alphabets, etc. For addop, valid classes are + and - and invalid classes are * and / and space and other symbols and alphabets. (Fuck! I hadn’t even thought of those until now.) For expression, valid classes are term followed by addop followed by term, and invalid classes are cases where one of them is missing or invalid and cases where you have trailing garbage.</p>
+<p>So, I should come up with one example of expression to cover all the valid classes and then toggle each part to cover all the invalid classes.</p>
+<p>If I hadn’t come up with valid and invalid classes for each node, I would have missed out on symbols and alphabets for addop.</p>
+<h3 id="stateful-programs-assert-properties-about-the-state">Stateful Programs: Assert Properties about the State</h3>
+<p>Hypothesis: If you also mention what a function does to the state, then you can catch any unwanted side-effects. Otherwise, you can’t.</p>
+<p>Test: [2018-11-07 Wed] I tested that an <code>empty</code> method on a <code>Queue</code> would do the right thing for an empty, partially-filled, or full queue. I didn’t test, however, that it <strong>wouldn’t</strong> change the queue.</p>
 <h1 id="programming-at-speed-cycle-time">Programming at Speed: Cycle Time</h1>
 <h2 id="speed-is-determined-by-the-number-of-constraints">Speed is Determined by the Number of Constraints</h2>
 <p><strong>Hypothesis</strong>: Time taken to complete some task is proportional to the number and severity of constraints.</p>
@@ -3118,7 +3128,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: December 19, 2018</div>
+<div class="info">Last modified: January 13, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
