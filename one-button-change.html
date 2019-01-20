@@ -1713,6 +1713,8 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 did not equal <span class="fu">Prim</span>(*/+-,<span class="fu">Unary</span>(-,<span class="fu">Lit</span>(<span class="dv">3</span>)),<span class="fu">Prim</span>(*-,<span class="fu">Prim</span>(/,<span class="fu">Lit</span>(<span class="dv">0</span>),<span class="fu">Lit</span>(<span class="dv">2147483646</span>)),<span class="fu">Prim</span>(+,<span class="fu">Prim</span>(-,<span class="fu">Prim</span>(-,<span class="fu">Prim</span>(*,<span class="fu">Lit</span>(<span class="dv">4</span>),<span class="fu">Unary</span>(-,<span class="fu">Lit</span>(<span class="dv">2</span>))),<span class="fu">Lit</span>(<span class="dv">2147483646</span>)),<span class="fu">Lit</span>(<span class="dv">2</span>)),<span class="fu">Prim</span>(*,<span class="fu">Prim</span>(*,<span class="fu">Lit</span>(<span class="dv">7</span>),<span class="fu">Lit</span>(<span class="dv">8</span>)),<span class="fu">Lit</span>(<span class="dv">9</span>)))))</code></pre></div>
 <p>It’s a precedence problem, alright. But I’ll need to muck around a lot before I get that entire test to pass. (Or not. Maybe it’ll work right away.) In the meantime, I haven’t got even a single positive exemplar for my code so far. Bad.</p>
 <p>Maybe this is why we have white-box tests.</p>
+<p>What I need is a test that toggles just one variable at a time. So, when I implement let-expressions, I should add to a working expression a new let-declaration.</p>
+<p>Man, black-box tests suck for debugging. Didn’t know what had gone wrong when implementing a let parser.</p>
 <h3 id="long-call-chains">Long Call Chains</h3>
 <p><strong>Test</strong>: [2019-01-18 Fri] Need to figure out how to reach <code>Scanner.getNum</code> from new <code>ArithParser(scanner(&quot;...&quot;)).parseCode</code>. Wow. Look at the call chain:</p>
 <blockquote>
@@ -1721,6 +1723,7 @@ did not equal <span class="fu">Prim</span>(*/+-,<span class="fu">Unary</span>(-,
 <p>However, I don’t have to worry about <code>getNum</code> being given “-3” because <code>parseUAtom</code> already extracts the “-” part.</p>
 <p>Damn. That complicates testing because you don’t know if “-3” could ever reach <code>getNum</code>. If it never does, it would be a waste of time to handle that case or test for it. However, if there’s even a small chance that it happens, the entire program might crash unless you handle it.</p>
 <p>Here’s the dilemma: If there’s any way somebody can call <code>getNum</code> bypassing all the guards in the current callers, then you are screwed. So, whether or not you test that input in <code>getNum</code> depends on who can call <code>getNum</code>.</p>
+<p>And since more cases means more work, it’s in your best interest to narrow it down as accurately as possible.</p>
 <h3 id="stateful-programs-assert-properties-about-the-state">Stateful Programs: Assert Properties about the State</h3>
 <p>Hypothesis: If you also mention what a function does to the state, then you can catch any unwanted side-effects. Otherwise, you can’t.</p>
 <p>Test: [2018-11-07 Wed] I tested that an <code>empty</code> method on a <code>Queue</code> would do the right thing for an empty, partially-filled, or full queue. I didn’t test, however, that it <strong>wouldn’t</strong> change the queue.</p>
@@ -2263,11 +2266,6 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <p>Test fails, debug by toggling here and there -&gt; don’t know what works (necessary causes) and what doesn’t; slow.</p>
 <hr />
 <p>Test: [2018-09-16 Sun] Spent half an hour debugging why I couldn’t clone a bare Git repository from the server. Turns out I used <code>/home/foo</code> instead of <code>/homes/foo</code>. Dammit! – A simple, detailed comparison with a past positive exemplar would have solved the problem.</p>
-<h2 id="example">Example</h2>
-<p>Test: [2019-01-18 Fri] ArithParser - Not sure what min precedence does. Thing is that its “meaning” is not specified. What domain variable does it correspond to? I’m supposed to set it somehow. Not even sure what parseExpression should do. Should it consume the entire buffer? No. Should it parse one binary operation (like 2 * 3) or an “entire” expression (like 2 * 3 + 4)?</p>
-<p>I guess I don’t know the spec for <code>parseExpression(min: Int, [inputBuffer: Buffer]): Exp</code>. How much of input buffer is it supposed to read? How does <code>min</code> affect that?</p>
-<p>Let’s assume that it is supposed to read till it reaches an operation that is lower precedence than <code>min</code>. (What a shitty variable name. <code>min</code> of what?)</p>
-<p>Had to toggle my underlying assumption that the grouping had to be left-associative (i.e., <code>(2 * 3) * 4</code> instead of <code>2 * (3 * 4)</code>). When I allowed right-associative grouping, it worked out easily.</p>
 <h1 id="understanding-uncertainty-about-the-program-output">Understanding: Uncertainty about the Program Output</h1>
 <h2 id="how-to-tackle-a-daunting-problem">How to Tackle a Daunting Problem</h2>
 <p><strong>Hypothesis</strong>: Get as close a positive exemplar as you can and take a diff to do what you want to do. You will be able to solve your problem more easily than if you try to figure it all out from scratch (?).</p>
