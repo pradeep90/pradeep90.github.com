@@ -55,7 +55,7 @@
 <p>Make one change at a time to a working product to get one additional property, setting input and getting output quickly, perhaps duplicating to avoid testing for regression and deducing the output instead of running tests every so often.</p>
 <p>Make one small change at a time so you don’t waste time debugging, i.e., narrowing the causes of the buggy output. Don’t change stuff deep down in the code. Do it only at the top-level - at the level of the domain language. For example, switch between two scheduling algorithms using one high-level change instead of three changes scattered through the code. Similarly, don’t add a feature and refactor it into an abstract, beautiful design at the same time. Of course, you’d write the cleanest design you are capable of generating without any errors. For example, I can write a <code>foldr</code> call in Haskell without breaking a sweat whereas a novice might want to start with an explicit recursive function and then abstract it into a <code>foldr</code>.</p>
 <p>Have a working implementation at all times because you can say useful things only when you have a positive exemplar. Specifically, start with a Hello World program that does the bare minimum thing from end to end. And settle on your high-level design before you have a lot of low-level code and, if you can’t avoid that, start with a blank slate and migrate the old code so that you always have something working.</p>
-<p>Implement and test a new function in isolation so that you can set input and get output quickly. Use first-classes values so that you can set the input and test the output easily. Have a pipeline that automatically creates the final output from your code so that you can quickly see the effect of each change on the output instead of having to run a dozen steps before you see anything. Similarly, work in the final medium of a PDF or a publishable essay or a report that your machine learning project is supposed to generate. Experiment on a tiny version of your project so that you can alter features cheaply (this is about speed of changing, whereas the earlier suggestion to change the high-level design in isolation was about knowing what causes bugs.). Otherwise, you would have to change a lot of the low-level bits even though you get the same high-level feature change. Similarly, if it takes a long time to compile a LaTeX file, have a separate, small file for experiments.</p>
+<p>Implement and test a new function in isolation so that you can change the code, set input, and get output quickly. Use first-classes values so that you can set the input and test the output easily. Have a pipeline that automatically creates the final output from your code so that you can quickly see the effect of each change on the output instead of having to run a dozen steps before you see anything. Similarly, work in the final medium of a PDF or a publishable essay or a report that your machine learning project is supposed to generate. Experiment on a tiny version of your project so that you can alter features cheaply (this is about speed of changing, whereas the earlier suggestion to change the high-level design in isolation was about knowing what causes bugs.). Otherwise, you would have to change a lot of the low-level bits even though you get the same high-level feature change. Similarly, if it takes a long time to compile a LaTeX file, have a separate, small file for experiments.</p>
 <p>When you want to write a new function and you’re struggling or out of time, add one test for one property you need to satisfy (or how many ever properties you can comfortably implement right away) and make it pass. The number of properties you want to satisfy determine how long it will take to implement. Don’t wait for the day when you will perfectly satisfy all properties on the first try. Minimize the number of callers so that you are expected to satisfy fewer relations.</p>
 <p>If you find it hard to refactor a function before adding your new feature, duplicate it, write your test, pass it, and then refactor. When you duplicate, you’re guaranteed not to regress (which is what takes a long time to ensure), but if you don’t refactor soon, the code may diverge. This may not be the best way. I need empirical evidence.</p>
 <p>Predict the behaviour of some code by deduction, not by blank-slate empiricism. You know the language well enough to tell what a sequence of familiar statements will do.</p>
@@ -259,7 +259,7 @@
 <p>Test: Causal hypothesis - a giant dump of ideas - hard to tell how things fit together – fail to fail.</p>
 <h2 id="maintain-a-short-cycle-time">Maintain a Short Cycle Time</h2>
 <h3 id="why-cycle-time-matters">Why Cycle Time Matters</h3>
-<p><strong>Hypothesis</strong>: Cycle time = time needed to set the desired inputs, get the outputs, and understand the outputs of a mechanism.</p>
+<p><strong>Hypothesis</strong>: Cycle time = time needed to change the code, set the desired inputs, get the outputs, and understand the outputs of a mechanism.</p>
 <p><strong>TODO</strong>: Show that total time taken is a product of the cycle time and number of iterations. Show that a working product with one change at a time leads to the least number of iterations because of faster debugging.</p>
 <h3 id="test-your-mechanism-in-isolation">Test your Mechanism in Isolation</h3>
 <p><strong>TODO</strong>: Refactor the two hypotheses below.</p>
@@ -291,25 +291,15 @@
 <p>Test: pipgetc – could test the output of the pipe without even using another process.</p>
 <p>Test: org drill - get session data - it inserts stuff into a buffer instead of returning a string (no first-class output). It also uses <code>(current-time)</code> - not a first-class input. – have to run the whole drill session to set the input; have to look at the log file to check the output.</p>
 <p><strong>Test</strong>: Python - had a for-loop in main to try different things with print statements. Extracted it into a function - had to think about building and returning a string instead of just printing to standard output. – first-class outputs.</p>
-<h3 id="how-to-understand-output-quickly">How to Understand Output Quickly</h3>
-<p><strong>TODO</strong>: Have some sort of test to judge whether the output satisfies some property.</p>
-<p>Test: OS HW1 - tons of output data. – Can’t really observe variables I care about. Hard to parse the output.</p>
-<h3 id="frequent-automated-releases-low-effort-low-cycle-time">Frequent, Automated Releases: Low Effort, Low Cycle Time</h3>
-<p><strong>Hypothesis</strong>: One-button change (or one-button execution) -&gt; set inputs with little work. (Zero-button -&gt; zero work!)</p>
-<p>Automated release -&gt; get output with little work. It may take time, but you don’t have to do anything manually.</p>
-<p>Dashboard -&gt; understand output with little work. The output gets interpreted for you.</p>
-<p>Frequent releases -&gt; actually get feedback about your changes and thus have lower uncertainty.</p>
-<p>Corollary: Daily build -&gt; zero-button execution.</p>
-<p>Corollary: Unit tests -&gt; automated release, easy-to-understand output (“10/11 tests passed.”)</p>
 <h3 id="powerful-abstractions-lead-to-quick-tests">Powerful Abstractions lead to Quick Tests</h3>
 <p><strong>Corollary</strong>: Powerful abstractions -&gt; less code to set a particular configuration as input to some other mechanism, less work to understand the output (since it is at a high level), may be slower.</p>
 <hr />
 <p>Test: When testing my pop-by-age code when trying to delete a process’ frames, I needed to get frames that had maximum age. Get maximum of a list (or tree or anything) by age - in Haskell, one word - <code>maximumBy</code> (assuming it implements Foldable). In C, I have to write an explicit for-loop keeping track of <code>max_age</code> and <code>max_i</code>. – less code to set a particular configuration in Haskell; less work to understand the output because it’s just an element (in C, it’s the index of the list); speed doesn’t matter much here.</p>
 <h3 id="deployment-pipeline-automatically-get-output-from-input">Deployment Pipeline: Automatically get Output from Input</h3>
-<p>Hypothesis: A deployment pipeline is when you can get the output directly by setting the input.</p>
+<p>Hypothesis: A deployment pipeline is when you can get the overall output with either one button or zero buttons by giving the overall input. You don’t have to manually produce the output from the input.</p>
 <p>This is obvious for a program like <code>square</code>, where you can feed in <code>3</code> and get <code>9</code>.</p>
 <p>But it’s more subtle for a project where your output is a report. Any change you make to the project should create a new instance of the final report. For example, if you add more training data, that should obviously affect the report. If you add a new machine learning algorithm, that should too. In short, if you set up an automated pipeline, you can measure your progress simply through the final result (your report). Otherwise, you will have to judge a multi-factor project on things like the training data, the machine learning algorithms, and so on. It’s much harder than judging a single report.</p>
-<p>Corollary: You can design your next action by looking at the next thing you want to add to your report.</p>
+<p>Corollary: Daily build -&gt; zero-button execution.</p>
 <hr />
 <p>Test: Joel Spolsky: – get feedback less frequently and find it harder to code and make more silly errors.</p>
 <blockquote>
@@ -322,7 +312,13 @@
 <p>– <a href="https://www.joelonsoftware.com/2001/01/27/daily-builds-are-your-friend/"></a></p>
 </blockquote>
 <p>Test: Math proofs - long time to get the output. You have to be the human interpreter and run the proof line by line. Sometimes you may not know either way and may have to wait for an experienced mathematician to give you feedback. You can’t (without automatic theorem provers, which I don’t think most mathematicians use) get the output in an instant. In this regard, we programmers are fortunate. – more uncertain about your math proofs. That’s why they have more than one proof for the same theorem (according to Terence Tao).</p>
-<h3 id="cut-through-work-in-the-final-medium">Cut Through: Work in the Final Medium</h3>
+<h3 id="understand-output-quickly-using-property-tests">Understand Output Quickly using Property Tests</h3>
+<p><strong>TODO</strong>: Have some sort of test to judge whether the output satisfies some property. Controlled experiment. What would it mean to not understand the output quickly? Why do you need that anyway? Show that it depends on your change in input.</p>
+<p>Dashboard -&gt; understand output with little work. The output gets interpreted for you.</p>
+<p>Corollary: Unit tests -&gt; automated release, easy-to-understand output (“10/11 tests passed.”)</p>
+<p>Test: OS HW1 - tons of output data. – Can’t really observe variables I care about. Hard to parse the output.</p>
+<h3 id="work-in-the-final-medium-to-get-feedback-about-all-desired-properties">Work in the Final Medium to get Feedback about all Desired Properties</h3>
+<p><strong>TODO</strong>: Hypothesis: Working in the final medium is a relevant factor for getting feedback about all properties. Otherwise, you may not get feedback about certain key properties, which means that you may have to scramble to fix them later.</p>
 <p><strong>Hypothesis</strong>: Experiment on the mechanism directly, get full feedback -&gt; low cycle time because you can toggle and get feedback quickly, can get to the final version faster.</p>
 <p>Experiment from within your final medium, get full feedback (by definition) -&gt; slower feedback because you can’t isolate the mechanism (toggling might be tedious, especially if you aren’t skilled in the medium), can get to the final version a bit slower.</p>
 <p>Experiment on the mechanism directly, don’t get full feedback -&gt; quick but partial feedback (may not even get full feedback from myself), may not get to the final version quickly.</p>
@@ -334,19 +330,15 @@
 <p>Test: Website - it lasts. – final medium, full feedback (if you release), but at least partial feedback if you write it up (as compared to your journal notes); skilled - so it’s natural by now (see this essay).</p>
 <p>Test: Memory via spaced repetition (or just frequency testing) - it lasts. – you get full feedback in the future.</p>
 <p>Test: org-autoclock within my Emacs vs a blank Emacs. – got misleading feedback by running it in my Emacs; got full feedback from the user.</p>
-<h3 id="iterative-development-easy-to-change-high-level-design">Iterative Development: Easy to Change High-level Design</h3>
-<p>Hypothesis: If you release a simple version of your project, you can try out different high-level designs cheaply since you have small inputs.</p>
-<p>If you wait until you’ve done the rest of work before you try a different high-level design, you’ll have to work a lot to get it running since you have large inputs.</p>
+<h3 id="change-high-level-code-in-isolation-less-code-to-move-around">Change High-level Code in Isolation: Less Code to Move Around</h3>
+<p><strong>TODO</strong>: Refactor based on experiments.</p>
+<p>Hypothesis: If you release a simple version of your project, you can cheaply try out different high-level designs and learn which properties you want to satisfy since you have small code and small inputs.</p>
+<p>If you wait until you’ve written fully-tested code before you try a different high-level design, you’ll have to work a lot to get it running since you have large inputs.</p>
 <p>Corollary: You can still get those benefits after you’ve begun by experimenting in a new blank project and moving in your old changes.</p>
 <p>Observation: I wanted to try different formats for a file that was going to be read by another program. Easy to do given that all I had in the file was one line.</p>
 <p>If I wanted to do it after I had a long file, I’d have to keep modifying the data in the file according to the new format.</p>
 <p>Observation: This is what writers call outlining.</p>
 <p>Observation: This is what filmmakers call story-boarding.</p>
-<h3 id="spec-or-integration-test-quick-feedback-about-high-level-design-decompose-the-output">Spec or Integration Test: Quick Feedback about High-level Design (??) (Decompose the Output?)</h3>
-<p><strong>Corollary</strong>: Writing a spec (or better, a prototype) = coming up with integration tests (with feedback from the user).</p>
-<p><strong>Hypothesis</strong>: Spec or integration test, change your high-level design -&gt; can set the input configuration (aka your program) quickly and get feedback from user (who is the mechanism you’re testing).</p>
-<p>Write fully-tested code, change your high-level design -&gt; lot of work to change the input configuration (your program).</p>
-<p><strong>Hypothesis</strong>: Spec -&gt; list your high-level assumptions so that you can toggle them deliberately or test them against reality.</p>
 <hr />
 <p>Test: Joel Spolsky:</p>
 <blockquote>
@@ -388,16 +380,6 @@
 <p>CORAL: All business plans for startups turn out to be wrong, but you still need them - and not just as works of fiction. They represent the written form of your current beliefs about your key assumptions. Writing down your business plan checks whether your current beliefs can possibly be coherent, and suggests which critical beliefs to test first, and which results should set off alarms, and when you are falling behind key survival thresholds. The idea isn’t that you stick to the business plan; it’s that having a business plan (a) checks that it seems possible to succeed in any way whatsoever, and (b) tells you when one of your beliefs is being falsified so you can explicitly change the plan and adapt. Having a written plan that you intend to rapidly revise in the face of new information is one thing. NOT HAVING A PLAN is another.</p>
 <p>– <a href="https://intelligence.org/2017/11/26/security-mindset-and-the-logistic-success-curve/"></a></p>
 </blockquote>
-<h3 id="rapid-prototyping-figure-out-the-high-level-design-before-the-low-level-details-valuable-features-first-others-come-later-based-on-experience">Rapid Prototyping: Figure out the High-level Design before the Low-level Details (?? Valuable features first; others come later based on experience)</h3>
-<p><strong>Question</strong>: Why is it better to pass one integration test with a 120-line program written in three hours than to pass all kinds of tests with a spec implemented in three weeks?</p>
-<p>Observation: The differing variables are: number of tests passed, number of lines of code, and time taken. Also, the first one gets feedback about the design immediately.</p>
-<p><strong>Hypothesis</strong>: You’re uncertain about the integration tests you actually want to pass. And even if you know precisely which tests you wanted to pass, you’re still uncertain about the high-level design you should use for your code.</p>
-<p>If you write a lot of code to pass the tests you assumed were important, you have to do a lot of work to handle some other tests (plus you would have wasted all that time). Basically, the high-level design changes, and that costs you if you’ve already written much code.</p>
-<p>Similarly, if you write a lot of code and then decide to change your high-level design, you have to do a lot of work. High-level design change always takes work when you have a lot of code. You may get it wrong in your spec, which makes it costly to change three weeks down the line.</p>
-<p><strong>Corollary</strong>: It’s a mistake to write low-level code without getting the high-level design right.</p>
-<p><strong>Hypothesis</strong>: Have working program (for at least one integration test) -&gt; can come up with new integration tests based on empirical usage.</p>
-<p>Don’t have working program (for at least one integration test) -&gt; can’t imagine new integration tests.</p>
-<hr />
 <p>Test: PG on the Viaweb editor:</p>
 <blockquote>
 <p>The Viaweb editor must be one of the most extreme cases of incremental development. It began with a 120-line program for generating Web sites that I had used in an example in a book that I finished just before we started Viaweb. The Viaweb editor, which eventually grew to be about 25,000 lines of code, grew incrementally from this program. I never once sat down and rewrote the whole thing. I don’t think I was ever more than a day or two without running code. The whole development process was one long series of gradual changes.</p>
@@ -2062,6 +2044,31 @@ did not equal <span class="fu">Prim</span>(*/+-,<span class="fu">Unary</span>(-,
 <p>Maybe this is why we have white-box tests.</p>
 <p>What I need is a test that toggles just one variable at a time. So, when I implement let-expressions, I should add to a working expression a new let-declaration.</p>
 <p>Man, black-box tests suck for debugging. Didn’t know what had gone wrong when implementing a let parser.</p>
+<h3 id="branch-coverage-vs-multiple-condition-coverage">Branch Coverage vs Multiple-Condition Coverage</h3>
+<p>Hypothesis: If-expression with multiple conditions is a relevant factor for multiple-condition coverage leading to more tests than branch coverage.</p>
+<hr />
+<p>Test: [2019-01-23 Wed] In the following case, one case each for Int, Unit, and Boolean, and one case like <code>Literal(3)</code> would satisfy branch coverage. However, you aren’t testing close to the boundary. You want to test something that is also an identifier but not one of the three above. Something like <code>Ident(&quot;IntFoo&quot;)</code>. I guess multiple-condition coverage would kind of cover that since <code>Ident(&quot;Int&quot;)</code> is actually <code>isIdent &amp;&amp; Ident(&quot;Int&quot;)</code>, which will force you to try <code>Ident(&quot;SomethingElse&quot;)</code> to satisfy the first clause but not the second.</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> parseType: Type = in.<span class="fu">peek</span> <span class="kw">match</span> {
+  <span class="kw">case</span> <span class="fu">Ident</span>(<span class="st">&quot;Int&quot;</span>) =&gt;
+	in.<span class="fu">next</span>
+	IntType
+  <span class="kw">case</span> <span class="fu">Ident</span>(<span class="st">&quot;Unit&quot;</span>) =&gt;
+	in.<span class="fu">next</span>
+	UnitType
+  <span class="kw">case</span> <span class="fu">Ident</span>(<span class="st">&quot;Boolean&quot;</span>) =&gt;
+	in.<span class="fu">next</span>
+	BooleanType
+  <span class="kw">case</span> _ =&gt; <span class="fu">expected</span>(<span class="st">&quot;type&quot;</span>)
+}</code></pre></div>
+<p>That wouldn’t have been the case if each had been a simple case like:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> parseType: Type = in.<span class="fu">peek</span> <span class="kw">match</span> {
+  <span class="kw">case</span> IntIdent =&gt;
+	in.<span class="fu">next</span>
+	IntType
+	...
+  <span class="kw">case</span> _ =&gt; <span class="fu">expected</span>(<span class="st">&quot;type&quot;</span>)
+}</code></pre></div>
+<p>In this case, branch coverage and multiple-condition coverage would have yielded the same tests.</p>
 <h3 id="stateful-programs-assert-properties-about-the-state">Stateful Programs: Assert Properties about the State</h3>
 <p>Hypothesis: If you also mention what a function does to the state, then you can catch any unwanted side-effects. Otherwise, you can’t.</p>
 <p>Test: [2018-11-07 Wed] I tested that an <code>empty</code> method on a <code>Queue</code> would do the right thing for an empty, partially-filled, or full queue. I didn’t test, however, that it <strong>wouldn’t</strong> change the queue.</p>
@@ -3115,7 +3122,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: January 23, 2019</div>
+<div class="info">Last modified: January 24, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 

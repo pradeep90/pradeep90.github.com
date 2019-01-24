@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="icon" type="image/png" href="./images/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="./images/favicon-16x16.png" sizes="16x16" />
+        <title>Scala Learning - SPK's Rationality Essays</title>
+        <link rel="stylesheet" type="text/css" href="./css/default.css" />
+        <link rel="stylesheet" type="text/css" href="./css/highlight.css" />
+
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+	<!-- <script type="text/javascript" src="/js/header-links.js"></script> -->
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+	<link href="atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM/RSS Feed" />
+
+	<!-- Google Analytics stuff -->
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-51321929-1', 'pradeep90.github.io');
+	  ga('send', 'pageview');
+
+	</script>
+
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="./">SPK's Rationality Essays</a>
+            </div>
+            <div id="navigation">
+                <a href="./">Home</a>
+                <a href="./notes.html">Notes</a>
+                <!-- <a href="/about.html">About</a> -->
+                <a href="./archive.html">Archive</a>
+		<a href="./atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM/RSS Feed">RSS</a>
+            </div>
+        </div>
+
+        <div id="content">
+          <h1 id="post-title">Scala Learning</h1>
+
+            <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
+
+<h1 id="how-to-generate-tests-from-a-list-of-inputs">How to Generate Tests from a List of Inputs</h1>
+<p>I had a list of test cases that I had generated for my function. But I was too lazy to name each of them separately, especially since many of them were boundary tests (like 0 and -1) and not really branch tests that would each exercise one branch in your code. Adding a new named test for each one would duplicate a lot of code.</p>
+<p>I tried avoiding that with one test that looped over the list of test cases. You can see that here (using a simple example of <code>cube</code>):</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> MultipleAssertionsTry <span class="kw">extends</span> org.<span class="fu">scalatest</span>.<span class="fu">FunSuite</span> {
+  <span class="co">// Defined here for testing.</span>
+  <span class="kw">def</span> <span class="fu">cube</span>(x: Int) = x * x * x
+
+  <span class="kw">val</span> cubeTests = Seq(
+    (<span class="dv">0</span>, <span class="dv">0</span>),
+    (<span class="dv">1</span>, <span class="dv">1</span>),
+    (-<span class="dv">1</span>, -<span class="dv">1</span>),
+    (<span class="dv">10</span>, <span class="dv">1000</span>),
+    (<span class="dv">9</span>, <span class="dv">729</span>),
+  )
+
+  <span class="fu">test</span>(s<span class="st">&quot;cube test&quot;</span>) {
+    cubeTests foreach { <span class="kw">case</span> (input, output) =&gt;
+      <span class="fu">assert</span>(<span class="fu">cube</span>(input) == output)
+    }
+  }
+}</code></pre></div>
+<p>When all the test cases passed, it worked correctly:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">[info] MultipleAssertionsTry:
+[info] - cube <span class="fu">test</span> (original)
+...
+[info] All tests passed.</code></pre></div>
+<p>However, when one test failed, it pointed it out but without mentioning the input argument:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">[info] MultipleAssertionsTry:
+[info] - cube <span class="fu">test</span> (original) *** FAILED ***
+[info]   <span class="dv">1000</span> did not equal <span class="dv">729</span> (MultipleAssertionsTry.<span class="fu">scala</span>:<span class="dv">14</span>)</code></pre></div>
+<p>I’d have to search through the list for a test case that expected 729 as the output.</p>
+<p>And when multiple tests failed, it stopped after the first one. If I’d named the tests separately, it would have run each of them and showed me all the ways in which I had screwed up the function.</p>
+<p>One solution to the above two problems is to generate a new named test for each test case (h/t this <a href="http://blog.echo.sh/2013/05/12/dynamically-creating-tests-with-scalatest.html">blog post</a>):</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">  cubeTests foreach { <span class="kw">case</span> (input, output) =&gt;
+      <span class="fu">test</span>(s<span class="st">&quot;cube of $input&quot;</span>) {
+        <span class="fu">assert</span>(<span class="fu">cube</span>(input) == output)
+      }
+  }</code></pre></div>
+<p>Now, when multiple tests fail, I get this:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">[info] MultipleAssertionsTry:
+[info] - cube <span class="fu">test</span> (original) *** FAILED ***
+[info]   -<span class="dv">1</span> did not equal <span class="dv">1</span> (MultipleAssertionsTry.<span class="fu">scala</span>:<span class="dv">14</span>)
+
+
+[info] - cube of <span class="dv">0</span>
+[info] - cube of <span class="dv">1</span>
+[info] - cube of -<span class="dv">1</span> *** FAILED ***
+[info]   -<span class="dv">1</span> did not equal <span class="dv">1</span> (MultipleAssertionsTry.<span class="fu">scala</span>:<span class="dv">20</span>)
+[info] - cube of <span class="dv">10</span>
+[info] - cube of <span class="dv">9</span> *** FAILED ***
+[info]   <span class="dv">729</span> did not equal <span class="dv">728</span> (MultipleAssertionsTry.<span class="fu">scala</span>:<span class="dv">20</span>)</code></pre></div>
+<p>Nice.</p>
+<p>Note that <a href="http://www.scalatest.org/user_guide/table_driven_property_checks">table-driven checks</a> in ScalaTest didn’t do the trick because, even though they showed the input and output of the failed test, they stopped running tests after one failed, which was the key point.</p>
+
+<div class="info">Created: January 23, 2019</div>
+<div class="info">Last modified: January 24, 2019</div>
+<div class="info">Status: in-progress notes</div>
+<div class="info"><b>Tags</b>: notes, scala</div>
+
+<br />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'spkrationalitytrainingground'; // required: replace example with your forum shortname
+    var disqus_identifier = '/scala-learning.html';
+    var disqus_title = 'Scala Learning';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+        </div>
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>
