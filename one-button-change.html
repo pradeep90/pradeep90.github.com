@@ -574,6 +574,16 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <p>Corollary: Don’t have to think about abstract cases. Don’t have to “contemplate the ifs”. Just make the current test case pass.</p>
 <p><strong>Hypothesis</strong>: Writing code without a failing test -&gt; don’t know if you’re cutting through.</p>
 <p>Corollary: Writing to pass tests -&gt; consequentialism.</p>
+<h2 id="implement-the-valuable-test-cases-first">Implement the Valuable Test Cases First</h2>
+<p>Hypothesis: Implementing the happy path of most valuable features instead of agonizing over boundary cases you might have missed is a relevant factor for speed. (<strong>TODO</strong>)</p>
+<p>How many valuable features at a time? For example, just the main conjunctive <code>def f(x: Int){}</code> or including multiple parameters <code>def f(x: Int, y: Boolean){}</code> or including currying as well <code>def f(x: Int, y: Boolean)(z: Unit){}</code>? I did all three in practically one shot. Maybe it depends on how much you can reliably do right on the first try.</p>
+<hr />
+<p>Test: [2019-01-25 Fri] When parsing array assignment <code>a(1) = 3</code>, I’m worrying about edge cases like <code>f(1)(2) = 3</code>. Is that a valid expression? Don’t know. Maybe some function <code>f</code> will return an array to which you will set the value. But do we have arrays as types? No. Still, <strong>what if</strong> there is some edge case where that happens? – All of these thoughts are getting in the way of implementing <code>a(1) = 3</code> as quickly and dirtily as possible.</p>
+<p>Specifically, I’m hesitating to write the concrete match <code>case App(Ref(arrayName), List(index))</code> instead of <code>case App(exp, List(index))</code> because the latter is more general and <strong>may</strong> be the right way in the future.</p>
+<p>In short, I’m prematurely abstracting.</p>
+<p>Just struck me: why not handle them as separate cases? Have one case for the concrete version and one for the abstract version. But that’s code duplication, which my mind tells me is a cardinal sin!</p>
+<p>Note that I’m trying to handle the maximum number of possibilities in the minimum amount of code. That could be why I’m dilly-dallying over this code.</p>
+<p>Observation: [2019-01-25 Fri] It’s harder to track what I’ve completed and what I haven’t. Earlier, I could mark “BaseParser” as done once I’d handled the different cases, added boundary tests, and refactored. But now, even though I’ve done one branch for function parser, I’ve left other valid cases and boundary tests, so I can’t mark any part as done.</p>
 <h1 id="big-functions-are-hard-to-reason-about-too">Big Functions are Hard to Reason about too (??)</h1>
 <p>Observation: Bunch of journal notes and essays. Don’t know exactly what they contain or what they advise for some problem I face. Clearly, a “chaotic mess”.</p>
 <p>Observation: Unfamiliar function - can’t tell what it does.</p>
@@ -2314,6 +2324,7 @@ did not equal <span class="fu">Prim</span>(*/+-,<span class="fu">Unary</span>(-,
 <p>Test: [2018-09-16 Sun] Spent half an hour debugging why I couldn’t clone a bare Git repository from the server. Turns out I used <code>/home/foo</code> instead of <code>/homes/foo</code>. Dammit! – A simple, detailed comparison with a past positive exemplar would have solved the problem.</p>
 <p>Test: [2019-01-21 Mon] Didn’t fall back to a positive exemplar when trying to debug the generated code for nested while loops.</p>
 <p>Caught it within <strong>minutes</strong> by getting a positive exemplar for a simple loop body and toggling the body from <code>x + 1</code> to <code>x = x + 1</code>. This is after an hour of random “debugging”. I was passing in the wrong stack pointer.</p>
+<p>Test: [2019-01-25 Fri] Struggled trying to instantiate an inner class while testing. Finally, replicated the nested classes in a fresh repo and systematically narrowed it down to the fact that I was instantiating the inner class using one object of the outer class and calling a method on another object of the inner class. And because Scala has “path-dependent types”, that doesn’t work. – Should have replicated it the moment I got stuck for more than 5 minutes. Or maybe even right away. Note that it still took 20 to 30 minutes after isolating the class, including time to look up stuff, partly because I didn’t focus on getting a positive exemplar first. In the end, it was just 7 tests to victory.</p>
 <h1 id="understanding-uncertainty-about-the-program-output">Understanding: Uncertainty about the Program Output</h1>
 <h2 id="how-to-tackle-a-daunting-problem">How to Tackle a Daunting Problem</h2>
 <p><strong>Hypothesis</strong>: Get as close a positive exemplar as you can and take a diff to do what you want to do. You will be able to solve your problem more easily than if you try to figure it all out from scratch (?).</p>
@@ -3122,7 +3133,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: January 24, 2019</div>
+<div class="info">Last modified: January 25, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
