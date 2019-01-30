@@ -61,7 +61,9 @@
 <p>Predict the behaviour of some code by deduction, not by blank-slate empiricism. You know the language well enough to tell what a sequence of familiar statements will do.</p>
 <p><strong>TODO</strong>: Learn powerful abstractions so that you can satisfy a bunch of properties in one step instead of having to walk through multiple iterations. Also, powerful abstractions mean less code.</p>
 <h2 id="one-small-encapsulated-change-at-a-time">One, Small, Encapsulated Change at a Time</h2>
-<h3 id="why-is-debugging-so-hard">Why is Debugging so Hard?</h3>
+<h3 id="debugging-consumes-time">Debugging Consumes Time</h3>
+<p>Hypothesis: Debugging (i.e., narrowing down the relevant factors for some erroneous output) is a relevant factor for spending a lot of time coding. (<strong>TODO</strong>)</p>
+<hr />
 <p>Observation: Debugging seems to be pretty hard and time-consuming. Lot more confusing and frustrating than normal coding.</p>
 <p>For example, 17 out of the 30 hours I spent on OS HW2 were lost in debugging.</p>
 <p>Why? Is debugging a different operation from normal coding?</p>
@@ -276,6 +278,30 @@
 <p>Test: rectangle numbering in Emacs - wanted it to start from 1 instead of 0, but kept putting it off because it felt like it wouldn’t be worth it to dive into some foreign code and change what I wanted. Just realized that it’s <em>my</em> code that starts from 0. Changed it in a jiffy. – somebody else’s code - have to do a lot of work to set the input (in case configuration variables don’t exist). my code - can just dive in and change whatever I want.</p>
 <p>Test: When trying to figure out how to send in a function pointer to my benchmark function, I decided to test it in a stand-alone program first. Fewer changes. In contrast, lots of stuff could go wrong in the benchmark code. – Faster output.</p>
 <p>Test: Negative exemplar - wrote a long function when I could have easily extracted <code>hasFoo(post)</code> into its own function. – didn’t implement it in isolation.</p>
+<p><strong>Test</strong>: In the first test, I had to write a let-block so that I could return the value I read from the array. But that would be if I could run only an end-to-end test. We can do better with unit tests.</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">(<span class="fu">Let</span>(<span class="st">&quot;arr&quot;</span>, IntType, <span class="fu">ArrayDec</span>(<span class="fu">Lit</span>(<span class="dv">5</span>), IntType),
+  <span class="fu">Prim</span>(<span class="st">&quot;block-get&quot;</span>, List(Ref(<span class="st">&quot;arr&quot;</span>), <span class="fu">Lit</span>(<span class="dv">2</span>)))), <span class="dv">2</span>, <span class="fu">compilerWithVals</span>())
+  -&gt; List(
+	s<span class="st">&quot;movq $$5, ${defaultCompiler.avRegs(2)}&quot;</span>,
+	s<span class="st">&quot;movq ${defaultCompiler.avRegs(2)}, ${defaultCompiler.avRegs(3)}&quot;</span>,
+	s<span class="st">&quot;movq heap(%rip), ${defaultCompiler.avRegs(2)}&quot;</span>,
+	s<span class="st">&quot;imul $$8, ${defaultCompiler.avRegs(3)}&quot;</span>,
+	s<span class="st">&quot;addq ${defaultCompiler.avRegs(3)}, ${defaultCompiler.avRegs(2)}&quot;</span>,
+	s<span class="st">&quot;movq ${defaultCompiler.avRegs(2)}, heap(%rip)&quot;</span>,
+	s<span class="st">&quot;movq ${defaultCompiler.avRegs(2)}, ${defaultCompiler.avRegs(3)}&quot;</span>,
+	s<span class="st">&quot;movq $$2, ${defaultCompiler.avRegs(4)}&quot;</span>,
+	s<span class="st">&quot;movq (${defaultCompiler.avRegs(3)}, ${defaultCompiler.avRegs(4)}, 8), ${defaultCompiler.avRegs(3)}&quot;</span>,
+	s<span class="st">&quot;movq ${defaultCompiler.avRegs(3)}, ${defaultCompiler.avRegs(2)}&quot;</span>,
+  ),</code></pre></div>
+<p>Now, I can test exactly the assembly output of this one little instruction:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">(<span class="fu">Prim</span>(<span class="st">&quot;block-get&quot;</span>, List(Ref(<span class="st">&quot;arr&quot;</span>), <span class="fu">Lit</span>(<span class="dv">2</span>))),
+  <span class="dv">2</span>, <span class="fu">compilerWithVals</span>(List((<span class="st">&quot;arr&quot;</span>, <span class="fu">Left</span>(<span class="dv">1</span>)))))
+  -&gt; List(
+	s<span class="st">&quot;movq ${defaultCompiler.avRegs(1)}, ${defaultCompiler.avRegs(2)}&quot;</span>,
+	s<span class="st">&quot;movq $$2, ${defaultCompiler.avRegs(3)}&quot;</span>,
+	s<span class="st">&quot;movq (${defaultCompiler.avRegs(2)}, ${defaultCompiler.avRegs(3)}, 8), ${defaultCompiler.avRegs(2)}&quot;</span>,
+  ),</code></pre></div>
+<p>It becomes 3 lines instead of 10.</p>
 <h3 id="how-to-set-inputs-and-test-outputs-quickly-use-first-class-values">How to Set Inputs and Test Outputs Quickly: Use First-Class Values</h3>
 <p><strong>Hypothesis</strong>: First-class input -&gt; can set the input without doing any other work.</p>
 <p>No first-class input -&gt; have to set the input by changing a lot of other variables.</p>
@@ -540,6 +566,16 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <hr />
 <p>Observation: Duplication vs regression strikes again! Handling a new case by itself is pretty trivial (if tedious). But handling the new case without affecting the else case too much is very hard. No wonder I’ve been stuck on this.</p>
 <p>Observation: When you duplicate and change, you get to start from scratch. You have far fewer constraints. Much more peaceful.</p>
+<h2 id="premature-abstraction">Premature Abstraction</h2>
+<p><strong>Hypothesis</strong>: Trying to abstract beyond your means (i.e., compress more branches into one than you know how to) is a relevant factor for being stymied. You may not know if some of those branches are necessary and, even if so, you may not know how to do it all off the top of your head.</p>
+<p>Trying to handle just as many branches as you know how to do easily is a relevant factor for making progress.</p>
+<p><strong>TODO</strong>: Controlled experiment to show that you would go fastest if you handled the maximum branches you can handle effortlessly and slower if you handled any fewer or any more.</p>
+<hr />
+<p>Test: [2019-01-25 Fri] When parsing array assignment <code>a(1) = 3</code>, I’m worrying about edge cases like <code>f(1)(2) = 3</code>. Is that a valid expression? Don’t know. Maybe some function <code>f</code> will return an array to which you will set the value. But do we have arrays as types? No. Still, <strong>what if</strong> there is some edge case where that happens? – All of these thoughts are getting in the way of implementing <code>a(1) = 3</code> as quickly and dirtily as possible.</p>
+<p>Specifically, I’m hesitating to write the concrete match <code>case App(Ref(arrayName), List(index))</code> instead of <code>case App(exp, List(index))</code> because the latter is more general and <strong>may</strong> be the right way in the future.</p>
+<p>In short, I’m prematurely abstracting. I know how to handle <code>a(1) = 3</code> separately and I know how to handle <code>f(1)(2) = 3</code> separately. But I don’t know off the top of my head how to handle both of them within the same branch. Plus, I don’t know if the latter expression is even valid.</p>
+<p>Just struck me: why not handle them as separate cases? Have one case for the concrete version and one for the abstract version. But that’s code duplication, which my mind tells me is a cardinal sin!</p>
+<p>Note that I’m trying to handle the maximum number of possibilities in the minimum amount of code. That could be why I’m dilly-dallying over this code.</p>
 <h3 id="to-prevent-regression-change-only-within-your-if-condition">To Prevent Regression, Change only within your If-Condition (??)</h3>
 <p><strong>Hypothesis</strong>: If you add code <strong>only</strong> within the conditional logic for your feature, you can be confident that you haven’t affected any other feature’s behaviour.</p>
 <p>If you add code without a conditional check for your feature, then you have to confirm that the other features aren’t affected too much by your change. The more features there are, the more time this takes.</p>
@@ -578,11 +614,6 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <p>Hypothesis: Implementing the happy path of most valuable features instead of agonizing over boundary cases you might have missed is a relevant factor for speed. (<strong>TODO</strong>)</p>
 <p>How many valuable features at a time? For example, just the main conjunctive <code>def f(x: Int){}</code> or including multiple parameters <code>def f(x: Int, y: Boolean){}</code> or including currying as well <code>def f(x: Int, y: Boolean)(z: Unit){}</code>? I did all three in practically one shot. Maybe it depends on how much you can reliably do right on the first try.</p>
 <hr />
-<p>Test: [2019-01-25 Fri] When parsing array assignment <code>a(1) = 3</code>, I’m worrying about edge cases like <code>f(1)(2) = 3</code>. Is that a valid expression? Don’t know. Maybe some function <code>f</code> will return an array to which you will set the value. But do we have arrays as types? No. Still, <strong>what if</strong> there is some edge case where that happens? – All of these thoughts are getting in the way of implementing <code>a(1) = 3</code> as quickly and dirtily as possible.</p>
-<p>Specifically, I’m hesitating to write the concrete match <code>case App(Ref(arrayName), List(index))</code> instead of <code>case App(exp, List(index))</code> because the latter is more general and <strong>may</strong> be the right way in the future.</p>
-<p>In short, I’m prematurely abstracting.</p>
-<p>Just struck me: why not handle them as separate cases? Have one case for the concrete version and one for the abstract version. But that’s code duplication, which my mind tells me is a cardinal sin!</p>
-<p>Note that I’m trying to handle the maximum number of possibilities in the minimum amount of code. That could be why I’m dilly-dallying over this code.</p>
 <p>Observation: [2019-01-25 Fri] It’s harder to track what I’ve completed and what I haven’t. Earlier, I could mark “BaseParser” as done once I’d handled the different cases, added boundary tests, and refactored. But now, even though I’ve done one branch for function parser, I’ve left other valid cases and boundary tests, so I can’t mark any part as done.</p>
 <h1 id="big-functions-are-hard-to-reason-about-too">Big Functions are Hard to Reason about too (??)</h1>
 <p>Observation: Bunch of journal notes and essays. Don’t know exactly what they contain or what they advise for some problem I face. Clearly, a “chaotic mess”.</p>
@@ -2082,6 +2113,25 @@ did not equal <span class="fu">Prim</span>(*/+-,<span class="fu">Unary</span>(-,
 <h3 id="stateful-programs-assert-properties-about-the-state">Stateful Programs: Assert Properties about the State</h3>
 <p>Hypothesis: If you also mention what a function does to the state, then you can catch any unwanted side-effects. Otherwise, you can’t.</p>
 <p>Test: [2018-11-07 Wed] I tested that an <code>empty</code> method on a <code>Queue</code> would do the right thing for an empty, partially-filled, or full queue. I didn’t test, however, that it <strong>wouldn’t</strong> change the queue.</p>
+<h3 id="how-to-test-whether-a-context-variable-is-relevant">How to Test Whether a Context Variable is Relevant?</h3>
+<p>Hypothesis: Having a context variable is a relevant factor for trying to find out examples where that variable affects the output. (<strong>TODO</strong>)</p>
+<hr />
+<p>Question: How do I test the following? There are no real branches within the Let-case. However, I was surprised to see that the return type for Let was <code>nbody.tp</code> and not <code>pt</code>. It feels like there should be a test for that, just to smoke out people who went for the wrong thing (even though I don’t know why it’s wrong).</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">case</span> <span class="fu">Let</span>(x, tp, rhs, body) =&gt;
+  <span class="kw">if</span> (env.<span class="fu">isDefined</span>(x))
+	<span class="fu">warn</span>(<span class="st">&quot;reuse of variable name&quot;</span>, exp.<span class="fu">pos</span>)
+  <span class="kw">val</span> nrhs = <span class="fu">typeCheck</span>(rhs, tp)(env)
+  <span class="kw">val</span> nbody = <span class="fu">typeCheck</span>(body, pt)(env.<span class="fu">withVal</span>(x, nrhs.<span class="fu">tp</span>))
+  <span class="fu">Let</span>(x, nrhs.<span class="fu">tp</span>, nrhs, nbody).<span class="fu">withType</span>(nbody.<span class="fu">tp</span>)</code></pre></div>
+<p>I think the black-box test will handle that. The type of the function is <code>Let(x, tp, rhs, body) -&gt; pt -&gt; Let(x', tp', rhs', body').withType(letType)</code>. We know that x’ is just x. rhs’ is just rhs with types. But can it be affected by tp? I’m not sure. That’s the problem with <code>typeInfer</code> as it is currently defined. I can’t tell the exact causes of the final types.</p>
+<p>Ah. What I need is one example where rhs’ gets affected by tp. Until I do that, I will never be sure if tp matters.</p>
+<p>Note that if this function weren’t defined to do both type inference <strong>and</strong> type unification at the same time, you would have a clean recursive function, where the inferred type of rhs would depend only on its body. Now, it depends on its body and on the expected type. Now, in order to induce the input-output relation for the function, you have to concoct an example where tp changes the output type rhs’.</p>
+<p>I would understand perfectly if <code>Let(...)</code> just had the type signature of its body (in the context of the bound variable). But now, it somehow has pt as well.</p>
+<p>Maybe I don’t need to find an example of the argument pt affecting the output of typeInfer for every branch. Maybe just one case would be enough. But I’m not able to think of it.</p>
+<p>And now I’m thinking of combinations like pt is UnknownType and the body’s type would end up being IntType, or pt is IntType and the body’s type would up being UnknownType (can that ever happen? don’t know).</p>
+<h2 id="order-of-testing">Order of Testing</h2>
+<p>Unit tests serve two purposes: feature testing and regression testing. If you add a new branch to an existing function, you don’t need to cover the other branches. You just need to add one test for that branch. However, if you’re changing an existing branch, you need to cover it for regression.</p>
+<p>If there’s an unfamiliar function that seems to do what you want to do, but you can write code quickly enough, just pass the test and then try to use the unfamiliar function. Otherwise, you’ll be changing two things at a time. However, if it’s a function that you have to use, such as an HTTP request function, test your understanding of it in isolation.</p>
 <h1 id="assorted-notes-on-tests-and-uncertainty">Assorted Notes on Tests and Uncertainty</h1>
 <h2 id="implementing-a-spec-acceptance-tests-vs-unit-tests">Implementing a Spec: Acceptance tests vs Unit tests (??)</h2>
 <p><strong>Hypothesis</strong>: Given high-level design, pseudo-code that you know is correct, implement first, write tests later, put only as much confidence in your program as the number of tests you pass -&gt; get correctness first and good module-level design later -&gt; low uncertainty about each function because you already know the pseudo-code, quick.</p>
@@ -2325,6 +2375,8 @@ did not equal <span class="fu">Prim</span>(*/+-,<span class="fu">Unary</span>(-,
 <p>Test: [2019-01-21 Mon] Didn’t fall back to a positive exemplar when trying to debug the generated code for nested while loops.</p>
 <p>Caught it within <strong>minutes</strong> by getting a positive exemplar for a simple loop body and toggling the body from <code>x + 1</code> to <code>x = x + 1</code>. This is after an hour of random “debugging”. I was passing in the wrong stack pointer.</p>
 <p>Test: [2019-01-25 Fri] Struggled trying to instantiate an inner class while testing. Finally, replicated the nested classes in a fresh repo and systematically narrowed it down to the fact that I was instantiating the inner class using one object of the outer class and calling a method on another object of the inner class. And because Scala has “path-dependent types”, that doesn’t work. – Should have replicated it the moment I got stuck for more than 5 minutes. Or maybe even right away. Note that it still took 20 to 30 minutes after isolating the class, including time to look up stuff, partly because I didn’t focus on getting a positive exemplar first. In the end, it was just 7 tests to victory.</p>
+<h2 id="debugging-cover-all-output-classes">Debugging: Cover all Output Classes</h2>
+<p>Test: [2019-01-26 Sat] <code>astTypeEquals</code> kept failing even when the types were different. I couldn’t figure it out at all. Turns out that it returned a boolean and I failed to <strong>assert</strong> that that boolean was true. Discovered that by writing a smaller version of the function and trying to make it fail. Given that it always passed, I should have tried to make that test fail.</p>
 <h1 id="understanding-uncertainty-about-the-program-output">Understanding: Uncertainty about the Program Output</h1>
 <h2 id="how-to-tackle-a-daunting-problem">How to Tackle a Daunting Problem</h2>
 <p><strong>Hypothesis</strong>: Get as close a positive exemplar as you can and take a diff to do what you want to do. You will be able to solve your problem more easily than if you try to figure it all out from scratch (?).</p>
@@ -3133,7 +3185,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: January 25, 2019</div>
+<div class="info">Last modified: January 29, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
