@@ -206,6 +206,12 @@
 <p>Expect to just pass the test with a quick and dirty hypothesis (and maybe refactor later), have some idea, little time -&gt; write it down well enough to pass that specific test.</p>
 <p>Corollary: Expect to have code that passes all tests written down (and put only as much confidence in your hypothesis as the tests warrant) -&gt; can do what needs to be done faster.</p>
 <p>Test: Jotting down my mock objects idea – I wanted to get a general hypothesis that fit with all my other “complex” programming ideas.</p>
+<h3 id="premature-code-reuse-considered-harmful">Premature Code Reuse Considered Harmful</h3>
+<p>Hypothesis: If you can pass your test without using an existing but unfamiliar function, trying to use it is a relevant factor for taking longer to pass the test. (<strong>TODO</strong>)</p>
+<p>If you can’t pass your test without using an existing but unfamiliar function, testing it in isolation is a relevant factor for passing your test quickly.</p>
+<p>If there’s an unfamiliar function that seems to do what you want to do, but you can write code quickly enough, just pass the test and then try to use the unfamiliar function. Otherwise, you’ll be changing two things at a time. However, if it’s a function that you have to use, such as an HTTP request function, test your understanding of it in isolation.</p>
+<hr />
+<p>Test: [2019-01-30 Wed] I was trying to use the method <code>typeConform</code> even though I could very well pass my current test case using a simple zip and map. And because that function was “unfamiliar”, I struggled with it for 15 minutes before realizing that it didn’t actually fit my purpose. – took much longer because I was trying to reuse code without understanding it fully. I would have gone along much faster with my own code even if it duplicated stuff. Refactoring it to reuse the existing method would be trivial after a passing test.</p>
 <h2 id="have-a-working-implementation-at-all-times">Have a Working Implementation at all Times</h2>
 <h3 id="code-transformation-fail-to-fail-gives-no-information">Code Transformation: Fail to Fail gives No Information</h3>
 <p><strong>Hypothesis</strong>: Going from fail to fail doesn’t give you any information about your latest change.</p>
@@ -265,7 +271,7 @@
 <p><strong>TODO</strong>: Show that total time taken is a product of the cycle time and number of iterations. Show that a working product with one change at a time leads to the least number of iterations because of faster debugging.</p>
 <h3 id="test-your-mechanism-in-isolation">Test your Mechanism in Isolation</h3>
 <p><strong>TODO</strong>: Refactor the two hypotheses below.</p>
-<p><strong>Corollary</strong>: Unit tests -&gt; minimum work to set the inputs, minimum time to get the outputs, minimum work to understand the outputs.</p>
+<p><strong>Corollary</strong>: Unit test that tests your new code directly -&gt; minimum work to set the inputs, minimum time to get the outputs, minimum work to understand the outputs. However, if the output is not first-class, it might take more work to get the direct output.</p>
 <p>Integration tests -&gt; need to do extra work to set the desired inputs because you have to <strong>change</strong> the rest of the program and because you have to concoct overall inputs that will deliver your desired input to the module, lot of time to get the outputs since there may be other code before the final output, harder to understand the outputs because they could be caused by any part of the program.</p>
 <p><strong>Hypothesis</strong>: Got the type signature for a mechanism (using your integration test), write and test it in isolation -&gt; less work to get to a correct implementation, can exhaustively test all the relevant input configurations -&gt; quick, correct.</p>
 <p>Got the type signature for a mechanism (using your integration test), write and test it as part of your overall program -&gt; more work to get to a correct implementation, costly to exhaustively test all the relevant input configurations -&gt; slower, may have errors.</p>
@@ -278,7 +284,7 @@
 <p>Test: rectangle numbering in Emacs - wanted it to start from 1 instead of 0, but kept putting it off because it felt like it wouldn’t be worth it to dive into some foreign code and change what I wanted. Just realized that it’s <em>my</em> code that starts from 0. Changed it in a jiffy. – somebody else’s code - have to do a lot of work to set the input (in case configuration variables don’t exist). my code - can just dive in and change whatever I want.</p>
 <p>Test: When trying to figure out how to send in a function pointer to my benchmark function, I decided to test it in a stand-alone program first. Fewer changes. In contrast, lots of stuff could go wrong in the benchmark code. – Faster output.</p>
 <p>Test: Negative exemplar - wrote a long function when I could have easily extracted <code>hasFoo(post)</code> into its own function. – didn’t implement it in isolation.</p>
-<p><strong>Test</strong>: In the first test, I had to write a let-block so that I could return the value I read from the array. But that would be if I could run only an end-to-end test. We can do better with unit tests.</p>
+<p><strong>Test</strong>: In my initial test for the <code>block-get</code> instruction, I had to wrap it in a let-block so that I could return the value I read from the array.</p>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">(<span class="fu">Let</span>(<span class="st">&quot;arr&quot;</span>, IntType, <span class="fu">ArrayDec</span>(<span class="fu">Lit</span>(<span class="dv">5</span>), IntType),
   <span class="fu">Prim</span>(<span class="st">&quot;block-get&quot;</span>, List(Ref(<span class="st">&quot;arr&quot;</span>), <span class="fu">Lit</span>(<span class="dv">2</span>)))), <span class="dv">2</span>, <span class="fu">compilerWithVals</span>())
   -&gt; List(
@@ -293,7 +299,7 @@
 	s<span class="st">&quot;movq (${defaultCompiler.avRegs(3)}, ${defaultCompiler.avRegs(4)}, 8), ${defaultCompiler.avRegs(3)}&quot;</span>,
 	s<span class="st">&quot;movq ${defaultCompiler.avRegs(3)}, ${defaultCompiler.avRegs(2)}&quot;</span>,
   ),</code></pre></div>
-<p>Now, I can test exactly the assembly output of this one little instruction:</p>
+<p>But that would be if I could run only an end-to-end test. We can do better with unit tests:</p>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">(<span class="fu">Prim</span>(<span class="st">&quot;block-get&quot;</span>, List(Ref(<span class="st">&quot;arr&quot;</span>), <span class="fu">Lit</span>(<span class="dv">2</span>))),
   <span class="dv">2</span>, <span class="fu">compilerWithVals</span>(List((<span class="st">&quot;arr&quot;</span>, <span class="fu">Left</span>(<span class="dv">1</span>)))))
   -&gt; List(
@@ -301,7 +307,7 @@
 	s<span class="st">&quot;movq $$2, ${defaultCompiler.avRegs(3)}&quot;</span>,
 	s<span class="st">&quot;movq (${defaultCompiler.avRegs(2)}, ${defaultCompiler.avRegs(3)}, 8), ${defaultCompiler.avRegs(2)}&quot;</span>,
   ),</code></pre></div>
-<p>It becomes 3 lines instead of 10.</p>
+<p>Now, I can test exactly the assembly output of this one little instruction with 3 lines instead of 10.</p>
 <h3 id="how-to-set-inputs-and-test-outputs-quickly-use-first-class-values">How to Set Inputs and Test Outputs Quickly: Use First-Class Values</h3>
 <p><strong>Hypothesis</strong>: First-class input -&gt; can set the input without doing any other work.</p>
 <p>No first-class input -&gt; have to set the input by changing a lot of other variables.</p>
@@ -2129,9 +2135,10 @@ did not equal <span class="fu">Prim</span>(*/+-,<span class="fu">Unary</span>(-,
 <p>I would understand perfectly if <code>Let(...)</code> just had the type signature of its body (in the context of the bound variable). But now, it somehow has pt as well.</p>
 <p>Maybe I don’t need to find an example of the argument pt affecting the output of typeInfer for every branch. Maybe just one case would be enough. But I’m not able to think of it.</p>
 <p>And now I’m thinking of combinations like pt is UnknownType and the body’s type would end up being IntType, or pt is IntType and the body’s type would up being UnknownType (can that ever happen? don’t know).</p>
-<h2 id="order-of-testing">Order of Testing</h2>
-<p>Unit tests serve two purposes: feature testing and regression testing. If you add a new branch to an existing function, you don’t need to cover the other branches. You just need to add one test for that branch. However, if you’re changing an existing branch, you need to cover it for regression.</p>
-<p>If there’s an unfamiliar function that seems to do what you want to do, but you can write code quickly enough, just pass the test and then try to use the unfamiliar function. Otherwise, you’ll be changing two things at a time. However, if it’s a function that you have to use, such as an HTTP request function, test your understanding of it in isolation.</p>
+<h2 id="feature-testing-vs-regression-testing">Feature Testing vs Regression Testing</h2>
+<p>Hypothesis: When you change an existing branch, covering it first with a test is a relevant factor for detecting regression. (<strong>TODO</strong>)</p>
+<p>When you don’t change an existing branch (say, when you add a new feature), covering the existing branch with a test is not a relevant factor for detecting regression (since you probably won’t affect it or any of its callees).</p>
+<p>Hypothesis: When you add a new feature, writing a test for it is a relevant factor for finding out if you’ve implemented that feature correctly.</p>
 <h1 id="assorted-notes-on-tests-and-uncertainty">Assorted Notes on Tests and Uncertainty</h1>
 <h2 id="implementing-a-spec-acceptance-tests-vs-unit-tests">Implementing a Spec: Acceptance tests vs Unit tests (??)</h2>
 <p><strong>Hypothesis</strong>: Given high-level design, pseudo-code that you know is correct, implement first, write tests later, put only as much confidence in your program as the number of tests you pass -&gt; get correctness first and good module-level design later -&gt; low uncertainty about each function because you already know the pseudo-code, quick.</p>
@@ -3185,7 +3192,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: January 29, 2019</div>
+<div class="info">Last modified: January 30, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
