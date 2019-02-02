@@ -52,11 +52,11 @@
 <p>What causes these things?</p>
 <h1 id="how-to-code-quickly">How to Code Quickly</h1>
 <h2 id="summary">Summary</h2>
-<p>Make one change at a time to a working product to get one additional property, setting input and getting output quickly, perhaps duplicating to avoid testing for regression and deducing the output instead of running tests every so often.</p>
+<p>Make one encapsulated change at a time to a working product to get one additional property, setting input and getting output quickly, perhaps duplicating to avoid testing for regression and deducing the output instead of running tests every so often.</p>
 <p>Make one small change at a time so you don’t waste time debugging, i.e., narrowing the causes of the buggy output. Don’t change stuff deep down in the code. Do it only at the top-level - at the level of the domain language. For example, switch between two scheduling algorithms using one high-level change instead of three changes scattered through the code. Similarly, don’t add a feature and refactor it into an abstract, beautiful design at the same time. Of course, you’d write the cleanest design you are capable of generating without any errors. For example, I can write a <code>foldr</code> call in Haskell without breaking a sweat whereas a novice might want to start with an explicit recursive function and then abstract it into a <code>foldr</code>.</p>
 <p>Have a working implementation at all times because you can say useful things only when you have a positive exemplar. Specifically, start with a Hello World program that does the bare minimum thing from end to end. And settle on your high-level design before you have a lot of low-level code and, if you can’t avoid that, start with a blank slate and migrate the old code so that you always have something working.</p>
 <p>Implement and test a new function in isolation so that you can change the code, set input, and get output quickly. Use first-classes values so that you can set the input and test the output easily. Have a pipeline that automatically creates the final output from your code so that you can quickly see the effect of each change on the output instead of having to run a dozen steps before you see anything. Similarly, work in the final medium of a PDF or a publishable essay or a report that your machine learning project is supposed to generate. Experiment on a tiny version of your project so that you can alter features cheaply (this is about speed of changing, whereas the earlier suggestion to change the high-level design in isolation was about knowing what causes bugs.). Otherwise, you would have to change a lot of the low-level bits even though you get the same high-level feature change. Similarly, if it takes a long time to compile a LaTeX file, have a separate, small file for experiments.</p>
-<p>When you want to write a new function and you’re struggling or out of time, add one test for one property you need to satisfy (or how many ever properties you can comfortably implement right away) and make it pass. The number of properties you want to satisfy determine how long it will take to implement. Don’t wait for the day when you will perfectly satisfy all properties on the first try. Minimize the number of callers so that you are expected to satisfy fewer relations.</p>
+<p>The number of properties you want to satisfy determine how long it will take to implement. When you want to write a new function and you’re struggling or out of time, add one test for one property you need to satisfy (or how many ever properties you can comfortably implement right away) and make it pass. Don’t wait for the day when you will perfectly satisfy all properties on the first try. Minimize the number of callers so that you are expected to satisfy fewer relations.</p>
 <p>If you find it hard to refactor a function before adding your new feature, duplicate it, write your test, pass it, and then refactor. When you duplicate, you’re guaranteed not to regress (which is what takes a long time to ensure), but if you don’t refactor soon, the code may diverge. This may not be the best way. I need empirical evidence.</p>
 <p>Predict the behaviour of some code by deduction, not by blank-slate empiricism. You know the language well enough to tell what a sequence of familiar statements will do.</p>
 <p><strong>TODO</strong>: Learn powerful abstractions so that you can satisfy a bunch of properties in one step instead of having to walk through multiple iterations. Also, powerful abstractions mean less code.</p>
@@ -420,13 +420,33 @@
 <p>Explanation: His initial integration test was passed by a 120-line program. He then added more integration tests and improved the design of the program as needed. – He figured out exactly which pieces he needed - the high-level design - before he implemented them in detail. For example, he needed macros to wrap HTML code in different tags, etc.</p>
 <p>Test: Haskell programmers use type signatures to do this kind of thing. Sudoku - get a matrix filled with possibilities for each cell, give each cell the possibilities of its row, column, and box neighbours, remove certain possibilities, repeat till you get either a solved matrix or a matrix that doesn’t improve anymore. Each of these steps is doable. – you’ve got the high-level design for passing the test of “solving a Sudoku grid”.</p>
 <p>Test: PG web page generator - if it initially created just one set of web pages, he may want to have code that generates new pages on demand, based on clicks. That would be a new integration test that he may not have thought of beforehand. – empirical usage gives you new ideas.</p>
-<h2 id="rest">Rest</h2>
+<h2 id="add-one-property-at-a-time">Add One Property at a Time</h2>
+<h3 id="cant-get-feedback-until-you-implement-something-usable">Can’t Get Feedback until you Implement something Usable</h3>
+<p>Hypothesis: Implementing one or more features so that that they are usable in a way resembling the final product is a relevant factor for getting feedback from your feedback mechanism.</p>
+<p>(We’ll leave aside for now the alternative technique of logical deduction.)</p>
+<p>This feedback mechanism could be the set of test cases that your use of ScalaCheck generates or the joy that your game engenders. You’re not sure how much each feature affects it. The only way to find out is by implementing some features and running the feedback mechanism.</p>
+<hr />
+<p>Test: Want to use ScalaCheck in my compiler tests. But I want it to be perfect - it should generate all the edge cases I want like nested functions, infinite loops, mutual recursion, and this and that. – Note that I can’t find out how many useful tests ScalaCheck will create for my compiler until I actually implement some part of it.</p>
+<p>For example, what kinds of tests will it generate if I simply pass in the Expression data type without any other information? Don’t know. What if I also weight the distribution from which it samples the different types? Don’t know. What if I get smart with the properties I ask for, like the fact that <code>eval</code> should never overwrite previous stack contents? Don’t know. Which properties should I test? Don’t really know. The only way to know for sure is to test it out.</p>
+<p>Test: [2019-02-01 Fri] [Making Your First Game: Minimum Viable Product](https://www.youtube.com/watch?v=UvCri1tqIxQ) - You can’t find out how engaging your game elements will be until you actually implement them and put them in front of a user (even yourself).</p>
+<h3 id="additional-constraints-delay-feedback">Additional Constraints delay Feedback</h3>
+<p>Hypothesis: The number of constraints you try to satisfy is a relevant factor for the delay until you get any feedback about your implementation of any feature.</p>
+<p>Question: Does the number of constraints you try to satisfy also affect how effectively you can debug?</p>
+<hr />
+<p>Test: [2019-02-01 Fri] I can’t think of a way to implement at once features like generating tests for nested functions and infinite loops in ScalaCheck. So, I don’t do it at all. But I could just hook it up to the Expression data type and generate whatever it could and use that on top of the unit tests I write. It would cost me maybe an hour or two of work up front. It would give me free test cases that could catch esoteric bugs within my code, but I reject it out of hand.</p>
+<p>Why not go for just nested functions, you ask? It doesn’t feel <strong>worth it</strong>. Why? Because I don’t know how many useful tests the basic version will create and I assume that it will probably create none.</p>
+<p>Test: [2019-02-01 Fri] [Making Your First Game: Minimum Viable Product](https://www.youtube.com/watch?v=UvCri1tqIxQ) - pare features from a full version of your game so that you can test the effects of your product empirically, do so quickly, and narrow down the effect of each feature.</p>
+<h3 id="implement-the-most-used-features-first">Implement the Most-Used Features First</h3>
+<p>Hypothesis: Implementing a feature that will be used a lot is a relevant factor for getting a lot of useful feedback about your product.</p>
+<hr />
+<p>Test: [2019-02-01 Fri] [Making Your First Game: Minimum Viable Product](https://www.youtube.com/watch?v=UvCri1tqIxQ) - One way to do this is to keep only those features that will always be used, whether in your minimum version, an intermediate version, or a full-fledged game. For example, Mario will always run and jump, but he won’t always have a princess to rescue or even pipes to crawl down. So, have only running and jumping in your MVP. Similarly, keep one, simple, representative example of each category, such as one type of monster instead of a dozen different types, one type of reward, and one type of weapon.</p>
 <h3 id="speed-is-determined-by-the-number-of-constraints">Speed is Determined by the Number of Constraints</h3>
 <p><strong>Hypothesis</strong>: Time taken to complete some task is proportional to the number and severity of constraints.</p>
 <p>TODO: Labels: “severity of constraint” - give me positive and negative exemplars; how does it affect the time taken?</p>
 <p>Corollary: Start with as few constraints as you can get away with to work at maximum speed. This is the MVP.</p>
 <p>For example, get correctness before you get quality. Further, get correctness in some aspects before you get in others.</p>
 <hr />
+<p>Test: [2019-02-01 Fri] Take out the trash - easy enough. Take out the trash <strong>and</strong> get back into the house within 2 minutes - pretty hard.</p>
 <p>Test: Positive exemplar - constraint - food must taste good – positive.</p>
 <p>Test: Negative exemplar - constraint - doesn’t matter how much of the zero-calorie drinks I drink – negative (within reason).</p>
 <p>Test: Cooking right now - wanted it to taste great, be nutritious, finish as quickly as possible, and leave minimal trash. – too many constraints. Would rather not do it at all.</p>
@@ -464,6 +484,77 @@
 <p><strong>Test</strong>: Also, I fear that there is a cleaner way to do it, which I can find by reading even more code, and therefore I don’t go ahead with a half-assed design that would actually work.</p>
 <p>Basically, I won’t go ahead until I’ve found the <strong>cleanest</strong> way to do it. Which would require me to go through <strong>all</strong> the existing code and check all of their designs. If any of them has a cleaner design (which is my output variable), then I will ignore the other options and go with the better one.</p>
 <p><strong>This</strong> is why I am such a slow learner.</p>
+<h3 id="acceptance-test-clear-focus-on-what-matters">Acceptance Test: Clear Focus on What Matters</h3>
+<p>Question: What happens when you don’t have a failing acceptance test?</p>
+<p><strong>Hypothesis</strong>: Failing acceptance test -&gt; you know exactly what needs to be done; you know it matters; need to remember only your current failing acceptance tests.</p>
+<p>No failing acceptance test, write unit tests or just implement code -&gt; you don’t know exactly what <strong>needs</strong> to be done; you don’t know if it matters; have to remember a lot of TODOs.</p>
+<p><strong>Lesson</strong>: Writing a TODO - instead, make a failing acceptance test for it.</p>
+<p><strong>Lesson</strong>: What to do next - make a failing acceptance test pass.</p>
+<p><strong>Question</strong>: What is the ideal behaviour for programming (on, say, the phone number problem)?</p>
+<hr />
+<p>Test: Phone number problem - I knew that <code>10/783--5: neu o&quot;d 5</code> wasn’t working yet and I needed to get on it. – No need to waste time on pointless “design” of beautiful types. Get that test passing ASAP. And I knew it mattered because that was they would test. Just needed to focus on that failing acceptance test.</p>
+<p>Test: Scheduler OS HW1 - no failing acceptance test (no real tests at all, in fact) – didn’t know if I was working on the right thing; didn’t know exactly what to do next (?). Had to remember a lot of to-do items in my Org file.</p>
+<p>Test: Want to write a to-do item for “handle multiple processes accessing the same virtual memory address” – instead, just add a failing acceptance test and set it aside. Don’t need to keep track of lots of to-do items.</p>
+<p>Test: Unsure what to work on right now - take up a failing acceptance test - such as “how to refactor ideas from different essays I’ve written”. – know exactly what to do.</p>
+<h3 id="what-to-do-next-unfinished">What to do Next? (?? Unfinished)</h3>
+<p><strong>Hypothesis</strong>: Have a dynamically updated list of acceptance tests, choose something that is easy to do -&gt; can find out what to do next.</p>
+<hr />
+<p><strong>Acceptance test</strong>: What to do next?</p>
+<p>Given that I have a bunch of acceptance tests, some of them failing and some of them already passed</p>
+<p>when I look for something to do next</p>
+<p>then I must be able to find it quickly</p>
+<p>when I pick a next action [get techniques from HW1]</p>
+<p>then it shouldn’t be a risky decision. If I get it wrong, I should be able to get quick feedback and change within an hour or so. [used ESS to reduce my cycle time.]</p>
+<h3 id="premature-abstraction">Premature Abstraction</h3>
+<p><strong>Hypothesis</strong>: Trying to abstract beyond your means (i.e., compress more branches into one than you know how to) is a relevant factor for being stymied. You may not know if some of those branches are necessary and, even if so, you may not know how to do it all off the top of your head.</p>
+<p>Trying to handle just as many branches as you know how to do easily is a relevant factor for making progress.</p>
+<p><strong>TODO</strong>: Controlled experiment to show that you would go fastest if you handled the maximum branches you can handle effortlessly and slower if you handled any fewer or any more.</p>
+<hr />
+<p>Test: [2019-01-25 Fri] When parsing array assignment <code>a(1) = 3</code>, I’m worrying about edge cases like <code>f(1)(2) = 3</code>. Is that a valid expression? Don’t know. Maybe some function <code>f</code> will return an array to which you will set the value. But do we have arrays as types? No. Still, <strong>what if</strong> there is some edge case where that happens? – All of these thoughts are getting in the way of implementing <code>a(1) = 3</code> as quickly and dirtily as possible.</p>
+<p>Specifically, I’m hesitating to write the concrete match <code>case App(Ref(arrayName), List(index))</code> instead of <code>case App(exp, List(index))</code> because the latter is more general and <strong>may</strong> be the right way in the future.</p>
+<p>In short, I’m prematurely abstracting. I know how to handle <code>a(1) = 3</code> separately and I know how to handle <code>f(1)(2) = 3</code> separately. But I don’t know off the top of my head how to handle both of them within the same branch. Plus, I don’t know if the latter expression is even valid.</p>
+<p>Just struck me: why not handle them as separate cases? Have one case for the concrete version and one for the abstract version. But that’s code duplication, which my mind tells me is a cardinal sin!</p>
+<p>Note that I’m trying to handle the maximum number of possibilities in the minimum amount of code. That could be why I’m dilly-dallying over this code.</p>
+<h3 id="to-prevent-regression-change-only-within-your-if-condition">To Prevent Regression, Change only within your If-Condition (??)</h3>
+<p><strong>Hypothesis</strong>: If you add code <strong>only</strong> within the conditional logic for your feature, you can be confident that you haven’t affected any other feature’s behaviour.</p>
+<p>If you add code without a conditional check for your feature, then you have to confirm that the other features aren’t affected too much by your change. The more features there are, the more time this takes.</p>
+<p><strong>Lesson</strong>: Always add new code under an if-condition for your feature.</p>
+<p>Corollary: If you keep all your features under separate condition checks, you can switch among them with just one button.</p>
+<p>If you don’t, you have to go and manually change the shared code that must be different for each of them.</p>
+<p>Corollary: As long as you change code within an if-condition for your feature, you know you won’t regress other features. However, to ensure correctness for your feature, you still have to handle all possible paths that lead to your output. So, if there are two paths, you need to add your code under both of them. (Ideally you would merge them first.)</p>
+<p>Corollary: If you want to change common code, first move it under a default if-condition and then add your changed code in a new if-condition for your feature.</p>
+<p><strong>Corollary</strong>: Code is hard to change when it’s used by multiple features and when you don’t add separate if-conditions (or can’t add them because you don’t know the set of features that use this code).</p>
+<p>Corollary: OOP abstracts these if-checks by having the conditional logic for a particular feature at all points along the data flow within one class.</p>
+<p>Corollary: If you add debug code only under a DEBUG check, then you can be confident that that code will be run only when debugging is turned and will not affect the normal logic.</p>
+<hr />
+<p><strong>Test</strong>: [2018-07-29 Sun] If you want to disable a “Submit” button until the form data is valid, you have to worry not only about disabling it only for your feature but also not accidentally disabling or enabling it for other features that use the same form.</p>
+<p>If you add some conditions that apply only to your feature, then you can be confident that you’re not affecting any of the logic for the remaining features (since they will never even enter your code branch).</p>
+<p>However, if you add some code without checking specifically for your feature, then it would be executed even for other features and thus you might affect their behaviour.</p>
+<h3 id="how-to-get-an-mvp">How to Get an MVP?</h3>
+<p>Hypothesis: Imagine the product without certain features (or with relaxed constraints). If it still satisfies some <strong>valuable acceptance tests</strong>, then those features are not part of your MVP.</p>
+<p>Or maybe it’s about the end-to-end acceptance tests that you choose not to pass.</p>
+<p>Hypothesis: Decide how much value you want in your MVP and then pack in as many high-value acceptance tests (or easy acceptance tests) as needed to produce that value.</p>
+<p>TODO: Labels: “value you want in your MVP”, “value of acceptance test” - need positive and negative exemplars.</p>
+<p>Hypothesis: Ask yourself “what would I do if I had to release right now?”. That will give you a current positive exemplar, even if it is low-quality (as opposed to a nebulous ideal exemplar, which only leads to a negative exemplar right now).</p>
+<hr />
+<p>Test: Super Mario - the game “works pretty well” even without the princess. Well, decompose the output (in this case, your gaming experience). You are entertained by the jumping and running.</p>
+<p>Test: Low-quality but immediate positive exemplar - what benchmark would I use for my equational calculator? Probably programming challenges.</p>
+<h3 id="make-a-change-only-when-a-test-fails">Make a Change only when a Test Fails</h3>
+<p>Observation: Wasted a lot of time just staring at the screen hoping for a “perfect” solution to land in my mind.</p>
+<p>Observation: I don’t have near-term tests for the changes I’m making to pipgetc. They are all abstract changes.</p>
+<p>Observation: Long time since I ran <em>any</em> test (or even compiled the code). No feedback.</p>
+<p><strong>Hypothesis</strong>: Make a change only when a test fails. Duh!</p>
+<p>It’s called red-green-refactor. I’ve been making changes willy-nilly.</p>
+<p>Corollary: Otherwise, you will end up making blue-sky changes to your code.</p>
+<p>Corollary: Don’t have to think about abstract cases. Don’t have to “contemplate the ifs”. Just make the current test case pass.</p>
+<p><strong>Hypothesis</strong>: Writing code without a failing test -&gt; don’t know if you’re cutting through.</p>
+<p>Corollary: Writing to pass tests -&gt; consequentialism.</p>
+<h3 id="implement-the-valuable-test-cases-first">Implement the Valuable Test Cases First</h3>
+<p>Hypothesis: Implementing the happy path of most valuable features instead of agonizing over boundary cases you might have missed is a relevant factor for speed. (<strong>TODO</strong>)</p>
+<p>How many valuable features at a time? For example, just the main conjunctive <code>def f(x: Int){}</code> or including multiple parameters <code>def f(x: Int, y: Boolean){}</code> or including currying as well <code>def f(x: Int, y: Boolean)(z: Unit){}</code>? I did all three in practically one shot. Maybe it depends on how much you can reliably do right on the first try.</p>
+<hr />
+<p>Observation: [2019-01-25 Fri] It’s harder to track what I’ve completed and what I haven’t. Earlier, I could mark “BaseParser” as done once I’d handled the different cases, added boundary tests, and refactored. But now, even though I’ve done one branch for function parser, I’ve left other valid cases and boundary tests, so I can’t mark any part as done.</p>
+<h2 id="rest">Rest</h2>
 <h3 id="the-cost-of-induction-depends-on-the-cost-of-diffing">The Cost of Induction depends on the Cost of Diffing</h3>
 <p><strong>Hypothesis</strong>: The cost of inducing over several existing implementations to find out the smallest sufficient set of factors is the cost of diffing.</p>
 <p>You’re given two implementations spanning several files and their output features. You have to <strong>diff</strong> the two programs and match the diffs to the diffs of their output features. And humans take a while to diff.</p>
@@ -541,26 +632,6 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <p><strong>Test</strong>: Algorithms - cut property - the cheapest edge in a cutset is part of the MST. – logic.</p>
 <h3 id="efficient-processing-how-often-do-you-get-feedback">Efficient Processing: How often do you get Feedback? (??)</h3>
 <p><strong>Hypothesis</strong>: Measure how many times you run commands in the interpreter or run your tests -&gt; learn how efficiently you process information.</p>
-<h3 id="acceptance-test-clear-focus-on-what-matters">Acceptance Test: Clear Focus on What Matters</h3>
-<p><strong>Hypothesis</strong>: Failing acceptance test -&gt; you know exactly what needs to be done; you know it matters; need to remember only your current failing acceptance tests.</p>
-<p>No failing acceptance test, write unit tests or just implement code -&gt; you don’t know exactly what <strong>needs</strong> to be done; you don’t know if it matters; have to remember a lot of TODOs.</p>
-<p><strong>Lesson</strong>: Writing a TODO - instead, make a failing acceptance test for it.</p>
-<p><strong>Lesson</strong>: What to do next - make a failing acceptance test pass.</p>
-<p><strong>Question</strong>: What is the ideal behaviour for programming (on, say, the phone number problem)?</p>
-<hr />
-<p>Test: Phone number problem - I knew that <code>10/783--5: neu o&quot;d 5</code> wasn’t working yet and I needed to get on it. – No need to waste time on pointless “design” of beautiful types. Get that test passing ASAP. And I knew it mattered because that was they would test. Just needed to focus on that failing acceptance test.</p>
-<p>Test: Scheduler OS HW1 - no failing acceptance test (no real tests at all, in fact) – didn’t know if I was working on the right thing; didn’t know exactly what to do next (?). Had to remember a lot of to-do items in my Org file.</p>
-<p>Test: Want to write a to-do item for “handle multiple processes accessing the same virtual memory address” – instead, just add a failing acceptance test and set it aside. Don’t need to keep track of lots of to-do items.</p>
-<p>Test: Unsure what to work on right now - take up a failing acceptance test - such as “how to refactor ideas from different essays I’ve written”. – know exactly what to do.</p>
-<h3 id="what-to-do-next-unfinished">What to do Next? (?? Unfinished)</h3>
-<p><strong>Hypothesis</strong>: Have a dynamically updated list of acceptance tests, choose something that is easy to do -&gt; can find out what to do next.</p>
-<hr />
-<p><strong>Acceptance test</strong>: What to do next?</p>
-<p>Given that I have a bunch of acceptance tests, some of them failing and some of them already passed</p>
-<p>when I look for something to do next</p>
-<p>then I must be able to find it quickly</p>
-<p>when I pick a next action [get techniques from HW1]</p>
-<p>then it shouldn’t be a risky decision. If I get it wrong, I should be able to get quick feedback and change within an hour or so. [used ESS to reduce my cycle time.]</p>
 <h3 id="dsl-only-what-you-need">DSL: Only What you Need</h3>
 <p><strong>Label</strong>: DSL = Set of features that will be needed in a set of use cases.</p>
 <hr />
@@ -572,55 +643,6 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <hr />
 <p>Observation: Duplication vs regression strikes again! Handling a new case by itself is pretty trivial (if tedious). But handling the new case without affecting the else case too much is very hard. No wonder I’ve been stuck on this.</p>
 <p>Observation: When you duplicate and change, you get to start from scratch. You have far fewer constraints. Much more peaceful.</p>
-<h2 id="premature-abstraction">Premature Abstraction</h2>
-<p><strong>Hypothesis</strong>: Trying to abstract beyond your means (i.e., compress more branches into one than you know how to) is a relevant factor for being stymied. You may not know if some of those branches are necessary and, even if so, you may not know how to do it all off the top of your head.</p>
-<p>Trying to handle just as many branches as you know how to do easily is a relevant factor for making progress.</p>
-<p><strong>TODO</strong>: Controlled experiment to show that you would go fastest if you handled the maximum branches you can handle effortlessly and slower if you handled any fewer or any more.</p>
-<hr />
-<p>Test: [2019-01-25 Fri] When parsing array assignment <code>a(1) = 3</code>, I’m worrying about edge cases like <code>f(1)(2) = 3</code>. Is that a valid expression? Don’t know. Maybe some function <code>f</code> will return an array to which you will set the value. But do we have arrays as types? No. Still, <strong>what if</strong> there is some edge case where that happens? – All of these thoughts are getting in the way of implementing <code>a(1) = 3</code> as quickly and dirtily as possible.</p>
-<p>Specifically, I’m hesitating to write the concrete match <code>case App(Ref(arrayName), List(index))</code> instead of <code>case App(exp, List(index))</code> because the latter is more general and <strong>may</strong> be the right way in the future.</p>
-<p>In short, I’m prematurely abstracting. I know how to handle <code>a(1) = 3</code> separately and I know how to handle <code>f(1)(2) = 3</code> separately. But I don’t know off the top of my head how to handle both of them within the same branch. Plus, I don’t know if the latter expression is even valid.</p>
-<p>Just struck me: why not handle them as separate cases? Have one case for the concrete version and one for the abstract version. But that’s code duplication, which my mind tells me is a cardinal sin!</p>
-<p>Note that I’m trying to handle the maximum number of possibilities in the minimum amount of code. That could be why I’m dilly-dallying over this code.</p>
-<h3 id="to-prevent-regression-change-only-within-your-if-condition">To Prevent Regression, Change only within your If-Condition (??)</h3>
-<p><strong>Hypothesis</strong>: If you add code <strong>only</strong> within the conditional logic for your feature, you can be confident that you haven’t affected any other feature’s behaviour.</p>
-<p>If you add code without a conditional check for your feature, then you have to confirm that the other features aren’t affected too much by your change. The more features there are, the more time this takes.</p>
-<p><strong>Lesson</strong>: Always add new code under an if-condition for your feature.</p>
-<p>Corollary: If you keep all your features under separate condition checks, you can switch among them with just one button.</p>
-<p>If you don’t, you have to go and manually change the shared code that must be different for each of them.</p>
-<p>Corollary: As long as you change code within an if-condition for your feature, you know you won’t regress other features. However, to ensure correctness for your feature, you still have to handle all possible paths that lead to your output. So, if there are two paths, you need to add your code under both of them. (Ideally you would merge them first.)</p>
-<p>Corollary: If you want to change common code, first move it under a default if-condition and then add your changed code in a new if-condition for your feature.</p>
-<p><strong>Corollary</strong>: Code is hard to change when it’s used by multiple features and when you don’t add separate if-conditions (or can’t add them because you don’t know the set of features that use this code).</p>
-<p>Corollary: OOP abstracts these if-checks by having the conditional logic for a particular feature at all points along the data flow within one class.</p>
-<p>Corollary: If you add debug code only under a DEBUG check, then you can be confident that that code will be run only when debugging is turned and will not affect the normal logic.</p>
-<hr />
-<p><strong>Test</strong>: [2018-07-29 Sun] If you want to disable a “Submit” button until the form data is valid, you have to worry not only about disabling it only for your feature but also not accidentally disabling or enabling it for other features that use the same form.</p>
-<p>If you add some conditions that apply only to your feature, then you can be confident that you’re not affecting any of the logic for the remaining features (since they will never even enter your code branch).</p>
-<p>However, if you add some code without checking specifically for your feature, then it would be executed even for other features and thus you might affect their behaviour.</p>
-<h2 id="how-to-get-an-mvp">How to Get an MVP?</h2>
-<p>Hypothesis: Imagine the product without certain features (or with relaxed constraints). If it still satisfies some <strong>valuable acceptance tests</strong>, then those features are not part of your MVP.</p>
-<p>Or maybe it’s about the end-to-end acceptance tests that you choose not to pass.</p>
-<p>Hypothesis: Decide how much value you want in your MVP and then pack in as many high-value acceptance tests (or easy acceptance tests) as needed to produce that value.</p>
-<p>TODO: Labels: “value you want in your MVP”, “value of acceptance test” - need positive and negative exemplars.</p>
-<p>Hypothesis: Ask yourself “what would I do if I had to release right now?”. That will give you a current positive exemplar, even if it is low-quality (as opposed to a nebulous ideal exemplar, which only leads to a negative exemplar right now).</p>
-<hr />
-<p>Test: Super Mario - the game “works pretty well” even without the princess. Well, decompose the output (in this case, your gaming experience). You are entertained by the jumping and running.</p>
-<p>Test: Low-quality but immediate positive exemplar - what benchmark would I use for my equational calculator? Probably programming challenges.</p>
-<h2 id="make-a-change-only-when-a-test-fails">Make a Change only when a Test Fails</h2>
-<p>Observation: Wasted a lot of time just staring at the screen hoping for a “perfect” solution to land in my mind.</p>
-<p>Observation: I don’t have near-term tests for the changes I’m making to pipgetc. They are all abstract changes.</p>
-<p>Observation: Long time since I ran <em>any</em> test (or even compiled the code). No feedback.</p>
-<p><strong>Hypothesis</strong>: Make a change only when a test fails. Duh!</p>
-<p>It’s called red-green-refactor. I’ve been making changes willy-nilly.</p>
-<p>Corollary: Otherwise, you will end up making blue-sky changes to your code.</p>
-<p>Corollary: Don’t have to think about abstract cases. Don’t have to “contemplate the ifs”. Just make the current test case pass.</p>
-<p><strong>Hypothesis</strong>: Writing code without a failing test -&gt; don’t know if you’re cutting through.</p>
-<p>Corollary: Writing to pass tests -&gt; consequentialism.</p>
-<h2 id="implement-the-valuable-test-cases-first">Implement the Valuable Test Cases First</h2>
-<p>Hypothesis: Implementing the happy path of most valuable features instead of agonizing over boundary cases you might have missed is a relevant factor for speed. (<strong>TODO</strong>)</p>
-<p>How many valuable features at a time? For example, just the main conjunctive <code>def f(x: Int){}</code> or including multiple parameters <code>def f(x: Int, y: Boolean){}</code> or including currying as well <code>def f(x: Int, y: Boolean)(z: Unit){}</code>? I did all three in practically one shot. Maybe it depends on how much you can reliably do right on the first try.</p>
-<hr />
-<p>Observation: [2019-01-25 Fri] It’s harder to track what I’ve completed and what I haven’t. Earlier, I could mark “BaseParser” as done once I’d handled the different cases, added boundary tests, and refactored. But now, even though I’ve done one branch for function parser, I’ve left other valid cases and boundary tests, so I can’t mark any part as done.</p>
 <h1 id="big-functions-are-hard-to-reason-about-too">Big Functions are Hard to Reason about too (??)</h1>
 <p>Observation: Bunch of journal notes and essays. Don’t know exactly what they contain or what they advise for some problem I face. Clearly, a “chaotic mess”.</p>
 <p>Observation: Unfamiliar function - can’t tell what it does.</p>
@@ -3192,7 +3214,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: January 30, 2019</div>
+<div class="info">Last modified: February  1, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
