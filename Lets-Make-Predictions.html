@@ -596,9 +596,25 @@ Sample Size
 </table>
 <p><img src="http://chart.apis.google.com/chart?cht=s&amp;chg=20,20&amp;chds=50,100,0,100,0,95&amp;chm=o,AAAAFF,0,-1,25,1|r,44FF44,0,0.49,0.51|D,FFCCCC,0,0,0.5,-1&amp;chxt=x,x,y,y&amp;chxr=0,50,100|1,0,100&amp;chd=t:50,60,70,80,90,100|51,64,69,77,86,100|59,89,95,70,88,3&amp;chs=355x200&amp;chxl=1:|Confidence  (%)|3:|Accuracy&amp;chxp=1,50|3,50" alt="Chart?cht=s&amp;chg=20,20&amp;chds=50,100,0,100,0,95&amp;chm=o,aaaaff,0, 1,25,1|r,44ff44,0,0.49,0.51|d,ffcccc,0,0,0"></p>
 </div>
+<h1 id="my-calibration-scores-on-the-quiz-from-software-estimation">My Calibration Scores on the quiz from Software Estimation</h1>
+<p>The format is “[my low estimate - my high estimate] question - actual answer”.</p>
+<blockquote>
+<p>[ 1000K - 50000K ] Surface temperature of the Sun - 6000 + 273 [ 0 - 200 ] Latitude of Shanghai - 31 degs North [ 20 - 40 million square miles] Area of the Asian continent - 17 million square miles (NOT COOL!) [ 1000 BC - 1200 ] The year of Alexander the Great’s birth - 356 BC [ $100B - $7T ] Total value of U.S. currency in circulation in 2004 - $700B (too close) [ 2 x 10^8 m^3 - 12 x 10^11 m^3 ] Total volume of the Great Lakes - 6 x 10^20 m^3 (not even in the ballpark) [ $500M - $6B ] Worldwide box office receipts for the movie Titanic - $1.835 [ 1000 miles - 20000 miles ] Total length of the coastline of the Pacific Ocean - 84000 miles (JFC) [ 2500 - 500,000,000 ] Number of book titles published in the U.S. since 1776 - 22 million (huh, good call) [ 1 ton - 10^8 kg ] Heaviest blue whale ever recorded - 170,000 kg (nice call)</p>
+<p>7/10 - JFC</p>
+</blockquote>
+<p>I came so close with the area of the Asian continent. I actually added up the areas I knew for India, China, and Russia. However, those were in square <strong>kilometer</strong>! Damn. Screwed by the unit. However, I just looked it up and even in square kilometers, the area is 44.58 million square kilometers. Which means my high estimate was just not high enough. So, I need to widen my confidence intervals. I shouldn’t have put so much faith on my uncertain beliefs about things outside my professional domain.</p>
+<p>Similarly, I had too small an interval for the total coastline of the Pacific Ocean. I figured that the west coast of the Americas from north to south would be around 3000 miles (don’t know why I thought that). Turns out the Pacific coastline for the US is around 7000 miles. But the length of the US is only 1200 miles. Not sure how the coastline is calculated. But I anchored hard on the 3000 miles thing and doubled it for both sides of the Pacific and tripled it for safety. Turns out it was still too low. Not because I didn’t double and triple enough, but because I didn’t consider the range of values for my sole input number - the length of the west coast of the Americas. I should have gone for 20x my original estimate just because I was so unsure about how a “coastline” was calculated. After all, this is a 90% confidence interval.</p>
+<p>Finally, I was off by 8 orders of magnitude on the volume of the Great Lakes. I thought their area would be no more than the area of India (which I thought was 3.5 million squared miles, when it was actually 3.2 million squared <strong>kilometers</strong>) and that their depth would be from 10m to 200m. Turns out their area is just 94000 squared miles and their average depth is 150m. Their total volume is 22000 km^3 or 2 x 10^13 m^3. So, his answer seems wrong. And mine is off by one order of magnitude. Fuck.</p>
+<p>I was so close! Apparently less than 5% of the 600 people Steve McConnell surveyed got 70% or more (like me). Most people got 30% or less. I could have easily got to 90% by widening my intervals for the area and coastline questions and just taken the hit for the volume question.</p>
+<blockquote>
+<p>When I find the rare person who gets 7 or 8 answers correct, I ask “How did you get that many correct?” The typical response? “I made my ranges too wide.”</p>
+<p>My response is, “No, you didn’t! You didn’t make your ranges wide enough!” If you got only 7 or 8 correct, your ranges were still too narrow to include the correct answer as often as you should have.</p>
+<p>– Chapter 2, Software Estimation</p>
+</blockquote>
+<p>True. I could have made them wider.</p>
 
 <div class="info">Created: November  3, 2014</div>
-<div class="info">Last modified: January  1, 2018</div>
+<div class="info">Last modified: February  4, 2019</div>
 <div class="info">Status: finished</div>
 <div class="info"><b>Tags</b>: prediction</div>
 
