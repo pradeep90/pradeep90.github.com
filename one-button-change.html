@@ -617,9 +617,9 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
 <p>Explanation: In short, I ignore certain external factors that I could have easily accounted for and instead postulate some mysterious missing piece that only people with the true vision know.</p>
 <p>Test: Positive exemplar - turnaround - did it all by myself. – I know it inside out.</p>
 <p>Test: Negative exemplar - bof - still not 100% sure – asked for a lot for help.</p>
-<h3 id="speed-and-amount-of-abstraction">Speed and Amount of Abstraction</h3>
-<p>Hypothesis: Writing a lot of code in one function is a relevant factor for writing it quickly.</p>
-<p>Writing code in different functions and classes is a relevant factor for writing it slowly.</p>
+<h3 id="abstraction-requires-inducing-input-and-output-variables">Abstraction requires Inducing Input and Output Variables</h3>
+<p>Hypothesis: Writing code in another scope is a relevant factor for having to induce the relevant input factors from the variables in scope at the caller.</p>
+<p>Hypothesis: Writing code in another scope is a relevant factor for having to induce the output values for the caller from the variables in the code.</p>
 <hr />
 <p>Test: [2019-02-14 Thu] Wrote a full program of around 45 lines of Python without any intermediate feedback. Granted, it was mostly about integrating a bunch of functions I’d already written, but it’s unusual for me.</p>
 <p>Note that I don’t usually write 35-line functions with 21-line for-loops:</p>
@@ -659,6 +659,44 @@ product <span class="fu">=</span> foldr (<span class="fu">*</span>) <span class=
     plot_accuracies(nbins, training_accuracy, test_accuracy)
     <span class="cf">return</span> model</code></pre></div>
 <p>I used to write this kind of code a long time ago. Now, I don’t. I used to be able to write code without much feedback (without <strong>any</strong> unit tests, in fact). Now, I can’t. Maybe there’s a link.</p>
+<p>Close negative exemplar: If I try to extract functions, it’s going to take me a lot more time. I’d have to “think”.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> evaluate_accuracy(nbins, input_file_name, output_file_name,
+                      training_file_name, test_file_name,
+                      test_frac, random_state):
+    discretize_columns(input_file_name, output_file_name, nbins)
+    split(output_file_name, training_file_name, test_file_name,
+          test_frac, random_state)
+
+    training_df <span class="op">=</span> read_csv(training_file_name).fillna(<span class="dv">0</span>)
+    test_df <span class="op">=</span> read_csv(test_file_name).fillna(<span class="dv">0</span>)
+    <span class="cf">for</span> col <span class="op">in</span> training_df.columns:
+        training_df[col] <span class="op">=</span> training_df[col].astype(<span class="st">'int64'</span>)
+    <span class="cf">for</span> col <span class="op">in</span> test_df.columns:
+        test_df[col] <span class="op">=</span> test_df[col].astype(<span class="st">'int64'</span>)
+    model <span class="op">=</span> nbc_module.nbc(training_df, training_frac, random_state, nbins)
+
+    training_accuracy <span class="op">=</span> nbc_module.accuracy(model, training_df)
+    test_accuracy <span class="op">=</span> nbc_module.accuracy(model, test_df)
+    <span class="bu">print</span>(<span class="st">'Bin size: {}</span><span class="ch">\n</span><span class="st">Training Accuracy: {:.2f}</span><span class="ch">\n</span><span class="st">Testing Accuracy: {:.2f}'</span>.<span class="bu">format</span>(
+        nbins,
+        training_accuracy,
+        test_accuracy))
+    <span class="cf">return</span> (training_accuracy, test_accuracy)
+
+<span class="kw">def</span> main():
+    input_file_name <span class="op">=</span> <span class="st">'dating.csv'</span>
+    output_file_name <span class="op">=</span> <span class="st">'dating-binned.csv'</span>
+    training_file_name <span class="op">=</span> <span class="st">'trainingSet.csv'</span>
+    test_file_name <span class="op">=</span> <span class="st">'testSet.csv'</span>
+    test_frac <span class="op">=</span> <span class="fl">0.2</span>
+    training_frac <span class="op">=</span> <span class="fl">1.00</span>
+    random_state <span class="op">=</span> <span class="dv">47</span>
+
+    nbins_list <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">200</span>]
+    training_accuracy_list, test_accuracy_list <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span>[evaluate_accuracy(nbins) <span class="cf">for</span> nbins <span class="op">in</span> nbins_list])
+    plot_accuracies(nbins, training_accuracy_list, test_accuracy_list)
+    <span class="cf">return</span> model</code></pre></div>
+<p>I had to think about how to break it up. Had to ensure that the loop body was truly independent of the rest of the code (like a <code>map</code> and not like a <code>fold</code>) before I could extract it as a function. Had to <strong>think</strong> about the function’s <strong>inputs and outputs</strong>. Earlier, it was all implicit. I knew that whatever it needed was available in scope. Now, I had to shrink the set of available variables from <strong>everything in scope</strong> to the few parameters of the function. Induction, in other words. Similarly, I had to think about the variables the remaining code needed from it (namely, the elements of the accuracy lists and the printed statement), whereas earlier I knew that whatever it added to scope would be available if needed. Induction again.</p>
 <p>Test: [2019-02-14 Thu] Some of the fastest coders I know write giant Python functions even today.</p>
 <h3 id="math-get-answers-without-getting-empirical-feedback">Math: Get Answers without Getting Empirical Feedback</h3>
 <p><strong>Hypothesis</strong>: Math is how you get answers without getting empirical feedback.</p>
@@ -3273,7 +3311,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: February 14, 2019</div>
+<div class="info">Last modified: February 19, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
