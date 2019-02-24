@@ -2194,6 +2194,86 @@ did not equal <span class="fu">Prim</span>(*/+-,<span class="fu">Unary</span>(-,
 <p>Maybe this is why we have white-box tests.</p>
 <p>What I need is a test that toggles just one variable at a time. So, when I implement let-expressions, I should add to a working expression a new let-declaration.</p>
 <p>Man, black-box tests suck for debugging. Didn’t know what had gone wrong when implementing a let parser.</p>
+<h3 id="high-coverage-tests-that-match-the-spec-tell-you-when-code-deviates">High-Coverage Tests that Match the Spec tell you when Code Deviates</h3>
+<p>Hypothesis: High-coverage tests that match the spec are relevant factors for failing the tests when the code doesn’t match the spec.</p>
+<p>Tests that don’t cover the code as much may miss some cases where the code doesn’t match the spec.</p>
+<p>Tests that don’t match the spec definitely miss some cases where the code doesn’t match the spec.</p>
+<p>Hypothesis: Changing the outputs of your tests when the spec changes is a relevant factor for noticing code mismatch.</p>
+<p>If you don’t change (or check) the outputs of some tests, you may not notice when the code doesn’t match the spec anymore.</p>
+<hr />
+<p>Test: [2019-02-23 Sat] Case where I was saved because of branch coverage (i.e., making the white-box test inputs cover the code’s branches) and updating the outputs when the spec changed:</p>
+<p>This is some old and ugly code from my Emacs configuration. It adds a Markdown quotation source using the link that you have in your clipboard. If you pass an argument, then it simply adds an empty quotation source.</p>
+<pre class="elisp"><code>(defun website-insert-quote-source (&amp;optional arg)
+  &quot;Insert yanked link in blockquote format.
+With arg, just insert an empty signature.&quot;
+  (interactive &quot;P&quot;)
+  (if arg
+      (insert &quot;&gt;\n&gt; -- &quot;)
+    (let* ((yanked-link (website-get-yanked-link))
+	   (link-string (format &quot;[%s](%s)&quot;
+				(website-link-attribution yanked-link)
+				(website-convert-link yanked-link))))
+      (insert (format &quot;&gt;\n&gt; -- %s&quot; link-string))
+      (search-backward &quot;]&quot;))))</code></pre>
+<p>Now, I wanted to add a newline at the end of the quotation source because otherwise I had to do that manually each time. I added it to the second branch and ran my tests and found that three tests failed, as expected. Score one for unit tests. However, I realized that I actually had four unit tests for this function and one of them was failing to fail. Turns out I hadn’t changed the case for the empty source.</p>
+<p>This is why you need branch coverage. Without it - specifically, without a test for the empty-source branch - I would have updated my three tests with newlines, changed just one branch, passed those tests, and thought that I had successfully changed my function to match my new requirements. I wouldn’t have realized that I had missed a branch until I kept getting the old annoying behaviour in some mysterious cases.</p>
+<p>Test: [2019-02-23 Sat] Let’s say your spec is to join a bunch of strings using some delimiter.</p>
+<p>You have tests whose inputs cover the code and whose outputs match the spec:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> <span class="kw">let</span> joinWith d [] <span class="fu">=</span> []; joinWith d xs <span class="fu">=</span> foldr1 (\x y <span class="ot">-&gt;</span> x <span class="fu">++</span> d <span class="fu">++</span> y) xs
+
+<span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> joinWith <span class="st">&quot;-&quot;</span> [] <span class="fu">==</span> []
+<span class="dt">True</span>
+<span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> joinWith <span class="st">&quot;-&quot;</span> [<span class="st">&quot;yo&quot;</span>, <span class="st">&quot;boyz&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="st">&quot;am&quot;</span>] <span class="fu">==</span> <span class="st">&quot;yo-boyz-I-am&quot;</span>
+<span class="dt">True</span></code></pre></div>
+<p>The two input cases that cover the code’s branches are the empty list and the non-empty list. We test that their outputs match the spec. (I’m using simple equality checks in the REPL for this example.)</p>
+<p>Let’s say the spec changes to ignore any empty strings. What needs to change?</p>
+<p>Well, unfortunately, none of the test outputs need to change because their inputs don’t lead to any leading or trailing whitespace. And since the tests don’t change, the code doesn’t <em>need</em> to change either. But that’s not right.</p>
+<p>This is where black-box tests, specifically equivalence classes, come in handy. We don’t have any test input that covers the equivalence class of “empty string” as mentioned in the spec. All of the strings we use in our test inputs are non-empty.</p>
+<p>So, the need for equivalence class coverage will make us change our test input:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> joinWith <span class="st">&quot;-&quot;</span> [<span class="st">&quot;yo&quot;</span>, <span class="st">&quot;boyz&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="st">&quot;am&quot;</span>] <span class="fu">==</span> <span class="st">&quot;yo-boyz-am&quot;</span>
+<span class="dt">False</span>
+<span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> joinWith <span class="st">&quot;-&quot;</span> [<span class="st">&quot;yo&quot;</span>, <span class="st">&quot;boyz&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="st">&quot;am&quot;</span>]
+<span class="st">&quot;yo-boyz--am&quot;</span></code></pre></div>
+<p>As we can see, it adds a double dash because of the empty string. The test fails, so we change our code:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> <span class="kw">let</span> joinWith d [] <span class="fu">=</span> []; joinWith d xs <span class="fu">=</span> foldr1 (\x y <span class="ot">-&gt;</span> <span class="kw">if</span> x <span class="fu">==</span> <span class="st">&quot;&quot;</span> <span class="kw">then</span> y <span class="kw">else</span> x <span class="fu">++</span> d <span class="fu">++</span> y) <span class="fu">$</span> xs
+
+<span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> joinWith <span class="st">&quot;-&quot;</span> [<span class="st">&quot;yo&quot;</span>, <span class="st">&quot;boyz&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="st">&quot;am&quot;</span>] <span class="fu">==</span> <span class="st">&quot;yo-boyz-am&quot;</span>
+<span class="dt">True</span></code></pre></div>
+<p>Now, it passes the new test. Are we done? Actually, the tests don’t cover all the branches of the code. <code>foldr1</code> has two branches: the singleton list and the non-singleton list.</p>
+<p>See what happens when you test with a singleton:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> joinWith <span class="st">&quot;-&quot;</span> [<span class="st">&quot;yo&quot;</span>] <span class="fu">==</span> <span class="st">&quot;yo&quot;</span>
+<span class="dt">True</span></code></pre></div>
+<p>It works. Huh. No problems, then?</p>
+<p>What if the singleton element is an empty string?</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> joinWith <span class="st">&quot;-&quot;</span> [<span class="st">&quot;&quot;</span>] <span class="fu">==</span> <span class="st">&quot;&quot;</span>
+<span class="dt">True</span></code></pre></div>
+<p>I somehow suspect that there’s a bug, but I’m not able to narrow it down.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> joinWith <span class="st">&quot;-&quot;</span> [<span class="st">&quot;yo&quot;</span>, <span class="st">&quot;&quot;</span>]
+<span class="st">&quot;yo-&quot;</span></code></pre></div>
+<p>Aha! Gotcha. How could I have caught that?</p>
+<p>So far, the tests are:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">main ::</span> <span class="dt">IO</span> ()
+main <span class="fu">=</span> hspec <span class="fu">$</span> <span class="kw">do</span>
+  describe <span class="st">&quot;joinWith&quot;</span> <span class="fu">$</span> <span class="kw">do</span>
+    it <span class="st">&quot;should join strings with delimiters&quot;</span> <span class="fu">$</span> <span class="kw">do</span>
+      joinWith <span class="st">&quot;-&quot;</span> [] <span class="ot">`shouldBe`</span> []
+      joinWith <span class="st">&quot;-&quot;</span> [<span class="st">&quot;yo&quot;</span>] <span class="ot">`shouldBe`</span> <span class="st">&quot;yo&quot;</span>
+      joinWith <span class="st">&quot;-&quot;</span> [<span class="st">&quot;yo&quot;</span>, <span class="st">&quot;boyz&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="st">&quot;am&quot;</span>] <span class="ot">`shouldBe`</span> <span class="st">&quot;yo-boyz-I-am&quot;</span>
+
+    it <span class="st">&quot;should handle empty strings&quot;</span> <span class="fu">$</span> <span class="kw">do</span>
+      joinWith <span class="st">&quot;-&quot;</span> [<span class="st">&quot;&quot;</span>] <span class="ot">`shouldBe`</span> <span class="st">&quot;&quot;</span>
+      joinWith <span class="st">&quot;-&quot;</span> [<span class="st">&quot;yo&quot;</span>, <span class="st">&quot;boyz&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="st">&quot;am&quot;</span>] <span class="ot">`shouldBe`</span> <span class="st">&quot;yo-boyz-am&quot;</span>
+
+    it <span class="st">&quot;should handle an empty string at the end&quot;</span> <span class="fu">$</span> <span class="kw">do</span>
+      joinWith <span class="st">&quot;-&quot;</span> [<span class="st">&quot;yo&quot;</span>, <span class="st">&quot;&quot;</span>] <span class="ot">`shouldBe`</span> <span class="st">&quot;yo&quot;</span></code></pre></div>
+<p>How could I have come up with these test cases given my original spec and implementation?</p>
+<p>Note that I fell into the trap of the empty string at the end of the list because I modified my existing program instead of coming up with a new program based on the new spec. If you’d told me that you needed to ignore empty strings, I would have just filtered out the empty strings before calling <code>joinWith</code>.</p>
+<h3 id="other-ways-to-notice-code-mismatch">Other Ways to Notice Code Mismatch</h3>
+<p>Hypothesis: Running tests is a relevant factor for noticing code mismatch.</p>
+<p>Hypothesis: Changing the inputs of your white-box tests when the code changes is a relevant factor for noticing code mismatch. (<strong>TODO</strong>: Need a controlled experiment.)</p>
+<p><strong>Question</strong>: When you refactor your code, you judge whether your code still works by checking if the tests pass. But don’t you need to change the white-box test inputs when you change the branches in your code? (<strong>TODO</strong>)</p>
+<p>Hypothesis: Changing the inputs of your black-box tests when the spec changes is a relevant factor for noticing code mismatch.</p>
+<p>Hypothesis: Changing the outputs of your tests when the inputs change is a relevant factor for noticing code mismatch.</p>
 <h3 id="branch-coverage-vs-multiple-condition-coverage">Branch Coverage vs Multiple-Condition Coverage</h3>
 <p>Hypothesis: If-expression with multiple conditions is a relevant factor for multiple-condition coverage leading to more tests than branch coverage.</p>
 <hr />
@@ -2242,6 +2322,32 @@ did not equal <span class="fu">Prim</span>(*/+-,<span class="fu">Unary</span>(-,
 <p>Hypothesis: When you change an existing branch, covering it first with a test is a relevant factor for detecting regression. (<strong>TODO</strong>)</p>
 <p>When you don’t change an existing branch (say, when you add a new feature), covering the existing branch with a test is not a relevant factor for detecting regression (since you probably won’t affect it or any of its callees).</p>
 <p>Hypothesis: When you add a new feature, writing a test for it is a relevant factor for finding out if you’ve implemented that feature correctly.</p>
+<h2 id="its-all-equivalence-class-testing">It’s all Equivalence Class Testing</h2>
+<p><strong>Hypothesis</strong>: Black-box testing with valid and invalid equivalence partitions treats all inputs to a variable that produce valid outputs to be part of the same equivalence class (and the same for those that produce invalid outputs).</p>
+<p>Branch coverage treats all inputs that exercise the same branch to be part of the same equivalence class.</p>
+<p>Path coverage does the same for all inputs that exercise the same path.</p>
+<p>Hypothesis: One input from an equivalence class working as expected is a relevant factor for all the other inputs from that class working as expected for that aspect of the program, be it a branch or a path.</p>
+<p>Observation: [2019-02-23 Sat] I got this hint from the follow source:</p>
+<blockquote>
+<p>A partition test is an abstraction of any systematic method that divides the input space into disjoint subdomains, and requires that tests be selected from each subdomain. Path testing is such a method, because the equivalence classes of inputs defined by the relation “execute the same path,” do constitute a partition.</p>
+<p>– Random Testing, Hamlet 1994</p>
+</blockquote>
+<p>Note that he talks about <strong>partitioning</strong> the input space. I’m not going that far. For example, one input could exercise all branches in a function and thus give you 100% branch coverage (like 5 for <code>factorial</code>, since it will eventually call <code>factorial(0)</code>). So, the equivalence classes for the branches may not be disjoint, but they still serve their purpose. If some input going down the zero-branch of factorial works as expected, you will assume that all inputs going down that zero-branch will work (it’s actually just one input - the value zero). If some input going down the non-zero branch of factorial works as expected, you will assume that all inputs going down that branch will work. It doesn’t matter if it is the same input in both cases.</p>
+<p>But aren’t there cases where one input going down a branch could work as expected but some other input going down that same branch could fail? Yes, there are cases where path coverage gives more tests than branch coverage (don’t have a concrete example right now). But there are always more tests that you could write. State coverage, I’m told, yields even more tests than path coverage (no concrete example right now). The point is that we can’t afford to write all the possible tests for a function. So, we stop at some practical limit, usually branch coverage or multiple-condition coverage.</p>
+<h2 id="fast-testing-vs-fast-debugging">Fast Testing vs Fast Debugging</h2>
+<p>Hypothesis: Choosing a minimum set of inputs that cover all equivalence classes is a relevant factor for fewer tests but higher uncertainty about which equivalence classes failed and higher cost in figuring out how many classes it covers.</p>
+<p>Choosing a unique input for each equivalence class is a relevant factor for more tests but lower uncertainty about which equivalence class failed and lower cost in figuring out how many classes it covers.</p>
+<hr />
+<p>Test: Consider tests for <code>factorial</code>.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">factorial <span class="dv">0</span> <span class="fu">=</span> <span class="dv">1</span>
+factorial n <span class="fu">=</span> n <span class="fu">*</span> factorial (n <span class="fu">-</span> <span class="dv">1</span>)</code></pre></div>
+<p>The test case <code>factorial 5 == 120</code> covers both the branches because it eventually calls <code>factorial 0</code>. Note that you have to think harder to figure out that it does so. There’s an additional cost in writing test cases that cover multiple branches.</p>
+<p>However, suppose somebody had written it wrongly as:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">factorial <span class="dv">0</span> <span class="fu">=</span> <span class="dv">1</span>
+factorial n <span class="fu">=</span> (n <span class="fu">-</span> <span class="dv">1</span>) <span class="fu">*</span> factorial (n <span class="fu">-</span> <span class="dv">1</span>)</code></pre></div>
+<p>Now, <code>factorial 5 == 120</code> still covers both branches (though you’d have to think a bit to figure that out, just like before). This time, the test fails because <code>factorial 5</code> returns 0.</p>
+<p>Now, which branch has the problem? It’s easy to eyeball it when there are just two lines of a very simple program. Things will get much harder when you have hundreds of lines of old code with lots of branches.</p>
+<p>If, instead, you’d written two disjoint branch tests, like <code>factorial 0 == 1</code> and <code>factorial 5 == 120</code>, you would know that it works correctly (as far as you know) for the zero-case. So, you’ve isolated the error to exactly one branch. That’s a major decrease in uncertainty.</p>
 <h1 id="assorted-notes-on-tests-and-uncertainty">Assorted Notes on Tests and Uncertainty</h1>
 <h2 id="implementing-a-spec-acceptance-tests-vs-unit-tests">Implementing a Spec: Acceptance tests vs Unit tests (??)</h2>
 <p><strong>Hypothesis</strong>: Given high-level design, pseudo-code that you know is correct, implement first, write tests later, put only as much confidence in your program as the number of tests you pass -&gt; get correctness first and good module-level design later -&gt; low uncertainty about each function because you already know the pseudo-code, quick.</p>
@@ -3311,7 +3417,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: February 19, 2019</div>
+<div class="info">Last modified: February 24, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
