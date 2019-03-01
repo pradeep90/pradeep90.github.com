@@ -344,6 +344,23 @@
 <p>– <a href="https://www.joelonsoftware.com/2001/01/27/daily-builds-are-your-friend/"></a></p>
 </blockquote>
 <p>Test: Math proofs - long time to get the output. You have to be the human interpreter and run the proof line by line. Sometimes you may not know either way and may have to wait for an experienced mathematician to give you feedback. You can’t (without automatic theorem provers, which I don’t think most mathematicians use) get the output in an instant. In this regard, we programmers are fortunate. – more uncertain about your math proofs. That’s why they have more than one proof for the same theorem (according to Terence Tao).</p>
+<p><strong>Test</strong>: [2019-02-28 Thu] An extreme example of this is where you can toggle any part of your code and see the change in output instantaneously.</p>
+<p>See Bret Victor’s <a href="https://vimeo.com/36579366">talk</a> Inventing on Principle. He shows how you can change the constant for the length of a branch in a program that draws a tree and see the branch lengthen immediately.</p>
+<p>He can use a magnifying-glass feature to pinpoint which part of the output is caused by some particular input.</p>
+<p>He can do the same thing in reverse to see which parts of the input caused some part of the output.</p>
+<blockquote>
+<p>I can make these changes as quickly as I think of them.</p>
+<p>– <a href="https://vimeo.com/36579366">Bret Victor, Inventing on Principle</a></p>
+</blockquote>
+<p>FUCK MY ASS! He can pause execution and rewind and play after changing some settings. That’s what you’d want when, say, practicing some strategy in AOE - you’d want to pause it before some battle, change some settings, and see how well you can do.</p>
+<p>And he can see the <strong>future</strong> effects of changes in code. That way he gets <strong>immediate</strong> feedback about stuff that would usually come after a cycle time of several minutes.</p>
+<blockquote>
+<p>In fact, I bet I can fiddle with any part of this code and come up with an idea for a game.</p>
+</blockquote>
+<p>You bet! That’s what a scientist does. He toggles variables to get novel configurations.</p>
+<p>For binary search, he showed the domain-level concrete values corresponding to your abstract code. So, <code>array.length - 1</code> showed up as 5 for his sample case. This sort of short cycle time is what we try to get at using unit tests, though without such interactive support. We can also get it, at considerable cost, by sprinkling print statements throughout our code.</p>
+<p>Hypothesis: He’s doing away with all logical inference by eliminating the cycle time for all the things you want to see, whether it be the current state of the tree you’re drawing or the future path of your Mario character. This is what empiricism would like to be. However, we have to note that it comes at a cost. You can’t view the simulation of your career in your prospective field for forty years before you decide whether or not to accept a job offer. There are simply too many variables.</p>
+<p>He’s bridging the cycle time between your source code in one language and your output in another language (maybe the language of pixels or numbers).</p>
 <h3 id="understand-output-quickly-using-property-tests">Understand Output Quickly using Property Tests</h3>
 <p><strong>TODO</strong>: Have some sort of test to judge whether the output satisfies some property. Controlled experiment. What would it mean to not understand the output quickly? Why do you need that anyway? Show that it depends on your change in input.</p>
 <p>Dashboard -&gt; understand output with little work. The output gets interpreted for you.</p>
@@ -2592,6 +2609,10 @@ factorial n <span class="fu">=</span> (n <span class="fu">-</span> <span class="
 <p>Caught it within <strong>minutes</strong> by getting a positive exemplar for a simple loop body and toggling the body from <code>x + 1</code> to <code>x = x + 1</code>. This is after an hour of random “debugging”. I was passing in the wrong stack pointer.</p>
 <p>Test: [2019-01-25 Fri] Struggled trying to instantiate an inner class while testing. Finally, replicated the nested classes in a fresh repo and systematically narrowed it down to the fact that I was instantiating the inner class using one object of the outer class and calling a method on another object of the inner class. And because Scala has “path-dependent types”, that doesn’t work. – Should have replicated it the moment I got stuck for more than 5 minutes. Or maybe even right away. Note that it still took 20 to 30 minutes after isolating the class, including time to look up stuff, partly because I didn’t focus on getting a positive exemplar first. In the end, it was just 7 tests to victory.</p>
 <p>Test: [2019-02-04 Mon] Spent half an hour trying to get function pointers to work in my generated assembly. Kept getting segfaults. Decided to look at the generated code for a simple C program that used a function pointer. Saw immediately that it used <code>movl $foo, %edi</code> whereas I had been using <code>movq foo, %edi</code>. Turns out that you needed the extra dollar sign. In just four minutes, I was done! – I didn’t have a positive exemplar for function pointer assembly code that actually worked. All I had were exemplars of assembly code that kept segfaulting.</p>
+<h2 id="debugging-shrink-the-failing-test">Debugging: Shrink the Failing Test</h2>
+<p>Hypothesis: Shrinking the failing test (that you’re debugging) is a relevant factor for quickly discovering the causes of failure.</p>
+<hr />
+<p>Test: [2019-02-28 Thu] Spent ages debugging the black-box test <code>testAppOrder</code> without figuring out that it was the anonymous function that was the problem. Once I got it down to a small function, I could easily look at the generated CPS code to see that I needed to extract the function pointer from the closure.</p>
 <h2 id="debugging-cover-all-output-classes">Debugging: Cover all Output Classes</h2>
 <p>Test: [2019-01-26 Sat] <code>astTypeEquals</code> kept failing even when the types were different. I couldn’t figure it out at all. Turns out that it returned a boolean and I failed to <strong>assert</strong> that that boolean was true. Discovered that by writing a smaller version of the function and trying to make it fail. Given that it always passed, I should have tried to make that test fail.</p>
 <h1 id="understanding-uncertainty-about-the-program-output">Understanding: Uncertainty about the Program Output</h1>
@@ -3417,7 +3438,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: February 24, 2019</div>
+<div class="info">Last modified: March  1, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
