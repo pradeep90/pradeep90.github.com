@@ -361,6 +361,22 @@
 <p>For binary search, he showed the domain-level concrete values corresponding to your abstract code. So, <code>array.length - 1</code> showed up as 5 for his sample case. This sort of short cycle time is what we try to get at using unit tests, though without such interactive support. We can also get it, at considerable cost, by sprinkling print statements throughout our code.</p>
 <p>Hypothesis: He’s doing away with all logical inference by eliminating the cycle time for all the things you want to see, whether it be the current state of the tree you’re drawing or the future path of your Mario character. This is what empiricism would like to be. However, we have to note that it comes at a cost. You can’t view the simulation of your career in your prospective field for forty years before you decide whether or not to accept a job offer. There are simply too many variables.</p>
 <p>He’s bridging the cycle time between your source code in one language and your output in another language (maybe the language of pixels or numbers).</p>
+<blockquote>
+<p>Perhaps someday this will change. Perhaps IDE makers will focus on dynamic exploration instead of static analysis, rich visualization instead of line debugging. Perhaps language theorists will stop messing around with arrows and dependent types, and start inventing languages suitable for interactive development and discovery.</p>
+<p>– <a href="http://worrydream.com/#!2/LadderOfAbstraction"></a></p>
+</blockquote>
+<p>That’s empiricism vs inference right there.</p>
+<p>Test: WYSIWYG vs modal editing - zero cycle time.</p>
+<p>Test:</p>
+<blockquote>
+<p>A designer needs direct, interactive control over the independent variables of the system. We must not be slaves to real time.</p>
+<p>– <a href="http://worrydream.com/#!2/LadderOfAbstraction"></a></p>
+</blockquote>
+<blockquote>
+<p>We step up to an abstraction by devising a representation that depicts the system across all values of a parameter. This gives us a broad view of the system’s behavior, and allows us to discover high-level patterns.</p>
+<p>– <a href="http://worrydream.com/#!2/LadderOfAbstraction"></a></p>
+</blockquote>
+<p>Your program is a point in configuration space. You want to look at the value of some parameter across all the configurations. For example, he showed the time taken to reach the end of the road for different values of road curvature and car turn angle. What was more impressive was that you could drop back down to the other ways to visualize that configuration by clicking on a particular point in configuration space.</p>
 <h3 id="understand-output-quickly-using-property-tests">Understand Output Quickly using Property Tests</h3>
 <p><strong>TODO</strong>: Have some sort of test to judge whether the output satisfies some property. Controlled experiment. What would it mean to not understand the output quickly? Why do you need that anyway? Show that it depends on your change in input.</p>
 <p>Dashboard -&gt; understand output with little work. The output gets interpreted for you.</p>
@@ -2733,6 +2749,32 @@ factorial n <span class="fu">=</span> (n <span class="fu">-</span> <span class="
 <p>Test: Log file - XINU – helped a lot for me to keep track of what was going on. Had to save separate files, though, because the output was pretty huge. (Could have noted down only the variables I cared about.)</p>
 <p><strong>Test</strong>: Negative exemplar - log file - didn’t have any for the IPL dataset – didn’t have a good idea of what was going on, especially when trying something new.</p>
 <h1 id="high-level-design-decomposing-the-output">High-level Design: Decomposing the Output</h1>
+<h2 id="bottom-up-design-layers-of-abstraction">Bottom-up Design: Layers of Abstraction</h2>
+<p><strong>Test</strong>: [2019-03-01 Fri] Source: Bottom Up vs Top Down Design in Clojure - Mark Bastian, <a href="https://www.youtube.com/watch?v=Tb823aqgX_0">ClojureTV</a></p>
+<p>He represented the game state as a first-class value. Then, very few functions know about it, such as update player hand. All the other functions compose the lower-level functions to build higher functionality like initializing the game state or playing a round.</p>
+<p>In the oop version, you modeled each class separately.</p>
+<p>Test: We deal with lists as a whole, whereas C programmers talk about specific pointers. Java programmers talk about methods on a particular object.</p>
+<p>Hmm… When you write a class, your method depends on that class’ instance. It’s good in the sense that it can encapsulate code that deals only with that object, like…?</p>
+<p>But what if you want to write a high-level function that updates an entire Sudoku grid or a whole proof tree instead of the individual cells and branches? You don’t care about the cells and branches.</p>
+<p>In a class hierarchy design, you’re predicting that the only changes you’ll need to make are to subclasses of the current classes. You may subclass game, player, board, and card for D&amp;D but the top-level classes remain the same.</p>
+<p>In a functional design, you’re betting that the only changes you’ll make are to the bottom layer. You may change the game state from a simple list to a btree or whatever, but the layer design remains the same. Even if you have to change a few layers above that, the other layers won’t change.</p>
+<p>Test: The bottom most layer - your first-class value - represents your domain completely. For example, the grid in Sudoku or the proof tree in my equational calculator. Your layers of code represent your abstraction of the concrete data.</p>
+<p>What set of data does cps Interpreter refer to? What does player refer to? Well, the value within the object.</p>
+<p>I guess the main difference is that you can’t combine and abstract stuff across classes. There will always be a player class.</p>
+<p>Test: In the functional approach, you have one value and a few top level functions that act on it. In the object oriented approach, you have a bunch of objects and their methods (though you can write a high-level game class).</p>
+<p>Test: He says functions compose but objects don’t. What does that mean?</p>
+<p>Test: He got a working implementation of the game in one iteration whereas the top down design had just created classes and relations.</p>
+<p>Once you have the bottom most data representation of your state, you can abstract as much as you want and still have a working program at every point.</p>
+<p>Can’t you abstract iteratively with classes?</p>
+<p>Maybe a difference is that you can change one layer without touching the rest.</p>
+<p>Test: Will both approaches have the same API? If so, they will differ only in their implementation.</p>
+<p>How much do they differ in code reuse? How much in modifiability? How much in understandability?</p>
+<p>Test: He says that you’re decoupling data and functions. Classes couple the two (??). Languages decouple the AST and the value it evaluates to.</p>
+<p>Test: In Scala, objects are still the glue with which you compose stuff. Here, we used function composition as our glue.</p>
+<p>Test: With classes, you can lose sight of your goal.</p>
+<p>You can spend a lot of time thinking about the perfect class hierarchy for a domain.</p>
+<p>Question: What sort of data and behavior is hard to model using classes but easy using functions?</p>
+<p>Need a controlled experiment.</p>
 <h2 id="programming-induction">Programming = Induction</h2>
 <p>Hypothesis: Tests are positive exemplars. So, they allow you to easily eliminate irrelevant factors or figure out the effect of a change.</p>
 <p>(h/t Michael Feathers’ Working Effectively with Legacy Code)</p>
