@@ -233,18 +233,35 @@
 <p>Maybe duplicate the concrete code you want to abstract and change one of them so that you can always revert to the other version for comparison.</p>
 <p>Observation: Still hard to reverse an abstraction.</p>
 <h3 id="premature-abstraction-considered-harmful">Premature Abstraction Considered Harmful</h3>
-<p>Observation: I’m struggling to get actual stats from the IPL match data even though it’s a pretty simple map of a simple function over each ball in the data.</p>
-<p>Observation: I’m trying to get a “good” (aka perfect) design of Match and Ball and Player and PlayerStats. Even though all I really want is the average and total runs for each player.</p>
-<p>Observation: Quick and dirty way of doing it - total runs = map over deliveries in both innings and if batsman is the given batsman, add runs scored by batsman.</p>
-<p>Observation: How <em>I</em> want to do it - <code>match.get_player_stats()</code> with different seasons and so on.</p>
-<p>Hypothesis: Focus on passing the test in an ugly way, then refactor -&gt; fast code + clean; focus on writing clean code -&gt; may waste time worrying about “good” design.</p>
-<p>Hypothesis: Focus on passing the test in an ugly way -&gt; have code that actually <em>works</em> for some input, goddamit. Focus on writing clean code -&gt; may have code that doesn’t work for any useful input yet even after an hour of thinking.</p>
-<p>Why would it be a net win to write ugly code and then refactor, rather than write clean code the first time around?</p>
-<p>Hypothesis: Code that works, refactor it -&gt; you’re changing only one thing at a time (design, not behaviour) -&gt; very little time, can choose how clean you want your design to be wrt expected inputs.</p>
-<p>Code that doesn’t work, write clean code -&gt; you’re changing two things at the same time (design <em>and</em> behaviour) -&gt; will take longer (?), may overengineer.</p>
-<p>Observation: You don’t want to write lots of code without stopping to test. You will get very confused if you get an error. (?)</p>
-<p>Hypothesis: Chain of functions that we understand -&gt; won’t take much time (why?). Branches of functions -&gt; will take time (why?).</p>
-<p>Corollary: So, writing “ugly”, concrete code to pass a unit test won’t take too much time.</p>
+<p>Hypothesis: Refactoring recursively (before or after you pass your failing test) is a relevant factor for finding it harder to debug and thus taking longer.</p>
+<hr />
+<p>Test: What if I refactor indefinitely?</p>
+<p>Let’s say refactoring is about getting the minimum set of relevant factors for some output variable. Roughly, it’s about minimizing the number of variables in scope <strong>while</strong> keeping all the variables you actually need. Just deleting variables at random is not refactoring.</p>
+<p>So, I could clean up <code>batsman_total</code> by extracting <code>batsman_balls</code> and <code>runs</code>:</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> batsman_total(match, player):
+	<span class="bu">print</span>(d)
+	<span class="cf">return</span> <span class="bu">sum</span>(runs(batsman_balls(match, player), player))
+
+<span class="kw">def</span> batsman_balls(match, player):
+	d <span class="op">=</span> match.match_details[<span class="st">'innings'</span>][<span class="st">'1st innings'</span>][<span class="st">'deliveries'</span>]
+	<span class="cf">return</span> [ball <span class="cf">for</span> <span class="cf">for</span> ball_num, ball <span class="op">in</span> d.items() <span class="cf">if</span> ball[<span class="st">'batsman'</span>] <span class="op">==</span> player]
+
+<span class="kw">def</span> runs(balls, player):
+    <span class="cf">return</span> [ball[<span class="st">'runs'</span>][player] <span class="cf">for</span> ball <span class="op">in</span> balls]</code></pre></div>
+<p>This leaves <code>batsman_total</code> pretty clean, but leaves some overly-concrete code in <code>batsman_balls</code> and <code>runs</code>. I could refactor them recursively:</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> batsman_balls(match, player):
+	<span class="cf">return</span> [ball <span class="cf">for</span> <span class="cf">for</span> ball_num, ball <span class="op">in</span> first_innings_balls(match).items() <span class="cf">if</span> ball[<span class="st">'batsman'</span>] <span class="op">==</span> player]
+
+<span class="kw">def</span> first_innings_balls(match):
+    <span class="cf">return</span> match.match_details[<span class="st">'innings'</span>][<span class="st">'1st innings'</span>][<span class="st">'deliveries'</span>]
+
+<span class="kw">def</span> runs(balls, player):
+    <span class="cf">return</span> [ball_runs(ball, player) <span class="cf">for</span> ball <span class="op">in</span> balls]
+
+<span class="kw">def</span> ball_runs(ball, player):
+    <span class="cf">return</span> ball[<span class="st">'runs'</span>][player]</code></pre></div>
+<p>Great. Now, <code>batsman_balls</code> and <code>runs</code> are clean, but I could refactor <code>first_innings_balls</code> and <code>ball_runs</code> further, and so on.</p>
+<p>Quick and dirty way of doing it - total runs = map over deliveries in both innings and if batsman is the given batsman, add runs scored by batsman. – This gives you a sufficient set of factors for passing the test. Now, your job is to eliminate irrelevant factors, i.e., refactor the code. Specifically, you don’t need to know whether the temporary variable for summing over the list of balls is called <code>total</code> or whatever. You don’t need to have that in scope.</p>
 <p>Observation: What about abstract code that still just passes one test case? For example, <code>Match:get_balls()</code> and <code>Match:map_over_balls()</code> and <code>runs_for_ball()</code>.</p>
 <p>Observation: The abstraction <code>Match:get_balls()</code> may or may not work. You may have made a mistake in defining the method or in the module scope (if Match is in another file) or whatever. Source of uncertainty - have to test it.</p>
 <p>Observation: You have multiple design choices - different levels of abstraction. For example, you could deal with separate methods for <code>get_balls()</code> and <code>map_over_balls()</code>, but not a separate class for <code>PlayerStats</code>. Or you could go the whole way and have subclasses for BowlerStats and BatsmanStats (and of course FielderStats) and have, god forbid, visitor methods to do complicated processing. But, for my problem of extracting data for machine learning, that is simply overkill.</p>
@@ -3537,7 +3554,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: March  3, 2019</div>
+<div class="info">Last modified: March  4, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
