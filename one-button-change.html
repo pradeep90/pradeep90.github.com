@@ -266,26 +266,22 @@
 <p>Observation: The abstraction <code>Match:get_balls()</code> may or may not work. You may have made a mistake in defining the method or in the module scope (if Match is in another file) or whatever. Source of uncertainty - have to test it.</p>
 <p>Observation: You have multiple design choices - different levels of abstraction. For example, you could deal with separate methods for <code>get_balls()</code> and <code>map_over_balls()</code>, but not a separate class for <code>PlayerStats</code>. Or you could go the whole way and have subclasses for BowlerStats and BatsmanStats (and of course FielderStats) and have, god forbid, visitor methods to do complicated processing. But, for my problem of extracting data for machine learning, that is simply overkill.</p>
 <p>Observation: Each time you add a new abstraction, you have to test it (since you may or may not have implemented the abstraction correctly, or may have even picked one that doesn’t fit your problem).</p>
-<h4 id="rule-of-three">Rule of Three</h4>
-<p><strong>Question</strong>: What if you abstracted code only on the second use?</p>
-<p>Maybe go for the Rule of Three? (https://blog.codinghorror.com/rule-of-three/)</p>
-<p>What’s the worst that can happen if you <em>don’t</em> abstract your code?</p>
-<p><strong>Inference</strong>: Unabstracted code is hard to understand and hard to change too. It’s not just about reuse.</p>
-<p>I don’t know the answer.</p>
 <h4 id="quick-and-dirty-vs-clean-why-i-procrastinate">Quick-and-Dirty vs Clean: Why I Procrastinate</h4>
+<p>Hypothesis: When you have just one source of feedback, releasing a version with a few properties is a relevant factor for getting a (low-value) positive exemplar quickly.</p>
+<hr />
 <p>Observation: I had the idea that mock objects were actually unnecessary if you strictly separated pure code from impure code, like in Haskell or other languages. That’s why you didn’t see Haskellers go ga-ga over mocks. (In fact, you don’t see anybody except Agile fellows.)</p>
 <p>But then I got caught up in writing some elisp code (which took over two hours). Then I felt like searching online for some precision teaching books. And finally I was late for a video call. So I didn’t write down my full ideas about mock objects and didn’t commit that code. And it weighed on my mind even as I was freshening up.</p>
-<p>Question: Why didn’t I simply jot down the rough idea as I did above? It would have taken me a couple of minutes, tops. It may not have been perfect, but I could commit the change and free my mind.</p>
-<p><strong>Hypothesis</strong>: Expect to write correct abstract code before I commit, have some idea I need to write down, little time -&gt; don’t write it down at all.</p>
-<p>Expect to just pass the test with a quick and dirty hypothesis (and maybe refactor later), have some idea, little time -&gt; write it down well enough to pass that specific test.</p>
-<p>Corollary: Expect to have code that passes all tests written down (and put only as much confidence in your hypothesis as the tests warrant) -&gt; can do what needs to be done faster.</p>
-<p>Test: Jotting down my mock objects idea – I wanted to get a general hypothesis that fit with all my other “complex” programming ideas.</p>
+<p>Why didn’t I simply jot down the rough idea as I did above? It would have taken me a couple of minutes, tops. It may not have been perfect, but I could commit the change and free my mind.</p>
+<p>Jotting down my mock objects idea – I wanted to get a general hypothesis that fit with all my other “complex” programming ideas.</p>
+<p>This is a negative exemplar of getting a quick-and-dirty, working product. A positive exemplar would have been if I noted down my proposed relevant factor, marked it as TODO, and committed it. Not that it would have a controlled experiment or fit in well with my other hypotheses, but at least it would have a few good properties (that of being committed in version control and being placed in the right section). Contrast that to not writing it down at all, where it would have no properties at all.</p>
+<p>A close negative exemplar would be if I didn’t note it down in my essays but rather in some loose paper or a stray file somewhere (like my lab notes) or didn’t mark it as TODO (like my Keep notes) or didn’t commit it in version control (like my usual additions).</p>
 <h3 id="premature-code-reuse-considered-harmful">Premature Code Reuse Considered Harmful</h3>
 <p>Hypothesis: If you can pass your test without using an existing but unfamiliar function, trying to use it is a relevant factor for taking longer to pass the test. (<strong>TODO</strong>)</p>
-<p>If you can’t pass your test without using an existing but unfamiliar function, testing it in isolation is a relevant factor for passing your test quickly.</p>
+<p>If you can’t pass your test without using an existing but unfamiliar function, testing it in isolation is a relevant factor for passing your test quickly. (<strong>TODO</strong>)</p>
 <p>If there’s an unfamiliar function that seems to do what you want to do, but you can write code quickly enough, just pass the test and then try to use the unfamiliar function. Otherwise, you’ll be changing two things at a time. However, if it’s a function that you have to use, such as an HTTP request function, test your understanding of it in isolation.</p>
 <hr />
 <p>Test: [2019-01-30 Wed] I was trying to use the method <code>typeConform</code> even though I could very well pass my current test case using a simple zip and map. And because that function was “unfamiliar”, I struggled with it for 15 minutes before realizing that it didn’t actually fit my purpose. – took much longer because I was trying to reuse code without understanding it fully. I would have gone along much faster with my own code even if it duplicated stuff. Refactoring it to reuse the existing method would be trivial after a passing test.</p>
+<p>Again, this is a negative exemplar. A positive exemplar would be to pass my test case using zip and map and then refactor. But I don’t have an empirical test of that.</p>
 <h2 id="have-a-working-implementation-at-all-times">Have a Working Implementation at all Times</h2>
 <h3 id="code-transformation-fail-to-fail-gives-no-information">Code Transformation: Fail to Fail gives No Information</h3>
 <p><strong>Hypothesis</strong>: Going from fail to fail doesn’t give you any information about your latest change.</p>
@@ -451,6 +447,7 @@
 <p>– <a href="http://worrydream.com/#!2/LadderOfAbstraction"></a></p>
 </blockquote>
 <p>Your program is a point in configuration space. You want to look at the value of some parameter across all the configurations. For example, he showed the time taken to reach the end of the road for different values of road curvature and car turn angle. What was more impressive was that you could drop back down to the other ways to visualize that configuration by clicking on a particular point in configuration space.</p>
+<p>Test: [2019-03-10 Sun] Humble example: <code>make submit</code> instead of copying over files into directory and running <code>turnin</code> myself.</p>
 <h3 id="understand-output-quickly-using-property-tests">Understand Output Quickly using Property Tests</h3>
 <p><strong>TODO</strong>: Have some sort of test to judge whether the output satisfies some property. Controlled experiment. What would it mean to not understand the output quickly? Why do you need that anyway? Show that it depends on your change in input.</p>
 <p>Dashboard -&gt; understand output with little work. The output gets interpreted for you.</p>
@@ -2121,6 +2118,13 @@ clocked out, not in task file -&gt; do nothing</code></pre>
 <p>then j0hn_5m17h is successfully “authenticated”.</p>
 </blockquote>
 <p>Explanation: There’s no semantic difference between the two. And yet, the latter feels like it’s talking about an actual person, complete with a super-weak password.</p>
+<h2 id="mistakes-despite-testing">Mistakes despite Testing</h2>
+<p>Test: [2019-03-10 Sun]</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> subgradient(<span class="va">self</span>, df, cols, target_col):
+	mistakes_mask <span class="op">=</span> (df[cols].dot(<span class="va">self</span>.w) <span class="op">+</span> <span class="va">self</span>.bias) <span class="op">*</span> df[target_col] <span class="op">&lt;</span> <span class="dv">1</span>
+	<span class="co"># I had written:</span>
+	<span class="co"># mistakes_mask = df[cols].dot(self.w) * df[target_col] + self.bias &lt; 1</span></code></pre></div>
+<p>My test didn’t catch the difference.</p>
 <h1 id="red-green-refactor-first-make-the-test-fail">Red-Green-Refactor: First, Make the Test Fail</h1>
 <p>Hypothesis: Making the test fail without the change is a relevant factor for knowing that the change caused the test to pass.</p>
 <hr />
@@ -2699,6 +2703,7 @@ factorial n <span class="fu">=</span> (n <span class="fu">-</span> <span class="
 <p>Caught it within <strong>minutes</strong> by getting a positive exemplar for a simple loop body and toggling the body from <code>x + 1</code> to <code>x = x + 1</code>. This is after an hour of random “debugging”. I was passing in the wrong stack pointer.</p>
 <p>Test: [2019-01-25 Fri] Struggled trying to instantiate an inner class while testing. Finally, replicated the nested classes in a fresh repo and systematically narrowed it down to the fact that I was instantiating the inner class using one object of the outer class and calling a method on another object of the inner class. And because Scala has “path-dependent types”, that doesn’t work. – Should have replicated it the moment I got stuck for more than 5 minutes. Or maybe even right away. Note that it still took 20 to 30 minutes after isolating the class, including time to look up stuff, partly because I didn’t focus on getting a positive exemplar first. In the end, it was just 7 tests to victory.</p>
 <p>Test: [2019-02-04 Mon] Spent half an hour trying to get function pointers to work in my generated assembly. Kept getting segfaults. Decided to look at the generated code for a simple C program that used a function pointer. Saw immediately that it used <code>movl $foo, %edi</code> whereas I had been using <code>movq foo, %edi</code>. Turns out that you needed the extra dollar sign. In just four minutes, I was done! – I didn’t have a positive exemplar for function pointer assembly code that actually worked. All I had were exemplars of assembly code that kept segfaulting.</p>
+<p>Test: [2019-03-10 Sun] Tried to move in my NBC implementation from CS573 HW2 to compare it against SVM and logistic regression. Failed because it didn’t fit the same interface and expected the data to be discrete whereas the data for hw3 was continuous. After an hour of struggle even after I brought in the training set from hw2, I moved back to hw2 and tried to get it to work there. It failed again. Turns out that the training set was out of date because of the other tasks in hw2. Got it working in hw2 and then got it working in hw3. Piece of cake once I got a positive exemplar.</p>
 <h2 id="debugging-shrink-the-failing-test">Debugging: Shrink the Failing Test</h2>
 <p>Hypothesis: Shrinking the failing test (that you’re debugging) is a relevant factor for quickly discovering the causes of failure.</p>
 <hr />
@@ -3554,7 +3559,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: March  4, 2019</div>
+<div class="info">Last modified: March 11, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
