@@ -284,13 +284,11 @@
 <p>Again, this is a negative exemplar. A positive exemplar would be to pass my test case using zip and map and then refactor. But I don’t have an empirical test of that.</p>
 <h2 id="have-a-working-implementation-at-all-times">Have a Working Implementation at all Times</h2>
 <h3 id="code-transformation-fail-to-fail-gives-no-information">Code Transformation: Fail to Fail gives No Information</h3>
-<p><strong>Hypothesis</strong>: Going from fail to fail doesn’t give you any information about your latest change.</p>
-<p><strong>TODO</strong>: Need controlled experiment.</p>
-<p>old code -&gt; fail (so we know it’s broken)</p>
-<p>old code broken + correct change -&gt; fail old code broken + wrong change -&gt; fail</p>
+<p><strong>Hypothesis</strong>: Going from fail to fail doesn’t tell you whether your latest change was right or wrong.</p>
 <p>Going from fail to pass tells you that your latest change is correct.</p>
-<p>Going from pass to pass tells you that your latest change is correct. This is true if you changed the code, but not necessarily if you added new code (you may have forgotten to test it).</p>
+<p>Going from pass to pass tells you that your latest change is correct. This is true if you changed the code being exercised by the test, but not necessarily if you added new code (you may have forgotten to test it).</p>
 <p>Going from pass to fail tells you that your latest change is wrong.</p>
+<p>Test: Code fails a test. You use the right <code>sort</code> function. The code may still fail if you made a mistake in a for-loop. Similarly, if code fails a test and you use a wrong function, the code will still fail. So, the fact that it fails even after a change doesn’t tell you whether the change was right or wrong.</p>
 <h3 id="how-to-maintain-a-working-product-continuous-delivery">How to Maintain a Working Product: Continuous Delivery</h3>
 <p><strong>TODO</strong>: What is continuous delivery?</p>
 <p>Hypothesis: Continuous delivery -&gt; low risk and low tension when it comes to release day.</p>
@@ -301,32 +299,32 @@
 <p>The other big thing was we always shipped all platforms simultaneously; that was another thing they thought was just stupid. “Oh, 90 percent of people are using Windows, so we’ll focus on the Windows side of things and then we’ll port it later.” Which is what many other failed companies have done. If you’re trying to ship a cross-platform product, history really shows that’s how you don’t do it. If you want it to really be cross-platform, you have to do them simultaneously. The porting thing results in a crappy product on the second platform.</p>
 <p>– JWZ, Coders at Work</p>
 </blockquote>
+<p>A controlled experiment would be if Netscape decided to handle Mac later. That way, we would control for other differences between Netscape and other companies. The above example is not exactly controlled. For that, we can look at the example company from the Continuous Delivery book where they switched from last-day, manual releases to frequent, automated releases. That seemed to relieve tension and reduce errors.</p>
+<p>However, JWZ’s case is a positive exemplar of someone releasing a non-crappy product on other platforms (according to his story above). So, if someone were to try to figure out some of the relevant factors for that, they might look at the key differences between Netscape and other companies, one of which is releasing on all platforms simultaneously.</p>
 <p>Test: CS373 HW1 - Note how much time I’m spending just <strong>wrestling</strong> with R and CSV. I haven’t done any actual work yet. – Need to release a hello world before you do anything else. Here, it would have been a simple installation of R itself, then reading CSV in R, CSV with arrays, converting JSON to CSV, and then other stuff. All because I didn’t release sooner.</p>
 <h4 id="continuous-delivery-run-acceptance-tests-in-a-production-like-environment">Continuous Delivery: Run Acceptance Tests in a Production-Like Environment</h4>
 <p><strong>Hypothesis</strong>: Continuous delivery = running acceptance tests in a production-like environment.</p>
 <p>(You still have to build and stage all the way to a production-like environment, running unit tests and integration tests along the way).</p>
 <hr />
-<p>Test: Writing a research report in LaTeX - production-like environment is the LaTeX PDF (not your handwritten sheaf of papers); running acceptance tests - getting feedback from yourself by looking at it from the eye of a reader and from others. – yup.</p>
-<p>Test: Negative exemplar - continuous integration where you simply run unit tests – that is not a production-like environment nor are they acceptance tests.</p>
+<p>Test: Writing a research report in LaTeX - production-like environment is the LaTeX PDF (not your handwritten sheaf of papers); running acceptance tests - getting feedback from yourself by looking at it from the eye of a reader and by getting feedback from others. – yup. Lack of acceptance tests would be not looking at the final PDF from a reader’s point of view. Lack of production-like environment would be working with handwritten notes instead of a PDF.</p>
+<p>Test: Negative exemplar - continuous integration where you simply run unit tests – neither is that a production-like environment nor are they acceptance tests.</p>
 <h3 id="how-to-start-with-a-working-product-hello-world-program-with-one-button-installation">How to Start with a Working Product: Hello-World Program with One-Button Installation</h3>
 <p>Hypothesis: A blank file is a negative exemplar because nothing works. You have to change a lot of things before it will work.</p>
-<p>A Hello World program is a positive exemplar because it works after you install it. But you may have to run the installation steps manually, which leaves you with a negative exemplar until you get everything right.</p>
+<p>A Hello World program (set up with all the tools you want for your project) is a positive exemplar because it works after you install it. But you may have to run the installation steps manually, which leaves you with a negative exemplar until you get everything right.</p>
 <p>A Hello World program with one-button installation is a positive exemplar right away.</p>
-<p><strong>TODO</strong>: Refactor the below hypothesis since it repeats what’s been said before. Get a controlled experiment for the above.</p>
-<p><strong>Hypothesis</strong>: Some workflow you want to have for your projects, have a blank project that has all the necessary stuff and just works -&gt; have to work only on adding our project-related features -&gt; less uncertainty, less work.</p>
-<p>Some workflow you want to have for your projects, have to install it manually using several steps -&gt; have to work on getting it to run and on adding our desired features -&gt; more uncertainty, more work.</p>
 <hr />
 <p>Test: Wanted to test <code>pre-commit</code>. Could download their <strong>demo repo</strong> and test the pre-commit hooks with zero fuss. – easy.</p>
+<p>Contrast that to downloading their code and installing their pre-commit hooks into my repo. I would have to work for a bit to figure out what went where.</p>
+<p>Contrast that to writing my own pre-commit hooks from scratch. It would take me much longer to see the results.</p>
 <p>Test: Node JS, wanted to use RESTful API, no working blank project - stuck for hours. Abandoned it. – spent all our time trying to get the RESTful API to work even though that wasn’t really the point of our project.</p>
-<h3 id="no-unstructured-notes">No Unstructured Notes</h3>
-<p>Hypothesis: Unstructured notes form a negative exemplar because you don’t know the properties that it satisfies.</p>
-<p><strong>Hypothesis</strong>: Have working code (passes tests and is well-refactored), add a test and then a feature -&gt; go from pass to fail, and then from fail to pass -&gt; know that the latest change passed the test.</p>
-<p>Have a mess, add a feature -&gt; go from fail to fail -&gt; can’t narrow down the causes; can’t tell whether the latest change helped.</p>
+<h3 id="have-a-working-system-at-each-point">Have a Working System At Each Point</h3>
+<p><strong>Hypothesis</strong>: Having a system that you know passes certain property tests is a relevant factor for knowing which properties a change breaks or maintains. It is also a relevant factor for narrowing down the relevant factors for each property that fails.</p>
+<p>Hypothesis: Having a system where you know exactly which properties fail is a relevant factor for knowing which properties a change newly satisfies. It is also a relevant factor for narrowing down the relevant factors for each property that passes.</p>
 <hr />
-<p>Test: [2017-12-12 Tue] My current presentation draft is a mess. No idea of how much work really remains and how much doesn’t. – Don’t know if my additions really cut through.</p>
-<p>Test: Negative exemplar - CS373 HW3 - I initially dumped all the text from my notes and the past assignment - had a tough time deciding how to go ahead – hard to tell if you’re making progress (fail to fail).</p>
-<p>Test: CS373 HW3 - when I removed the old stuff, I could tell what was happening and what needed to be done and whether I was making progress – pass to fail or pass to pass.</p>
-<p>Test: Current notes in this essay - pretty unstructured - hard to tell how much I’ve improved by adding one more idea – fail to fail.</p>
+<p>Test: Negative exemplar - designing the questions for CS373 HW3 - I initially dumped all the text from my notes and the past reference assignment - had a tough time deciding how to go ahead. It didn’t pass any property test like “look well-formatted” or “define every term you use”. (In fact, I couldn’t tell whether it passed that second property because it was all so messy that I couldn’t tell which terms had already been defined.)</p>
+<p>If I added a couple of questions about decision trees, I wouldn’t know if I had used an undefined term or even if I had inadvertently defined the same term twice (which is another undesirable property). So, I couldn’t tell if the questions hurt or helped that property. Similarly, I wouldn’t be able to tell which other properties my new questions affected - maybe they added some weird formatting that makes LaTeX break; I wouldn’t know that they did so until I eliminated formatting errors from the rest of the assignment. Conversely, I wouldn’t know the narrow relevant factors for a failing property. That is, if I wanted to know all the places in which I had used undefined terms, I would have to read the assignment from top to bottom.</p>
+<p>Positive exemplar - when I removed the old stuff, I could tell what properties my assignment now satisfied satisfied (such as “look well-formatted”) and what properties it didn’t (like “ask two theoretical questions about decision trees”). When I added two theoretical questions about decision trees, I could tell that it now satisfied one extra property (“ask two theoretical questions about decision tree” - check). I could tell that it maintained the old properties (such as “look well-formatted”) since they used to pass and they still passed after the change. When I added a question about “post-pruning” without defining it, I could tell that it failed the property of “define every term you use”. And since that property used to pass, I could tell that my latest change was the culprit. I didn’t need to read the entire assignment to search for undefined terms. I just had to look at my latest change.</p>
+<p>Test: 2017 - Current notes in this essay - pretty unstructured - hard to tell how much I’ve improved by adding one more idea – fail to fail.</p>
 <h3 id="to-fix-a-mess-change-high-level-design-separately-and-migrate-one-at-a-time">To Fix a Mess: Change High-level Design Separately and Migrate One at a Time</h3>
 <p>Hypothesis: If you settle on a high-level design in a small blank file, you will have a working product and can migrate old stuff one at a time.</p>
 <p>If you change your high-level design in your existing project, you won’t have a working product until you’ve changed everything.</p>
@@ -3559,7 +3557,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: March 11, 2019</div>
+<div class="info">Last modified: March 15, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
