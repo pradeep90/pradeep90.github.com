@@ -326,8 +326,16 @@
 <p>Positive exemplar - when I removed the old stuff, I could tell what properties my assignment now satisfied satisfied (such as “look well-formatted”) and what properties it didn’t (like “ask two theoretical questions about decision trees”). When I added two theoretical questions about decision trees, I could tell that it now satisfied one extra property (“ask two theoretical questions about decision tree” - check). I could tell that it maintained the old properties (such as “look well-formatted”) since they used to pass and they still passed after the change. When I added a question about “post-pruning” without defining it, I could tell that it failed the property of “define every term you use”. And since that property used to pass, I could tell that my latest change was the culprit. I didn’t need to read the entire assignment to search for undefined terms. I just had to look at my latest change.</p>
 <p>Test: 2017 - Current notes in this essay - pretty unstructured - hard to tell how much I’ve improved by adding one more idea – fail to fail.</p>
 <h3 id="to-fix-a-mess-change-high-level-design-separately-and-migrate-one-at-a-time">To Fix a Mess: Change High-level Design Separately and Migrate One at a Time</h3>
-<p>Hypothesis: If you settle on a high-level design in a small blank file, you will have a working product and can migrate old stuff one at a time.</p>
-<p>If you change your high-level design in your existing project, you won’t have a working product until you’ve changed everything.</p>
+<p>Hypothesis: When you check whether your project matches some high-level design, you have <strong>one</strong> source of feedback. Also, changing the high-level design involves experimenting with the design till it does what you want (i.e., till it passes the test you have in mind) and modifying your project till it matches the high-level design.</p>
+<p>You have two options: (a) changing the design within your existing project so that it passes the test saying that the high-level design looks good and the test that the code matches the high-level design and (b) changing the high-level design on a toy project till it looks good and then changing your code till it matches the high-level design.</p>
+<p>How long will each option take and what happens when you make mistakes (i.e., fail the test you’re trying to pass)?</p>
+<p>If you make no mistakes in updating the code and make no mistakes in getting the high-level design to look good (and thus change the high-level design only once), both options take the same time.</p>
+<p>If you make no mistakes in updating the code and make a mistake in getting the high-level design to look good (and thus change the high-level design many times), option (a) is a relevant factor for taking a longer time because you will have to change potentially all the code every time you change the high-level design whereas option (b) is a relevant factor for taking less time because you will have to change only the toy project.</p>
+<p>If you make a mistake in updating the code (i.e., fail the test of matching the high-level design), option (a) is a relevant factor for not knowing</p>
+<p>So, adding the new high-level design in a small file and migrating the rest of the project one at a time is a relevant factor for knowing exactly which change breaks the high-level property (perhaps your original skeleton was itself wrong). This keeps it a single-variable search problem.</p>
+<p>Trying to change a high-level design in a large project is a relevant factor for not knowing which change breaks the high-level property. This makes it a multi-variable search problem (like cracking a safe).</p>
+<p>Note that both of them involve the same amount of work if you make no mistakes. It’s just that if you make a mistake - if you break the high-level property - you will have flail around a lot in the latter case as you try to get a bunch of things right together.</p>
+<p>Note that type-checkers change the game by giving you multiple sources of precise feedback. You don’t just get told that your code doesn’t type-check; you get told exactly which parts don’t type-check and why. Imagine having a compiler that told you “Compilation error(s) found” with nothing else.</p>
 <hr />
 <p>Observation: Want to format a long LaTeX file like a research paper. All of a sudden, I have to deal with a lot of changes, like diagrams or tables or headings, all at once.</p>
 <p>If I’d started with an empty research paper template, then I would have had to deal with each problem one at a time.</p>
@@ -3557,7 +3565,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: March 15, 2019</div>
+<div class="info">Last modified: March 17, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
