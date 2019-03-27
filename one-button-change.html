@@ -2832,6 +2832,25 @@ factorial n <span class="fu">=</span> (n <span class="fu">-</span> <span class="
 <p>Test: Log file - decision trees – helped a lot, as mentioned above.</p>
 <p>Test: Log file - XINU – helped a lot for me to keep track of what was going on. Had to save separate files, though, because the output was pretty huge. (Could have noted down only the variables I cared about.)</p>
 <p><strong>Test</strong>: Negative exemplar - log file - didn’t have any for the IPL dataset – didn’t have a good idea of what was going on, especially when trying something new.</p>
+<h2 id="granularity-of-tests-affects-the-granularity-of-your-model">Granularity of Tests affects the Granularity of your Model</h2>
+<p>Hypothesis: Having only a high-level test is a relevant factor for inducing only a relation between the high-level input and output.</p>
+<p>Having a unit test is a relevant factor for inducing a relation between an intermediate input and an intermediate output.</p>
+<p>Working through code with a concrete example (and getting feedback about the output somehow) is a relevant factor for inducing a relation between an intermediate input and an intermediate output.</p>
+<p>Having a Jest-like snapshot test is a relevant factor for inducing a relation between an intermediate input and the penultimate output and a relation between the penultimate output and the final output.</p>
+<p>Hypothesis: A unit test as a regression test is not a relevant factor for the difference between visualization programming and compiler programming because you rarely change code more than once and, even when you do, it’s within a few days of the original change, when it’s still fresh in your mind.</p>
+<p>Skill smell: Do you have a unit test or concrete example for this line of code?</p>
+<p>For example, when it comes to <code>mapper.InterpolateScalarsBeforeMappingOn()</code> or <code>mapper.SetScalarRange(vector_field_reader.GetOutput().GetPointData().GetScalars().GetRange())</code>, I don’t know what they do or what would happen if I commented them out. When it comes to prose, I didn’t have a concrete example for “barycentric coordinate calculation” and fumbled hopelessly on the exam.</p>
+<hr />
+<p>Test: I can test for regression at any time when I have a set of unit tests. I can’t do that in visualization. I have to run stuff manually. Perhaps that also makes me not break dependencies, as I would when I write unit tests, and perhaps that makes it harder to extract free variables and run things in a script.</p>
+<p>Test: Huh. I haven’t worked through the visualization code with even one concrete example. If the final output looks right, I accept it. If it doesn’t, I tweak the code here and there till it does. Contrast that to unit tests where I usually have to consider the direct input and direct output of each part of my code.</p>
+<p>Think about it: I didn’t even have a good “mental model” of what the vector field dataset looked like. I didn’t know how the points were laid out. Still have no idea why we are using a vtkPolyDataMapper. What’s the actual difference between an unstructured grid and a structured grid? I know the definition, but I can’t come up with a small differing example.</p>
+<p>For project 3, my model of the program was of the type <code>[(isovalue, color, opacity)] -&gt; multiple isosurfaces</code>. Which is great when you’re trying to optimize the look of the final image, but is <em>useless</em> when you’re trying to get the program to work in the first place. This might be what I used to call the Hello World setup - integrate the components so that you have to use just a high-level model.</p>
+<p>Ideally, you want two kinds of models of your program: one at the level of the domain (such as <code>[(isovalue, color, opacity)] -&gt; multiple isosurfaces</code>) and one at the level of the code (such as <code>render_streamlines :: vector field dataset -&gt; actor for streamlines</code>). To build the former, you need end-to-end tests; to build the latter, you need unit tests.</p>
+<p>Maybe this is a drawback of judging your code through some ultimate feedback. You exonerate yourself from having to “understand” every line of your code.</p>
+<p>Test: What’s so different about visualization programming? For one, the final output isn’t a data structure that you can break into pieces. It’s an image. Neither are the intermediate values first-class. So, you end up inducing a relation between the parameters in your code to the final image. – Basically, you lack any source of feedback apart from the final one.</p>
+<p>Test: MATLAB integration test - didn’t force myself to “understand” the innards of the code. Just checked if the whole thing worked correctly. Even when it did, I had no idea how my code worked. – Note that the values at each point were pretty first-class. I could print the weights of the SVM and the inputs and labels of the test set, but I didn’t. So, I prevented myself from getting any source of feedback apart from the final one.</p>
+<p>Contrast that to my data mining implementation of SVM - I “understood” precisely what was happening at each point because I wrote unit tests.</p>
+<p>Test: Software security project - I wrote acceptance tests for the different API commands, but not unit tests for our code. Again, this high-level source of feedback made me induce a relation between the high-level commands and the final output, but not necessarily the intermediate code. Had no clue about the multi-threaded code, for example.</p>
 <h1 id="high-level-design-decomposing-the-output">High-level Design: Decomposing the Output</h1>
 <h2 id="bottom-up-design-layers-of-abstraction">Bottom-up Design: Layers of Abstraction</h2>
 <p><strong>Test</strong>: [2019-03-01 Fri] Source: Bottom Up vs Top Down Design in Clojure - Mark Bastian, <a href="https://www.youtube.com/watch?v=Tb823aqgX_0">ClojureTV</a></p>
@@ -3564,7 +3583,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: March 17, 2019</div>
+<div class="info">Last modified: March 26, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
