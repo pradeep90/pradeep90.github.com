@@ -2855,6 +2855,7 @@ factorial n <span class="fu">=</span> (n <span class="fu">-</span> <span class="
 <p>Hypothesis: Normal branch coverage is a sign that your input eventually executed that branch.</p>
 <p>Isolated branch coverage is a sign that your input directly went into the start of that branch and directly came out from the end of that branch.</p>
 <p>How do they differ in their partition of the input space? Obviously, all inputs of the latter also obey the former. When will an input obey the former but not the latter?</p>
+<p>Hypothesis: Maybe Haskell programmers decouple code so much that they don’t need to write unit tests.</p>
 <hr />
 <p>Test: Compilers project 6 - Ideally, I’d like each optimization to be a separate phase.</p>
 <p>Right now, CSE for LetL checks if the state has another identifier bound to the same literal. DCE for LetL checks if the state marks the current identifier as dead.</p>
@@ -3595,7 +3596,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: March 28, 2019</div>
+<div class="info">Last modified: March 30, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
