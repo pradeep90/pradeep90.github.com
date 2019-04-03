@@ -2715,6 +2715,12 @@ factorial n <span class="fu">=</span> (n <span class="fu">-</span> <span class="
 <p>Test: [2019-02-28 Thu] Spent ages debugging the black-box test <code>testAppOrder</code> without figuring out that it was the anonymous function that was the problem. Once I got it down to a small function, I could easily look at the generated CPS code to see that I needed to extract the function pointer from the closure.</p>
 <h2 id="debugging-cover-all-output-classes">Debugging: Cover all Output Classes</h2>
 <p>Test: [2019-01-26 Sat] <code>astTypeEquals</code> kept failing even when the types were different. I couldn’t figure it out at all. Turns out that it returned a boolean and I failed to <strong>assert</strong> that that boolean was true. Discovered that by writing a smaller version of the function and trying to make it fail. Given that it always passed, I should have tried to make that test fail.</p>
+<h2 id="when-debugging-a-failing-test-is-a-positive-exemplar">When Debugging, a Failing Test is a Positive Exemplar</h2>
+<p>Hypothesis: When debugging, a failing test is a positive exemplar of an input for which the code diverges from the spec. A passing test is a negative exemplar. So, you can shrink a failing test input the way you can shrink any positive exemplar.</p>
+<hr />
+<p>Test: [2019-04-02 Tue] <code>testLibFunctions2</code> failed. But it was a black-box test that depended on a huge library, so I brought in the necessary functions from the library so that I could be sure that the problem existed even without them. But how can you shrink a negative exemplar? Isn’t it that you shrink a positive exemplar by removing irrelevant factors?</p>
+<p>Well, a failing test <strong>is</strong> a positive exemplar of your implementation diverging from the specification. A passing test doesn’t diverge from the specification. So, you were shrinking the failing test to find the smallest version of the test that still failed - i.e., still diverged from the spec.</p>
+<p>So, a failing test is a positive exemplar when debugging (i.e., searching for places where your code doesn’t match the spec), but a passing test is a positive exemplar when coding (i.e., searching for some configuration of code that matches the spec). That is what allows you to refactor code by removing unnecessary parts.</p>
 <h1 id="understanding-uncertainty-about-the-program-output">Understanding: Uncertainty about the Program Output</h1>
 <h2 id="follow-the-pure-type-signatures-to-understand-the-diff">Follow the Pure Type Signatures to Understand the Diff</h2>
 <p>Hypothesis: A pure type signature for a function is a relevant factor for knowing that function’s output variable.</p>
@@ -3620,7 +3626,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: April  1, 2019</div>
+<div class="info">Last modified: April  2, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
