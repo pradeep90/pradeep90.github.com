@@ -2893,8 +2893,11 @@ factorial n <span class="fu">=</span> (n <span class="fu">-</span> <span class="
 <p>Test: Map square vs for loop - change it to cube. Basically, the overall test you have may not catch the difference if you use a list with just 0s and 1s.</p>
 <p>Test: Use gini instead of entropy - if you’d not extracted the function and if your change was wrong, your overall test may still pass because your mental calculation of the necessary input and the eventual output was wrong. If you had extracted the function, you can’t infer wrongly.</p>
 <h2 id="use-higher-order-functions-instead-of-flags">Use Higher-Order Functions instead of Flags?</h2>
+<p>Hypothesis: Using a higher-order function is a relevant factor for avoiding an if-branch with a flag in your code.</p>
+<hr />
 <p>Test: [2019-03-31 Sun] Wanted to extend my decision tree implementation into random forests by choosing a random subset of features at each split. Initially thought of using a flag <code>is_random_forest</code>, which would decide whether the columns looked at were a random subset or the full set. This would be hard to test because it would be a random subset at each point.</p>
 <p>Then, I decided to use a <code>columns_chooser</code> (good idea, bad name) function as an argument. The default value would be just <code>lambda xs: xs</code> - use all the columns. But, for random forests, I could send in <code>lambda xs: random_sample(xs)</code> without touching the decision tree code at all!</p>
+<p>So, I avoided having an if-branch within my decision tree code. That made it simpler to reason about and test. Specifically, it relieved me of knowing about the random forests idea when looking at the decision tree code. It decoupled the two things.</p>
 <h1 id="high-level-design-decomposing-the-output">High-level Design: Decomposing the Output</h1>
 <h2 id="bottom-up-design-layers-of-abstraction">Bottom-up Design: Layers of Abstraction</h2>
 <p><strong>Test</strong>: [2019-03-01 Fri] Source: Bottom Up vs Top Down Design in Clojure - Mark Bastian, <a href="https://www.youtube.com/watch?v=Tb823aqgX_0">ClojureTV</a></p>
@@ -3627,7 +3630,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: April 11, 2019</div>
+<div class="info">Last modified: April 13, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
