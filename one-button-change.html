@@ -2894,6 +2894,11 @@ factorial n <span class="fu">=</span> (n <span class="fu">-</span> <span class="
 <p>Test: Use gini instead of entropy - if you’d not extracted the function and if your change was wrong, your overall test may still pass because your mental calculation of the necessary input and the eventual output was wrong. If you had extracted the function, you can’t infer wrongly.</p>
 <h2 id="use-higher-order-functions-instead-of-flags">Use Higher-Order Functions instead of Flags?</h2>
 <p>Hypothesis: Using a higher-order function is a relevant factor for avoiding an if-branch with a flag in your code.</p>
+<p>This is exactly what Chris Done mentioned when comparing Haskell and Lisp:</p>
+<blockquote>
+<p>One difference in philosophy of Lisp (e.g. Common Lisp, Emacs Lisp) and Haskell is that the latter makes liberal use of many tiny functions that do one single task. This is known as composability, or the UNIX philosophy. In Lisp a procedure tends to accept many options which configure its behaviour. This is known as monolithism, or to make procedures like a kitchen-sink, or a Swiss-army knife.</p>
+<p>– <a href="https://chrisdone.com/posts/haskell-lisp-philosophy-difference/"></a></p>
+</blockquote>
 <hr />
 <p>Test: [2019-03-31 Sun] Wanted to extend my decision tree implementation into random forests by choosing a random subset of features at each split. Initially thought of using a flag <code>is_random_forest</code>, which would decide whether the columns looked at were a random subset or the full set. This would be hard to test because it would be a random subset at each point.</p>
 <p>Then, I decided to use a <code>columns_chooser</code> (good idea, bad name) function as an argument. The default value would be just <code>lambda xs: xs</code> - use all the columns. But, for random forests, I could send in <code>lambda xs: random_sample(xs)</code> without touching the decision tree code at all!</p>
@@ -3630,7 +3635,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: April 13, 2019</div>
+<div class="info">Last modified: April 15, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
