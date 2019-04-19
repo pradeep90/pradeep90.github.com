@@ -2903,6 +2903,17 @@ factorial n <span class="fu">=</span> (n <span class="fu">-</span> <span class="
 <p>Test: [2019-03-31 Sun] Wanted to extend my decision tree implementation into random forests by choosing a random subset of features at each split. Initially thought of using a flag <code>is_random_forest</code>, which would decide whether the columns looked at were a random subset or the full set. This would be hard to test because it would be a random subset at each point.</p>
 <p>Then, I decided to use a <code>columns_chooser</code> (good idea, bad name) function as an argument. The default value would be just <code>lambda xs: xs</code> - use all the columns. But, for random forests, I could send in <code>lambda xs: random_sample(xs)</code> without touching the decision tree code at all!</p>
 <p>So, I avoided having an if-branch within my decision tree code. That made it simpler to reason about and test. Specifically, it relieved me of knowing about the random forests idea when looking at the decision tree code. It decoupled the two things.</p>
+<h2 id="adts-gives-you-an-index-into-the-input-space">ADTs gives you an Index into the Input Space</h2>
+<p>Hypothesis: Looking at a program’s input as a combination of different variables is a relevant factor for getting an index into the input configuration space.</p>
+<p>Otherwise, you can feel like you haven’t covered all the possibilities and you can feel like there’s always a lot more work left.</p>
+<hr />
+<p>Test: [2019-04-17 Wed] Trying to analyze how many cases there would be for the free list allocation and freeing - was finding it hard. It seemed like anything could go wrong anywhere! It felt like the linked lists and the pointers could be in any arbitrary order.</p>
+<p>Looked at it as a combination of an action on the free list and different equivalence classes of the free list state. Suddenly, I could tell exactly how many cases there would be. I could tell that once I had covered one set of cases, there would not be any surprises. And I could traverse the configuration space in a predictable manner.</p>
+<p>In short, I had an index. I could tell roughly how many items there were, how much I had covered, how much was left, exactly where I’d left off, and exactly what came next.</p>
+<p>These are the observable dependent variables. What are the observable independent variables?</p>
+<p>I’m representing the possible actions as allocate and free. I’m also representing the state of the free list as a bunch of linked lists with blocks of particular sizes. It’s a product of the different linked lists. A linked list for a fixed size block has a few possible states: it can be empty, it can have one block of that size, or many blocks. A linked list for arbitrary sized blocks can be empty, have one block of some large size, many blocks in ascending order, descending order, or jumbled order. Now, the property they satisfy is that they must together comprise the heap.</p>
+<p>Controlled experiments: What if the alternatives weren’t exhaustive? For example… What if the alternatives weren’t mutually exclusive? What if you couldn’t decouple the state into independent variables?</p>
+<p>Corollary: ADTs give you the ability to index the configuration space. In Haskell and other languages, we have pattern matching to do so. Note that you can get this indexing without static types.</p>
 <h1 id="high-level-design-decomposing-the-output">High-level Design: Decomposing the Output</h1>
 <h2 id="bottom-up-design-layers-of-abstraction">Bottom-up Design: Layers of Abstraction</h2>
 <p><strong>Test</strong>: [2019-03-01 Fri] Source: Bottom Up vs Top Down Design in Clojure - Mark Bastian, <a href="https://www.youtube.com/watch?v=Tb823aqgX_0">ClojureTV</a></p>
@@ -3635,7 +3646,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: April 15, 2019</div>
+<div class="info">Last modified: April 17, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
