@@ -399,21 +399,42 @@
 <p>Test: pipgetc – could test the output of the pipe without even using another process.</p>
 <p>Test: org drill - get session data - it inserts stuff into a buffer instead of returning a string (no first-class output). It also uses <code>(current-time)</code> - not a first-class input. – have to run the whole drill session to set the input; have to look at the log file to check the output. An alternative would be to break it up before and after the call to <code>(current-time)</code> so that you could test those parts separately (the functional way to do that would be to take in the <code>timer</code> function as an argument). For the output, make it take the output buffer as an argument too.</p>
 <p><strong>Test</strong>: Python - had a for-loop in main to try different things with print statements. Extracted it into a function - had to think about building and returning a string instead of just printing to standard output. – first-class outputs.</p>
-<h3 id="powerful-abstractions-lead-to-quick-tests">Powerful Abstractions lead to Quick Tests</h3>
-<p><strong>Corollary</strong>: Powerful abstractions -&gt; less code to set a particular configuration as input to some other mechanism, less work to understand the output (since it is at a high level), may be slower.</p>
-<hr />
-<p>Test: When testing my pop-by-age code when trying to delete a process’ frames, I needed to get frames that had maximum age. Get maximum of a list (or tree or anything) by age - in Haskell, one word - <code>maximumBy</code> (assuming it implements Foldable). In C, I have to write an explicit for-loop keeping track of <code>max_age</code> and <code>max_i</code>. – less code to set a particular configuration in Haskell; less work to understand the output because it’s just an element (in C, it’s the index of the list); speed doesn’t matter much here.</p>
 <h3 id="deployment-pipeline-automatically-get-output-from-input">Deployment Pipeline: Automatically get Output from Input</h3>
 <p>Hypothesis: A deployment pipeline is when you can get the overall output with either one button or zero buttons by giving the overall input. You don’t have to manually produce the output from the input.</p>
 <p>This is obvious for a program like <code>square</code>, where you can feed in <code>3</code> and get <code>9</code>.</p>
 <p>But it’s more subtle for a project where your output is a report. Any change you make to the project should create a new instance of the final report. For example, if you add more training data, that should obviously affect the report. If you add a new machine learning algorithm, that should too. In short, if you set up an automated pipeline, you can measure your progress simply through the final result (your report). Otherwise, you will have to judge a multi-factor project on things like the training data, the machine learning algorithms, and so on. It’s much harder than judging a single report.</p>
 <p>Corollary: Daily build -&gt; zero-button execution.</p>
+<p><strong>Hypothesis</strong>: Running multiple steps manually is a relevant factor for having to enforce constraints manually across steps, which probably leads to silly mistakes like not enforcing the constraint in some steps and having to try multiple combinations when fixing a bug because you have only one source of feedback.</p>
+<p>Running a single step that encapsulates multiple steps is a relevant factor for not having to enforce constraints manually across steps and having fewer combinations of inputs.</p>
 <hr />
 <p>Test: Joel Spolsky: – get feedback less frequently and find it harder to code and make more silly errors.</p>
 <blockquote>
 <p>If the process takes any more than one step, it is prone to errors. And when you get closer to shipping, you want to have a very fast cycle of fixing the “last” bug, making the final EXEs, etc. If it takes 20 steps to compile the code, run the installation builder, etc., you’re going to go crazy and you’re going to make silly mistakes.</p>
 <p>– <a href="https://www.joelonsoftware.com/2000/08/09/the-joel-test-12-steps-to-better-code/"></a></p>
 </blockquote>
+<p>One example of making silly mistakes when there are multiple steps instead of one step: I wanted to get the importance of different features in my Naive Bayes classifier. For that, I needed to load the label encoder and tokenizer I had saved earlier so that I could convert the label numbers to the label names and convert the feature numbers to their names. I also had to load the classifier I had saved. But I had different versions of the encoder and tokenizer and classifier corresponding to different parameters and datasets. I mixed up the three from different versions and got weird results. I had to go back and try a few variations before I got sensible results. If I had had a single function that took as argument the version name, I could have ensured that the encoder, tokenizer, and classifier were of the same version. Also, the interpreter had a lot of variables in context, so I could have auto-completed the wrong variable and got a perplexing error.</p>
+<p>In short, I was manually enforcing the constraint that all three should be loaded using the same version name. It’s only a matter of time before a human slips up and inadvertently violates the constraint; not so for the computer.</p>
+<p>It also drove me somewhat crazy to see the nonsensical results. I didn’t know if my classifier was wrong or if I had muddled up the analysis somehow. Basically, I wasn’t able to isolate the source of the error. If I had a function for calculating feature importance and could check that it worked on a sample input, I would know that any error was due to my classifier.</p>
+<p>Note how I had to try several variations. I had multiple suspects for the bug because I was changing more than one factor at a time (thanks to the multiple manual steps), and had to go through many of their configurations to hit a positive exemplar. If it were one function, then I would have to go through the configurations of its inputs, but not all the configurations of the code within.</p>
+<p>It’s the difference between a function:</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> get_feature_importance_for_version(model_version):
+    label_encoder <span class="op">=</span> load_label_encoder(model_version)
+    tokenizer <span class="op">=</span> load_tokenizer(model_version)
+    model <span class="op">=</span> load_model(model_version)
+	<span class="cf">return</span> get_feature_importance(model, tokenizer, label_encoder)
+
+get_feature_importance(<span class="st">'10k-rows'</span>)</code></pre></div>
+<p>and a manual session in the Python REPL:</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">label_encoder <span class="op">=</span> load_label_encoder(<span class="st">'label-encoder-10k-rows.joblib'</span>)
+<span class="co"># ...</span>
+tokenizer <span class="op">=</span> load_tokenizer(<span class="st">'tokenizer-100k-rows.joblib'</span>)
+<span class="co"># ...</span>
+model <span class="op">=</span> load_model(<span class="st">'model-10k-rows.joblib'</span>)
+<span class="co"># ...</span>
+get_feature_importance(model, tokenizer, label_encoder)</code></pre></div>
+<p>Notice how I mistakenly passed ‘…100k-rows.joblib’ in the second line instead of ‘…10k-rows.joblib’</p>
+<p>The only possibilities with the function were the different versions: 10k-rows, 100k-rows, 1M-rows, and so on. But there were a combinatorial number of possibilities with the manual session: I could have given any triplet of versions when loading the label encoder, tokenizer, and model. Granted, I wouldn’t give wildly different versions to them, but if I wanted to give (A, A, A) but gave (A, B, A), then if I tried to fix the last call alone, I might make it (A, B, B), which would still fail. Then, I might change the second version to A, making it (A, A, B), and so on. It’s not quite combinatorial in the number of possibilities I actually try, but still much more than the simple iteration through different versions (A, A, A) and (B, B, B).</p>
+<p>My actual session had even more complicated version names. I didn’t know what was wrong, so I had to try loading another version of the label encoder. Didn’t work. Change the tokenizer version this time; didn’t work. What was wrong?! Tried a couple more variations before I finally got it. I got results alright, but they didn’t make any sense. In fact, it showed similar features as important for different labels, which was weird as hell. So, yeah, multiple manual steps can lead to fun debugging sessions.</p>
 <p>Test: Joel Spolsky - why developers always want faster hardware – faster cycle time.</p>
 <blockquote>
 <p>A crucial observation here is that you have to run through the loop again and again to write a program, and so it follows that the faster the Edit-Compile-Test loop, the more productive you will be, down to a natural limit of instantaneous compiles. That’s the formal, computer-science-y reason that computer programmers want really fast hardware and compiler developers will do anything they can to get super-fast Edit-Compile-Test loops.</p>
@@ -3646,7 +3667,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: April 17, 2019</div>
+<div class="info">Last modified: May  6, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
