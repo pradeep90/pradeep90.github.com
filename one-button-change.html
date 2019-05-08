@@ -399,11 +399,7 @@
 <p>Test: pipgetc – could test the output of the pipe without even using another process.</p>
 <p>Test: org drill - get session data - it inserts stuff into a buffer instead of returning a string (no first-class output). It also uses <code>(current-time)</code> - not a first-class input. – have to run the whole drill session to set the input; have to look at the log file to check the output. An alternative would be to break it up before and after the call to <code>(current-time)</code> so that you could test those parts separately (the functional way to do that would be to take in the <code>timer</code> function as an argument). For the output, make it take the output buffer as an argument too.</p>
 <p><strong>Test</strong>: Python - had a for-loop in main to try different things with print statements. Extracted it into a function - had to think about building and returning a string instead of just printing to standard output. – first-class outputs.</p>
-<h3 id="deployment-pipeline-automatically-get-output-from-input">Deployment Pipeline: Automatically get Output from Input</h3>
-<p>Hypothesis: A deployment pipeline is when you can get the overall output with either one button or zero buttons by giving the overall input. You don’t have to manually produce the output from the input.</p>
-<p>This is obvious for a program like <code>square</code>, where you can feed in <code>3</code> and get <code>9</code>.</p>
-<p>But it’s more subtle for a project where your output is a report. Any change you make to the project should create a new instance of the final report. For example, if you add more training data, that should obviously affect the report. If you add a new machine learning algorithm, that should too. In short, if you set up an automated pipeline, you can measure your progress simply through the final result (your report). Otherwise, you will have to judge a multi-factor project on things like the training data, the machine learning algorithms, and so on. It’s much harder than judging a single report.</p>
-<p>Corollary: Daily build -&gt; zero-button execution.</p>
+<h3 id="multiple-manual-steps-vs-one-step">Multiple Manual Steps vs One Step</h3>
 <p><strong>Hypothesis</strong>: Running multiple steps manually is a relevant factor for having to enforce constraints manually across steps, which probably leads to silly mistakes like not enforcing the constraint in some steps and having to try multiple combinations when fixing a bug because you have only one source of feedback.</p>
 <p>Running a single step that encapsulates multiple steps is a relevant factor for not having to enforce constraints manually across steps and having fewer combinations of inputs.</p>
 <hr />
@@ -435,6 +431,12 @@ get_feature_importance(model, tokenizer, label_encoder)</code></pre></div>
 <p>Notice how I mistakenly passed ‘…100k-rows.joblib’ in the second line instead of ‘…10k-rows.joblib’</p>
 <p>The only possibilities with the function were the different versions: 10k-rows, 100k-rows, 1M-rows, and so on. But there were a combinatorial number of possibilities with the manual session: I could have given any triplet of versions when loading the label encoder, tokenizer, and model. Granted, I wouldn’t give wildly different versions to them, but if I wanted to give (A, A, A) but gave (A, B, A), then if I tried to fix the last call alone, I might make it (A, B, B), which would still fail. Then, I might change the second version to A, making it (A, A, B), and so on. It’s not quite combinatorial in the number of possibilities I actually try, but still much more than the simple iteration through different versions (A, A, A) and (B, B, B).</p>
 <p>My actual session had even more complicated version names. I didn’t know what was wrong, so I had to try loading another version of the label encoder. Didn’t work. Change the tokenizer version this time; didn’t work. What was wrong?! Tried a couple more variations before I finally got it. I got results alright, but they didn’t make any sense. In fact, it showed similar features as important for different labels, which was weird as hell. So, yeah, multiple manual steps can lead to fun debugging sessions.</p>
+<h3 id="deployment-pipeline-automatically-get-output-from-input">Deployment Pipeline: Automatically get Output from Input</h3>
+<p>Hypothesis: A deployment pipeline is when you can get the overall output with either one button or zero buttons by giving the overall input. You don’t have to manually produce the output from the input.</p>
+<p>This is obvious for a program like <code>square</code>, where you can feed in <code>3</code> and get <code>9</code>.</p>
+<p>But it’s more subtle for a project where your output is a report. Any change you make to the project should create a new instance of the final report. For example, if you add more training data, that should obviously affect the report. If you add a new machine learning algorithm, that should too. In short, if you set up an automated pipeline, you can measure your progress simply through the final result (your report). Otherwise, you will have to judge a multi-factor project on things like the training data, the machine learning algorithms, and so on. It’s much harder than judging a single report.</p>
+<p>Corollary: Daily build -&gt; zero-button execution.</p>
+<hr />
 <p>Test: Joel Spolsky - why developers always want faster hardware – faster cycle time.</p>
 <blockquote>
 <p>A crucial observation here is that you have to run through the loop again and again to write a program, and so it follows that the faster the Edit-Compile-Test loop, the more productive you will be, down to a natural limit of instantaneous compiles. That’s the formal, computer-science-y reason that computer programmers want really fast hardware and compiler developers will do anything they can to get super-fast Edit-Compile-Test loops.</p>
@@ -475,24 +477,27 @@ get_feature_importance(model, tokenizer, label_encoder)</code></pre></div>
 </blockquote>
 <p>Your program is a point in configuration space. You want to look at the value of some parameter across all the configurations. For example, he showed the time taken to reach the end of the road for different values of road curvature and car turn angle. What was more impressive was that you could drop back down to the other ways to visualize that configuration by clicking on a particular point in configuration space.</p>
 <p>Test: [2019-03-10 Sun] Humble example: <code>make submit</code> instead of copying over files into directory and running <code>turnin</code> myself.</p>
-<h3 id="understand-output-quickly-using-property-tests">Understand Output Quickly using Property Tests</h3>
-<p><strong>TODO</strong>: Have some sort of test to judge whether the output satisfies some property. Controlled experiment. What would it mean to not understand the output quickly? Why do you need that anyway? Show that it depends on your change in input.</p>
-<p>Dashboard -&gt; understand output with little work. The output gets interpreted for you.</p>
-<p>Corollary: Unit tests -&gt; automated release, easy-to-understand output (“10/11 tests passed.”)</p>
-<p>Test: OS HW1 - tons of output data. – Can’t really observe variables I care about. Hard to parse the output.</p>
+<h3 id="automated-property-tests-to-notice-failures-quickly-and-surely">Automated Property Tests to Notice Failures Quickly and Surely</h3>
+<p>Hypothesis: If you have a “dashboard”, i.e., something that shows you which of your automatically-checked properties have failed, and some change breaks a property, you will always see a note about the failure quickly. (The same holds for a property-check passing.)</p>
+<p>If you don’t check such properties regularly (let alone automatically) and some change breaks the property, you may not notice the failure at all. Note that such a property check is sufficient but not necessary to notice a failure, because you may have noticed the violation by looking at the code.</p>
+<p>If you can’t check a property automatically and some change breaks the property, you will have to spend some time checking the property manually if you want to notice the failure.</p>
+<hr />
+<p>Test: OS HW1 - tons of output data. – Can’t really observe variables I care about. Hard to parse the output. The feature I was implementing was scheduling according to the aging scheduling policy. I wanted to check if its output on 10 processes of different types matched what I expected. However, I couldn’t test that automatically. I had to sift through the logging output to see if the statements printed by each process were in the correct order.</p>
+<p>Imagine if I had a function that would sift through the logging output for me and check the order of the statements. Then, I could speedily check if my implementation of the scheduling policy produced logging output that passed that function.</p>
+<p>However, to notice whenever that property was violated, I would need to set the property check to run every time I changed the code. This is what they call continuous integration.</p>
 <h3 id="work-in-the-final-medium-to-get-feedback-about-all-desired-properties">Work in the Final Medium to get Feedback about all Desired Properties</h3>
-<p><strong>TODO</strong>: Hypothesis: Working in the final medium is a relevant factor for getting feedback about all properties. Otherwise, you may not get feedback about certain key properties, which means that you may have to scramble to fix them later.</p>
+<p>Hypothesis: Working in a production-like environment is a relevant factor for learning about the properties of your program in production. Otherwise, you may not learn about them (or may learn the wrong things).</p>
 <p><strong>Hypothesis</strong>: Experiment on the mechanism directly, get full feedback -&gt; low cycle time because you can toggle and get feedback quickly, can get to the final version faster.</p>
 <p>Experiment from within your final medium, get full feedback (by definition) -&gt; slower feedback because you can’t isolate the mechanism (toggling might be tedious, especially if you aren’t skilled in the medium), can get to the final version a bit slower.</p>
 <p>Experiment on the mechanism directly, don’t get full feedback -&gt; quick but partial feedback (may not even get full feedback from myself), may not get to the final version quickly.</p>
 <hr />
-<p>Test: Research report - handwritten notes vs LaTeX notes. – handwritten notes - won’t get feedback from others; may not even get harsh feedback from myself because I don’t look at it from a reader’s point of view. Earlier, I wasn’t skilled enough to think in LaTeX. Now I realize that I can. Done.</p>
+<p>Test: When I wrote a small Emacs mode (org-autoclock) for another user, the question I wanted to answer was: will this work correctly on the user’s computer? Got misleading feedback about that when I ran it in my Emacs and it worked. I acted like this meant it would work on the user’s computer. Got the true feedback that it doesn’t actually work when the user tried it out on their computer. I could have gotten the same feedback by running it in a blank Emacs instance (using <code>emacs -Q</code>).</p>
+<p>Test: Research report - handwritten notes vs LaTeX notes. – handwritten notes - won’t get feedback from others; may not even get harsh feedback from myself because I don’t look at it from a reader’s point of view. It seemed like it would look good in a report format, but I wasn’t sure. The only way to know for sure if it would make a good report is to create the report and see.</p>
 <p>Test: Unsure about pointer manipulation or struct indirection in C - tested it in a separate C file that wouldn’t be part of the final product. Helped a lot! – low cycle time because I isolated the mechanism!</p>
 <p>Test: Unit tests - they last. – you’re working in the final medium, full feedback, can isolate the mechanism,</p>
 <p>Test: Documentation - lasts. – ??</p>
 <p>Test: Website - it lasts. – final medium, full feedback (if you release), but at least partial feedback if you write it up (as compared to your journal notes); skilled - so it’s natural by now (see this essay).</p>
 <p>Test: Memory via spaced repetition (or just frequency testing) - it lasts. – you get full feedback in the future.</p>
-<p>Test: org-autoclock within my Emacs vs a blank Emacs. – got misleading feedback by running it in my Emacs; got full feedback from the user.</p>
 <h3 id="change-high-level-code-in-isolation-less-code-to-move-around">Change High-level Code in Isolation: Less Code to Move Around</h3>
 <p><strong>TODO</strong>: Refactor based on experiments.</p>
 <p>Hypothesis: If you release a simple version of your project, you can cheaply try out different high-level designs and learn which properties you want to satisfy since you have small code and small inputs.</p>
@@ -3667,7 +3672,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: May  6, 2019</div>
+<div class="info">Last modified: May  7, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
