@@ -485,29 +485,24 @@ get_feature_importance(model, tokenizer, label_encoder)</code></pre></div>
 <p>Test: OS HW1 - tons of output data. – Can’t really observe variables I care about. Hard to parse the output. The feature I was implementing was scheduling according to the aging scheduling policy. I wanted to check if its output on 10 processes of different types matched what I expected. However, I couldn’t test that automatically. I had to sift through the logging output to see if the statements printed by each process were in the correct order.</p>
 <p>Imagine if I had a function that would sift through the logging output for me and check the order of the statements. Then, I could speedily check if my implementation of the scheduling policy produced logging output that passed that function.</p>
 <p>However, to notice whenever that property was violated, I would need to set the property check to run every time I changed the code. This is what they call continuous integration.</p>
-<h3 id="work-in-the-final-medium-to-get-feedback-about-all-desired-properties">Work in the Final Medium to get Feedback about all Desired Properties</h3>
+<h3 id="work-in-a-production-like-environment-to-get-properties-about-production">Work in a Production-like Environment to get Properties about Production</h3>
 <p>Hypothesis: Working in a production-like environment is a relevant factor for learning about the properties of your program in production. Otherwise, you may not learn about them (or may learn the wrong things).</p>
-<p><strong>Hypothesis</strong>: Experiment on the mechanism directly, get full feedback -&gt; low cycle time because you can toggle and get feedback quickly, can get to the final version faster.</p>
-<p>Experiment from within your final medium, get full feedback (by definition) -&gt; slower feedback because you can’t isolate the mechanism (toggling might be tedious, especially if you aren’t skilled in the medium), can get to the final version a bit slower.</p>
-<p>Experiment on the mechanism directly, don’t get full feedback -&gt; quick but partial feedback (may not even get full feedback from myself), may not get to the final version quickly.</p>
 <hr />
 <p>Test: When I wrote a small Emacs mode (org-autoclock) for another user, the question I wanted to answer was: will this work correctly on the user’s computer? Got misleading feedback about that when I ran it in my Emacs and it worked. I acted like this meant it would work on the user’s computer. Got the true feedback that it doesn’t actually work when the user tried it out on their computer. I could have gotten the same feedback by running it in a blank Emacs instance (using <code>emacs -Q</code>).</p>
 <p>Test: Research report - handwritten notes vs LaTeX notes. – handwritten notes - won’t get feedback from others; may not even get harsh feedback from myself because I don’t look at it from a reader’s point of view. It seemed like it would look good in a report format, but I wasn’t sure. The only way to know for sure if it would make a good report is to create the report and see.</p>
-<p>Test: Unsure about pointer manipulation or struct indirection in C - tested it in a separate C file that wouldn’t be part of the final product. Helped a lot! – low cycle time because I isolated the mechanism!</p>
-<p>Test: Unit tests - they last. – you’re working in the final medium, full feedback, can isolate the mechanism,</p>
-<p>Test: Documentation - lasts. – ??</p>
-<p>Test: Website - it lasts. – final medium, full feedback (if you release), but at least partial feedback if you write it up (as compared to your journal notes); skilled - so it’s natural by now (see this essay).</p>
-<p>Test: Memory via spaced repetition (or just frequency testing) - it lasts. – you get full feedback in the future.</p>
 <h3 id="change-high-level-code-in-isolation-less-code-to-move-around">Change High-level Code in Isolation: Less Code to Move Around</h3>
-<p><strong>TODO</strong>: Refactor based on experiments.</p>
-<p>Hypothesis: If you release a simple version of your project, you can cheaply try out different high-level designs and learn which properties you want to satisfy since you have small code and small inputs.</p>
-<p>If you wait until you’ve written fully-tested code before you try a different high-level design, you’ll have to work a lot to get it running since you have large inputs.</p>
+<p>Hypothesis: If some feedback mechanism depends only on some property of the output, then the detailed output of a program for some input is conditionally independent.</p>
+<p>Hypothesis: If some feedback mechanism depends only on some property of the output, then the part of a program that produce detailed output is conditionally independent.</p>
+<p>Hypothesis: If some design feedback mechanism depends only on the high-level code, then the lower-level code of a program is conditionally independent.</p>
+<p>Hypothesis: If you represent the output for an input using a “spec”, you will take a short time. If you represent it using a program, you will take longer because each term of a spec corresponds to multiple terms of a program.</p>
+<p>Hypothesis: If you change the output for an input in a “spec”, you will take a short time. If you change it in a program, you will take longer. Not exactly sure why.</p>
+<p>Hypothesis: A design choice that applies to the high-level descriptions in a spec may not apply to the actual implementation of the spec. But a design choice that applies to a program - i.e., a refactoring that seems to apply - will probably lead to a valid program.</p>
+<p>Hypothesis: If you get feedback about a high-level design using a spec or a skeleton of your code, you will arrive at the best design faster than if you get feedback using a full implementation because, in the latter scenario, you have to modify the rest of the code each time you change the design even though it is conditionally independent of the design. (Don’t have a concrete example.)</p>
 <p>Corollary: You can still get those benefits after you’ve begun by experimenting in a new blank project and moving in your old changes.</p>
-<p>Observation: I wanted to try different formats for a file that was going to be read by another program. Easy to do given that all I had in the file was one line.</p>
-<p>If I wanted to do it after I had a long file, I’d have to keep modifying the data in the file according to the new format.</p>
-<p>Observation: This is what writers call outlining.</p>
-<p>Observation: This is what filmmakers call story-boarding.</p>
 <hr />
+<p>Test: Imagine you’re writing a program to produce a supermarket checkout bill. The initial test might be to see if every item in the cart is included and whether the total is accurate. Now, your program will pass the test whether or not you don’t print the supermarket’s name or the current date on the bill. So, those parts are conditionally independent given the itemized total.</p>
+<p>Similarly, the parts of your program that produce the supermarket’s name or the current date are conditionally independent of the test given the parts that produce the itemized total, because the program will pass the test whether or not they’re present.</p>
+<p>Test: Imagine you’re writing a class hierarchy for visualization. Your feedback mechanism for the design might be whether the subclass relations make sense, e.g., whether <code>ImageData</code> is a subclass of <code>RectilinearData</code>. However, you would get the same feedback regardless of your implementation of the methods in those classes.</p>
 <p>Test: Joel Spolsky:</p>
 <blockquote>
 <p>Now, Mr. Rogers over at Well-Tempered Software Company (colloquially, “WellTemperSoft”) is one of those nerdy organized types who refuses to write code until he’s got a spec. He spends about 20 minutes designing the backwards compatibility feature the same way Speedy did, and comes up with a spec that basically says:</p>
@@ -525,9 +520,18 @@ get_feature_importance(model, tokenizer, label_encoder)</code></pre></div>
 </blockquote>
 <p>20 more minutes.</p>
 <p>Mr. Rogers is grumpy. This refactoring will take 3 weeks, instead of the 2 weeks he originally estimated! But it does solve all the customer problems, in an elegant way, so he goes off and does it.</p>
+<p>The moral of the story is that when you design your product in a human language, it only takes a few minutes to try thinking about several possibilities, revising, and improving your design. Nobody feels bad when they delete a paragraph in a word processor. But when you design your product in a programming language, it takes weeks to do iterative designs. What’s worse, a programmer who’s just spend 2 weeks writing some code is going to be quite attached to that code, no matter how wrong it is.</p>
 <p>– <a href="https://www.joelonsoftware.com/2000/10/02/painless-functional-specifications-part-1-why-bother/"></a></p>
 </blockquote>
-<p>Explanation: I suspect that a spec is just an integration test. You come up with a high-level input-output pair and go through the particular branch of (not-yet-existing) code that it exercises. – The key is that you can change the high-level design quickly and get feedback (about whether they do what the users wants and whether they will lead to good-quality code).</p>
+<p>When Mr. Rogers tried out the design in a spec, he could get feedback from his customer and his boss and change it twice within an hour. He estimated that he could do it in three weeks. If he had tried to implement the program the first way, he might have taken two weeks, after which changing it according to the customer’s needs would have taken another week, and another one after that to accommodate his boss’ design changes. So, he saved himself at least a week by getting feedback about the design using a spec and not a program.</p>
+<p>What could have accounted for the time savings? Firstly, he could get feedback after 20 minutes and not 2 weeks. The more such changes he makes in the spec, the more time he saves in implementing fully and getting feedback. Secondly, he had to change one line in his spec, not a bunch of lines in his program. 20 minutes + 2 weeks for the right version &lt; 2 weeks for the first version + 1 week to change it to the right version.</p>
+<p>Note that you may not know the true costs or benefits of a design by writing a spec. For example, I wrote a spec for a programming assignment, with the names of the functions I was going to write and how they would work together. But when I actually started implementing the program, I found that most of them were already implemented better as library functions. I never looked back once at the spec. It was completely out of touch with my actual implementation.</p>
+<p>Similarly, Mr. Rogers’ boss suggested having V2 subclass V1. Maybe the <code>Save</code> method is not the only one that differs, which means subclassing might be the wrong move. But you’re unlikely to know the exact set of methods that differ unless you implement both classes.</p>
+<p>Test: I wanted to try different formats for a file that was going to be read by another program. Easy to do given that all I had in the file was one line. If I wanted to do it after I had a long file, I’d have to keep modifying the data in the file according to the new format.</p>
+<p>Test: Rearrange sections in an essay - I find it easier to write just the top-level headings and reorder them and merge some of them based on how they look. If I tried to do that while moving the contents along with the headings as they got reordered and merged, I would have to do a lot more work.</p>
+<p>Test: This is probably what writers call outlining.</p>
+<p>Test: This is probably what filmmakers call story-boarding.</p>
+<h3 id="spec-vs-prototype">Spec vs Prototype</h3>
 <p>Test: PG on spec vs prototype:</p>
 <blockquote>
 <ol start="8" style="list-style-type: decimal">
@@ -540,10 +544,6 @@ get_feature_importance(model, tokenizer, label_encoder)</code></pre></div>
 <p>– <a href="http://www.paulgraham.com/hp.html"></a></p>
 </blockquote>
 <p>Explanation: Write a prototype to pass one integration test (such as evaluating some small Lisp program) and then abstract your code into well-separated modules. – You can test different high-level design ideas using your integration test without much trouble (because you don’t have too many branches).</p>
-<blockquote>
-<p>The moral of the story is that when you design your product in a human language, it only takes a few minutes to try thinking about several possibilities, revising, and improving your design. Nobody feels bad when they delete a paragraph in a word processor. But when you design your product in a programming language, it takes weeks to do iterative designs. What’s worse, a programmer who’s just spend 2 weeks writing some code is going to be quite attached to that code, no matter how wrong it is.</p>
-<p>– <a href="https://www.joelonsoftware.com/2000/10/02/painless-functional-specifications-part-1-why-bother/"></a></p>
-</blockquote>
 <blockquote>
 <p>CORAL: All business plans for startups turn out to be wrong, but you still need them - and not just as works of fiction. They represent the written form of your current beliefs about your key assumptions. Writing down your business plan checks whether your current beliefs can possibly be coherent, and suggests which critical beliefs to test first, and which results should set off alarms, and when you are falling behind key survival thresholds. The idea isn’t that you stick to the business plan; it’s that having a business plan (a) checks that it seems possible to succeed in any way whatsoever, and (b) tells you when one of your beliefs is being falsified so you can explicitly change the plan and adapt. Having a written plan that you intend to rapidly revise in the face of new information is one thing. NOT HAVING A PLAN is another.</p>
 <p>– <a href="https://intelligence.org/2017/11/26/security-mindset-and-the-logistic-success-curve/"></a></p>
@@ -3672,7 +3672,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: May  7, 2019</div>
+<div class="info">Last modified: May  8, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
