@@ -593,6 +593,7 @@ get_feature_importance(model, tokenizer, label_encoder)</code></pre></div>
 <h3 id="number-of-variables-per-source-of-feedback-determines-your-speed">Number of Variables per Source of Feedback determines your Speed</h3>
 <p>Hypothesis: The number of variables (and thus the number of possible configurations) you have per source of feedback decides how many experiments and thus how much time it will take you to pass the feedback.</p>
 <p><strong>TODO</strong>: I suspect the test is not your only source of feedback. You also have a spec. How does that affect the coding time? Why would that be affected by the number of “sources of feedback”? What happens when you don’t have a spec?</p>
+<p>Hypothesis: When you have a spec, your lines of code are written using the spec as feedback and your overall program is written using a concrete test as corroborating feedback. (TODO)</p>
 <hr />
 <p>Test: When the problem “seems somewhat hard”, I don’t break it into pieces and test my implementation of each part, i.e., I don’t get intermediate feedback. I also don’t implement it all and check whether it works, i.e., I don’t get overall feedback. Basically, it’s a question of how big a change I’m trying to explain or simulate with my program. Clearly, if it’s a vast change, spread across multiple variables and multiple files, I probably won’t be able to simulate it all. If it’s a small change, such as squaring each element of a list, I can do it with one statement.</p>
 <p>So, what I don’t do is break up the big change into smaller changes. Note that this changes the problem from having one overall source of feedback to multiple intermediate sources of feedback. Getting a positive exemplar for a multi-variable problem from scratch with just one source of feedback is always going to take time and lots of experimentation. Getting a positive exemplar for a problem with fewer variables will take less time and fewer iterations.</p>
@@ -3672,7 +3673,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: May 10, 2019</div>
+<div class="info">Last modified: May 11, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
