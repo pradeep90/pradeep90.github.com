@@ -590,12 +590,47 @@ get_feature_importance(model, tokenizer, label_encoder)</code></pre></div>
 <p><strong>Test</strong>: [2019-01-18 Fri] I don’t have to worry about the <code>getNum</code> function (for parsing a number from a string) being given “-3” because <code>parseUAtom</code> already extracts the “-” part.</p>
 <p>If a negative number never reaches <code>getNum</code>, it would be a waste of time to handle that case or test for it. However, if there’s even a small chance that it happens, the entire program might crash unless you handle it. So, whether or not you test that input in <code>getNum</code> depends on who calls <code>getNum</code> and with what inputs. And since more cases means more work, it’s in your best interest to narrow it down as accurately as possible.</p>
 <p>Test: Hard to change the behaviour of <code>pipe_set</code> without knowing how and where it’s been used. I don’t want to break its “contract”. If I assume that it will always be in the free state but it turns out to be in a connected state on one occasion, I might break something.</p>
-<h3 id="number-of-variables-per-source-of-feedback-determines-your-speed">Number of Variables per Source of Feedback determines your Speed</h3>
-<p>Hypothesis: The number of variables (and thus the number of possible configurations) you have per source of feedback decides how many experiments and thus how much time it will take you to pass the feedback.</p>
-<p><strong>TODO</strong>: I suspect the test is not your only source of feedback. You also have a spec. How does that affect the coding time? Why would that be affected by the number of “sources of feedback”? What happens when you don’t have a spec?</p>
-<p>Hypothesis: When you have a spec, your lines of code are written using the spec as feedback and your overall program is written using a concrete test as corroborating feedback. (TODO)</p>
+<h3 id="number-of-spec-features-per-test-determines-your-speed">Number of Spec Features per Test determines your Speed</h3>
+<p><strong>Hypothesis</strong>: Given a spec, the number of features of the spec exercised in one test is a relevant factor for the number of configurations you will walk through before you pass the test, and is thus a relevant factor for the time taken to pass the test.</p>
+<p>You’re actually implementing an implicit compiler to translate the spec to an implementation of it.</p>
 <hr />
-<p>Test: When the problem “seems somewhat hard”, I don’t break it into pieces and test my implementation of each part, i.e., I don’t get intermediate feedback. I also don’t implement it all and check whether it works, i.e., I don’t get overall feedback. Basically, it’s a question of how big a change I’m trying to explain or simulate with my program. Clearly, if it’s a vast change, spread across multiple variables and multiple files, I probably won’t be able to simulate it all. If it’s a small change, such as squaring each element of a list, I can do it with one statement.</p>
+<p><strong>Test</strong>: A spec doesn’t give you feedback about your translation of the high-level terms to the programming language. For example, take the spec for parsing an arithmetic expression:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">&lt;</span>exp<span class="fu">&gt;</span> <span class="ot">::</span><span class="fu">=</span> <span class="fu">&lt;</span>num<span class="fu">&gt;</span>
+<span class="fu">|</span> <span class="fu">&lt;</span>exp<span class="fu">&gt;</span> <span class="fu">+</span> <span class="fu">&lt;</span>exp<span class="fu">&gt;</span>
+<span class="fu">|</span> <span class="fu">&lt;</span>exp<span class="fu">&gt;</span> <span class="fu">-</span> <span class="fu">&lt;</span>exp<span class="fu">&gt;</span>
+<span class="fu">|</span> <span class="fu">&lt;</span>exp<span class="fu">&gt;</span> <span class="fu">*</span> <span class="fu">&lt;</span>exp<span class="fu">&gt;</span>
+<span class="fu">|</span> <span class="fu">&lt;</span>exp<span class="fu">&gt;</span> <span class="fu">/</span> <span class="fu">&lt;</span>exp<span class="fu">&gt;</span>
+
+<span class="dt">Precedence</span> for (<span class="fu">+</span>) and (<span class="fu">-</span>)<span class="fu">:</span> <span class="dv">1</span>; for (<span class="fu">*</span>) and (<span class="fu">/</span>)<span class="fu">:</span> <span class="dv">2</span><span class="fu">.</span>
+<span class="dt">All</span> the operators are left<span class="fu">-</span>associative<span class="fu">.</span></code></pre></div>
+<p>The two implementations:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> parseExpressionA: Exp = <span class="fu">parseExpressionA</span>(<span class="dv">0</span>)
+<span class="kw">def</span> <span class="fu">parseExpressionA</span>(min: Int): Exp = {
+  <span class="kw">var</span> res = parseNum
+  <span class="kw">while</span> (in.<span class="fu">hasNext</span>(...)) {
+    <span class="kw">val</span> op = getOperator
+      ...
+  }
+  res
+}</code></pre></div>
+<p>and</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> parseExpressionB: Exp = <span class="fu">parseExpressionB</span>(<span class="dv">0</span>)
+<span class="kw">def</span> <span class="fu">parseExpressionB</span>(min: Int): Exp = {
+  <span class="kw">val</span> exp1 = parseExpressionB
+  <span class="kw">val</span> op = getOperator
+  <span class="kw">val</span> exp2 = parseExpressionB
+  <span class="kw">val</span> res = ...
+  res
+}</code></pre></div>
+<p>both match the given spec or grammar. How do I distinguish the two? I need another source of feedback, namely a test. Even on a simple input <code>2 + 3</code>, <code>parseExpressionB</code> would go into an infinite loop, whereas <code>parseExpressionA</code> would handle it alright. Note that somebody else has to give you the expected output for the test. You don’t know a priori.</p>
+<p>I suspect that we use the test to decide how to translate the high-level spec into code.</p>
+<p>Oh. Is it that the granularity of the test determines how quickly you can code up the spec?</p>
+<p>Imagine that you had a test saying that <code>&quot;1-2*3+4/5*6&quot;</code> parses to <code>Plus(Minus(Lit(1), Times(Lit(2), Lit(3))), Times(Div(Lit(4), Lit(5)), Lit(6)))</code>. It tests Plus, Minus, Times, Div, associativity, and precedence. If the test passes, you will have high confidence that your implementation of all those features was correct. But if the test fails, you will have a hard time finding out where you made a mistake.</p>
+<p>Contrast that to <code>&quot;1+2&quot; -&gt; Plus(Lit(1), Lit(2))</code> and <code>&quot;1+2+3&quot; -&gt; Plus(Plus(Lit(1), Lit(2)), Lit(3))</code>. The first one tests for a basic Plus expression and the second one tests for simple associativity. So, if the first one fails, you know that you messed up in simple Plus parsing. If the second one fails, you know you messed up in your implementation of associativity. You no longer have to search. So, you can use these narrow tests to learn how to translate each part of the spec into code, in isolation.</p>
+<p>The tradeoff between the two test styles depends, of course, on how often you make mistakes and on how long it takes to write the narrow tests.</p>
+<p>Notice how you’re imitating a compiler while implementing the spec. The final program can be seen as a translation of a program written in the spec language to one written in Scala. Writing the spec in an executable language would make the compiler explicit. For example, the configuration file for Emacs is itself written in Emacs Lisp. It could have been a simple YAML file with fields and values, where you would have to write an interpreter to change the parameters of the programs based on the config values or write a compiler to translate the configuration into the language of the program. But writing the config in Emacs Lisp obviates the need for that interpreter or compiler.</p>
+<p>What you’re uncertain about, then, is the implementation of that spec compiler. After all, if you had such a compiler, you could simply run it on the spec and hand away the translated program without doing any work. This means that the narrow feedback you need to get is about the different branches of that compiler.</p>
+<p>Test: (TODO) When the problem “seems somewhat hard”, I don’t break it into pieces and test my implementation of each part, i.e., I don’t get intermediate feedback. I also don’t implement it all and check whether it works, i.e., I don’t get overall feedback. Basically, it’s a question of how big a change I’m trying to explain or simulate with my program. Clearly, if it’s a vast change, spread across multiple variables and multiple files, I probably won’t be able to simulate it all. If it’s a small change, such as squaring each element of a list, I can do it with one statement.</p>
 <p>So, what I don’t do is break up the big change into smaller changes. Note that this changes the problem from having one overall source of feedback to multiple intermediate sources of feedback. Getting a positive exemplar for a multi-variable problem from scratch with just one source of feedback is always going to take time and lots of experimentation. Getting a positive exemplar for a problem with fewer variables will take less time and fewer iterations.</p>
 <p>A simple example is when you need to implement a pipeline of compiler operations, such as scanning, parsing, type-checking, and compiling. You can come up with the intermediate tokens, AST, and types and work on each operation in isolation till they generate the right immediate output. Contrast that to sending in an input program and changing all the operations in your compiler till they generate the right ultimate output of assembly code. The latter will take a lot more time and experimentation before you get it right.</p>
 <p>How much more time, though? Well, the pain will be in debugging. If you didn’t make any errors at all, there would be no difference between the two approaches. But if you do make a mistake, you will have fewer suspects in the former than in the latter.</p>
@@ -3673,7 +3708,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: May 11, 2019</div>
+<div class="info">Last modified: May 12, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
