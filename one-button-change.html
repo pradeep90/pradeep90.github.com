@@ -682,27 +682,18 @@ get_feature_importance(model, tokenizer, label_encoder)</code></pre></div>
 <p><strong>Test</strong>: Also, I fear that there is a cleaner way to do it, which I can find by reading even more code, and therefore I don’t go ahead with a half-assed design that would actually work.</p>
 <p>Basically, I won’t go ahead until I’ve found the <strong>cleanest</strong> way to do it. Which would require me to go through <strong>all</strong> the existing code and check all of their designs. If any of them has a cleaner design (which is my output variable), then I will ignore the other options and go with the better one.</p>
 <p><strong>This</strong> is why I am such a slow learner.</p>
-<h3 id="acceptance-test-clear-focus-on-what-matters">Acceptance Test: Clear Focus on What Matters</h3>
-<p>Question: What happens when you don’t have a failing acceptance test?</p>
+<h3 id="acceptance-test-clear-focus-on-what-matters-todo">Acceptance Test: Clear Focus on What Matters (TODO)</h3>
+<p>Hypothesis: Going from not knowing how to implement a spec feature and not having a narrow test to having a narrow test for the spec-to-code compiler will speed up your time a lot. Ditto for learning how to implement the spec feature.</p>
 <p><strong>Hypothesis</strong>: Failing acceptance test -&gt; you know exactly what needs to be done; you know it matters; need to remember only your current failing acceptance tests.</p>
 <p>No failing acceptance test, write unit tests or just implement code -&gt; you don’t know exactly what <strong>needs</strong> to be done; you don’t know if it matters; have to remember a lot of TODOs.</p>
 <p><strong>Lesson</strong>: Writing a TODO - instead, make a failing acceptance test for it.</p>
 <p><strong>Lesson</strong>: What to do next - make a failing acceptance test pass.</p>
 <p><strong>Question</strong>: What is the ideal behaviour for programming (on, say, the phone number problem)?</p>
 <hr />
-<p>Test: Phone number problem - I knew that <code>10/783--5: neu o&quot;d 5</code> wasn’t working yet and I needed to get on it. – No need to waste time on pointless “design” of beautiful types. Get that test passing ASAP. And I knew it mattered because that was they would test. Just needed to focus on that failing acceptance test.</p>
+<p>Test: Phone number problem - I knew that <code>10/783--5: neu o&quot;d 5</code> wasn’t working yet and I needed to get on it. – No need to waste time on pointless “design” of beautiful types. Get that test passing ASAP. And I knew it mattered because that was what they would test. Just needed to focus on that failing acceptance test.</p>
 <p>Test: Scheduler OS HW1 - no failing acceptance test (no real tests at all, in fact) – didn’t know if I was working on the right thing; didn’t know exactly what to do next (?). Had to remember a lot of to-do items in my Org file.</p>
 <p>Test: Want to write a to-do item for “handle multiple processes accessing the same virtual memory address” – instead, just add a failing acceptance test and set it aside. Don’t need to keep track of lots of to-do items.</p>
 <p>Test: Unsure what to work on right now - take up a failing acceptance test - such as “how to refactor ideas from different essays I’ve written”. – know exactly what to do.</p>
-<h3 id="what-to-do-next-unfinished">What to do Next? (?? Unfinished)</h3>
-<p><strong>Hypothesis</strong>: Have a dynamically updated list of acceptance tests, choose something that is easy to do -&gt; can find out what to do next.</p>
-<hr />
-<p><strong>Acceptance test</strong>: What to do next?</p>
-<p>Given that I have a bunch of acceptance tests, some of them failing and some of them already passed</p>
-<p>when I look for something to do next</p>
-<p>then I must be able to find it quickly</p>
-<p>when I pick a next action [get techniques from HW1]</p>
-<p>then it shouldn’t be a risky decision. If I get it wrong, I should be able to get quick feedback and change within an hour or so. [used ESS to reduce my cycle time.]</p>
 <h3 id="premature-abstraction">Premature Abstraction</h3>
 <p><strong>Hypothesis</strong>: Trying to abstract beyond your means (i.e., compress more branches into one than you know how to) is a relevant factor for being stymied. You may not know if some of those branches are necessary and, even if so, you may not know how to do it all off the top of your head.</p>
 <p>Trying to handle just as many branches as you know how to do easily is a relevant factor for making progress.</p>
@@ -3734,7 +3725,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: June  8, 2019</div>
+<div class="info">Last modified: June  9, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
