@@ -2768,6 +2768,14 @@ factorial n <span class="fu">=</span> (n <span class="fu">-</span> <span class="
 <p>For example, if all you know is that the React component tree is <code>Foldable a</code>, you can just fold over it with different monoids. That’s all. Can’t access just one part of the tree.</p>
 <h2 id="why-novel-interfaces-proliferate">Why Novel Interfaces Proliferate</h2>
 <p>Hypothesis: Because it gives you a competitive advantage over others and prevents you from becoming a commodity. And perhaps also because you can deliver new features.</p>
+<h2 id="cover-before-you-change-legacy-code">Cover before you Change Legacy Code</h2>
+<p><strong>Hypothesis</strong>: If you have explicit tests for different features, you can find out which ones conflict with your new feature and you can split any common branches. If not, you may find it harder to know which ones conflict and thus which branches you must split and how. (TODO)</p>
+<hr />
+<p><strong>Test</strong>: [2019-06-23 Sun] I covered <code>evil-jump-item</code> with three tests: <code>spk-evil-jump-item--start-at-opening-paren</code>, <code>spk-evil-jump-item--start-at-closing-paren</code>, <code>spk-evil-jump-item--start-in-between-parens</code>.</p>
+<p>I wanted to change its behaviour when the point (cursor) was between two parens, but maintain its behaviour for the other two cases. When I naively changed the code, I got the former but later discovered that I had broken the latter. That happened three or four times. It’s the classic problem with legacy code: regression of existing features.</p>
+<p>So, I wrote explicit unit tests for them and started coding. Figured out how to pass the test I cared about. Narrowed down the new bug it created in the previous test and fixed it by adding a new if-branch. Done in quick time. What helped, I think, was that there was exactly one failing test at each point and I knew precisely what it was. When I changed code without any unit tests, I didn’t know if the legacy features were broken. Sometimes, both features were broken.</p>
+<p>In short, I could take on one feature at a time. I implemented the new feature in the simplest possible way. I found that the first feature wasn’t broken; only the second one was. Ok. Time to fix that.</p>
+<p>I realized that both those inputs shared the same branch in the code. Time to split up the branch so that they went separate ways. This was probably the key move. So far, I’d been trying and failing to pass the tests by changing the same branch. Maybe the three explicit tests helped me by showing that the first input landed in a different branch while the second and third inputs landed up in the same branch. I could now safely ignore the first feature while looking at what was different between the second and third inputs. Earlier, I was unsure if the conflict was between the first and third feature or the second and third feature.</p>
 <h1 id="debugging">Debugging</h1>
 <h2 id="debugging-look-at-the-diffs">Debugging: Look at the Diffs!</h2>
 <p><strong>Hypothesis</strong>: don’t know the cause of something, have the source code and can run interventions (aka <strong>debugging</strong>), look at your <strong>diff</strong>, list all your assumptions or toggle your diff till you get a “yes” -&gt; figure out which assumption is causing your error.</p>
@@ -3725,7 +3733,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: June  9, 2019</div>
+<div class="info">Last modified: June 23, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
