@@ -61,14 +61,23 @@
 <p>Predict the behaviour of some code by deduction, not by blank-slate empiricism. You know the language well enough to tell what a sequence of familiar statements will do.</p>
 <p><strong>TODO</strong>: Learn powerful abstractions so that you can satisfy a bunch of properties in one step instead of having to walk through multiple iterations. Also, powerful abstractions mean less code.</p>
 <h2 id="one-small-encapsulated-change-at-a-time">One, Small, Encapsulated Change at a Time</h2>
-<h3 id="debugging-consumes-time">Debugging Consumes Time</h3>
-<p>Hypothesis: Debugging (i.e., narrowing down the relevant factors for some erroneous output) is a relevant factor for spending a lot of time coding. (<strong>TODO</strong>)</p>
+<h3 id="coarse-grained-tests-can-cause-costly-debugging">Coarse-grained Tests can cause Costly Debugging?</h3>
+<p>Hypothesis: Debugging seems to take up a lot of time.</p>
+<p>The effect you observed was that you spent a lot of time on variations that still failed your test. But what was the cause? What did you observe in advance that could have predicted those failed attempts?</p>
+<p>Hypothesis: If it’s a test you’ve never passed before, that’s implementing a new feature. If it’s a test you’ve passed before but which fails now, that’s debugging.</p>
+<p>When implementing a new feature, a test that needs multiple spec features will cause more failed attempts than individual tests for those spec features.</p>
+<p>When debugging a test that newly fails, having more changes since the last known-good version will cause more failed attempts.</p>
+<p>So, we should have finer-grained tests when implementing a new feature and finer-grained changes when trying to debug a failing test.</p>
+<p>Of course, there’s also your knowledge of how to implement the spec features.</p>
 <hr />
-<p>Observation: Debugging seems to be pretty hard and time-consuming. Lot more confusing and frustrating than normal coding.</p>
-<p>For example, 17 out of the 30 hours I spent on OS HW2 were lost in debugging.</p>
-<p>Why? Is debugging a different operation from normal coding?</p>
+<p>Test: Suppose you’re writing an arithmetic expression calculator. One test could be that “1 + 2” should return 3. Another could be that “1-2<em>3+4/5</em>6” should return -5. If your calculator implementation fails the first test, you know it’s because you’ve wrongly implemented addition. But if it fails the second test, you don’t know if it’s because you’ve wrongly implemented addition, subtraction, multiplication, division, or operator precedence. You may have to check all of their implementations and try several variations till you pass the test.</p>
+<p>Test: Say you’ve passed the test for “1-2<em>3+4/5</em>6”. When implementing general operator precedence, if you change the code for multiplication and the test fails, you know that the latest change was at fault. But if you change many things and then find that the test fails, you won’t know which changes to blame. You’ll have to try toggling many of them to pass the test again.</p>
+<p>What if you have a smaller test like “1 + 2”? Can’t you ignore the changes outside the addition code? I guess you can if you know how to map the spec to the code. If you know that all the addition code is a particular file and that there has been only one change there, that must be the culprit. So, it’s a question of the number of changes to the part of the code implementing that spec.</p>
+<p>Observation: Debugging - trying variations that still fail your test - seems to be pretty hard and time-consuming. Lot more confusing and frustrating than normal coding, which is probably trying a variation that passes your test. Notice that I don’t have an advance prediction of when I’ll have to debug and when I’ll have to code “normally”.</p>
+<p>17 out of the 30 hours I spent on OS HW2 were lost in debugging.</p>
 <p><strong>Test</strong>: [2019-03-02 Sat] One of my worst debugging sessions in the last year (but still not as bad as my debugging sessions with XINU before I started writing unit tests for my OS code).</p>
 <p>Turns out that you were supposed to load and store tagged values as such (duh! That’s their whole point) but I didn’t pick up on that and got all kinds of errors.</p>
+<p>I’ll note that <code>testLibLists11</code> was an end-to-end test, not a unit test. It involved all kinds of irrelevant and unfamiliar library code. Didn’t know which features I’d implemented wrongly - block-set, block-get, literals, or something else.</p>
 <p>First session:</p>
 <blockquote>
 <p>testLibLists11 and a bunch of other lib lists tests failed</p>
@@ -89,32 +98,11 @@
 <p>CLOCK: [2019-02-26 Tue 18:55]–[2019-02-26 Tue 20:19] =&gt; 1:24 :PROPERTIES: :Effort: 2:00 :END:</p>
 </blockquote>
 <p>Test: [2019-03-02 Sat] Another contender for worst debugging session of the last year - when I wrote a great unit test for my implementation of Naive Bayes but wimped out at the last minute by just copying whatever model accuracy I got on the test input and using that as the expected output. Turns out that that killed me and cost over four hours of debugging over two days to recover from. I changed all kinds of factors like the input file, the number of columns, the number of rows, and so on. I measured correlations between individual columns and the output variable. Nothing pinpointed the error. Realized at last that my likelihood calculation was wrong.</p>
-<h3 id="adding-one-feature-at-a-time-is-easier-than-debugging-multiple-features">Adding One Feature at a Time is easier than Debugging Multiple Features</h3>
-<p><strong>Lesson</strong>: Adding features and releasing at each point -&gt; quick and painless. Adding lots of features and then debugging -&gt; slow and painful (because you can’t toggle features easily).</p>
-<p>And it’s hardest when you have made a lot of changes before observing some understandable output. For example, when working on my OS assignment, I changed the scheduling code in a lot of places and then ran my test case. The OS hung after the initial output. Why? I had no clue.</p>
-<p>In another case, I just wanted to change the scheduling algorithm of the XINU OS. It was a simple enough conceptual change, but because my change affected a lot of other variables (like whether interrupts were disabled or enabled, polled I/O vs blocking I/O, null pointer errors, etc.) I couldn’t tell exactly which of my changes had caused what.</p>
-<hr />
 <p>Test: [2019-03-02 Sat] Changed a bunch of things in my Emacs configuration on my lab computer and pushed the code. Will it work right on my laptop? Don’t know.</p>
-<h3 id="a-model-of-programming-number-of-changes-needed-to-debug">A Model of Programming: Number of Changes Needed to Debug</h3>
-<p>Observation: Consider a case where you have a multi-variable configuration space like (A2, B5, C1) -&gt; pass; (A1, B8, C5) -&gt; fail; etc. We will call each configuration a “program”.</p>
-<p>You have different “features” that will let you change the program from one configuration to another. For example, “sort the output list” could correspond to going from B5 to B6 and thus take your program (A2, B5, C1) to (A2, B6, C1).</p>
-<p>However, you are not a perfect programmer, so you could make a mistake while implementing the first feature and end up at some other value than B6.</p>
-<p>Basically, you can’t tell if you are at B6. You have to infer from the result of your test case that checks for a sorted output list. It will go from “fail” for B5 to “pass” for B6 and thus tell you that you implemented the feature correctly.</p>
-<p>Let’s say C1 is a function to compute the mean-squared error for two vectors. It does all that in one function. C3 is a function that does the same thing but has a “cleaner design” than C1: it calculates the error vector first and then calls <code>meansqr</code> for it. So, it requires two additional features on top of C1 - separate functions for <code>error</code> and <code>meansqr</code>. So, you have to go from C1 to C2 (i.e., C1 + <code>error</code>) and then from C2 to C3 (C1 + <code>error</code> + <code>meansqr</code>).</p>
-<p>Now, the clean way to get to C3 would be to extract <code>error</code> in C1 and run a test to see if you really are at C2 (which would be the same test for C1 because C1 and C2 behave identically). Then, extract <code>meansqr</code> and run a test to see if you really are at C3 (which is the same test as for C1 or C2 as they all behave identically). Even if you made a mistake while extracting <code>error</code>, you would know that the error (heh) would be in your latest change, not anywhere else in the code. Simple. No frustration.</p>
-<p>What if you extracted <code>error</code> and <code>meansqr</code> in one shot? Well, if your implementation of C3 passed the test, then you could be pretty confident that you did it right.</p>
-<p>But what if the test for C3 fails? Now, you don’t know if the problem is in your extraction of <code>error</code> or in your extraction of <code>meansqr</code>.</p>
-<p>How would you handle this? The best way would be to go back to the inline version of <code>meansqr</code> and check if the test passed then. If so, the problem is in your extraction of <code>meansqr</code> and you can run finer tests.</p>
-<p>Assume that you didn’t have to write new code manually or press undo in your editor repeatedly till you got back to C2 and ran your test. What if you could jump from C1 to C2 or from C2 to C1 in a flash? Basically, what if you could toggle any implemented feature instantaneously?</p>
-<p>Well, if your original code passed the test for C1 but your implementation of features <code>error</code> and <code>meansqr</code> failed the test, you could tell that the problem must have been somewhere in the implementation of the two features. Then, you could just toggle <code>meansqr</code> and see if that code passed the test. Say it doesn’t. So, there must be a problem with <code>error</code> (there may also be a problem with <code>meansqr</code>; we don’t know). We then toggle features within <code>error</code> to check which one broke our code until we pinpoint the culprit.</p>
-<p>In the worst case, you need two tests - one to check <code>error</code> and one to check <code>meansqr</code>, which is the same number of tests as in normal coding where you test after every feature.</p>
-<h3 id="debugging-is-hard-when-you-cant-toggle-easily">Debugging is Hard when you Can’t Toggle Easily</h3>
-<p>Observation: Some state transitions are costlier in the reverse direction. (Example?)</p>
-<p><strong>Hypothesis</strong>: Debugging is hard when you can’t toggle the state space easily.</p>
-<p>You can figure out the right configuration effortlessly if you can walk through state configurations in an instant. (In fact, you can even automate it.)</p>
 <h3 id="encapsulate-your-change">Encapsulate your Change</h3>
 <p><strong>Hypothesis</strong>: One key factor in programming efficiently - aka processing evidence about our program - is to make one high-level change at a time before you get evidence.</p>
 <p>This means that you should be able to choose between your two design choices, say process scheduler A and process scheduler B with just one small change. No changing variable assignments in three different places, no hasty commenting of 15 lines of code, no tweaking of multiple configuration files - just one button press.</p>
+<p>Basically, you’re giving two different inputs to the function, analogous to two different input strings. Now, you can either switch between them by changing lots of words in that string manually, or you can press a button to swap the entire first input with the second input (while not wasting time on copying the common parts). In other words, you get fast state transition.</p>
 <p>(Why would this weird condition help write programs faster? We’ll see.)</p>
 <p>How will this affect the way you code?</p>
 <p>For one, you can’t change multiple lines of code within some other function. Because then, if you wanted to roll back those changes, you would have to edit multiple lines.</p>
@@ -123,15 +111,97 @@
 <hr />
 <p>Test: [2019-03-02 Sat] I can generate with a simple command two versions of a midterm exam that I designed: one with just the questions and one with the questions and answers. All I have to say is <code>make midterm-exam.pdf</code> and <code>make midterm-exam-solutions.pdf</code> to get the two versions. I don’t need to go in and comment out the answer each time I want to get just the questions. I just wrap the answers in a macro and disable the printing of stuff within that macro when I do <code>make midterm-exam.pdf</code>.</p>
 <p>Test: [2019-03-02 Sat] I could turn Laplacian smoothing on or off in my Naive Bayes implementation by changing its flag. I didn’t have to go to each place that differed based on whether smoothing was on or off (including the test code).</p>
-<h3 id="have-a-first-class-alternative">Have a First-Class Alternative</h3>
-<p><strong>Corollary</strong>: Any alternatives must be easily switchable (when you run the program).</p>
-<p>In OOP, you would do this via interfaces or inheritance, where you simply switch the class that is implementing the interface, and the caller code is none the wiser. In functional programming, you simply switch to another value of the same type or type class.</p>
-<p><strong>Corollary</strong>: You must have a default alternative for every choice (when you run the program).</p>
-<p>For example, if you implemented pipes, your default would be the non-piped version. (Again, you should be able to switch between these two in one button-press.) If you implemented a new time-share scheduler for the operating system, you must encapsulate the original scheduler as a default alternative.</p>
-<p>Likewise, if you’re setting out on a “complex” change, you should have a default stub of it that does nothing.</p>
+<h3 id="switch-between-versions-using-a-button-that-applies-the-diff">Switch between Versions using a Button that Applies the Diff</h3>
+<p>Question: How long does it take you to switch from one version to another?</p>
+<p><strong>Hypothesis</strong>: If you arrange a button that applies certain diffs, you can switch to a different input with less effort than if you apply the diffs manually.</p>
+<p>Keeping two separate versions in their entirety will also let you switch with one button, but it will require double the changes whenever you change your design and will cause bugs when you update one but not the other.</p>
+<p>One factor is the number of times the differing piece of code is used; another is whether you know precisely where it is used; yet another factor is the effort required to apply a diff as opposed to a one-button change.</p>
+<p>Applying a diff using version control history takes more work in finding the right diff than a one-button software change.</p>
+<p>Hypothesis: Inheritance allows you to apply a diff of new methods and instance variables by changing from the parent class to the child class.</p>
+<p>Polymorphism allows you to apply a diff of a class of one type to another class of the same type without changing the receiving variable’s type.</p>
 <hr />
-<p>Test: What happens when you’re starting out with a new feature, like pipes in an operating system (completely hypothetical example; not related to my coursework at all)? If you press the button, you will switch to your neatly encapsulated function or class that implements pipes. But what if you want to go back to a pipe-less operating system, just to check for correctness or performance? You may not be able to, if you have pipe initialization and destruction code lying around, and if processes have information about pipes they may own.</p>
-<p>That’s a negative exemplar. What would it take to make it a positive exemplar? (Note that it is controllable because it depends just on the code and not on my mental model.) You’ll probably need a macro because you will need to add or remove pipes from the struct definition of processes based on a variable. Fine. So, a macro <code>PIPES_ENABLED</code> that enables or disables pipes in the struct definition of processes and a boolean flag (set by the macro) that toggles between a version of the initialization or destruction code that uses pipes and a version that doesn’t. Now, you can switch between the pipes version and the non-pipes version with a single button press. And your default for every pipes-based function would be the original non-pipes version, such that you the boolean flag for pipes chooses between them.</p>
+<p>Test: One concrete example is that of a function abstraction:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">squarePlusCube x <span class="fu">=</span> x <span class="fu">*</span> x <span class="fu">+</span> x <span class="fu">*</span> x <span class="fu">*</span> x
+print <span class="fu">$</span> squarePlusCube <span class="dv">7</span></code></pre></div>
+<p>Imagine if you didn’t have function abstraction:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">print <span class="fu">$</span> <span class="dv">7</span> <span class="fu">*</span> <span class="dv">7</span> <span class="fu">+</span> <span class="dv">7</span> <span class="fu">*</span> <span class="dv">7</span> <span class="fu">*</span> <span class="dv">7</span></code></pre></div>
+<p>Now, if you wanted to change 7 to 8, you’d have to go and change all five occurrences, which you can do with a search-and-replace here, but not when the variable is distributed over a large library. Contrast that to changing <code>squarePlusCube 7</code> to <code>squarePlusCube 8</code>. That’s one-fifth the effort.</p>
+<p>Test: Another example is when the variable is not duplicated but is buried deep in a function:</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> f(W, N):
+	<span class="cf">for</span> i <span class="op">in</span> <span class="bu">xrange</span>(<span class="dv">0</span>, N):
+		<span class="cf">for</span> w <span class="op">in</span> <span class="bu">xrange</span>(W<span class="op">/</span><span class="dv">2</span>, wt_list[i] <span class="op">-</span> <span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>):
+			dp_arr[w] <span class="op">=</span> <span class="bu">min</span>(dp_arr[w <span class="op">-</span> wt_list[i]], dp_arr[w])
+f(<span class="bu">sum</span>(wt_list), <span class="bu">len</span>(wt_list))</code></pre></div>
+<p>If you wanted W to be the product of <code>wt_list</code>, you could change it right in the function call. Contrast that to:</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> f(N):
+	<span class="cf">for</span> i <span class="op">in</span> <span class="bu">xrange</span>(<span class="dv">0</span>, N):
+		<span class="cf">for</span> w <span class="op">in</span> <span class="bu">xrange</span>(<span class="bu">sum</span>(wt_list)<span class="op">/</span><span class="dv">2</span>, wt_list[i] <span class="op">-</span> <span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>):
+			dp_arr[w] <span class="op">=</span> <span class="bu">min</span>(dp_arr[w <span class="op">-</span> wt_list[i]], dp_arr[w])
+f(<span class="bu">len</span>(wt_list))</code></pre></div>
+<p>You would have to search for the place where <code>sum(wt_list)</code> is being used. That takes time (and is error-prone).</p>
+<p>Test: You’re applying a diff throughout the program. In the function abstraction case, the diff was just a one-variable change. In the general case, it could be many variables and many lines of code changed.</p>
+<p>Contrast</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">sumOfEvenSquares <span class="fu">=</span> sum <span class="fu">.</span> map square <span class="fu">.</span> filter even</code></pre></div>
+<p>to</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">productOfOddCubes <span class="fu">=</span> product <span class="fu">.</span> map cube <span class="fu">.</span> filter odd</code></pre></div>
+<p>It’s not just one value or even one function name that changes. It’s three function names in three different positions.</p>
+<p>Imagine if you didn’t name those two chains separately. Instead, you had just <code>f = sum . map square . filter even</code>. Now, if you wanted to switch to the other formulation, you’d have to go in and <strong>apply the diff manually</strong>. Change <code>sum</code> to <code>product</code>, <code>square</code> to <code>cube</code>, and <code>even</code> to <code>odd</code>. That’s three times as much work as changing <code>sumOfEvenSquares</code> to <code>productOfOddCubes</code>.</p>
+<p>Test: Hardware versions vs software versions. There are two ways you can go back to a previous version of your program. You can either go up your version control history and retrieve the old version or you can change a flag so that the program executes a different function. The problem with the former is that the old version may no longer type-check given the other changes you have made.</p>
+<p>For example, if your old version was <code>sumOfEvenSquares = f . sum . map square . filter even</code>, and you’ve later changed <code>f</code> so that it accepts a String, not an Integer, then <code>sumOfEvenSquares</code> won’t work as it is. You’ll have to <strong>re-apply the diff</strong> for <code>f</code> that you applied to <code>productOfOddCubes</code>. If <code>sumOfEvenSquares</code> were part of your code, your type-checker would warn you about it when you changed <code>f</code>.</p>
+<p>More importantly, you can’t switch between the two versions with one change in the input. You have to search the version control history and apply the diff, which takes more steps.</p>
+<p>Test: One alternative to keeping just the diffs is keeping the inputs in their entirety. So, instead of having one high-level function <code>map f = foldr ((:) . f) []</code> and passing different arguments like in <code>map sum</code> and <code>map product</code>, you would keep two functions <code>mapSum = foldr ((:) . sum) []</code> and <code>mapProduct = foldr ((:) . product) []</code>. Now, this too allows you to switch between the two versions with just one change. However, it duplicates the code! Tomorrow, if you decide to update the function to work on all functors, not just lists, you would have to update both the versions, for double the work.</p>
+<p>Test: In OOP, you would do this via interfaces or inheritance, where you simply switch the class that is implementing the interface, and the caller code is none the wiser.</p>
+<p>Consider</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Employee {
+    <span class="kw">var</span> salary = <span class="dv">100000</span>
+}
+
+<span class="kw">class</span> Programmer <span class="kw">extends</span> Employee {
+    <span class="kw">var</span> numBugsFixed = <span class="dv">9001</span>
+}</code></pre></div>
+<p>We can switch between a Programmer type and an Employee type just by typing the different name. Keeping the two versions in their entirety would look like:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Employee {
+    <span class="kw">var</span> salary = <span class="dv">100000</span>
+}
+
+<span class="kw">class</span> Programmer {
+	<span class="kw">var</span> salary = <span class="dv">100000</span>
+    <span class="kw">var</span> numBugsFixed = <span class="dv">9001</span>
+}</code></pre></div>
+<p>So, inheritance allows us to switch between two largely similar types using just a change in their name instead of a tedious change in all the differing instance variables and methods.</p>
+<p>Of course, it also helps in polymorphism. How does that save us effort when switching between versions? It means we don’t have to change the caller’s type. One less thing!</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> fooEmployee: Employee = <span class="kw">new</span> <span class="fu">Employee</span>()
+<span class="co">// to</span>
+<span class="kw">val</span> fooEmployee: Employee = <span class="kw">new</span> <span class="fu">Programmer</span>()</code></pre></div>
+<p>Without polymorphism, we would also have to change the variable’s type:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> fooEmployee: Employee = <span class="kw">new</span> <span class="fu">Employee</span>()
+<span class="co">// to</span>
+<span class="kw">val</span> fooEmployee: Programmer = <span class="kw">new</span> <span class="fu">Programmer</span>()</code></pre></div>
+<p>Test: Higher-order functions allow you to switch between two functions without much effort, as in <code>map sum</code> and <code>map product</code>.</p>
+<h3 id="todo-implementing-in-isolation">TODO: Implementing in Isolation</h3>
+<p>When you implement in isolation, you get a separate function. Now, that’s a clear diff from the existing code, so any failed tests must be because of that function. You can isolate the input that goes into that function and change it till it returns the right output. This makes debugging easier. Next, it implements only one feature of the spec, which means that you can write a test for just that feature, with a direct input and a direct output. You can try to pass that test by changing only this function, not any other part of the code.</p>
+<p>How would you get one without the other? Simple.</p>
+<p>For one, implement it in isolation but insert it into the rest of the code instead of keeping it as a separate function or class. Now, debugging failed tests will be harder because you will have to look at a lot of changes in a lot of places.</p>
+<p>Conversely, have it as a separate function but implement it using a coarse end-to-end test. Now, debugging of failed tests will be easier because you will know you’ve changed only that one function or class, but implementing will be harder, I think, because your new test could fail because of any of the features involved.</p>
+<hr />
+<p>Test: [2019-07-30 Tue] Was trying to debug my implementation of choose. Actually, no, I wasn’t debugging, since I had never passed the test. I was actually trying to implement the function and pass the test for the first time.</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span class="kw">let</span> <span class="kw">rec</span> choose n xs = <span class="kw">match</span> n, xs <span class="kw">with</span>
+  | <span class="dv">0</span>, _ -&gt; []
+  | n, [] -&gt; []
+  | n, x::xs -&gt; List<span class="kw">.</span>append (List<span class="kw">.</span>map (<span class="kw">fun</span> ys -&gt; x::ys) (choose (n<span class="dv">-1</span>) xs)) (choose n xs);;
+
+<span class="kw">assert</span> (choose <span class="dv">2</span> [<span class="st">&quot;a&quot;</span>;<span class="st">&quot;b&quot;</span>;<span class="st">&quot;c&quot;</span>;<span class="st">&quot;d&quot;</span>] = [[<span class="st">&quot;a&quot;</span>; <span class="st">&quot;b&quot;</span>]; [<span class="st">&quot;a&quot;</span>; <span class="st">&quot;c&quot;</span>]; [<span class="st">&quot;a&quot;</span>; <span class="st">&quot;d&quot;</span>]; [<span class="st">&quot;b&quot;</span>; <span class="st">&quot;c&quot;</span>]; [<span class="st">&quot;b&quot;</span>; <span class="st">&quot;d&quot;</span>]; [<span class="st">&quot;c&quot;</span>; <span class="st">&quot;d&quot;</span>]]);;</code></pre></div>
+<p>Given that this was implementation of a new feature, I needed to focus on making the test narrower.</p>
+<p>Tried <code>assert (choose 1 [&quot;a&quot;;&quot;b&quot;] = [[&quot;a&quot;]; [&quot;b&quot;]]);;</code> but even that failed! Tried <code>assert (choose 1 [&quot;a&quot;] = [[&quot;a&quot;]]);;</code>, which also failed. Finally realized that there must be something wrong with the base case, so I tried <code>assert (choose 0 [&quot;a&quot;] = [[]]);;</code>, which pinpointed the exact branch in which the problem lied.</p>
+<p>So, finer feedback helped when implementing. Otherwise, I would have been changing multiple things trying to pass the original coarse test.</p>
+<p>Test: [2019-07-30 Tue] Trying to pass this test.</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span class="kw">assert</span> (possible_groups [<span class="st">&quot;a&quot;</span>;<span class="st">&quot;b&quot;</span>;<span class="st">&quot;c&quot;</span>;<span class="st">&quot;d&quot;</span>] [<span class="dv">2</span>;<span class="dv">1</span>] = [
+      [[<span class="st">&quot;a&quot;</span>; <span class="st">&quot;b&quot;</span>]; [<span class="st">&quot;c&quot;</span>]]; [[<span class="st">&quot;a&quot;</span>; <span class="st">&quot;c&quot;</span>]; [<span class="st">&quot;b&quot;</span>]]; [[<span class="st">&quot;b&quot;</span>; <span class="st">&quot;c&quot;</span>]; [<span class="st">&quot;a&quot;</span>]];
+      [[<span class="st">&quot;a&quot;</span>; <span class="st">&quot;b&quot;</span>]; [<span class="st">&quot;d&quot;</span>]]; [[<span class="st">&quot;a&quot;</span>; <span class="st">&quot;c&quot;</span>]; [<span class="st">&quot;d&quot;</span>]]; [[<span class="st">&quot;b&quot;</span>; <span class="st">&quot;c&quot;</span>]; [<span class="st">&quot;d&quot;</span>]];
+      [[<span class="st">&quot;a&quot;</span>; <span class="st">&quot;d&quot;</span>]; [<span class="st">&quot;b&quot;</span>]]; [[<span class="st">&quot;b&quot;</span>; <span class="st">&quot;d&quot;</span>]; [<span class="st">&quot;a&quot;</span>]]; [[<span class="st">&quot;a&quot;</span>; <span class="st">&quot;d&quot;</span>]; [<span class="st">&quot;c&quot;</span>]];
+      [[<span class="st">&quot;b&quot;</span>; <span class="st">&quot;d&quot;</span>]; [<span class="st">&quot;c&quot;</span>]]; [[<span class="st">&quot;c&quot;</span>; <span class="st">&quot;d&quot;</span>]; [<span class="st">&quot;a&quot;</span>]]; [[<span class="st">&quot;c&quot;</span>; <span class="st">&quot;d&quot;</span>]; [<span class="st">&quot;b&quot;</span>]]]);;</code></pre></div>
+<p>It’s pretty big when implementing a new, unfamiliar feature. I need to test each part of the feature separately.</p>
+<p>Took me a total of 53 minutes.</p>
 <h3 id="have-a-first-class-default">Have a First-Class Default</h3>
 <p>Question: What if you’re not creating alternatives, like two types of schedulers, but rather just one algorithm, like pipes for an operating system?</p>
 <p>Question: What kind of change are you making at each point? What was the program like earlier and what is it like after the change?</p>
@@ -144,8 +214,9 @@
 <p>[2019-03-02 Sat] However, that’s a negative exemplar. I don’t have a positive exemplar for a default stub. Specifically, when I say that the test must pass when I implement the feature and fail when I switch to the default stub, it’s not clear if I should switch to the pipes version just without this one small feature or if I should switch to the version without pipes at all.</p>
 <p>I think you should have a way to get back to any point along your tree of development. Specifically, if you’ve added features <code>A + B + C</code>, you should be able to go back to <code>A + B</code> or <code>A</code>. You may not be able to go to <code>A + C</code> since that requires that C doesn’t depend on B at all, but that’s fine. And just going back in your version control history may not do the trick because you may have changed A to A’ sometime later and would want to go to <code>A' + B</code> and not your original <code>A + B</code>.</p>
 <p>This needn’t be as elaborate as a global flag for every feature you add. Maybe if you implement <code>pipdelete</code> as an isolated function and create a stub <code>pipdelete_empty</code> that does nothing, you can pass in the latter during testing to switch to your implementation without <code>pipdelete</code>.</p>
+<p>Test: What happens when you’re starting out with a new feature, like pipes in an operating system (completely hypothetical example; not related to my coursework at all)? If you press the button, you will switch to your neatly encapsulated function or class that implements pipes. But what if you want to go back to a pipe-less operating system, just to check for correctness or performance? You may not be able to, if you have pipe initialization and destruction code lying around, and if processes have information about pipes they may own.</p>
+<p>That’s a negative exemplar. What would it take to make it a positive exemplar? (Note that it is controllable because it depends just on the code and not on my mental model.) You’ll probably need a macro because you will need to add or remove pipes from the struct definition of processes based on a variable. Fine. So, a macro <code>PIPES_ENABLED</code> that enables or disables pipes in the struct definition of processes and a boolean flag (set by the macro) that toggles between a version of the initialization or destruction code that uses pipes and a version that doesn’t. Now, you can switch between the pipes version and the non-pipes version with a single button press. And your default for every pipes-based function would be the original non-pipes version, such that you the boolean flag for pipes chooses between them.</p>
 <h3 id="upshot">Upshot</h3>
-<p>What do all those straitjackets get you? I’m not fully sure. We’ll find out the usual way: good ol’ fashioned experimentation.</p>
 <p><strong>Hypothesis</strong>: Single, easily-reversible change -&gt; any behaviour that is in the program with the feature on and not in the program with the feature off must be caused (at least partly) by the feature.</p>
 <p>Contrast that to shotgun change, where you aren’t sure which change broke your code.</p>
 <p>Hypothesis: First-class objects -&gt; make it easier to switch.</p>
@@ -3733,7 +3804,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: June 23, 2019</div>
+<div class="info">Last modified: August  3, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
