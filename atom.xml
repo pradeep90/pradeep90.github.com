@@ -8,16 +8,8 @@
         <name>S Pradeep Kumar</name>
         <email>none@ofyourbiz.com</email>
     </author>
-    <updated>2019-08-09T00:00:00Z</updated>
+    <updated>2019-07-26T00:00:00Z</updated>
     <entry>
-    <title>What is an Explanation?</title>
-    <link href="http://pradeep90.github.io//what-is-an-explanation.html" />
-    <id>http://pradeep90.github.io//what-is-an-explanation.html</id>
-    <published>2019-08-09T00:00:00Z</published>
-    <updated>2019-08-09T00:00:00Z</updated>
-    <summary type="html"><![CDATA[What is a correct explanation? What is a wrong explanation?]]></summary>
-</entry>
-<entry>
     <title>Adjectives from the Future: The Danger of Result-based Descriptions</title>
     <link href="http://pradeep90.github.io//result-based-description.html" />
     <id>http://pradeep90.github.io//result-based-description.html</id>
@@ -87,6 +79,14 @@
     <id>http://pradeep90.github.io//Rationalists-Taboo.html</id>
     <published>2015-10-29T00:00:00Z</published>
     <updated>2015-10-29T00:00:00Z</updated>
+    <summary type="html"><![CDATA[This is the post description]]></summary>
+</entry>
+<entry>
+    <title>Think Narrowly</title>
+    <link href="http://pradeep90.github.io//Think-Narrowly.html" />
+    <id>http://pradeep90.github.io//Think-Narrowly.html</id>
+    <published>2015-10-28T00:00:00Z</published>
+    <updated>2015-10-28T00:00:00Z</updated>
     <summary type="html"><![CDATA[This is the post description]]></summary>
 </entry>
 
