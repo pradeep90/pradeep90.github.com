@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="icon" type="image/png" href="./images/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="./images/favicon-16x16.png" sizes="16x16" />
+        <title>Narrow the Diff - SPK's Rationality Essays</title>
+        <link rel="stylesheet" type="text/css" href="./css/default.css" />
+        <link rel="stylesheet" type="text/css" href="./css/highlight.css" />
+
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+	<!-- <script type="text/javascript" src="/js/header-links.js"></script> -->
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+	<link href="atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM/RSS Feed" />
+
+	<!-- Google Analytics stuff -->
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-51321929-1', 'pradeep90.github.io');
+	  ga('send', 'pageview');
+
+	</script>
+
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="./">SPK's Rationality Essays</a>
+            </div>
+            <div id="navigation">
+                <a href="./">Home</a>
+                <a href="./notes.html">Notes</a>
+                <!-- <a href="/about.html">About</a> -->
+                <a href="./archive.html">Archive</a>
+		<a href="./atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM/RSS Feed">RSS</a>
+            </div>
+        </div>
+
+        <div id="content">
+          <h1 id="post-title">Narrow the Diff</h1>
+
+            <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
+
+<h1 id="small-diffs-help-you-find-relevant-factors">Small Diffs help you find Relevant Factors</h1>
+<p>What would convince you that the accelerator pedal is indeed relevant to the speed of a moving car? First of all, we <a href="./explain-a-change.html">saw</a> that we can’t call it a relevant factor or a cause unless we see it changing the output. So, we must observe the speed changing. But what if you turn the steering wheel, blast the horn, and crank up the music at the same time as you pressed the pedal? How would you know that the accelerator was the cause? Maybe the horn did it.</p>
+<p>The ideal way to find out if something is truly a cause is to have one car where the accelerator pedal is pressed without changing anything else and another car where nothing is changed at all. If the car’s speed in the first case is greater than in the second case, you can be reasonably sure that the accelerator pedal was the cause. And, if it is the same in both, then you can say that, at least for that baseline car state, the pedal is not relevant to the car’s speed. This could happen if, say, the fuel tank is empty, the brakes are on, or the pedal has been disconnected. For those baselines, the accelerator pedal is not a relevant factor.</p>
+<p>This is what we would call a controlled experiment. A simpler experiment would be to press the pedal in your car and see if the speed changes. This is less conclusive because there might be some unseen factor, such as the fuel running out, that also changed without your noticing it. If so, your simple experiment would make you think the accelerator pedal slows things down. That wouldn’t happen in a controlled experiment, because both cars would slow down, so you wouldn’t blame the accelerator pedal.</p>
+<p>What happened there was that you got a change in the output variable - the speed of the car - and since there was only one thing that changed in the inputs, you could attribute the change in output to it. The diff, i.e., the set of things that differed between the inputs, was just one variable.</p>
+<p>The smaller the diff, the fewer are the possible causes of any change in the output. For example, suppose you inflated your car’s tires and changed the type of fuel you used and found that your car went faster than before. Was the increase in speed due to the tires or the fuel? You can’t say for sure, but you know it’s one or both of them. You had a diff of only two variables and thus had only two suspects.</p>
+<p>Contrast that to the case where you drive a friend’s car, which is of a different make, different engine, different brand of tires, running on diesel instead of gasoline, and five years old instead of just one year old like your car. If it goes much faster than your car, what is it due to? Is it because of the engine alone? Or the tires too? Perhaps the age of the car also has something to do with it. Suddenly you have a much larger diff and you can’t narrow down the possible causes of the changes. Maybe the tires don’t have anything to do with it. You can’t tell. It won’t help much even if you see a few other cars if they all have large diffs, i.e., changes in many inputs such as the engine, tires, and other kinds of stuff.</p>
+<p>Imagine what it would have been like if you had been shown the changes one at a time, i.e., with a diff of one variable at a time. First, your friend takes your car and adds his engine. You see that your car goes much faster than before, even faster than his original car. So, the engine is an important relevant factor. Then, he adds his tires. No change in speed. Huh. The tires don’t quite matter, <em>given this baseline of engine</em>. Then he somehow adds the grime and dust and wear and tear that would have been added over four more years of usage. You find that it slows down the car to approximately that of his original car. Now, you have a much clearer idea of what’s going on. You know that the difference in engines was a big factor, that the tires were not a relevant factor given the other stuff, and that the wear and tear was a relevant factor. The small diffs helped a lot more than the large diffs in finding the relevant factors.</p>
+<p><strong>Hypothesis</strong>: If we get changes in the output caused by a small diff, we can find out the relevant factors more easily than with a large diff.</p>
+<p>Note that we still don’t have a quantitative model of how exactly the engine affects the speed. All we care about right now is which factors affect the output, not how they affect the output.</p>
+<p>Yes, there is another way of narrowing down the relevant factors. You can come up with a quantitative model, like <code>s = u * t + 1/2 * a * t^2</code>. If its predictions precisely match reality, we can accept those factors as relevant and the model as a good model of the system. However, the problem here is that it’s hard to be conclusive. First of all, if you have a lot of data, you may not be able to find a model that predicts all of it accurately. If you have only a little data, there can be many models that fit it, and some of the models can be very detailed. For example, a model that stores all the input-output pairs seen so far will get 100% accuracy on the data so far, but will probably not do well in the future. This is where things like Bayes theorem and Occam’s Razor come in. They help you distinguish among different models based on their likelihood of producing the data observed and their prior probability. The difficulty of doing that kind of analysis is why it’s crucial to get examples with narrow diffs - they often let you bypass this kind of costly analysis by telling you which factors are relevant and thus eliminating all the models that say those factors are irrelevant.</p>
+<h1 id="close-negative-examples">Close Negative Examples</h1>
+<p>We all know that scientists run controlled experiments to get narrow diffs along with a change in the output. We should do that whenever we can run experiments. But what happens when we can’t experiment and can only observe? Let’s focus on the less-often practiced technique of looking for an existing example that has a small diff. I call such an example as a “close negative example”. “Close” because the diff is small and “negative” because we want a change in the output, so that if we got a positive output (car moving fast), we want a negative output (car not moving fast).</p>
+<p><strong>Example</strong>: Suppose you want to understand how cultures differ in their productivity. You may compare a culture in Europe to one in South America, but the diff would be really large. They might differ in genetics, language, technology, natural resources, and so on. How would you figure out which factors were responsible for which changes in productivity? You would like a much smaller diff.</p>
+<blockquote>
+<p>Scattered over the Pacific Ocean beyond New Guinea and Melanesia are thousands of islands differing greatly in area, isolation, elevation, climate, productivity, and geological and biological resources (Figure 2.1). For most of human history those islands lay far beyond the reach of watercraft. Around 1200 B.C. a group of farming, fishing, seafaring people from the Bismarck Archipelago north of New Guinea finally succeeded in reaching some of those islands. Over the following centuries their descendants colonized virtually every habitable scrap of land in the Pacific. The process was mostly complete by A.D. 500, with the last few islands settled around or soon after A.D. 1000.</p>
+<p>Thus, within a modest time span, enormously diverse island environments were settled by colonists all of whom stemmed from the same founding population. The ultimate ancestors of all modern Polynesian populations <strong>shared essentially the same culture, language, technology, and set of domesticated plants and animals</strong>. Hence Polynesian history constitutes a natural experiment allowing us to study human adaptation, devoid of the usual complications of multiple waves of disparate colonists that often frustrate our attempts to understand adaptation elsewhere in the world.</p>
+<p>– Chapter 2, Guns, Germs, and Steel, Jared Diamond (emphasis mine)</p>
+</blockquote>
+<p>Notice how these examples narrowed the diff by controlling for factors like “culture, language, technology, and set of domesticated plants and animals”. Now, the main differing factors left were the environmental variables:</p>
+<blockquote>
+<p>Contributing to these differences among Polynesian societies were at least six sets of environmental variables among Polynesian islands: island climate, geological type, marine resources, area, terrain fragmentation, and isolation.</p>
+</blockquote>
+<p>The author Jared Diamond basically got a narrow diff along with changes in the output variables. He could analyze the effect of, say, geological type and marine resources on the type of food collection (nonintensive, slash-and-burn agriculture vs irrigation agriculture):</p>
+<blockquote>
+<p>Henderson, Rennell, and the atolls [had] poor soil and limited fresh water. … Polynesians on these and some other islands practiced a nonintensive type of shifting, slash-and-burn agriculture.</p>
+</blockquote>
+<blockquote>
+<p>… Irrigation agriculture reached its peak on the westernmost Hawaiian islands of Kauai, Oahu, and Molokai, which were big and wet enough to support not only large permanent streams but also large human populations available for construction projects.</p>
+</blockquote>
+<p>He could then analyze the effect of a factor such as food collection (“subsistence”) on an output variable like population density:</p>
+<blockquote>
+<p>As a result of all this environmentally related variation in subsistence, human population densities … varied greatly over Polynesia. At the lower end were the hunter-gatherers of the Chathams (only 5 people per square mile) and of New Zealand’s South Island, and the farmers of the rest of New Zealand (28 people per square mile). In contrast, many islands with intensive agriculture attained population densities exceeding 120 per square mile.</p>
+</blockquote>
+<p>He didn’t have to worry about genetic or cultural differences in ability to farm or anything like that because they shared a lot of their genes and all descended from people who could farm. Because he had narrowed the diff, he could attribute the changes to the few factors that varied.</p>
+<p>Note, however, that you can’t attribute the entire difference in population density to the variation in subsistence. Why not? Because it’s not the only factor that varies among them. It may be the most important one concerning population density, but things like disease prevalence (or whatever) must have also affected the population density. So, Jared Diamond may be overreaching when he says that the variation in population density is “as a result of all this environmentally related variation in subsistence”.</p>
+<p>Also note that the environmental differences matter for the <em>given baseline of genes</em>. If the people on the islands had had some genetic mutations that made them be born without limbs, the differences in soil type or fresh water availability wouldn’t have mattered much.</p>
+<p>Even after noting those caveats, this is still a fantastic set of changes that narrows the diff between cultures and allow us to see the effect of certain relevant factors on productivity. This is what we should try to do when analyzing a domain where we can’t run a controlled experiment: get a narrow diff.</p>
+<p><strong>Example</strong>: Consider this fictional example from House M.D. Some babies in the maternity ward got sick with similar symptoms and he’s not able to diagnose them. There are so many possibilities; it could be a virus, bacterial infection, something called “MRSA”, contaminated food or water source, and so on. And there isn’t enough time to narrow it down by running the usual tests, because “[c]ultures will take 48 hours, might as well be post-mortem.”</p>
+<p>The problem is that there is quite a large diff between the environment of the sick babies here and that of normal babies that you could find anywhere else. These babies were born in this maternity ward to these mothers at this time. The other babies were born in some other maternity ward to other mothers at other times. A bacterial infection, if any, could be in this particular ward, or it could have spread from one mother to the other babies. The same goes for the different food sources in different hospitals. You would have to compare a lot of things between the two sets of babies.</p>
+<p>How can Dr. House narrow down the relevant factors?</p>
+<blockquote>
+<p>House: Wait a second. The kids on the floor <strong>who didn’t get sick</strong>. Are any of them still in the hospital?</p>
+<p>Wilson: They got moved to the fifth floor. But they’re probably all checked out by now.</p>
+<p>Cuddy: No, the Lindpert boy had a bit of jaundice. He should be checking out today.</p>
+<p>House: I want to test his blood, too.</p>
+<p>Cuddy: Why?</p>
+<p>House: ’Cause we need all the information we can get. The healthy kid can be our control group.</p>
+<p>– <a href="http://community.livejournal.com/clinic_duty/1082.html">S01E04, Maternity</a>, House M.D. (emphasis mine)</p>
+</blockquote>
+<p>Instead of focusing only on the babies who got sick, he asked for the close negative example of the babies born in the same ward who didn’t get sick. That way he could control for factors like maternity ward (it’s the same ward), food source (probably the same food source), and pediatrician (probably the same guys). Now, he’s got a change in the output (sick vs healthy) along with a smaller diff, which will eventually lead him to the diagnosis.</p>
+<p><strong>Example</strong>: Take “talent”. You see a soccer star who can effortlessly dodge three defenders and score a goal, whereas when you try, you get deprived of the ball before you know what’s happening. What causes his superior soccer skill? The diff is so large! His upbringing was different from yours, as were his genetics and soccer coach and total hours of practice and matches played and his position and so on. What are the relevant factors?</p>
+<p>We want a close negative example, one where the other soccer player is pretty similar but slightly less skilled. But if you compare one person to another, you’ll have a large diff because so many unrelated things differ, from the brand of soccer boots to favorite movies.</p>
+<p>The best bet for getting a small diff is to compare a person to himself from the past. Suddenly, genes and upbringing and height and so on are pretty much all the same. Even then, his technique or match experience or practice hours may change a lot over time. So, look at a change in his skill that occurred over a short period of time. Only so many things can change in a few weeks. Figure out what it was.</p>
+<p>In other words, he went from practically zero skill to world-class skill in increments. Find out the factors that caused those increments and you’ll know the relevant factors and their precise impact.</p>
+<p><strong>Example</strong>: The same principle applies to economic policies. It can be hard to compare two countries because they may differ not just in their economic policies but also in their natural resources and current GDP and major industrial sectors and infrastructure and culture. What to do? How to narrow the diff?</p>
+<p>Look at the same country before and after a new policy. Not much would have changed about its natural resources or infrastructure. Even if you can’t compare a country against itself, you can compare very similar countries. Instead of comparing America and North Korea, compare South Korea and North Korea.</p>
+<p><strong>Example</strong>: Debugging basically runs on the idea of small diffs. Suppose you change a program in seven different places and a previously-passing test now fails. Which change was the culprit? It can be hard to tell. The diff is pretty large. But imagine if you had made just one change and ran the test. There is only one possible culprit.</p>
+<blockquote>
+<p>[When] most of the change is small and incremental, … [it] means you know what to test most carefully when you’re about to release software: the last thing you changed.</p>
+<p>– <a href="http://paulgraham.com/road.html">The Other Road Ahead</a>, Paul Graham</p>
+</blockquote>
+<p><strong>Example</strong>: This kind of small diff debugging applies outside programming. I was once utterly confused by a math proof in grad school. It was the end of a long class where the professor had covered many new concepts and he had gone several steps forward with this new proof. I couldn’t see how the steps followed. When he finished and asked if everyone got it, I just said that I was very confused. A lesser professor may have told me to go over the proof when I had time and come back to him if I still didn’t get it. But he didn’t.</p>
+<p>He asked me what sounded like a strange question: which part is confusing? I was like, “The whole thing. I’m just not able to follow it.” But he wouldn’t let me get away with such a statement. He just brushed aside my despairing statement and pointed to the first step: Is this part clear? I nodded reluctantly, but felt like he was wasting time. The proof was just too confusing. What was the point of these questions? He then kept going down step by step till we found out the exact point at which I had gotten lost. Suddenly the diff had narrowed! Instead of the whole proof seeming confusing, it was now just one step. Once I learned about that one step, the rest was a piece of cake. I couldn’t believe I’d ever thought it was too hard to understand.</p>
+<p>The lesson I drew from that incident was to be specific about your confusion. Get a narrow diff between the text that seems not confusing and the text that seems confusing. When you say that the whole thing is confusing, you leave it vague as to which factors are relevant in your being stuck. It can seem like you need an effort proportional to the size of the whole thing, which can make you give up. But when you say that I was able to follow up to this point and then I wasn’t able to follow any more, you know exactly which factor was relevant to your struggle and you can focus your attack on that one factor. It seems far more doable.</p>
+<h1 id="notes">Notes</h1>
+<p>This is usually called controlling for the other variables. I focus on the size of the diff because it allows you to predict how many potentially relevant factors will remain. Saying that you must control for other variables is not as precise. In an experiment, you try to fix the rest of the inputs. In an observation, you try to compare things that have most of the other input factors as the same.</p>
+<p>We’re ignoring prior knowledge for now. So, for the sake of our examples, nobody told you that the accelerator pedal accelerates the car. You have to figure it out yourself. This simulates situations where you have to explain by yourself how a system works.</p>
+
+<div class="info">Created: August 16, 2019</div>
+<div class="info">Last modified: August 20, 2019</div>
+<div class="info">Status: in-progress</div>
+<div class="info"><b>Tags</b>: narrow</div>
+
+<br />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'spkrationalitytrainingground'; // required: replace example with your forum shortname
+    var disqus_identifier = '/toggle-factor-youre-curious-about.html';
+    var disqus_title = 'Narrow the Diff';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+        </div>
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>
