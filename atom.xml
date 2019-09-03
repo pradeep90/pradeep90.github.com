@@ -8,16 +8,8 @@
         <name>S Pradeep Kumar</name>
         <email>none@ofyourbiz.com</email>
     </author>
-    <updated>2019-08-26T00:00:00Z</updated>
+    <updated>2019-08-21T00:00:00Z</updated>
     <entry>
-    <title>Look for Other Differing Factors</title>
-    <link href="http://pradeep90.github.io//look-for-other-differing-factors.html" />
-    <id>http://pradeep90.github.io//look-for-other-differing-factors.html</id>
-    <published>2019-08-26T00:00:00Z</published>
-    <updated>2019-08-26T00:00:00Z</updated>
-    <summary type="html"><![CDATA[What happens when you don't look for other differing factors?]]></summary>
-</entry>
-<entry>
     <title>Toggle the Factor you're Curious about</title>
     <link href="http://pradeep90.github.io//toggle-curious-factor.html" />
     <id>http://pradeep90.github.io//toggle-curious-factor.html</id>
@@ -88,6 +80,14 @@
     <published>2017-05-09T00:00:00Z</published>
     <updated>2017-05-09T00:00:00Z</updated>
     <summary type="html"><![CDATA[This is the post description]]></summary>
+</entry>
+<entry>
+    <title>Reducing Information Theory to Probability Theory</title>
+    <link href="http://pradeep90.github.io//reducing-information-theory.html" />
+    <id>http://pradeep90.github.io//reducing-information-theory.html</id>
+    <published>2016-01-08T00:00:00Z</published>
+    <updated>2016-01-08T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Information and entropy are not essential concepts. They can be reduced to probability theory.]]></summary>
 </entry>
 
 </feed>
