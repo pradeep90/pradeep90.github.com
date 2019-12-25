@@ -109,6 +109,10 @@
 <p>For one, you can’t change multiple lines of code within some other function. Because then, if you wanted to roll back those changes, you would have to edit multiple lines.</p>
 <p><strong>Corollary</strong>: Any change you make must be encapsulated within a new function before you run the program.</p>
 <p>Now, what if you wanted to switch from scheduler A to scheduler B? Sure, A is within a function that you can comment out (or in a class method that you can change at runtime via polymorphism). But B could be a bunch of lines of code strewn across your project. So, to switch to B, you would have to uncomment all those lines. Not allowed.</p>
+<p>Hypothesis: Adding a new feature in an encapsulated way gives you a high-level variable that you can debug more efficiently. If the code fails after adding it, you can try toggling it quickly. If the code now passes, then at least one culprit is within the new code. You have narrowed down the suspects to the new code. If the code fails even without the new code, then you don’t have to suspect it unduly.</p>
+<p>I guess the difference is in the speed with which you can eliminate factors. In the encapsulated case, it takes one step to eliminate or narrow it down to the newly-added code. In the shotgun case, it takes several steps to toggle all the newly-added lines of code and eliminate or narrow it down to them.</p>
+<p>Conservative-focusing gives you guaranteed information about a variable. A high-level variable allows you to get guaranteed information about a bunch of variables. Your alternatives are to (a) toggle a bunch of variables in one step using a high-level variable, (b) toggle a bunch of variables manually in several steps, or (c) toggle one variable manually in one step.</p>
+<p>I suspect that the option (b) of taking several steps to get one piece of feedback will not happen too often. Options (a) and (c) should be fine because every step gets you feedback. It’s just that (c) eliminates factors too slowly and will thus require a lot more iterations before hitting the right answer.</p>
 <hr />
 <p>Test: [2019-03-02 Sat] I can generate with a simple command two versions of a midterm exam that I designed: one with just the questions and one with the questions and answers. All I have to say is <code>make midterm-exam.pdf</code> and <code>make midterm-exam-solutions.pdf</code> to get the two versions. I don’t need to go in and comment out the answer each time I want to get just the questions. I just wrap the answers in a macro and disable the printing of stuff within that macro when I do <code>make midterm-exam.pdf</code>.</p>
 <p>Test: [2019-03-02 Sat] I could turn Laplacian smoothing on or off in my Naive Bayes implementation by changing its flag. I didn’t have to go to each place that differed based on whether smoothing was on or off (including the test code).</p>
@@ -3805,7 +3809,7 @@ reverse<span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</code><
 <p>And I know this can be done because we did it for the <code>toDecimal</code> problem using the definition of <code>toNaturalNumber</code> and the property <code>toNaturalNumber . toDecimal = id</code>.</p>
 
 <div class="info">Created: October 20, 2017</div>
-<div class="info">Last modified: September 28, 2019</div>
+<div class="info">Last modified: December 24, 2019</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, one-button</div>
 
