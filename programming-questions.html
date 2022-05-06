@@ -64,6 +64,17 @@
 <p>The dependent function space (<code>forall</code>) allows the range to depend on the domain. For example, <code>id</code> would be <code>forall a :: * . a -&gt; a</code>. Give me an <code>a</code> of base type <code>*</code> and a value of that type <code>a</code> and I will return a value of that type <code>a</code>. (h/t <a href="https://www.andres-loeh.de/LambdaPi/LambdaPi.pdf">LambdaPi</a>)</p>
 <p>Similarly, we can represent the family of types <code>Vec1 a</code>, <code>Vec2 a a</code>, and so on using some function that takes an Int and returns the appropriate Vec. But we saw that ordinary functions don’t let the range depend on the domain. So, we need a dependent function. Specifically, <code>forall a :: * . forall n :: Nat . Vec a n</code>. So, the <code>forall a . b</code> is just a more permissive version of <code>a -&gt; b</code>.</p>
 <p>Finally, <code>id</code> for Vecs can be typed as <code>id :: forall a :: * . forall n :: Nat . Vec a n -&gt; Vec a n</code>. The last part is just an ordinary function since the range does not depend on the domain. However, we can still write it as a dependent function: <code>id :: forall a :: * . forall n :: Nat . forall v :: Vec a n . Vec a n</code>. All of a sudden, what was a function is now a type.</p>
+<h1 id="prolog">Prolog</h1>
+<blockquote>
+<p>Logic programming … is based upon the following thesis: predicate logic (calculus) is a useful language for representing knowledge.</p>
+<p>– Prolog by Example, page 12</p>
+</blockquote>
+<p>(What do you mean by “useful” language?)</p>
+<blockquote>
+<p>Logic programming style is achieved in full by taking into account Kowalski’s equation (the main thesis of logic programming):</p>
+<p>Algorithm = Logic (specifications) + Control (declarations of logical commitment)</p>
+<p>– Prolog by Example, page 16</p>
+</blockquote>
 <h1 id="questions">Questions</h1>
 <p>What is Emscripten?</p>
 <p>How to build and run a program with Docker?</p>
@@ -78,7 +89,7 @@
 <p>What is the use of holes?</p>
 
 <div class="info">Created: July 30, 2019</div>
-<div class="info">Last modified: August 29, 2019</div>
+<div class="info">Last modified: May  5, 2022</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, questions</div>
 
