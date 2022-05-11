@@ -115,6 +115,32 @@
 <p>This part of the wiki (https://en.wikibooks.org/wiki/Haskell/Understanding_arrows#Static_and_dynamic_parsers) talks about using static and dynamic parsers to prevent space leaks.</p>
 <p><strong>Hypothesis</strong>: Arrows allow you to combine two different types of parsers and treat them as one.</p>
 <p>Couldn’t you do that with monads? Not sure. Haven’t thought it through.</p>
+<p>Test: [2022-05-09 Mon] Reading The Fun of Programming, edited by Jeremy Gibbons and Oege de Moor.</p>
+<p>Apparently, an Arrow is a Category with a one-sided product function, called <code>first</code>.</p>
+<pre><code>class Category c where
+    id :: c a a
+	(&gt;&gt;&gt;) :: c a b -&gt; c b d -&gt; c a d</code></pre>
+<p>They need to satisfy identity and associativity.</p>
+<pre><code>class Arrow c where
+    pure :: (a -&gt; b) -&gt; c a b
+	(&gt;&gt;&gt;) :: c a b -&gt; c b d -&gt; c a d
+	first :: c a b -&gt; c (a, d) (b, d)</code></pre>
+<p><code>first</code> means that it took an arrow from a to b and turned it into an arrow from (a, d) to (b, d).</p>
+<p><code>idA</code> is uniquely determined by the <code>pure id</code>.</p>
+<p>Arrow instance for functions:</p>
+<pre><code>class Arrow (-&gt;) where
+    pure :: (a -&gt; b) -&gt; (a -&gt; b)
+	(&gt;&gt;&gt;) :: (a -&gt; b) -&gt; (b -&gt; d) -&gt; (a -&gt; d)
+	first :: (a -&gt; b) -&gt; (a, d) -&gt; (b, d)</code></pre>
+<p>Arrow instance for <code>State</code>:</p>
+<pre><code>newtype State s i o = ST ((s, i) -&gt; (s, o))</code></pre>
+<pre><code>class Arrow (State s) where
+    pure :: (i -&gt; o) -&gt; (State s i o)
+	(&gt;&gt;&gt;) :: (State s i o) -&gt; (State s o o2) -&gt; (State s i o2)
+	first :: (State s i o) -&gt; (State s (i, d) (o, d))</code></pre>
+<p>Here, <code>pure f</code> is just <code>ST (id x f)</code>. That is, the state part remains unchanged, while <code>f</code> is append to the input.</p>
+<p><code>ST f &gt;&gt;&gt; ST g</code> is just <code>ST (g . f)</code>.</p>
+<p><code>first f</code> is just ``.</p>
 <h1 id="watch-tests">Watch Tests</h1>
 <blockquote>
 <p>stack test –file-watch –fast</p>
@@ -134,7 +160,7 @@
 <p>Recursion schemes: https://www.schoolofhaskell.com/user/bartosz/understanding-algebras; http://www.timphilipwilliams.com/slides.html - Recursion schemes by example (very detailed)</p>
 
 <div class="info">Created: February 17, 2017</div>
-<div class="info">Last modified: September 28, 2019</div>
+<div class="info">Last modified: May 10, 2022</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes, haskell</div>
 
