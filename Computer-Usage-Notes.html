@@ -168,9 +168,12 @@ gpg --export-secret-keys --armor foo@gmail.com</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">$ ./stanford-postagger.sh models/english-left3words-distsim.tagger foo.txt <span class="kw">|</span> <span class="kw">awk</span> <span class="st">'{for(i=1;i&lt;=NF;i++) if($i ~ /_V/) print $i}'</span></code></pre></div>
 <h1 id="iso">ISO</h1>
 <p>To burn an ISO to a USB, use <code>usb-creator-gtk</code>.</p>
+<h1 id="pyenv">pyenv</h1>
+<p>[2022-11-06 Sun] Install using https://github.com/pyenv/pyenv-installer</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">curl https://pyenv.run <span class="kw">|</span> <span class="kw">bash</span></code></pre></div>
 
 <div class="info">Created: August 19, 2015</div>
-<div class="info">Last modified: September 28, 2019</div>
+<div class="info">Last modified: November  6, 2022</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes</div>
 
