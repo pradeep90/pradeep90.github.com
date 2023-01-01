@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="icon" type="image/png" href="./images/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="./images/favicon-16x16.png" sizes="16x16" />
+        <title>Computer Usage Notes - SPK's Rationality Essays</title>
+        <link rel="stylesheet" type="text/css" href="./css/default.css" />
+        <link rel="stylesheet" type="text/css" href="./css/highlight.css" />
+
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+	<!-- <script type="text/javascript" src="/js/header-links.js"></script> -->
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+	<link href="atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM/RSS Feed" />
+
+	<!-- Google Analytics stuff -->
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-51321929-1', 'pradeep90.github.io');
+	  ga('send', 'pageview');
+
+	</script>
+
+	<script type="text/javascript" src="https://fast.fonts.net/jsapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.js"></script>
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="./">SPK's Rationality Essays</a>
+            </div>
+            <div id="navigation">
+                <a href="./">Home</a>
+                <a href="./notes.html">Notes</a>
+                <!-- <a href="/about.html">About</a> -->
+                <a href="./archive.html">Archive</a>
+		<a href="./atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM/RSS Feed">RSS</a>
+            </div>
+        </div>
+
+        <div id="content">
+          <h1 id="post-title">Computer Usage Notes</h1>
+
+            <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
+
+<h1 id="pdf-and-epub-notes">pdf and epub notes</h1>
+<p>The Adobe Acrobat tablet app writes my notes and underlinings to the PDF file itself. So, my notes persist when I copy the PDF file elsewhere.</p>
+<p>Not so with the notes I make in the Google Play Reader. The changes aren’t saved to the file itself. It must be stored as metadata in the reader app (and synced with the cloud).</p>
+<h1 id="manually-install-a-deb-package">Manually install a deb package</h1>
+<p>To install foo.deb:</p>
+<pre><code>sudo dpkg -i foo.deb</code></pre>
+<p>If it fails due to dependency problems:</p>
+<pre><code>sudo apt-get install -f</code></pre>
+<p>(Thanks to <a href="http://askubuntu.com/questions/40779/how-do-i-install-a-deb-file-via-the-command-line">AskUbuntu</a>)</p>
+<h1 id="install-a-font-like-inconsolata">Install a font (like Inconsolata)</h1>
+<pre><code>sudo apt install fonts-inconsolata</code></pre>
+<h1 id="number-of-pages-in-pdfs">Number of Pages in PDFs</h1>
+<p>Useful when trying to calculate the number of slides in a bunch of lectures:</p>
+<pre><code>ls -1 *.pdf | xargs -n 1 pdfinfo | awknum '/Pages/{print $1}' | awksum
+
+# Aliases for awknum and awksum
+
+alias -g awknum=&quot;awk -v FPAT='[0-9]+(\\\\.[0-9]+)?'&quot;
+
+# Sum of the first number on each line.
+alias -g awksum=&quot;awknum '{sum+=\$1}END{print sum}'&quot;</code></pre>
+<h1 id="pdf-from-text">PDF from Text</h1>
+<pre><code>enscript file.txt --output=- | ps2pdf - &gt; file.pdf</code></pre>
+<p>Useful when I need to create a simple one-page PDF with meta details for each folder so that when I collate all the PDFs, I can see the details for each one in order.</p>
+<p>With Pandoc:</p>
+<pre><code>echo 'Foo test' | pandoc -o foo.pdf</code></pre>
+<h1 id="annotate-a-pdf-on-ubuntu">Annotate a PDF on Ubuntu</h1>
+<p>To write text or doodle on a PDF and have those changes persist, use xournal.</p>
+<h1 id="shell">Shell</h1>
+<h2 id="diff-output-of-two-commands">Diff Output of Two Commands</h2>
+<p>Convoluted way to check if a file has duplicate lines (you could just do <code>sort | uniq -d</code>):</p>
+<pre><code>diff &lt;(sort foo.txt) &lt;(sort -u foo.txt)</code></pre>
+<h1 id="zip">Zip</h1>
+<pre><code>zip -r foo.zip foo-directory</code></pre>
+<p>To uncompress a .Z file (which in my case has usually been a non-gzip file):</p>
+<pre><code>tar zxvf foo.Z</code></pre>
+<p>Don’t use <code>gzip -d foo.Z</code>. It gives some weird result.</p>
+<h1 id="pass-input-to-two-commands">Pass Input to Two Commands</h1>
+<p>I want lines with “Foo” to be displayed before the rest. Also, those two sections should be sorted within themselves.</p>
+<pre><code>Baz
+Foo: Ball
+Yoboyz
+Foo: Apple
+Bar</code></pre>
+<p>should show as</p>
+<pre><code>Foo: Apple
+Foo: Baz
+Bar
+Baz
+Yoboyz</code></pre>
+<p>How to do this?</p>
+<p>One <a href="https://unix.stackexchange.com/questions/28503/how-can-i-send-stdout-to-multiple-commands">trick</a>: zsh allows you to redirect output to multiple files (or processes). This uses the MULTIOS option, which is turned on by default.</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span class="kw">cat</span> input.txt <span class="kw">&gt;</span> <span class="kw">&gt;(grep</span> Foo <span class="kw">|</span> <span class="kw">sort)</span> <span class="kw">&gt;</span> <span class="kw">&gt;(grep</span> -v Foo <span class="kw">|</span> <span class="kw">sort)</span></code></pre></div>
+<p>However, the output is non-deterministic. On some runs, I get the Foo section on top; on some other runs, I get it on the bottom.</p>
+<h2 id="sort-on-an-intermediate-data-structure">Sort on an Intermediate Data Structure</h2>
+<p><strong>Lesson</strong>: Whenever you want to sort on some special feature that you will compute from each line (or paragraph or section), create an intermediate stream with that value explicit, sort it, and then delete that value.</p>
+<p>Here you go:</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span class="kw">awk</span> <span class="st">'$0=($0 ~ /Foo/)&quot;\t&quot;$0'</span> sort-on-pass.txt <span class="kw">|</span> <span class="kw">sort</span> -k1,1nr -k2,2 <span class="kw">|</span> <span class="kw">cut</span> -f 2-</code></pre></div>
+<h1 id="ssh-port-forwarding">SSH: Port forwarding</h1>
+<p>First, do:</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span class="kw">ssh</span> -L 31337:cs527-vm0.cs.purdue.edu:8000 mc08.cs.purdue.edu -l <span class="kw">&lt;</span>username<span class="kw">&gt;</span></code></pre></div>
+<p>Then open localhost:31337 in your browser. No need for FoxyProxy.</p>
+<h1 id="gnupg-or-gpg">GnuPG or GPG</h1>
+<p>Tutorial: https://hashrocket.com/blog/posts/encryption-with-gpg-a-story-really-a-tutorial</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span class="co"># --armor makes the gpg output ASCII.</span>
+<span class="kw">echo</span> <span class="st">&quot;hello world&quot;</span> <span class="kw">|</span> gpg --armor --encrypt -r gohanpra@gmail.com <span class="kw">&gt;</span> ~/test/hello-world.gpg
+gpg --output ~/test/hello-world-gpg-output.txt ~/test/hello-world.gpg
+
+<span class="co"># Export public key.</span>
+gpg --export --armor foo@gmail.com
+<span class="co"># Export private key.</span>
+gpg --export-secret-keys --armor foo@gmail.com</code></pre></div>
+<p>Emacs tutorial: https://www.masteringemacs.org/article/keeping-secrets-in-emacs-gnupg-auth-sources</p>
+<p>To read a GPG-encrypted file in Emacs, just visit it and enter your passphrase.</p>
+<p>To create a GPG file in Emacs, just save it as <code>foo.gpg</code>.</p>
+<p>To create a new encrypted version of a file, use <code>: e</code> in Dired (or <code>; e</code> with Evil).</p>
+<p>Since I have only one private key in my keyring, Emacs knows which key to use. I guess that if you have more than one key, you have to mention that at the top of the file.</p>
+<p>Note: You will have to enter your passphrase every time you open a file (after closing it).</p>
+<p>TODO: How to import your private key on a new computer? (Otherwise all your encrypted data will be lost once you lose or format your current hard drive.)</p>
+<h2 id="gpg-agent">gpg-agent</h2>
+<p>Installed <code>gpg-agent</code>.</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span class="co"># Add to .zshrc.</span>
+<span class="ot">GPG_TTY=$(</span>tty<span class="ot">)</span>
+<span class="kw">export</span> <span class="ot">GPG_TTY</span></code></pre></div>
+<p>Test: It doesn’t work right now even after I do <code>gpg-agent --daemon</code>. I’m guessing that’s because I have gpg v1.4 and gpg-agent v2.1.</p>
+<p>For example,</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">gpg -vvv --use-agent -d hello-world.txt.gpg</code></pre></div>
+<p>asked me for my passphrase twice.</p>
+<p>Test: However, when I evaluated the code printed by <code>gpg-agent</code>, then it works. It asks me for my passphrase the first time and then works without it the next time.</p>
+<p>You need to do <code>eval</code> because <code>gpg-agent --daemon</code> prints code to export the value of <code>GPG_AGENT_INFO</code>. Source: https://unix.stackexchange.com/a/407849/</p>
+<p>Test: Check if it gets started automatically on bootup. – It doesn’t.</p>
+<p>Test: Check if you need to add <code>eval $(gpg-agent --daemon)</code> to <code>.xsessionrc</code>. But won’t I be starting gpg-agent twice if gpg starts it too? – Seems to work fine for now.</p>
+<p>Test: How to make Emacs know about the agent? Even when gpg-agent worked in the terminal, Emacs still kept asking me for a passphrase. I’m guessing it’s because it doesn’t know about the agent since I started it before the agent set its environment variables. – Update: It worked without trouble once I changed my <code>.xsessionrc</code>.</p>
+<p>Test: Emacs - if I type in the password from within Emacs, then it asks me again when I open a new file. But if I type in the password outside, it doesn’t ask me again. [Not true. It didn’t ask me again now when I closed and opened a gpg file. Maybe it’s because the agent timed out last time?]</p>
+<p>Test: Continued – it’s been 6 hours since I typed in the password and now I have to type it again. Probably a time-out.</p>
+<h1 id="json-to-csv">JSON to CSV</h1>
+<p>Use <code>jq</code> (h/t http://bigdatums.net/2017/09/30/convert-json-to-csv-with-jq/):</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span class="kw">echo</span> <span class="st">'{&quot;key1&quot;:&quot;val1&quot;, &quot;myarray&quot;:[&quot;abc&quot;, &quot;def&quot;, &quot;ghi&quot;]}'</span> <span class="kw">|</span> jq <span class="st">'[.key1, .myarray[0], .myarray[1]] | @csv'</span></code></pre></div>
+<p>To process an array of objects:</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span class="co"># The quotes are necessary, AFAICS.</span>
+<span class="kw">echo</span> <span class="st">'[{&quot;yo&quot;: {&quot;boyz&quot;: 1}, &quot;foo&quot;: 3}, {&quot;yo&quot;: {&quot;boyz&quot;: 2}, &quot;foo&quot;: 4}]'</span> <span class="kw">|</span> jq -r <span class="st">'.[] | [.yo.boyz, .foo] | @csv'</span></code></pre></div>
+<h1 id="firefox">Firefox</h1>
+<p>“To play audio, you may need to install the required PulseAudio software” error sometimes when I play videos (after upgrading to FF58).</p>
+<p>Fix: Run <code>start-pulseaudio-x11</code> when starting your X session.</p>
+<h1 id="bash">Bash</h1>
+<p>Command without spaces:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">	<span class="dt">{cat,foo.txt}</span><span class="kw">|head</span>
+	<span class="kw">cat</span><span class="ot">${IFS%</span>?<span class="ot">}</span>foo.txt</code></pre></div>
+<h1 id="change-time-zone-from-the-command-line">Change Time Zone from the Command-line</h1>
+<blockquote>
+<p>$ sudo dpkg-reconfigure tzdata</p>
+</blockquote>
+<h1 id="send-in-stdin-where-a-file-is-expected">Send in Stdin where a File is expected</h1>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">echo</span> yo boyz <span class="kw">|</span> <span class="kw">foo</span> /dev/stdin</code></pre></div>
+<h1 id="get-parts-of-speech-pos-from-a-sentence">Get Parts of Speech (POS) from a Sentence</h1>
+<p>Use the <a href="https://nlp.stanford.edu/software/tagger.shtml">Stanford POS tagger</a>.</p>
+<p>Get verbs:</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">$ ./stanford-postagger.sh models/english-left3words-distsim.tagger foo.txt <span class="kw">|</span> <span class="kw">awk</span> <span class="st">'{for(i=1;i&lt;=NF;i++) if($i ~ /_V/) print $i}'</span></code></pre></div>
+<h1 id="iso">ISO</h1>
+<p>To burn an ISO to a USB, use <code>usb-creator-gtk</code>.</p>
+<h1 id="pyenv">pyenv</h1>
+<p>[2022-11-06 Sun] Install using https://github.com/pyenv/pyenv-installer</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">curl https://pyenv.run <span class="kw">|</span> <span class="kw">bash</span></code></pre></div>
+
+<div class="info">Created: August 19, 2015</div>
+<div class="info">Last modified: November  6, 2022</div>
+<div class="info">Status: in-progress notes</div>
+<div class="info"><b>Tags</b>: notes</div>
+
+<br />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'spkrationalitytrainingground'; // required: replace example with your forum shortname
+    var disqus_identifier = '/Computer-Usage-Notes.html';
+    var disqus_title = 'Computer Usage Notes';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<script type="text/javascript" src="https://fast.fonts.net/jsapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.js"></script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+        </div>
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>

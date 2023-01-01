@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>SPK Rationality Website</title>
+    <link href="http://pradeep90.github.io//atom.xml" rel="self" />
+    <link href="http://pradeep90.github.io/" />
+    <id>http://pradeep90.github.io//atom.xml</id>
+    <author>
+        <name>S Pradeep Kumar</name>
+        <email>none@ofyourbiz.com</email>
+    </author>
+    <updated>2022-12-31T00:00:00Z</updated>
+    <entry>
+    <title>What makes us say our Life has Meaning?</title>
+    <link href="http://pradeep90.github.io//what-creates-meaning.html" />
+    <id>http://pradeep90.github.io//what-creates-meaning.html</id>
+    <published>2022-12-31T00:00:00Z</published>
+    <updated>2022-12-31T00:00:00Z</updated>
+    <summary type="html"><![CDATA[This is the post description]]></summary>
+</entry>
+<entry>
+    <title>Toggle the Factor you're Curious about</title>
+    <link href="http://pradeep90.github.io//toggle-curious-factor.html" />
+    <id>http://pradeep90.github.io//toggle-curious-factor.html</id>
+    <published>2019-08-21T00:00:00Z</published>
+    <updated>2019-08-21T00:00:00Z</updated>
+    <summary type="html"><![CDATA[How to know the impact of a factor?]]></summary>
+</entry>
+<entry>
+    <title>Narrow the Diff</title>
+    <link href="http://pradeep90.github.io//narrow-the-diff.html" />
+    <id>http://pradeep90.github.io//narrow-the-diff.html</id>
+    <published>2019-08-16T00:00:00Z</published>
+    <updated>2019-08-16T00:00:00Z</updated>
+    <summary type="html"><![CDATA[How can a narrow diff between exemplars help us figure out the causes of an output?]]></summary>
+</entry>
+<entry>
+    <title>Explain a Change, not an Absolute Outcome</title>
+    <link href="http://pradeep90.github.io//explain-a-change.html" />
+    <id>http://pradeep90.github.io//explain-a-change.html</id>
+    <published>2019-08-15T00:00:00Z</published>
+    <updated>2019-08-15T00:00:00Z</updated>
+    <summary type="html"><![CDATA[What happens when we try to explain an absolute outcome?]]></summary>
+</entry>
+<entry>
+    <title>Adjectives from the Future: The Dangers of Result-based Descriptions</title>
+    <link href="http://pradeep90.github.io//result-based-description.html" />
+    <id>http://pradeep90.github.io//result-based-description.html</id>
+    <published>2019-07-26T00:00:00Z</published>
+    <updated>2019-07-26T00:00:00Z</updated>
+    <summary type="html"><![CDATA[What goes wrong when we describe something in terms of its future results? When do we accept such a description?]]></summary>
+</entry>
+<entry>
+    <title>The Ben Franklin Method: A Deliberate Practice case study</title>
+    <link href="http://pradeep90.github.io//ben-franklin-practice.html" />
+    <id>http://pradeep90.github.io//ben-franklin-practice.html</id>
+    <published>2018-10-20T00:00:00Z</published>
+    <updated>2018-10-20T00:00:00Z</updated>
+    <summary type="html"><![CDATA[What can we learn about a general model of deliberate practice from Ben Franklin's method of practicing writing?]]></summary>
+</entry>
+<entry>
+    <title>How to Keep your Essay Clean</title>
+    <link href="http://pradeep90.github.io//how-to-keep-your-essay-clean.html" />
+    <id>http://pradeep90.github.io//how-to-keep-your-essay-clean.html</id>
+    <published>2018-05-19T00:00:00Z</published>
+    <updated>2018-05-19T00:00:00Z</updated>
+    <summary type="html"><![CDATA[How to maintain a meaningful structure in your essay despite lots of small, long-term changes.]]></summary>
+</entry>
+<entry>
+    <title>How to Get Persuaded</title>
+    <link href="http://pradeep90.github.io//how-to-get-persuaded.html" />
+    <id>http://pradeep90.github.io//how-to-get-persuaded.html</id>
+    <published>2017-09-01T00:00:00Z</published>
+    <updated>2017-09-01T00:00:00Z</updated>
+    <summary type="html"><![CDATA[What you worry about decides what you do.]]></summary>
+</entry>
+<entry>
+    <title>Turn Off the Internet</title>
+    <link href="http://pradeep90.github.io//turn-off-the-internet.html" />
+    <id>http://pradeep90.github.io//turn-off-the-internet.html</id>
+    <published>2017-07-19T00:00:00Z</published>
+    <updated>2017-07-19T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Why you should turn off the internet when trying to do deep work.]]></summary>
+</entry>
+<entry>
+    <title>The Shallows: Thinking in the Age of the Web</title>
+    <link href="http://pradeep90.github.io//The-Shallows-Thinking-in-the-Age-of-the-Web.html" />
+    <id>http://pradeep90.github.io//The-Shallows-Thinking-in-the-Age-of-the-Web.html</id>
+    <published>2017-05-09T00:00:00Z</published>
+    <updated>2017-05-09T00:00:00Z</updated>
+    <summary type="html"><![CDATA[This is the post description]]></summary>
+</entry>
+
+</feed>
