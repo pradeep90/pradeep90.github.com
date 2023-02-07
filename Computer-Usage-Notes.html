@@ -158,6 +158,10 @@ gpg --export-secret-keys --armor foo@gmail.com</code></pre></div>
 	<span class="kw">cat</span><span class="ot">${IFS%</span>?<span class="ot">}</span>foo.txt</code></pre></div>
 <h1 id="change-time-zone-from-the-command-line">Change Time Zone from the Command-line</h1>
 <blockquote>
+<p>$ sudo timedatectl set-timezone Asia/Kolkata</p>
+</blockquote>
+<p>Another way:</p>
+<blockquote>
 <p>$ sudo dpkg-reconfigure tzdata</p>
 </blockquote>
 <h1 id="send-in-stdin-where-a-file-is-expected">Send in Stdin where a File is expected</h1>
@@ -173,7 +177,7 @@ gpg --export-secret-keys --armor foo@gmail.com</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">curl https://pyenv.run <span class="kw">|</span> <span class="kw">bash</span></code></pre></div>
 
 <div class="info">Created: August 19, 2015</div>
-<div class="info">Last modified: November  6, 2022</div>
+<div class="info">Last modified: February  7, 2023</div>
 <div class="info">Status: in-progress notes</div>
 <div class="info"><b>Tags</b>: notes</div>
 
