@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="icon" type="image/png" href="./images/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="./images/favicon-16x16.png" sizes="16x16" />
+        <title>Seek High-Entropy Situations - SPK's Rationality Essays</title>
+        <link rel="stylesheet" type="text/css" href="./css/default.css" />
+        <link rel="stylesheet" type="text/css" href="./css/highlight.css" />
+
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+	<!-- <script type="text/javascript" src="/js/header-links.js"></script> -->
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+	<link href="atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM/RSS Feed" />
+
+	<!-- Google Analytics stuff -->
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-51321929-1', 'pradeep90.github.io');
+	  ga('send', 'pageview');
+
+	</script>
+
+	<script type="text/javascript" src="https://fast.fonts.net/jsapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.js"></script>
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="./">SPK's Rationality Essays</a>
+            </div>
+            <div id="navigation">
+                <a href="./">Home</a>
+                <a href="./notes.html">Notes</a>
+                <!-- <a href="/about.html">About</a> -->
+                <a href="./archive.html">Archive</a>
+		<a href="./atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM/RSS Feed">RSS</a>
+            </div>
+        </div>
+
+        <div id="content">
+          <h1 id="post-title">Seek High-Entropy Situations</h1>
+
+            <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
+
+<h1 id="the-ball-weighing-puzzle">The Ball-Weighing Puzzle</h1>
+<p>Here’s a puzzle (paraphrased from David JC MacKay’s wonderful <a href="http://www.inference.phy.cam.ac.uk/mackay/itila/book.html">textbook</a> on Information Theory):</p>
+<blockquote>
+<p>You are given 12 balls all weighing the same, except for one which is lighter or heavier (you don’t know which). You are also given a weighing scale that can tell you one of three things: the left pan is heavier or the right pan is heavier or they are equal.</p>
+<p>What is the least number of weighings to identify the odd ball and also tell whether it is lighter or heavier?</p>
+</blockquote>
+<p>How would you do this? Take your best shot.</p>
+<p>(spoiler space)</p>
+<p><br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /></p>
+<p>Did you get it? The answer is 3 weighings. Can you prove how? I was stuck on this for a while.</p>
+<p>What are your options? On the first weighing, you can choose to weigh 6 balls on each pan or 5 or 4 or 3 or 2 or 1. You want to find the correct ball (along with its relative weight) as quickly as possible. Now, you can do this in an ad hoc manner, just going with your hunches. But let’s instead try to use a more systematic method. How can we frame this in terms of information theory?</p>
+<h1 id="first-weighing-which-question-to-ask">First Weighing: Which question to ask</h1>
+<p>Well, we have 24 hypotheses: H1 says that ball 1 is different from the rest and is lighter; H1’ says that ball 1 is different and is heavier; H2 says that ball 2 is different and lighter; H2’ says ball 2 is different and heavier; and so on till H12 and H12’. Which of them is the correct one? We don’t know. So we assign the same probability to all of them: 1/24.</p>
+<p>Our job is now to get the correct hypothesis to probability 1. How? By getting evidence and thus <a href="./reducing-information-theory.html">multiplying our confidence</a> in the correct hypothesis.</p>
+<p>And the fastest way to do that is by seeking <a href="./reducing-information-theory.html#entropy-in-disguise">high-entropy</a> experiments. Without this knowledge about entropy, I struggled to figure out the optimal algorithm. Now, I know exactly how to proceed. More importantly, I can go ahead confident that this is the best way.</p>
+<p>We have six possible types of experiments: 6 balls on each side, 5 balls on each side, etc. Right now, it doesn’t matter which balls we choose for the experiment because they are all the same to us.</p>
+<p>What is the entropy of these 6 types of experiments? The entropy of an experiment (or ensemble or whatever it is you call something you’re unsure about) depends only on the probabilities you assign to the different outcomes. Nothing else matters. All your knowledge about your hypotheses and your distribution of confidence in them is captured in your final probability distribution over the outcomes.</p>
+<p>So, we have to calculate our probability distribution over the 3 possible outcomes of a weighing: left-heavier, equal, and right-heavier.</p>
+<p>For 6 balls per pan, there are 6 spots for the odd ball on the left pan and 6 spots on the right pan. Also, the ball can be heavier or lighter than the rest. So, there are 24 possibilities. You get left-heavier when the odd ball is on the left and is heavier or when it is on the right and is lighter. So, there are 12 situations when you get left-heavier. Similarly, 12 situations for right-heavier. There are 0 situations where you will get a message of “equal” since one of the balls is odd. So, the probabilities of left-heavier, right-heavier, and equal are 1/2, 1/2, and 0.</p>
+<p>For 5 balls per pan, there are 5 spots for the odd ball on the left, 5 spots on the right, and 2 spots outside. Again, the ball can be lighter or heavier. So, we get left-heavier when the odd ball is on the left and is heavier, or when it is on the right and lighter, giving a total of 10 situations. Similarly 10 situations for right-heavier. The remaining 4 situations will “equal”. Hence, we get odds of 10:10:4 and thus probabilities of 10/24, 10/24, and 4/24.</p>
+<p>For 4 balls per pan, the odds are 8:8:8 and so the probabilities are 1/3, 1/3, and 1/3.</p>
+<p>For 3 balls per pan, the odds are 6:6:12 and so the probabilities are 3/12, 3/12, and 6/12.</p>
+<p>For 2 balls per pan, the odds are 4:4:16 and so the probabilities are 2/12, 2/12, and 8/12.</p>
+<p>For 1 balls per pan, the odds are 2:2:20 and so the probabilities are 1/12, 1/12, and 10/12.</p>
+<p>For quick reference, the various probability distributions are:</p>
+<pre><code>6 balls: (1/2, 1/2, 0)
+5 balls: (5/12, 5/12, 1/6)
+4 balls: (1/3, 1/3, 1/3)
+3 balls: (1/4, 1/4, 1/2)
+2 balls: (1/6, 1/6, 2/3)
+1 balls: (1/12, 1/12, 5/6)</code></pre>
+<p>Which experiment will you pick? Well, the one that has highest entropy. Now, you could sit and calculate entropy using the formula <span class="math display">\[ \sum\nolimits p\log_2(1/p) \]</span></p>
+<p>Or you could just note that entropy is maximum when all the probabilities are equal. If there are n outcomes, then they will all have probability 1/n. Then, entropy becomes <span class="math inline">\(n \times 1/n \times log_2(1/(1/n)))\)</span> which is just <span class="math inline">\(log_2(n)\)</span>. So, the maximum entropy for an experiment of n outcomes is <span class="math inline">\(log_2(n)\)</span>.</p>
+<p>From the above experiments, the one with 4 balls on each pan has equal probability for all 3 outcomes, and thus the maximum entropy. We will pick that one.</p>
+<p>Similarly, we can chase the maximum entropy question at each subsequent weighing of the remaining balls to get to the correct answer quickly.</p>
+<p>(The rest of the solution to the puzzle is at the <a href="./seek-high-entropy.html#appendix">end</a>.)</p>
+<h1 id="uncertainty-are-we-there-yet">Uncertainty: Are we there yet?</h1>
+<p>Why is 4 balls per pan better than 6 balls per pan? Intuitively, because the 6-balls version wastes a message - you can never get the message “equal” because there is definitely an odd ball. When you get the message “left-heavier” in the 4-ball case, you have eliminated 16 out of the 24 hypotheses. When you get the message “left-heavier” in the 6-ball case, you have only eliminated 12 out of the 24 hypotheses - good, but not the best. You’re closer to the correct answer in the 4-ball case.</p>
+<p>Can we formalize this notion of “how close we are to the right hypothesis”? Can we calculate how many more questions we need to ask before we’re sure?</p>
+<p>That is what “uncertainty” measures:</p>
+<p><span class="math display">\[ uncertainty = \sum_i P(H_i)\log_2 \frac 1 {P(H_i)} \]</span></p>
+<p>Uncertainty is simply another name for the same formula as entropy, just that instead of working over your probability distribution over the outcomes of an experiment, you work over your probability distribution over your hypotheses.</p>
+<p>Your uncertainty about your hypotheses tells you how much more information you expect to need to become sure. With probability <span class="math inline">\(p_i\)</span>, you expect the correct hypothesis to be <span class="math inline">\(H_i\)</span>. How much information would you need to get to full confidence in <span class="math inline">\(H_i\)</span>? You would need a total message of probability <span class="math inline">\(P(H_i)\)</span>. That way your confidence in <span class="math inline">\(H_i\)</span> will be multiplied by <span class="math inline">\(1/P(H_i)\)</span> and so your final confidence will be <span class="math inline">\(P(H_i) \times 1/P(H_i) = 1\)</span>.</p>
+<p>In other words, you need a message with information content of <span class="math inline">\(log_2(1/P(H_i))\)</span> to get to full confidence in <span class="math inline">\(H_i\)</span>. However, this is if <span class="math inline">\(H_i\)</span> is the correct hypothesis, which you suspect with probability <span class="math inline">\(P(H_i)\)</span>. So, on average over all the hypotheses, you need a message with an information content of <span class="math inline">\(\sum_i P(H_i)\log_2 \frac 1 {P(H_i)}\)</span> bits to get to full certainty in the correct hypothesis.</p>
+<h1 id="how-many-questions">How Many Questions?</h1>
+<p>Another way of looking at uncertainty is how many questions of a given entropy you will need. The entropy of an experiment tells you how much you expect to reduce your uncertainty. The more the entropy, the more your uncertainty will shrink.</p>
+<p>How many ball-weighings will it take us in the opening example if we get close to maximum entropy at each weighing? Well, our uncertainty at the beginning about our 24 equally likely hypotheses is log2(24) = 4.59 bits. The maximum entropy for an experiment with three outcomes is log2(3) = 1.58 bits per experiment. So, how many such ideal experiments do we need to remove our uncertainty? 4.59 bits / 1.58 bits per experiment = ~2.9 experiments. We can’t expect to identify the odd ball in 2 experiments, but we can do it in 3 experiments.</p>
+<h1 id="central-aim-reduce-uncertainty-as-quickly-as-possible">Central Aim: Reduce Uncertainty as quickly as possible</h1>
+<p>We want to reduce uncertainty to zero. Why? Because uncertainty measures how much more information we need on average to identify the correct hypothesis. When we get it to zero, we have done our job - we’ve put all our confidence in the correct hypothesis. And the more confidence you put in the correct hypothesis, the more accurate your predictions.</p>
+<p>So, our aim everywhere must be to reduce our uncertainty. And we want to do this in the minimum number of questions.</p>
+<p>How do we reduce our uncertainty the most? By seeking high-entropy experiments. That’s where you will, on average, gain the most information.</p>
+<p>The less you know about an experiment, the more entropy you will assign it, and thus the more you will expect to learn from it. If you already know about it, if you can place more probability mass on some outcomes and less on others, then you will expect to learn less from it.</p>
+<p>Look specifically at questions about whose answers you’re totally unsure.</p>
+<h1 id="entropy-needs-only-the-probability-distribution">Entropy needs only the Probability Distribution</h1>
+<p>One advantage of looking for entropy vs looking for evidence (an experiment where your hypotheses make differing predictions) is that you may not need to do the explicit probability calculation. Instead of asking each hypothesis for its prediction and then weighting that by your confidence in it, you can just use your intuitive probability estimates. That’s what we do most of the time anyway. We don’t explicitly call up hypotheses in our mind. We just say, based on our informed gut feeling, that India seems more likely (say around 70%) to win this cricket match than Australia.</p>
+<p>If we’re going by our intuitive judgments most of the time, we might as well learn to exploit them as they are instead of expecting our mind to overhaul its methods. Sometimes we don’t even know <em>why</em> we know something. We just do. Like when you notice that someone looks different - it could be because he’s lost weight or changed his hairstyle, but you didn’t enumerate those hypotheses. Your unconscious mind processed the information and noticed the surprise.</p>
+<p>Entropy works well here because all it asks of you is your probability distribution over the outcomes of the experiment. Nothing else. Nothing about your hypotheses or their history or anything. Which is good, because the probability estimates are all we’ve got much of the time.</p>
+<p>Intuitive way to calculate entropy: the flatter the probability distribution, the more the entropy; the spikier the distribution, the less the entropy. You want a spiky distribution. Insert the argument that if you get to a spiky distinction lawfully, you can’t expect to flatten again. You’re (on expectation) golden.</p>
+<p>TODO: Of course, there’s the whole question of calibrating your probability estimates.</p>
+<h1 id="why-we-stop-asking-questions">Why We Stop Asking Questions</h1>
+<p>In the 2-4-6 task, for example, you don’t need to generate a perfect list of hypotheses (all possible sets of triplets, which is infinite) or calculate entropy formally over all the questions you could possibly ask. Just use entropy to decide between two questions - which one should you ask (4, 6, 8) or (-3, 345, 6)?</p>
+<p>And you don’t even need to assign formal probabilities. Just use your (hopefully calibrated) probability estimations. In the former, you expect “yes” with quite high probability. In the latter, you expect “no” with quite high probability. (Hmmm… they seem to have the same uncertainty… is that correct?) Maybe the problem is that you’re not considering any concrete alternative hypotheses and so your estimations are way off.</p>
+<p>Maybe just consider two hypotheses at any time. For example, the even plus increment of two rule is one hypothesis. The alternative hypothesis is just any other rule. You believe the former with high confidence. So, to get a high-entropy question, you need…</p>
+<p>Wait. That’s the problem. Once you believe something with high confidence, you <em>cannot</em> have a question with high entropy! (Note: unless that belief makes uniform predictions over the outcomes). Bring in the rule about the high confidence hypothesis dragging P(E) towards itself, and therefore not allowing a large change. The whole argument about seeking high entropy rests on the platform that you will reach a spiky confidence distribution in your hypotheses only when you’ve updated on the evidence lawfully. Here, we have unjustifiably come to high confidence in the even-plus-two hypothesis. We cannot <em>expect</em> to lose confidence in it.</p>
+<p>If this is correct, then it makes it imperative for us to start with justified confidence in everybody and update lawfully. If you start with a wrong high confidence in some hypothesis, you may have already lost the game. (Can you recover, with enough evidence?)</p>
+<p>Instead of locating the even-plus-two hypothesis right off, start with uniform hypotheses and then update on the initial “2-4-6” example as evidence.</p>
+<p>This is the biggest problem of all. Once you wrongly put high confidence in a hypothesis, you can’t expect to get out. You’re doomed.</p>
+<p>Why? Because when you have high confidence in a hypothesis, you have low entropy for any experiment - you think you know what’s up. So, any area you search will be inefficient from the point of view of entropy. You won’t expect to “learn anything new” from it. So, you’ll look at confirmatory evidence for a bit and stop entirely after a while. You won’t look at extreme questions like “-3, 243, -34092” in the 2-4-6 task because you fully expect to get an answer of “no”. Similarly, you won’t look at “simple” questions like “32, 34, 36” because you fully expect to get an answer of “yes”. So, you’ll stop your search and present your “solution”.</p>
+<p>Hypothesis: We stop our search when we come to a hypothesis with high confidence. And since that happens all too often due to our faulty information-processing, we stop our search too soon most of the time. (This is probably related to <a href="http://lesswrong.com/lw/km/motivated_stopping_and_motivated_continuation/">motivated stopping</a>.)</p>
+<p>Why do we stop asking questions? Because we think we know the answers.</p>
+<p>Corollary: There are questions that are really high-entropy but which we don’t recognize because we think we can predict them correctly.</p>
+<p>So, go after those too. Be skeptical about your ideas, even if you’re very confident (unless you’ve updated on evidence correctly).</p>
+<p>Wow. This illusion of knowing might just be the most harmful belief we have.</p>
+<h1 id="within-the-confines-of-the-law">Within the confines of the Law</h1>
+<p>TODO: Given only the confidence levels in your hypotheses before and after and also your probability estimate for the outcome, how do we check whether your new confidence levels are justified? What if we’ve put too much confidence in a wrong hypothesis?</p>
+<p>Look at that hypothesis alone - call it H_i. Let’s say initially you had confidence p1 in it. Now, after updating on the outcome E of one experiment, you came to confidence p2 in it. As per Bayes Theorem, p2 must be equal to p1 x P(E|H_i) / P(E). So, p2 / p1 = P(E|H_i) / P(E).</p>
+<p>And since log2(1/P(E)) is the information content of E (info(E)), the ratio p2 / p1 = P(E|H_i) x 2^(info(E)).</p>
+<p>And P(E|H_i) &lt;= 1. Therefore, p2 / p1 &lt;= 2^(info(E)). Alternatively, p2 / p1 &lt;= 1/P(E).</p>
+<p>Now, ask yourself: did the outcome E really give you that much information? If you initially had a thousand equally likely hypotheses, their probability would be 1/1000 each. If after the message, you come to confidence 1/2 in this hypothesis H_i, then 1/P(E) &gt;= 1/2 / 1/1000 = 500. That is, P(E) &lt;= 1/500 and thus info(E) &gt;= log2(500) = ~9 bits.</p>
+<p>This can be hard to do sometimes, like in the 2-4-6 task, where you can’t readily figure out the probability of being given “2-4-6” at the beginning, as opposed to something else.</p>
+<p>One idea: if you expected E with probability &lt;= 1/500, then you must have expected ~E with probability &gt; 499/500. That is, say you look at the 2-4-6 as a randomly picked triplet. No hypothesis particularly predicts that this triplet should be chosen, so they all remain at equal confidence. Now, the answer to “2-4-6” could have been yes or no. But you were told that it was “yes”. After that, you suddenly came to probability 50% in the “even plus 2” rule, meaning a probability of &lt;= 1/500 in “yes”. That automatically means that you predicted “no” with 499/500. Doesn’t that seem absurd? When you didn’t know anything at all, why would you predict “no” with such great confidence? You would have predicted them with equal probability - 1/2 each. That would make the information content of either “yes” or “no” a paltry single bit - nowhere near enough to narrow it down to 50% probability in “even plus 2”.</p>
+<hr />
+<p>Another way could be to ask if the information you’ve got so far was enough to eliminate alternative hypotheses. For example, say you feel you’ve got 80% confidence in the “even plus 2” hypothesis after seeing 2-4-6. But, you have to tell yourself, if there’s even one other hypothesis that can explain 2-4-6 equally well, you cannot have more than 50% confidence in “even plus 2”. If there are 3 other hypotheses (for a total of 4), then you cannot have more than 25% confidence in any one.</p>
+<p>To judge your true uncertainty, just check how much entropy you assign to any specific experiment. If you truly have low uncertainty, you will most likely have low entropy for the experiment. If not, if you don’t have any idea about the correct answer, then you have false confidence in your hypothesis. You don’t even need to know the right answer to the question, all you need to see is that you’re unable to make narrow predictions. This is because we just store the false thought in our mind “Hypothesis H is the correct answer” without actually asking whether it makes a lot of accurate predictions for specific situations.</p>
+<h1 id="practical-applications">Practical Applications</h1>
+<p>Where do we ask questions in practice? The three main areas of information-processing, as far as I can tell, are learning from others, researching for yourself, and solving problems.</p>
+<p>Understanding a system means being able to answer certain questions about it. What are the questions you want to be able to answer? Enumerate those and then pick the ones with high entropy.</p>
+<p>Also, calculate how much uncertainty you have about that topic. That will tell you how many questions you will need to get to certainty. (Not fully sure about this.)</p>
+<p>Can we answer these questions: as a human, how much information do <em>we</em> need to solve a problem? Not as a computer, that can be answered by math. But given our idiosyncratic cognitive design, how much information do we need? How much time will we take to process a bit of information?</p>
+<p>The problem seems to be that humans are not ideal information-processors. We think using models that are not transparent to us.</p>
+<p>Still, consider the human mind as an inefficient information-processor. Then, giving it a certain bits of information should lead to some improvement in its predictions, right?</p>
+<h1 id="learning">Learning</h1>
+<p>When learning, which book should you read first? Which part of that book first? Which online articles?</p>
+<p>Entropy is maximum when all outcomes are equally likely. So, ask questions that have a good chance of giving each of the possible answers.</p>
+<h1 id="research">Research</h1>
+<p>When researching, which questions should you attack? When writing an essay, for example, which questions should you aim to answer first?</p>
+<h1 id="problem-solving">Problem-solving</h1>
+<p>When problem-solving, which parts of the problem to take on first?</p>
+<h1 id="narrowing-it-down">Narrowing it Down</h1>
+<p>Corollary: What is the maximum entropy for a question? If it has only 4 options, like a multiple-choice question, then you can have a maximum of only 2 bits of entropy for it (the case when all the options are equally likely).</p>
+<p>Corollary: Narrowing the solution space down to just 4 options means that you have reduced a tremendous amount of uncertainty. Earlier you had a lot of uncertainty. Now you only have a maximum of 2 bits, probably even less.</p>
+<h1 id="practical-applications-of-reducing-uncertainty">Practical Applications of Reducing Uncertainty</h1>
+<p>TODO: How can we use this to determine how many books or blog posts we’ll have to read? Plus, other practical cases.</p>
+<p>Look at uncertainty before and after a resource. Use this to calibrate your judgment of high-entropy resources. If your aim is to reduce uncertainty, then you should judge yourself by that measurement. (example?)</p>
+<p>As long as you have uncertainty, keep searching.</p>
+<p>Don’t waste time on zero entropy questions.</p>
+<p>Worthy questions - does this give you entropy? Then it’s still worth investigating. (However, for full effect, you need to know the value of information)</p>
+<p>Look at areas where you haven’t yet got false confidence, areas where you know that you don’t know anything. When you have high entropy for an experiment, even a little exposure should give you a lot of information. Example: areas where I have no clue like Renaissance art, Gothic architecture, astronomy, or maritime history.</p>
+<p>Where do we take a long time to reduce our uncertainty? Where are we slow (or stuck)? Where do we ask low-entropy questions?</p>
+<h1 id="notes">Notes</h1>
+<p>You want to maximize information gained. Expected information gain is nothing but entropy.</p>
+<p>TODO: information = reduction in entropy of the ensemble; also, information in the case of maximum entropy; how to count number of weighings needed (and how you can always conjure an ideal code that gives you maximum entropy on each turn); application to real life.</p>
+<p>Note: This is, in my opinion, the main missing piece in reasoning. Just knowing that you have to use Bayesian inference is not enough. It can be hard to know what to do - there are so many options. Entropy guides your search. Moreover, you don’t have to calculate it perfectly - more entropy is better than less. So, I suspect, you can use it as a compass to make your information-seeking choices. (How does it compare to the idea of strong inference, where you always aim to get differing predictions between hypotheses? Which one is better, more practical?)</p>
+<h1 id="one-test-information-reduction-in-uncertainty">One test: Information = reduction in uncertainty?</h1>
+<p>Look at your uncertainty before and after. Did you <em>really</em> get that much information?</p>
+<h2 id="suitcase">Suitcase</h2>
+<p>Take the simple case when your hypotheses correspond to that of each possible outcome. For example, suppose your old suitcase has a three-digit number lock. There are a 1000 possible codes - 000 to 999. You can consider each code as a hypothesis - H0 saying that the code is 000, H1 saying that the code is 001, etc.</p>
+<p>Now, you’ve forgotten the code. Fortunately, you’d written it somewhere. However, part of the written code has been erased. All you can see is “-3-”. Even though it doesn’t tell you everything, it does give you some information. This eliminates 900 hypotheses - all those that didn’t have “3” as their second digit.</p>
+<p>In this case, the information given by the partial code equals reduction in uncertainty. Before, you had 1000 hypotheses, each of which was equally likely, giving you log2(1000) = 9.96 bits of entropy. Afterwards, you had 100 hypotheses, again each of which was equally likely, giving you log2(100) = 6.64 bits of entropy. The difference is ~3.32 bits. How many bits of information did you get from that message? Well, information = log2(1/P(E)). How much did you predict that the middle digit would be 3? 1 in 10 hypotheses said so - therefore, a probability of 1/10 and information of ~3.32. It works out.</p>
+<h2 id="unequal-hypotheses">Unequal hypotheses</h2>
+<p>The problem with the above example is that all the hypotheses have equal confidence. What about the case when you have different confidence in your hypotheses? Will information still be equal to reduction in uncertainty?</p>
+<p>What if you had a 1000 hypotheses like before (0-999) but you believe that the first digit is likely to be 4? Say this leads to confidence 0.005 in the 4xx hypotheses, and confidence 0.00055 in the other hypotheses (for a total of 1). Now, you get the evidence saying that the middle digit is 3. The 43x hypotheses will get a posterior probability of 0.005 x 1/(0.1) = 0.05 each and the remaining x3x hypotheses will get a posterior probability of 0.00055 x 1/0.1 = 0.0055.</p>
+<p>The information content of the message was log2(1/0.1) = ~3.32 bits. The entropy of the question “what is the middle digit” was 10 x 0.1log2(1/0.1) = ~3.32 bits - because the probability of any digit in the middle place is the same (0.1). Your initial uncertainty about your hypotheses was 100 x 0.005 x log2(1/0.005) + 900 x 0.00055 x log2(1/0.00055) = ~9.2288 bits. Your final uncertainty about your hypotheses is 10 x 0.05 x log2(1/0.05) + 90 x 0.0055 x log2(1/0.0055) = ~5.9069 bits.</p>
+<p>So, does information equal reduction in uncertainty? 9.2288 bits - 5.9069 bits = ~3.3219 bits = ~log2(10) bits.</p>
+<p>It does seem to equal reduction in uncertainty. Can we show that mathematically?</p>
+<p>Wait. The problem here again is that the entropy of the question (“what is the middle digit”) is the same as the information content of any message (like 3). I need an example where entropy is not equal to the information content.</p>
+<p>Take this example - three hypotheses H1 with confidence 1/4, H2 with 1/4, and H3 with 1/2. H1 says heads with probability 1 and H2 and H3 say tails with probability 1. Heads comes up. The final probability distribution becomes 1, 0, 0. The initial uncertainty was 1.5 bits and the final uncertainty is 0 bits. However, the information content of the message heads was log2(1/4) = 2 bits. So there.</p>
+<p>Then, is the entropy of an experiment the expected reduction in uncertainty?</p>
+<hr />
+<p>If your hypotheses only make 0% or 100% predictions, then you will never have unequal confidence in them. You will either eliminate a hypothesis completely or still have it in the mix. And since all the surviving hypotheses have made 100% accurate predictions, they will all have equal confidence (assuming you started with uniform confidence in them). This will make information = reduction in uncertainty because then information = log2(1/p) = log2(n1/n2) and reduction in uncertainty = log2(n1) - log2(n2) = log2(n1/n2).</p>
+<h2 id="general-case">General case</h2>
+<p>But this feels like a toy example to me. What about the general case where you have large, hairy hypotheses that talk about several experiments, not just this one? What about the case when you get just one message from the possible messages, instead of getting a partial message like above? Is information still reduction in entropy then?</p>
+<p>Well, first, note the terms. The information refers to the information content of the message you receive. We calculate it using log2(1/P(E)). And entropy talks about a probability distribution - remember how the formula for entropy used only the probabilities of the various outcomes, nothing else.</p>
+<p>We can use of the term entropy to talk about our probability distribution over the <em>outcomes</em> of an experiment - like the entropy of one ball-weighing in the initial example. As we have seen, this tells us how much the outcome of that experiment will on average multiply our confidence in the correct hypothesis.</p>
+<p>We can also use entropy to talk about our probability distribution over our <em>hypotheses</em>. In this scenario, we refer to entropy as “uncertainty”. This tells us how far we think we are from reaching full certainty in the correct hypothesis H0.</p>
+<p>TODO: Unsure how to derive the above. Test whether information here really is equal to reduction in uncertainty. Get one example.</p>
+<h1 id="summary">Summary</h1>
+<p>In general, you want to get the most information. When choosing, pick the experiment with higher entropy. Like the ball-weighing example. Entropy is higher when the distribution is more uniform (how do we judge that informally?), and maximum when the distribution is completely uniform.</p>
+<p>Similarly, in the 2-4-6 task, look at the question that has most entropy. You may be able to assign probabilities using your intuition. However, you could have a problem if you haven’t lawfully come to those probabilities. I think this only happens when you’re not calibrated. Then, is it that the highest-entropy questions aren’t really the highest-entropy ones? How can you fix that (at least practically)?</p>
+<p>Where do we make a poor choice of experiments? Where are we inefficient with our information-seeking? How much more efficient can we get? We are inefficient whenever we seek lower-entropy questions. Where can we change our behaviour now that we know about entropy? Where do you need to make a choice between experiments? Talking to people, running experiments, etc. Also, when learning - we need to choose the right books, instead of reading things that are not very surprising. Entropy is nothing but expected surprise, so you should be quite surprised on average when you read books. If not, you’re not being efficient. Ditto for solving problems - you should ask questions that get to the heart of the problem. (TODO: examples for everything.)</p>
+<p>How should we apply this to our lives? I suspect we should practice the skill of noticing the entropy of any given question or the uncertainty of our hypotheses or</p>
+<p>What about when you’re presenting an experiment? Should you present the highest-entropy experiments (according to them)? (Remember, you can’t ask for information. You can only ask for expected information aka entropy.)</p>
+<p>How many questions of a certain entropy do we need to come to full certainty about an ensemble? I think this is just entropy of the ensemble divided by the entropy of the question. Here, information does seem to be like reduction in uncertainty. And questions with higher entropy are better because you will need fewer of them to get to certainty.</p>
+<p>TODO: How many questions of a given entropy do we need to come to full certainty about our hypotheses? If you say you have “x bits of uncertainty” about your hypotheses, that means it will take x questions of 1 bit entropy to get to the answer or x/2 questions of 2 bits of entropy (really?). (Remember, in the best case, you just need one compound message of probability 1/P(H0) to get to certainty, and so one compound experiment of entropy x.)</p>
+<p>Is it really that x bits of uncertainty means x questions of 1 bit entropy?</p>
+<p>TODO: A message of information content x bits is simply an outcome to which you assign 1/(2^x) probability. A question of entropy x bits is one that will give you (2<sup>x)</sup>n confidence-multiplier for n questions. A distribution of uncertainty x bits is simply one that requires x questions of 1 bit entropy. (example?)</p>
+<p>What you need to test is whether information = reduction in uncertainty about your hypotheses. Also, whether expected information aka entropy of a question = expected reduction in uncertainty about your hypotheses.</p>
+<p>Look at the example where you have two hypotheses H1 with probability 0.25 and H2 with probability 0.75. You have an experiment with two outcomes heads or tails. H1 predicts heads with probability 1 and H2 predicts heads with probability 0.33 and tails with probability 0.67. So, your total probability for heads is 0.25 x 1 + 0.75 x 0.33 = ~0.5. Say, heads comes up. Now your confidence in H1 is multiplied by 1/0.5 = 2 making it have a probability of 2 x 0.25 = 0.5. So, your posterior probabilities over your hypotheses is 0.5 in H1 and 0.5 in H2.</p>
+<p>Your initial uncertainty about your hypotheses is entropy(0.25, 0.75) = 0.81 bits. And your final uncertainty is entropy(0.5, 0.5) = 1 bit. But, the information you got was 1 bit. So, information is not reduction in uncertainty. However, the entropy of the experiment was entropy(0.5, 0.5) = 1 bit. So, reduction in uncertainty is not entropy of the experiment either. What but expected reduction in uncertainty? With probability 0.5, you expected heads, which would lead to a final uncertainty of 1 bit, and with probability 0.5, you expected tails, which would lead to a final uncertainty of 0 bits (since H1 will go down to probability 0 and H2 up to probability 1). That leads to an “expected final uncertainty” of 0.5 bits.</p>
+<p>TODO: I suspect my whole calculation above is thrown off by the lack of other hypotheses. The only reason H2 got to posterior 1.0 for tails was because the only other hypothesis H1 put zero probability mass on the correct outcome. If the correct hypothesis H0 were present, it would have predicted tails with probability 1.0 and therefore H2 would not have got to posterior probability 1.0 and you would have a different final uncertainty. Then, the uncertainty we calculated earlier is not our true uncertainty. Perhaps with the true uncertainty, you will get information = reduction in uncertainty. (example? I think for any given sequence of outcomes, your hypothesis set should have a hypothesis that predicts it with 100% accuracy.) In this case, your true uncertainty about your hypotheses becomes hard to compute, since you have a very large number of hypotheses, and if omitting hypotheses leads to big errors, then this uncertainty variable may not be worth much in practice.</p>
+<p>And having x+1 bits of uncertainty is worse than having x bits of uncertainty because you need an extra one-bit question. Having more uncertainty is worse because, given questions of any entropy, you will need more questions to get to certainty.</p>
+<p>The question I want to answer is: why is a less uncertain hypothesis set better than a more uncertain one? Remember our central aim: to get to full confidence in H0. How does a less uncertain hypothesis set lead you to H0 faster than a more uncertain one? “Asked in such fashion, the question answers itself.” Well, remember that you can never decrease your confidence in H0. It will always make correct predictions and thus never fall in confidence. Look at a series of experiments. H0 will of course make the right prediction each time and thus rise in confidence.</p>
+<p>TODO: Remember, you always have a code that will give you maximum entropy (a code with one message per hypothesis). But this doesn’t take into account the prior probabilities of the hypotheses (?).</p>
+<p>Can you always construct a code to give you an experiment of any entropy (up to the maximum)? If so, the question becomes: given an experiment of some entropy, how many experiments will you need to get to full certainty? Hmmm… the key idea here is that there is no definite number of experiments. It is probabilistic. The number of experiments itself is not meaningful. The question is actually how many experiments of a given entropy you <strong>expect</strong> to need to get to full certainty.</p>
+<p>What do I mean by “expect” here? I think I mean that if you had n hypothesis sets with the same probability distribution, then I would need <code>n x uncertainty</code> bits of information. So, for a less uncertain set of hypotheses, I need fewer bits of information to get to certainty. (shocker, I know. But you still had to prove that our colloquial idea of “uncertainty” matched this mathematical term “uncertainty”.)</p>
+<p>I was confused about the part about “expecting fewer bits of information” because I was unable to imagine multiple sets of hypotheses. When it came to the entropy of an experiment, I could easily see it as the expected information content of its outcome because I could think of n experiments with the same probability distribution and thus the total information gained. But when it came to hypotheses, I was thinking of the grand set of hypotheses that an agent would have about the world and there would only be one such set and just one sequence of messages that you get (I thought). How could you do this several times and get the average? There’s only one world and you only get one shot to do things. Note how I completely forgot that the world has several agents and that you could very well have agents with the same probability distribution over their hypotheses and then take the average over their experiences. (“You have a blind spot around strategies that involve <del>doing nice things for</del> other people.”)</p>
+<p>(Still not sure, though, about how to define uncertainty in terms of Bayes Theorem the way I did with entropy and n experiments.)</p>
+<h2 id="key-insight">Key insight</h2>
+<p>Think in terms of the correct hypothesis H0.</p>
+<p>When looking at the expected value of something, imagine several repetitions of it and look at the average.</p>
+<h1 id="appendix">Appendix</h1>
+<h2 id="second-weighing-the-equal-case">Second Weighing: The equal case</h2>
+<p>After putting 4 balls on each pan, you can get the messages “left-heavier”, “right-heavier”, or “equal” with equal probability.</p>
+<p>Let’s take the “equal” case. This means that the odd ball is in the 4 balls not kept on the pan. This eliminates the hypotheses saying that the odd ball was on one of the pans. Now, we have to find which one it is and whether it is lighter or heavier. Again, what are our choices? We can put all these 4 balls from the odd group on one pan and the previous 4 balls from the normal group on the other pan. Or, we could put 3 from the odd group and 3 from the normal group. Or 2 odd and 2 normal. Or 2 odd and 2 odd. Or 1 odd and 1 odd.</p>
+<p>The chief question is, of course, what is the entropy of these experiments? We want the one with highest entropy, remember. And that is satisfied when the probabilities of the three messages are as uniform as possible.</p>
+<p>There’s no point putting all normal balls on the pans - we know for sure that the message will be “equal”, so there’s zero entropy there.</p>
+<p>For the 4 odd and 4 normal trial, with the 4 odd on the left and the 4 normal on the right, we will get left-heavier if the odd ball is heavy, right-heavier if the odd ball is light, but we will never get “equal” because one ball is odd. This should be our first red flag. We want high entropy, where the probabilities are as nearly equal as we can manage (meaning, they are each close to 1/n). And here, one of the probabilities is zero! Anyway, the entropy is <code>-1/2 x log(1/2) + -1/2 x log(1/2)</code> = 1 bit.</p>
+<p>Let’s see if the other experiments do any better. For 3 odd and 3 normal, again, the probability of equal is zero. This is not good. Again, since left-heavier and right-heavier have equal probability (1/2), the entropy is 1 bit as earlier. Ditto for 2 odd and 2 normal or 1 odd and 1 normal - 1 bit of entropy.</p>
+<p>For the 2 odd and 2 odd trial, there are 4 possible spots for the odd ball, and 2 possible weights (lighter or heavier). So, 8 possibilities. We will get left-heavier if the odd ball is heavier and is on the left, or if it is lighter and is on the right. So, that is 4 out of 8 possibilities. Right-heavier is the same. There is no chance of equal again, since there is an odd ball. So, this experiment too has two outcomes with probabilities 1/2 and 1/2 and thus entropy of 1 bit.</p>
+<p>For the 1 odd and 1 odd trial, there are 4 possible spots for the odd ball (on the left, on the right, and outside) and 2 possible weights. So, 8 possibilities. We get left-heavier when the odd ball is on the left and is heavier, or when it is on the right and is lighter - so, 2 possibilities. Similarly for right-heavier - 2 possibilities. The rest give “equal”. So, we get odds of 2:2:4 and thus probabilities of 1/4, 1/4, and 1/2 and thus entropy of <code>-1/4log2(1/4) + -1/4log2(1/4) + -1/2log2(1/2)</code> = 1.5 bits. Nice.</p>
+<p>Can we do better? What about 1 odd and 1 normal on the left pan and 2 odd on the right pan? Then, there are 4 possible spots for the odd ball (on the left, on the right, and outside) and therefore 8 possibilities. We get left-heavier when the odd ball is on the left and is heavier (1 possibility), or when it is on the right and is lighter (2 possibilities) - so, 3 total possibilities. Similarly for right-heavier - 3 possibilities. The rest give “equal”. So, we get odds of 3:3:2 and thus probabilities of 3/8, 3/8, and 1/4 and thus entropy of <code>-3/8log2(3/8) + -3/8log2(3/8) + -1/4log2(1/4)</code> = ~1.56 bits. Nice. We pick this one.</p>
+<p>We can see how the 1 odd and 1 odd trial and the 1 odd plus 2 odd trial were the only trials that even allowed the “equal” probability and thus got more uniform distributions, leading to higher entropy.</p>
+<h2 id="third-weighing">Third Weighing</h2>
+<p>We can now get three possible messages again. If you get left-heavier, then either the left odd ball is heavier or one of the right odd balls is lighter. Now, we can compare the two right balls - if you get “equal”, then the left ball above was odd and heavier; if you get “left-heavier”, then the right ball is odd and lighter; if you get right-heavier, then the left ball is odd and lighter (since we saw above that one of them is lighter). This way, we get to full certainty with just three weighings.</p>
+<p>We can do the same thing if we got right-heavier. And if we get equal, then it just means that the one ball left outside is odd. We can just test it with a normal ball to find out it if is lighter or heavier - again making for a total of 3 weighings.</p>
+<p>Long story short, you can do the same for the other messages in the original weighing. TODO: If you got left-heavier for the 4-4 weighing, then you can choose …</p>
+<h1 id="surprises">Surprises</h1>
+<p>Entropy is maximum when all outcomes are equally likely. So, look for questions where all answers are equally likely.</p>
+<p>When you have a choice of two questions, pick the one with more entropy.</p>
+<h1 id="complexity-of-a-system">Complexity of a System</h1>
+<p>Complexity of a system: we programmers generally measure complexity in terms of number of possible states (example: No Silver Bullet). The more the number of states, the harder a system is to understand. A system with a huge number of states is hard to understand because anything could happen. However, that’s not the complete answer. Some states are more equal than others. We expect certain states more.</p>
+<p>Consider this: a system A with a million states, each of which is equally likely to occur, and a system B with a million states too, just that four states are likely with nearly 25% probability each, and the remaining fractional probability is divided among the other states. Which system do you think is harder to deal with? (example: twenty binary variables in an imperative language in the middle of a unfamiliar program’s execution. What are their values? There are around a million possible answers (“on-on-on…”, “off-on-on…”, etc.). For system B, think of a case where you have if x then a function with 2 variables else a function with 20 variables and x is likely to be true with nearly 100% probability.)</p>
+<p>Instead of talking about the vague term “understanding”, let’s talk in terms of information. How much information do you need to be able to predict the behaviour of system A? How uncertain are you about system A? Well, you have a million hypotheses, each equally likely, which gives you an uncertainty of log2(10^6) = ~20 bits. You expect to need 20 bits of information. How uncertain are you about system B? Again, you have a million hypotheses, but 4 of them have probability ~25% and the others have probability epsilon / 10^6. Your uncertainty here is 4 x 1/4 x log2(4) + ~10^6 x (epsilon / 10^6) x log2(10^6/epsilon). Take epsilon as, say, 1% (0.01). So, the answer is 2 bits + 10^6 x 1/10^8 x log2(10^8) = 2 bits + ~0.26 bits = 2.26 bits.</p>
+<p>You need a lot less information to understand system B compared to system A. And this is what we measure intuitively as the complexity of a system, be it a complex program, a messy organization, or a filing cabinet: how uncertain are we about the system? It’s our inability to predict or control the system that we capture as “complexity”. Inversely, if we can predict the behaviour of a system perfectly, we don’t consider it “complex” at all - like walking, talking, biking, etc. (all still hard to make robots do).</p>
+<blockquote>
+<p>I’d always thought of [a system] as something chaotic, something unpredictable. I never used those words, but that was the way I treated it.</p>
+<p>Maybe it wasn’t that [the system] was unusually chaotic; maybe I was just unusually stupid with respect to predicting it.</p>
+<p>That’s what inverted stupidity looks like - chaos. Something hard to handle, hard to grasp, hard to guess, something you can’t do anything with.</p>
+<p>– Eliezer Yudkowsky, <a href="http://lesswrong.com/lw/wb/chaotic_inversion/">Chaotic Inversion</a></p>
+</blockquote>
+<p>(The cost model is another thing, of course; different actions and pieces of information have different costs. I’ll get to that part when I talk about decision theory and value of information.)</p>
+<p>Corollary: We can roughly assess the difficulty of solving a problem by our uncertainty about it. The more uncertain we are about a problem, the harder we feel it is. (The full picture will, again, take into account the costs but this should do for most purposes.) Example: Writing a function in Haskell vs writing it in an imperative language like C++ or Python.</p>
+
+<div class="info">Created: January 10, 2016</div>
+<div class="info">Last modified: February  7, 2016</div>
+<div class="info">Status: in-progress</div>
+<div class="info"><b>Tags</b>: reduction, information theory</div>
+
+<br />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'spkrationalitytrainingground'; // required: replace example with your forum shortname
+    var disqus_identifier = '/seek-high-entropy.html';
+    var disqus_title = 'Seek High-Entropy Situations';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<script type="text/javascript" src="https://fast.fonts.net/jsapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.js"></script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+        </div>
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>

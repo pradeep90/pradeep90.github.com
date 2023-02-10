@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="icon" type="image/png" href="./images/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="./images/favicon-16x16.png" sizes="16x16" />
+        <title>Haskell Learning - SPK's Rationality Essays</title>
+        <link rel="stylesheet" type="text/css" href="./css/default.css" />
+        <link rel="stylesheet" type="text/css" href="./css/highlight.css" />
+
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+	<!-- <script type="text/javascript" src="/js/header-links.js"></script> -->
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+	<link href="atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM/RSS Feed" />
+
+	<!-- Google Analytics stuff -->
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-51321929-1', 'pradeep90.github.io');
+	  ga('send', 'pageview');
+
+	</script>
+
+	<script type="text/javascript" src="https://fast.fonts.net/jsapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.js"></script>
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="./">SPK's Rationality Essays</a>
+            </div>
+            <div id="navigation">
+                <a href="./">Home</a>
+                <a href="./notes.html">Notes</a>
+                <!-- <a href="/about.html">About</a> -->
+                <a href="./archive.html">Archive</a>
+		<a href="./atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM/RSS Feed">RSS</a>
+            </div>
+        </div>
+
+        <div id="content">
+          <h1 id="post-title">Haskell Learning</h1>
+
+            <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
+
+<h1 id="use-functor-in-the-definition-of-applicative">Use Functor in the definition of Applicative</h1>
+<p>For example, when defining <code>&lt;*&gt;</code> for Parser, you need:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">(&lt;*&gt;) ::</span> <span class="dt">Parser</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> <span class="dt">Parser</span> a <span class="ot">-&gt;</span> <span class="dt">Parser</span> b</code></pre></div>
+<p>You only need to work to get the (a -&gt; b) from the first argument. After that, you can use <code>fmap</code> to transform <code>Parser a</code> to <code>Parser b</code>.</p>
+<p>My original implementation:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">Parser</span> {runParser <span class="fu">=</span> pf} <span class="fu">&lt;*&gt;</span> <span class="dt">Parser</span> {runParser <span class="fu">=</span> px} <span class="fu">=</span>
+	<span class="dt">Parser</span> <span class="fu">$</span> \s <span class="ot">-&gt;</span> join <span class="fu">$</span> fmap (\(f, s') <span class="ot">-&gt;</span> fmap (first f) (px s')) (pf s)</code></pre></div>
+<p>I had to do <code>fmap (first f) (px s')</code> i.e., unpack the <code>Maybe (a, String)</code> type again despite doing it once for <code>Functor</code>.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- After some help from an existing implementation:</span>
+<span class="dt">Parser</span> {runParser <span class="fu">=</span> pf} <span class="fu">&lt;*&gt;</span> xp <span class="fu">=</span>
+    <span class="dt">Parser</span> (join <span class="fu">.</span> fmap (\(f, s') <span class="ot">-&gt;</span> runParser (fmap f xp) s') <span class="fu">.</span> pf)</code></pre></div>
+<h1 id="why-algebraic-data-types-matter">Why Algebraic Data Types Matter</h1>
+<p>Will Kurt gives a <a href="https://medium.com/@willkurt/why-sum-types-matter-in-haskell-ba2c1ab4e372#.2kmp91qss">good example</a> for ADTs vs OOP class hierarchies by trying to represent names.</p>
+<h1 id="xmonad">XMonad</h1>
+<p>To get the classname for an application, run:</p>
+<pre><code>xprop | grep WM_CLASS</code></pre>
+<p>and click on the application window. Use the second term. The first one doesn’t seem to work.</p>
+<pre><code>WM_CLASS(STRING) = &quot;emacs25&quot;, &quot;Emacs&quot;</code></pre>
+<p>So, use “Emacs”, not “emacs25”.</p>
+<h1 id="turtle">Turtle</h1>
+<p>[2018-03-15 Thu] First impressions: pretty cool!</p>
+<p>Each utility like <code>ls</code> or <code>grep</code> is basically a function that takes a stream of lines (<code>Shell Line</code>) and returns a stream of lines. Mix and match to your heart’s delight.</p>
+<h1 id="beautiful-folds">Beautiful Folds</h1>
+<p>Combining HashMaps by combining their values (not just picking the first value for a key), averaging, creating custom Monoid types for aggregating statistics: http://tech.frontrowed.com/2017/09/22/aggregations/</p>
+<p>Of course, Gabriel has a post on this: http://www.haskellforall.com/2013/08/composable-streaming-folds.html</p>
+<h1 id="row-polymorphism">Row Polymorphism</h1>
+<p>From <a href="https://brianmckenna.org/blog/row_polymorphism_isnt_subtyping">Brian McKenna’s blog</a>:</p>
+<blockquote>
+<p>Here’s a simple example of where the row instantiation can cause differences:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">let</span> f x <span class="fu">=</span> x with {sum<span class="fu">:</span> x<span class="fu">.</span>a <span class="fu">+</span> x<span class="fu">.</span>b}
+<span class="kw">let</span> answer <span class="fu">=</span> f {a<span class="fu">:</span> <span class="dv">1</span>, b<span class="fu">:</span> <span class="dv">2</span>, c<span class="fu">:</span> <span class="dv">100</span>}</code></pre></div>
+<p>With structural subtyping, the type is upcast to what f needs and we get back:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">answer ::</span> {a<span class="fu">:</span> <span class="dt">Number</span>, b<span class="fu">:</span> <span class="dt">Number</span>, sum<span class="fu">:</span> <span class="dt">Number</span>}</code></pre></div>
+<p>But with row polymorphism, the row variable <span class="math inline">\(\rho\)</span> gets instantiated to contain the c field:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">answer ::</span> {a<span class="fu">:</span> <span class="dt">Number</span>, b<span class="fu">:</span> <span class="dt">Number</span>, c<span class="fu">:</span> <span class="dt">Number</span>, sum<span class="fu">:</span> <span class="dt">Number</span>}</code></pre></div>
+</blockquote>
+<p>My hypothesis: You need row polymorphism only because you’re changing <strong>data types</strong> on the fly without specifying in advance which parts you want to change.</p>
+<p>The idiomatic way to do this would be to build a data structure that explicitly <strong>allows for change</strong>.</p>
+<p>A simple example is <code>data Tree a = Leaf a | Branch (Tree a) (Tree a)</code>. This data structure allows you to change the data type stored at each node from <code>Person</code> to <code>String</code> or <code>Int</code> without any other changes, i.e., <code>Tree Person</code> to <code>Tree String</code>. The type parameter <code>a</code> in the type definition makes it explicit that changes in the data type are orthogonal to changes in the structure of the tree. Moreover, it does not allow for any other ad hoc changes.</p>
+<p>That’s my problem with row polymorphism! It doesn’t restrict the changes you can make to the data type. It seems to act like you have no idea how you will change the data type and like it must therefore be open to anything you might do.</p>
+<p>(I haven’t gone deep into this topic. These are just my initial thoughts.)</p>
+<p>The only good argument I’ve heard so far for row polymorphism has been “extensible effects” as seen in PureScript. I’m not sure how useful that is but it seems cool and I’ll look into it soon.</p>
+<h1 id="arrows">Arrows</h1>
+<p><strong>Hypothesis</strong>: Arrows allow you to compose disparate operations on a data structure so that it still seems like a single operation.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">(***) ::</span> <span class="dt">Arrow</span> a <span class="ot">=&gt;</span> a b c <span class="ot">-&gt;</span> a b' c' <span class="ot">-&gt;</span> a (b, b') (c, c')</code></pre></div>
+<p>You can, of course, compose arrows to get a single arrow:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">(<span class="fu">&lt;&lt;&lt;</span>) <span class="ot">::</span>
+  forall k (<span class="ot">cat ::</span> k <span class="ot">-&gt;</span> k <span class="ot">-&gt;</span> <span class="fu">*</span>) (<span class="ot">b ::</span> k) (<span class="ot">c ::</span> k) (<span class="ot">a ::</span> k)<span class="fu">.</span>
+  <span class="dt">Control.Category.Category</span> cat <span class="ot">=&gt;</span>
+  cat b c <span class="ot">-&gt;</span> cat a b <span class="ot">-&gt;</span> cat a c</code></pre></div>
+<p>(All arrows are categories.)</p>
+<p>Finally, you can raise a plain function into an arrow:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">arr ::</span> <span class="dt">Arrow</span> a <span class="ot">=&gt;</span> (b <span class="ot">-&gt;</span> c) <span class="ot">-&gt;</span> a b c</code></pre></div>
+<p>Arrow laws:</p>
+<p>Identity law: Raising an identity operation should just give you the identity arrow (I think).</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">arr id <span class="fu">===</span> id</code></pre></div>
+<p>Composition law: Composing two functions and then raising them to an arrow should be the same as raising them to arrows and then composing them.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">arr (f <span class="fu">.</span> g) <span class="fu">===</span> arr f <span class="fu">&lt;&lt;&lt;</span> arr g</code></pre></div>
+<p>For example:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">*</span><span class="dt">Main</span> <span class="dt">Control.Arrow</span><span class="fu">&gt;</span> arr (<span class="fu">+</span><span class="dv">1</span>) <span class="fu">&lt;&lt;&lt;</span> arr (<span class="fu">*</span> <span class="dv">2</span>) <span class="fu">$</span> <span class="dv">5</span>
+<span class="dv">11</span>
+<span class="fu">*</span><span class="dt">Main</span> <span class="dt">Control.Arrow</span><span class="fu">&gt;</span> arr ((<span class="fu">+</span><span class="dv">1</span>) <span class="fu">.</span> (<span class="fu">*</span><span class="dv">2</span>)) <span class="fu">$</span> <span class="dv">5</span>
+<span class="dv">11</span></code></pre></div>
+<p>How do arrows simplify code?</p>
+<p>This part of the wiki (https://en.wikibooks.org/wiki/Haskell/Understanding_arrows#Static_and_dynamic_parsers) talks about using static and dynamic parsers to prevent space leaks.</p>
+<p><strong>Hypothesis</strong>: Arrows allow you to combine two different types of parsers and treat them as one.</p>
+<p>Couldn’t you do that with monads? Not sure. Haven’t thought it through.</p>
+<p>Test: [2022-05-09 Mon] Reading The Fun of Programming, edited by Jeremy Gibbons and Oege de Moor.</p>
+<p>Apparently, an Arrow is a Category with a one-sided product function, called <code>first</code>.</p>
+<pre><code>class Category c where
+    id :: c a a
+	(&gt;&gt;&gt;) :: c a b -&gt; c b d -&gt; c a d</code></pre>
+<p>They need to satisfy identity and associativity.</p>
+<pre><code>class Arrow c where
+    pure :: (a -&gt; b) -&gt; c a b
+	(&gt;&gt;&gt;) :: c a b -&gt; c b d -&gt; c a d
+	first :: c a b -&gt; c (a, d) (b, d)</code></pre>
+<p><code>first</code> means that it took an arrow from a to b and turned it into an arrow from (a, d) to (b, d).</p>
+<p><code>idA</code> is uniquely determined by the <code>pure id</code>.</p>
+<p>Arrow instance for functions:</p>
+<pre><code>class Arrow (-&gt;) where
+    pure :: (a -&gt; b) -&gt; (a -&gt; b)
+	(&gt;&gt;&gt;) :: (a -&gt; b) -&gt; (b -&gt; d) -&gt; (a -&gt; d)
+	first :: (a -&gt; b) -&gt; (a, d) -&gt; (b, d)</code></pre>
+<p>Arrow instance for <code>State</code>:</p>
+<pre><code>newtype State s i o = ST ((s, i) -&gt; (s, o))</code></pre>
+<pre><code>class Arrow (State s) where
+    pure :: (i -&gt; o) -&gt; (State s i o)
+	(&gt;&gt;&gt;) :: (State s i o) -&gt; (State s o o2) -&gt; (State s i o2)
+	first :: (State s i o) -&gt; (State s (i, d) (o, d))</code></pre>
+<p>Here, <code>pure f</code> is just <code>ST (id x f)</code>. That is, the state part remains unchanged, while <code>f</code> is append to the input.</p>
+<p><code>ST f &gt;&gt;&gt; ST g</code> is just <code>ST (g . f)</code>.</p>
+<p><code>first f</code> is just ``.</p>
+<h1 id="watch-tests">Watch Tests</h1>
+<blockquote>
+<p>stack test –file-watch –fast</p>
+</blockquote>
+<p><strong>Super-slow</strong>. Takes around 10 seconds to rebuild and test.</p>
+<p>Apparently, <a href="https://github.com/ndmitchell/ghcid">ghcid</a> can essentially reload ghci and check for errors. That works. However, I’m not able to get it to run tests upon reloading.</p>
+<h1 id="odds-and-ends">Odds and Ends</h1>
+<h2 id="int-to-hex">Int to Hex</h2>
+<blockquote>
+<p>Prelude Data.Bits Numeric Data.Char&gt; let showIntAsHex n = showIntAtBase 16 intToDigit n “”</p>
+</blockquote>
+<h1 id="questions">Questions</h1>
+<p>What is higher-rank polymorphism?</p>
+<h1 id="useful-haskell-resources">Useful Haskell Resources</h1>
+<p>Thinking Functionally with Haskell by Richard Bird. The Sudoku implementation is compact and epic. Reminds me of PG.</p>
+<p>TODO: Check out http://haskellbook.com/</p>
+<p>Recursion schemes: https://www.schoolofhaskell.com/user/bartosz/understanding-algebras; http://www.timphilipwilliams.com/slides.html - Recursion schemes by example (very detailed)</p>
+
+<div class="info">Created: February 17, 2017</div>
+<div class="info">Last modified: November  6, 2022</div>
+<div class="info">Status: in-progress notes</div>
+<div class="info"><b>Tags</b>: notes, haskell</div>
+
+<br />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'spkrationalitytrainingground'; // required: replace example with your forum shortname
+    var disqus_identifier = '/haskell-learning.html';
+    var disqus_title = 'Haskell Learning';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<script type="text/javascript" src="https://fast.fonts.net/jsapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.js"></script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+        </div>
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="icon" type="image/png" href="./images/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="./images/favicon-16x16.png" sizes="16x16" />
+        <title>Planning - SPK's Rationality Essays</title>
+        <link rel="stylesheet" type="text/css" href="./css/default.css" />
+        <link rel="stylesheet" type="text/css" href="./css/highlight.css" />
+
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+	<!-- <script type="text/javascript" src="/js/header-links.js"></script> -->
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+	<link href="atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM/RSS Feed" />
+
+	<!-- Google Analytics stuff -->
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-51321929-1', 'pradeep90.github.io');
+	  ga('send', 'pageview');
+
+	</script>
+
+	<script type="text/javascript" src="https://fast.fonts.net/jsapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.js"></script>
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="./">SPK's Rationality Essays</a>
+            </div>
+            <div id="navigation">
+                <a href="./">Home</a>
+                <a href="./notes.html">Notes</a>
+                <!-- <a href="/about.html">About</a> -->
+                <a href="./archive.html">Archive</a>
+		<a href="./atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM/RSS Feed">RSS</a>
+            </div>
+        </div>
+
+        <div id="content">
+          <h1 id="post-title">Planning</h1>
+
+            <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
+
+<p><strong>Question</strong>: Why is planning hard?</p>
+<h1 id="is-it-just-sequential-plans-that-are-hard">Is it just Sequential Plans that are hard?</h1>
+<p>Why do I always mess up my estimates? How come my plans for a month always go wrong?</p>
+<p><strong>Hypothesis</strong>: Sequential plans are complicated because each step of a plan usually depends on the outcome of the previous steps, which gives you an exponential number of possibilities to handle.</p>
+<p>For example, suppose I want to study two topics A and B over the next two weeks. I assume that each topic will take me a week and assign myself A for the first week and B for the second week. But, inevitably, due to more interesting problems or… ahem… YouTube, I don’t complete A within the first week. Now, I can’t stick to my original plan of studying B the second week because I want to do A. Of course, in case both are important for an exam, say, I’ll have to choose which parts to study from each and make finer-grained plans.</p>
+<p>The point is that your plan must handle each possibility for each step. Your second-week plan must have one case for when your first-week plan succeeds and one case for when it fails. (Of course, if you just wanted to try A out for a week, then your second week’s plan can be anything you want. But most plans are sequential.) By the time you get to step four, you have to handle success or failure for each of the eight possible outcomes for the first three steps.</p>
+<h1 id="planning-is-hard-in-general">Planning is Hard in general</h1>
+<p><strong>Hypothesis</strong>: Plans are hard to make because you have to handle at least two cases for each variable in your plan - success or failure. So, the more the variables, the exponentially larger the number of cases your plan must handle.</p>
+<blockquote>
+<p>That was when Father had told Draco about the Rule of Three, which was that any plot which required more than three different things to happen would never work in real life. Father had further explained that since only a fool would attempt a plot that was as complicated as possible, the real limit was two.</p>
+<p>– <a href="http://hpmor.com/chapter/24">Chapter 24: Machiavellian Intelligence Hypothesis, HPMOR</a></p>
+</blockquote>
+<p>For example, if you want to throw a surprise birthday party for your friend, somebody has to get the cake, somebody has to keep the birthday boy away for a while, and somebody has to make sure all the guests arrive. If the cake doesn’t arrive, either because the bakery was full up and couldn’t take your order or because there was too much traffic, there’s no party. If the birthday boy isn’t kept away, there’s no surprise. If the guests don’t arrive in time, it’s not really a party.</p>
+<p>Note that it’s not a sequential plan. Each part of the plan happens simultaneously, but you still have to handle the different possibilities of failure.</p>
+<h1 id="how-do-our-plans-work-then">How do our Plans work then?</h1>
+<p>In reality, you don’t have to handle complex combinations of multiple variables. You may be able to address each variable individually. For example, if one bakery can’t handle your cake order, you can try another one. If your guests are late, you can shift the party by half an hour (and propagate that constraint to the cake-fetcher and the birthday-boy-distractor). If one plan to distract the birthday boy doesn’t work, you can try another one.</p>
+<h1 id="plan-to-an-interface-not-an-implementation">Plan to an Interface, not an Implementation</h1>
+<p>Here’s one way to simplify the birthday plan above. The plan boils down to three separate abstract goals - get a cake, get the guests, and keep the birthday boy away. There are several possible outcomes that would satisfy those goals.</p>
+<p>You could get the perfect ice-cream cake in the flavour your friend likes, in the shape of a guitar or bike or whatever, with his name written on it. Or you could get a generic square cake with ordinary frosting. Or a pitiful little cupcake with a lone candle on top. These are all acceptable “cakes” as far as your birthday party plans go.</p>
+<p>Similarly, you could get all twenty people in your social circle or just a dozen or maybe just the one guy who didn’t have an exam the next day. These are reasonably acceptable versions of “guests”.</p>
+<p>The same goes for keeping the birthday boy away - you could distract him by playing video games at somebody else’s house, drag him along for your regular grocery shopping, or let him give you advice for your relationship problems (real or imagined).</p>
+<p>Naturally, different strategies will vary in their results. A ice-cream cake will probably go down better in a surprise party than a cupcake. But the point is that your overall plan wouldn’t have to change. It’s still about the three things - cake, guests, and distraction. You may decide that if you can’t even get the barest possible result (a cupcake, one guest, or fifteen minutes of distraction), you’ll ditch the whole plan. But the abstract plan, as such, works.</p>
+<p>What helped simplify the plan above was decoupling the variables in the plan into orthogonal parts. Once you knew that you were getting a cake, of whatever kind, the guy getting the guests didn’t really have to worry about the cake anymore. (Of course, in reality, people will want to eat part of the cake, so you may have to vary the number of guests with the size of the cake. That would require an interface with two variables - the cake and its size)</p>
+<p><strong>Hypothesis</strong>: The only way to simplify plans is the same as the only way to simplify programs: decouple the parts by having interfaces.</p>
+<p><strong>Hypothesis</strong>: Once you have an overall abstract plan made out of interfaces, you can vary the concrete parts independently without having to change your plan.</p>
+<p>For example, the party plan above used the interface of “cake”. You could get any of the hundreds of cake at your local baker without having to change your overall plan.</p>
+<p>If you hadn’t used interfaces, you would have to handle cases in their entirety - “what if I call ten guests and keep the birthday boy away for an hour but get only a cupcake?”; “what if I call three guests but get an ice-cream cake?”</p>
+<h1 id="minimum-viable-plan">Minimum Viable Plan</h1>
+<p>We can see how to build complex plans. First, we start out with the simplest things that would satisfy each interface and then slowly raise the quality of each part till we reach an optimum.</p>
+<p>In our example above, we would first ensure that we could get a cupcake and one guest and keep the birthday boy away for fifteen minutes. Then, once we’ve proved that that would work, we can try to get a regular square cake. Next (or simultaneously), we can try to wrangle a few more guests, maybe promising some alcohol if they deign to appear. We can also concoct a better distraction to gain even more time.</p>
+<p><strong>Hypothesis</strong>: So, a plan consists of an abstract plan made out of interfaces and then concrete sub-plans that satisfy each interface.</p>
+<p>The above plan had the abstract plan of “cake + guests + distraction” and the concrete sub-plans of regular cake, ten guests, and one hour of distraction.</p>
+<p>This suggests that the key problem is in coming up with the abstract core plan. Once we’ve got that, it’s straightforward enough to find concrete ways to satisfy the interfaces.</p>
+<h1 id="complications">Complications</h1>
+<p><strong>Question</strong>: What would make you change your abstract core plan?</p>
+<p>Suppose your guests decide that they will come <em>only</em> if they get to eat some ice-cream cake. Now, you <em>have</em> to get an ice-cream cake if you want a lot of guests. But what size ice-cream cake should you buy? For that, you need the number of guests. One way to solve that problem is to turn that part of the plan sequential - wait to get RSVPs from all the guests and only then place an order for the cake. This is a different core plan from the previous one.</p>
+<p>Basically, that extra requirement broke the decoupling you’d exploited earlier. The cake order is no longer independent of the number of guests. So, the old interface and thus the old plan won’t work.</p>
+<h1 id="one-at-a-time">One at a Time</h1>
+<p>Figuring out a core plan and then improving the sub-plans individually forces you to implement things one at a time instead of trying to execute your whole to-do list in one go.</p>
+<p>That is (I think) what we call paralysis by analysis - where you don’t do anything because you can’t figure out a perfect plan to get everything you want, instead of just accepting some imperfect but effective plan.</p>
+<p>For example, I had a long wishlist of things I wanted to do before I went to grad school in August. However, instead of just picking them off one by one, I was waiting for the day when I could get them all somehow. I wasn’t content with the idea of just getting a few of those benefits. They all looked so great that I felt I needed them all. For example, instead of trying to “write essays about all your ideas”, I now have the smaller goal to “write three essays about ideas X, Y, and Z”. That is now far more manageable and in fact more work because now I actually have to do sit my ass to my chair and bang out three essays whereas previously I could get away with idle contemplation about all the great writing I was going to get done someday.</p>
+<p><strong>Corollary</strong>: If you can’t get even the simple plan going, then it was probably a waste of time having the larger, complex plan.</p>
+<p>This way, at least, you’re forced into action and can see which variables are holding you up.</p>
+
+<div class="info">Created: April  7, 2017</div>
+<div class="info">Last modified: April  8, 2017</div>
+<div class="info">Status: in-progress notes</div>
+<div class="info"><b>Tags</b>: notes, planning</div>
+
+<br />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'spkrationalitytrainingground'; // required: replace example with your forum shortname
+    var disqus_identifier = '/planning.html';
+    var disqus_title = 'Planning';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<script type="text/javascript" src="https://fast.fonts.net/jsapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.js"></script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+        </div>
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>

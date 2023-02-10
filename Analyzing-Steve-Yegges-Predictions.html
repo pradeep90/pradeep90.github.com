@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="icon" type="image/png" href="./images/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="./images/favicon-16x16.png" sizes="16x16" />
+        <title>Analyzing Steve Yegge's Predictions - SPK's Rationality Essays</title>
+        <link rel="stylesheet" type="text/css" href="./css/default.css" />
+        <link rel="stylesheet" type="text/css" href="./css/highlight.css" />
+
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+	<!-- <script type="text/javascript" src="/js/header-links.js"></script> -->
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+	<link href="atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM/RSS Feed" />
+
+	<!-- Google Analytics stuff -->
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-51321929-1', 'pradeep90.github.io');
+	  ga('send', 'pageview');
+
+	</script>
+
+	<script type="text/javascript" src="https://fast.fonts.net/jsapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.js"></script>
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="./">SPK's Rationality Essays</a>
+            </div>
+            <div id="navigation">
+                <a href="./">Home</a>
+                <a href="./notes.html">Notes</a>
+                <!-- <a href="/about.html">About</a> -->
+                <a href="./archive.html">Archive</a>
+		<a href="./atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM/RSS Feed">RSS</a>
+            </div>
+        </div>
+
+        <div id="content">
+          <h1 id="post-title">Analyzing Steve Yegge's Predictions</h1>
+
+            <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
+
+<p><strong>Note</strong>: I want to figure out <em>how</em> he made those predictions. What model of the programming world does Steve Yegge have that lets him predict <a href>so accurately</a>?</p>
+<p>Let’s first look at the original predictions and rationale.</p>
+<p>(Note: “now” refers to the time at which he made the predictions, i.e., 2004)</p>
+<h1 id="caveats">Caveats</h1>
+<p>It’s pretty <a href>hard</a> to avoid the hindsight bias. No doubt our views are coloured by the fact that we know Facebook already took off or that Lisp still isn’t too popular. Let’s try to overcome it as much as possible but discount the arguments a bit.</p>
+<h1 id="top-level-predictions">Top-level predictions</h1>
+<blockquote>
+<p><strong>Prediction #1</strong>: XML databases will surpass relational databases in popularity by 2011.</p>
+<p>Reason for prediction: Nobody likes to do O/R mapping; everyone just wants a solution.</p>
+</blockquote>
+<p>So will the programmers change? Do you expect other good technologies to surpass incumbents too?</p>
+<p>Who exactly will change? Who’s making the choice: the technical heads or the average programmers? What algorithm are they really using?</p>
+<p>Will the popularity level of relational databases go up or down? What about XML databases? Will existing programmers shift or will there be a new batch of programmers who start out using XML databases? If a mixture of that will happen, what will the ratio be? In which specific domains do you expect programmers to switch? Where <em>won’t</em> they switch?</p>
+<p>What are still some advantages of relational databases over XML databases? (else, why haven’t people shifted already?) How might relational databases remain more popular?</p>
+<p>Could there be other alternatives?</p>
+<blockquote>
+<p><strong>Prediction #2</strong>: Someone will make a lot of money by hosting open-source web applications.</p>
+<p>Reason for prediction: most small development shops would pay a monthly fee not to have to administer the apps themselves.</p>
+</blockquote>
+<p>Why hasn’t it been done before? How painful is it to host and administer the apps yourself?</p>
+<p>How much is the demand for such hosted web apps? How hard is it to enter the market?</p>
+<p>How could this not happen? Could something other than open-source web app hosting be a solution?</p>
+<blockquote>
+<p><strong>Prediction #3</strong>: Multi-threaded programming will fall out of favor by 2012.</p>
+<p>Reason for prediction: Cost/benefit ratio isn’t high enough.</p>
+</blockquote>
+<p>Is it in favour now? What are people using it for? What else will they use, then?</p>
+<p>What will turn the tide? Will it be a new language? Which one?</p>
+<p>Could multi-threaded programming gain favour somehow? Could there be better language support or whatever? Some killer feature perhaps?</p>
+<blockquote>
+<p><strong>Prediction #4</strong>: Java’s “market share” on the JVM will drop below 50% by 2010.</p>
+<p>In other words, over half the code written for the Java platform will not be Java. It’ll be Python, Ruby, Haskell, Lisp, and a variety of other languages. The Java programming language will become more like “assembly-language for the JVM” - something you use for building frameworks in Java, but most app code will be in higher-level languages compiled into Java bytecode.</p>
+<p>Reason for prediction: The Java core language is the weakest part of the otherwise strong Java platform.</p>
+</blockquote>
+<p>Why are people using Java so much now? What else will they use? Will they get the characteristics they want - speed, security, whatever?</p>
+<p>Wait. Instead of talking about the “market share”, let’s look at the absolute lines of code written in Java. Will that rise or fall? Will the lines of code in other JVM languages rise or fall? He predicts that most app code will be in higher-level languages.</p>
+<p>Could the number of lines in Java increase? Maybe the language improves or gets better frameworks for some killer app?</p>
+<blockquote>
+<p>… (<strong>continued</strong>)</p>
+<p>I suspect that most Java programmers won’t upgrade to the new languages, but lots of people coming to the JVM from other platforms will use those languages. So I predict that in six years, less than half of all (new) Java bytecode will be compiled from Java code.</p>
+</blockquote>
+<p>How does that suspicion lead you to make the “half of all new Java bytecode” prediction (in six years)?</p>
+<blockquote>
+<p><strong>Prediction #5</strong>: Lisp will be in the top 10 most popular programming languages by 2010.</p>
+<p>Reason for prediction: Lisp is a keeper. And it’s getting a lot of good press these days.</p>
+</blockquote>
+<p>Why don’t people use it much now? What will change? What about the other languages?</p>
+<p>Where will people use it? What frameworks will they use? Will somebody create those new frameworks? Who?</p>
+<p>Again, let’s look at the absolute numbers. Will people switch to Lisp or will new programmers come in using Lisp?</p>
+<blockquote>
+<p><strong>Prediction #6</strong>: A new internet community-hangout will appear. One that you and I will frequent.</p>
+<p>Reason for prediction: People like to socialize.</p>
+</blockquote>
+<p>Why don’t we have that now? How will it be different from forums, etc.? Why will people flock there when they aren’t going for the existing options?</p>
+<p>Will normal people hang out there? What barrier will you have to overcome to draw them? What don’t current communities have?</p>
+<p>People have liked to socialize for a long time. Why should that lead to a new internet community hangout? Could the internet have previously unseen capabilities? Like what?</p>
+<blockquote>
+<p><strong>Prediction #7</strong>: The mobile/wireless/handheld market is still at least 5 years out.</p>
+<p>Reason for prediction: My spider-sense isn’t tingling yet.</p>
+</blockquote>
+<p>What kind of device would become very popular? Why 5 years? What will happen in the interim?</p>
+<blockquote>
+<p><strong>Prediction #8</strong>: Someday I will voluntarily pay Google for one of their services.</p>
+<p>Reason for prediction: They’re putting technological heroin in their services, and someday they’re going to start charging.</p>
+</blockquote>
+<p>What would make Google charge for some service? Why aren’t they charging now?</p>
+<p>Why wouldn’t advertising cover the charges?</p>
+<blockquote>
+<p><strong>Prediction #9</strong>: Apple’s laptop sales will exceed those of HP/Compaq, IBM, Dell and Gateway combined by 2010.</p>
+<p>Reason for prediction: Macs rule. Windows laptops are as exciting as a shiny disco ball in the ceiling.</p>
+</blockquote>
+<p>How could this happen? Either all their sales have to remain constant and Apple’s laptop sales have to shoot up, or they have to go down a lot and Apple’s sales remain the same, or something in between. (which of these scenarios is he predicting?)</p>
+<p>Also, how about the prices? Will Apple slice their prices? How? By making cheaper laptops? Why won’t the others do that too? Or will Apple accept a lower margin? Or just keep it priced the same (adjusting for inflation)?</p>
+<blockquote>
+<p><strong>Prediction #10</strong>: In five years’ time, most programmers will still be average.</p>
+<p>Reason for prediction: That’s just how the math works out.</p>
+</blockquote>
+<p>His other interpretation of the prediction was that the level of the average programmer will still be “ho-hum”. First, is the current standard “ho-hum”? Next, what would have to happen (or not happen) to keep the standard this way? If new languages appear, if old languages get upgraded, or if we get better tools and frameworks, won’t the average level improve? What if coding academies sprout up - will they not affect the average level at all?</p>
+<p>Aren’t there already projects in the pipeline that could improve programmer effectiveness? Maybe new versions of languages, etc.? Will they all have zero effect?</p>
+<h1 id="notes">Notes</h1>
+<p>Talk in terms of absolute values (units sold) not relative ones (Apple will surpass all the others).</p>
+<p>We can search efficiently by looking at the points where hypotheses make differing predictions. It’s pointless to look at experiments where they make the same predictions - it won’t be evidence either way.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<h1 id="aim">Aim</h1>
+<p>I want to test Steve Yegge’s causal model. He’s already given his reasoning. So, we need to test his model to see which parts are accurate.</p>
+<p>How do we test a model?</p>
+<p>First, we need to clear some of the vague terms in the prediction and see exactly which variables he expects to change.</p>
+<p>Next, we see if each “reason” is a hypothesis or just a prediction. If it’s just a prediction, we need to dig deeper by asking “why”.</p>
+<p>Then, we check if it is a well-specified model. Can it handle different conditions? Does it predict precisely what will happen? Why does the model predict this particular outcome?</p>
+<p>Also, we check if the assertions are true.</p>
+<p>Finally, we collect the alternative hypotheses and list the experiments where they differ. How do we generate alternative hypotheses? For now, look at each possible outcome and ask what could cause it.</p>
+<p>Remember that everything is either a hypothesis, an experiment, a prediction about the outcome of an experiment, or the outcome of an experiment.</p>
+<p>TODO: Go through all the above tests for each reason.</p>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Note, of course, that we must sanity-check our hypothesis by ensuring that the things it predicts will happen actually do happen. We can do that after eliminating the other hypotheses using differing predictions.<a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
+
+<div class="info">Created: September 17, 2015</div>
+<div class="info">Last modified: September 28, 2019</div>
+<div class="info">Status: in-progress</div>
+<div class="info"><b>Tags</b>: scientific method, practice, steve yegge</div>
+
+<br />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'spkrationalitytrainingground'; // required: replace example with your forum shortname
+    var disqus_identifier = '/Analyzing-Steve-Yegges-Predictions.html';
+    var disqus_title = 'Analyzing Steve Yegge\'s Predictions';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<script type="text/javascript" src="https://fast.fonts.net/jsapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.js"></script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+        </div>
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>
