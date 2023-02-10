@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="icon" type="image/png" href="./images/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="./images/favicon-16x16.png" sizes="16x16" />
+        <title>Cognitive Psychology - SPK's Rationality Essays</title>
+        <link rel="stylesheet" type="text/css" href="./css/default.css" />
+        <link rel="stylesheet" type="text/css" href="./css/highlight.css" />
+
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+	<!-- <script type="text/javascript" src="/js/header-links.js"></script> -->
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+	<link href="atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM/RSS Feed" />
+
+	<!-- Google Analytics stuff -->
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-51321929-1', 'pradeep90.github.io');
+	  ga('send', 'pageview');
+
+	</script>
+
+	<script type="text/javascript" src="https://fast.fonts.net/jsapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.js"></script>
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="./">SPK's Rationality Essays</a>
+            </div>
+            <div id="navigation">
+                <a href="./">Home</a>
+                <a href="./notes.html">Notes</a>
+                <!-- <a href="/about.html">About</a> -->
+                <a href="./archive.html">Archive</a>
+		<a href="./atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM/RSS Feed">RSS</a>
+            </div>
+        </div>
+
+        <div id="content">
+          <h1 id="post-title">Cognitive Psychology</h1>
+
+            <!-- <center><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-prn1/t31.0-8/p600x600/10257116_10202295769100492_2438594605053717342_o.jpg" height="400" width="300" class="sujeet-pic" alt="Sujeet pic" /></center> -->
+
+<h1 id="perception-in-chess">Perception in Chess</h1>
+<p>Chase, W. G., &amp; Simon, H. A. (1973). Perception in chess. Cognitive psychology, 4(1), 55-81.</p>
+<blockquote>
+<p>This paper develops a technique for isolating and studying the perceptual structures that chess players perceive.</p>
+</blockquote>
+<p>The basic lesson: to figure out your chunks for some material, copy it by glancing occasionally. Each glance indicates where you memorized a new chunk. Use this to figure out the exact chunks and their sizes.</p>
+<h2 id="experiment-copy-a-program">Experiment: Copy a Program</h2>
+<p>Program: <code>sudoku.lhs</code> from http://www.cs.nott.ac.uk/~pszgmh/sudoku.lhs</p>
+<p>Method: Record myself using <code>recordmydesktop</code>.</p>
+<p>Instruction: Copy three functions beginning with <code>prune</code>.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">prune ::</span> <span class="dt">Matrix</span> <span class="dt">Choices</span> <span class="ot">-&gt;</span> <span class="dt">Matrix</span> <span class="dt">Choices</span>
+prune <span class="fu">=</span> pruneBy boxes <span class="fu">.</span> pruneBy cols <span class="fu">.</span> pruneBy rows
+	<span class="kw">where</span> pruneBy f <span class="fu">=</span> f <span class="fu">.</span> map reduce <span class="fu">.</span> f
+
+<span class="ot">reduce ::</span> <span class="dt">Row</span> <span class="dt">Choices</span> <span class="ot">-&gt;</span> <span class="dt">Row</span> <span class="dt">Choices</span>
+reduce xss <span class="fu">=</span> [xs <span class="ot">`minus`</span> singles <span class="fu">|</span> xs <span class="ot">&lt;-</span> xss]
+	<span class="kw">where</span> singles <span class="fu">=</span> concat (filter single xss)
+
+<span class="ot">minus ::</span> <span class="dt">Choices</span> <span class="ot">-&gt;</span> <span class="dt">Choices</span> <span class="ot">-&gt;</span> <span class="dt">Choices</span>
+xs <span class="ot">`minus`</span> ys <span class="fu">=</span> <span class="kw">if</span> single xs <span class="kw">then</span> xs <span class="kw">else</span> xs \\ ys</code></pre></div>
+<p>Video length: 2m35s</p>
+<pre><code>Time between glances at source file: (Log once at start of glance and end of glance)
+- 0:00:02 :: start
+- 0:00:36 :: setup stuff; including `prune ::` and `prune =`
+- 0:00:43 :: start
+- 0:00:46 :: end (pruneBy rows . pruneBy cols)
+- 0:00:52 :: start
+- 0:00:55 :: end (where pruneBy = )
+- 0:01:04 :: start
+- 0:01:07 :: end (f . map reduce . f)
+- 0:01:12 :: start
+- 0:01:13 :: end (add f to lhs)
+- 0:01:16 :: start
+- 0:01:17 :: end (reduce :: Row Choices -&gt; Row Choices)
+- 0:01:23 :: start
+- 0:01:26 :: end (reduce xss =)
+- 0:01:30 :: start
+- 0:01:31 :: end ([xs `minus` singles | xs &lt;- xss])
+- 0:01:41 :: start
+- 0:01:44 :: end (where xs =)
+- 0:01:50 :: start
+- 0:01:51 :: end (fix error; singles = concat ())
+- 0:01:56 :: start
+- 0:01:58 :: end (filter simple xss)
+- 0:02:03 :: start
+- 0:02:04 :: end (minus ::)
+- 0:02:06 :: start
+- 0:02:08 :: end (Choices -&gt; Choices -&gt; Choices)
+- 0:02:13 :: start
+- 0:02:14 :: end (xs `minus` ys =)
+- 0:02:18 :: start
+- 0:02:21 :: end (if single xs then xs else xs \\ ys)
+- 0:02:29 :: check
+- 0:02:30 :: end</code></pre>
+<p>Convert to seconds:</p>
+<pre><code>- 2		:: start
+- 36		:: setup stuff; including `prune ::` and `prune =`
+- 43		:: start
+- 46		:: end (pruneBy rows . pruneBy cols)
+- 52		:: start
+- 55		:: end (where pruneBy = )
+- 64		:: start
+- 67		:: end (f . map reduce . f)
+- 72		:: start
+- 73		:: end (add f to lhs)
+- 76		:: start
+- 77		:: end (reduce :: Row Choices -&gt; Row Choices)
+- 83		:: start
+- 86		:: end (reduce xss =)
+- 90		:: start
+- 91		:: end ([xs `minus` singles | xs &lt;- xss])
+- 101		:: start
+- 104		:: end (where xs =)
+- 110		:: start
+- 111		:: end (fix error; singles = concat ())
+- 116		:: start
+- 118		:: end (filter simple xss)
+- 123		:: start
+- 124		:: end (minus ::)
+- 126		:: start
+- 128		:: end (Choices -&gt; Choices -&gt; Choices)
+- 133		:: start
+- 134		:: end (xs `minus` ys =)
+- 138		:: start
+- 141		:: end (if single xs then xs else xs \\ ys)
+- 149		:: check
+- 150		:: end</code></pre>
+<p>Glance interval lengths:</p>
+<pre><code>[3,3,3,1,1,3,1,3,1,2,1,2,1,3]
+
+Mean glance interval = 2s
+
+Standard deviation = 0.92s</code></pre>
+<p>Each glance seems to take around 2s, which is what the chunking theory predicts:</p>
+<blockquote>
+<p>The pieces placed on the board by the subject in the perception task after a single glance correspond to a single chunk. About 2 sec is required to recognize a chunk and store a label for it in short-term memory.</p>
+</blockquote>
+<p>Writing interval lengths:</p>
+<pre><code>[6,9,5,3,6,4,10,6,5,5,2,5,4,8]
+
+Mean writing interval = 5.5s
+
+Standard deviation = 2.1s</code></pre>
+<p>What do my chunks look like?</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">pruneBy rows <span class="fu">.</span> pruneBy cols
+<span class="kw">where</span> pruneBy <span class="fu">=</span>
+f <span class="fu">.</span> map reduce <span class="fu">.</span> f
+<span class="fu">&lt;</span>add f to lhs<span class="fu">&gt;</span>
+<span class="ot">reduce ::</span> <span class="dt">Row</span> <span class="dt">Choices</span> <span class="ot">-&gt;</span> <span class="dt">Row</span> <span class="dt">Choices</span>
+reduce xss <span class="fu">=</span>
+[xs <span class="ot">`minus`</span> singles <span class="fu">|</span> xs <span class="ot">&lt;-</span> xss]
+<span class="kw">where</span> xs <span class="fu">=</span>
+<span class="fu">&lt;</span>fix error<span class="fu">&gt;</span> singles <span class="fu">=</span> concat
+filter simple xss
+minus <span class="ot">::</span>
+<span class="dt">Choices</span> <span class="ot">-&gt;</span> <span class="dt">Choices</span> <span class="ot">-&gt;</span> <span class="dt">Choices</span>
+xs <span class="ot">`minus`</span> ys <span class="fu">=</span>
+<span class="kw">if</span> single xs <span class="kw">then</span> xs <span class="kw">else</span> xs \\ ys</code></pre></div>
+<h2 id="reading-the-paper">Reading the Paper</h2>
+<p>Mnemonic: “between-glance” = there’s a glance between the two pieces; “within-glance” = there’s no glance in between</p>
+<blockquote>
+<p>An examination of the z scores shows that the between-glance probabilities are much closer to the chance levels than are the within-glance probabilities. In contrast, the within-glance probabilities are higher than chance for pairs of pieces with several relations, and lower than chance for pairs with few relations. In particular, the relations AP, DC, DPC, PCS, and DPCS have high probabilities, C, S, and null (-) relations have lower- than-chance probabilities.</p>
+</blockquote>
+<p>So, pieces in the same chunk are closely related while pieces in successive chunks are not.</p>
+<p><strong>Question</strong>: How do they calculate the deviation score Z? It’s not Z = (Po - Pe) / SE.</p>
+<blockquote>
+<p>Thus, from the within-glance relations, it appears that subjects are noticing the pawn structure, clusters of pieces of the same color, and attack and defense relations over small spatial distances.</p>
+</blockquote>
+<blockquote>
+<p>Apparently, subjects are noticing the same kinds of structures in the random positions as in the game positions even though such structures are rare in the random positions.</p>
+</blockquote>
+<h2 id="recalling-from-memory">Recalling from Memory</h2>
+<p><strong>Question</strong>: Why should people recalling chess pieces do so in 2s chunks?</p>
+<p>In the perception task, they glanced at the source chess board, loaded their working memory with as much information as they could comfortably carry, and unloaded it on the target board. So, the time they took for each glance told you the size of their working memory. But why would they take the same time when recalling stuff from <em>memory</em>? It’s not like they’re loading their working memory… again… wait…</p>
+<p><strong>Hypothesis</strong>: They’re loading information from long-term memory. We assume that time taken to load a “chunk” from long-term memory is the same as the time taken to load a “chunk” from the senses. So, the time taken between the last piece of one chunk and the first piece of the next tells you the loading time.</p>
+<p>Note that the two loading times could have been different. Loading from long-term memory <em>could</em> have been much faster (or vice versa). But it doesn’t seem to be.</p>
+<p>Also note that there doesn’t seem to be some kind of queue where you can partially load pieces of the next chunk as soon as you’re done with the first pieces of the previous chunk so that there’s never a gap in production. Instead, you wait till you’re done with one chunk before you start with the next. (This could be because you need to <em>pay attention</em> to the label of a chunk to recall its contents, and since your attention is on <em>using</em> the pieces of the previous chunk, you aren’t able to load the next chunk.)</p>
+<h2 id="experiment-recall-an-unfamiliar-function">Experiment: Recall an Unfamiliar Function</h2>
+<p>Program: HughesPJ.hs</p>
+<p>Method: Record myself using <code>recordmydesktop</code>.</p>
+<p>Instruction: Memorize <code>fill1</code> in 3.5m.</p>
+<p>14 lines of code.</p>
+<p>What it actually was:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">fill1 ::</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">RDoc</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [<span class="dt">Doc</span>] <span class="ot">-&gt;</span> <span class="dt">Doc</span>
+fill1 _ _		    k _	 <span class="fu">|</span> k <span class="ot">`seq`</span> <span class="dt">False</span> <span class="fu">=</span> undefined
+fill1 _ <span class="dt">NoDoc</span>		    _ _	 <span class="fu">=</span> <span class="dt">NoDoc</span>
+fill1 g (p <span class="ot">`Union`</span> q)	    k ys <span class="fu">=</span> fill1 g p k ys <span class="ot">`union_`</span> (aboveNest q <span class="dt">False</span> k (fill g ys))
+fill1 g <span class="dt">Empty</span>		    k ys <span class="fu">=</span> mkNest k (fill g ys)
+fill1 g (<span class="dt">Nest</span> n p)	    k ys <span class="fu">=</span> nest_ n (fill1 g p (k <span class="fu">-</span> n) ys)
+fill1 g (<span class="dt">NilAbove</span> p)	    k ys <span class="fu">=</span> nilAbove_ (aboveNest p <span class="dt">False</span> k (fill g ys))
+fill1 g (<span class="dt">TextBeside</span> s sl p) k ys <span class="fu">=</span> textBeside_ s sl (fillNB g p (k <span class="fu">-</span> sl) ys)
+fill1 _ (<span class="dt">Above</span> {})	    _ _	 <span class="fu">=</span> error <span class="st">&quot;fill1 Above&quot;</span>
+fill1 _ (<span class="dt">Beside</span> {})	    _ _	 <span class="fu">=</span> error <span class="st">&quot;fill1 Beside&quot;</span></code></pre></div>
+<p>How I remembered it:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">fill1 ::</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">RDoc</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [<span class="dt">Doc</span>] <span class="ot">-&gt;</span> <span class="dt">Doc</span>
+fill1 _ _ k _ <span class="fu">|</span> k <span class="ot">`seq`</span> <span class="dt">False</span> <span class="fu">=</span> undefined
+fill1 _ <span class="dt">NoDoc</span> _ _ <span class="fu">=</span> <span class="dt">NoDoc</span>
+fill1 g <span class="dt">Empty</span> k ys <span class="fu">=</span> mkNest_ k (fill g ys)
+fill1 g <span class="dt">NestAbove</span> {n <span class="fu">=</span> n, p <span class="fu">=</span> p} k ys <span class="fu">=</span> nest_ n (fill1 g p (k <span class="fu">-</span> n) ys)
+fill1 _ <span class="dt">NilAbove</span> _ _ <span class="fu">=</span> something
+fill1 _ <span class="dt">NilBeside</span> _ _ <span class="fu">=</span> something
+fill1 _ <span class="dt">Above</span> {} _ _ <span class="fu">=</span> error
+fill1 _ <span class="dt">Beside</span> {} _ _ <span class="fu">=</span> error</code></pre></div>
+<p>What I missed:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">fill1 g (p <span class="ot">`Union`</span> q)       k ys <span class="fu">=</span> fill1 g p k ys <span class="ot">`union_`</span> (aboveNest q <span class="dt">False</span> k (fill g ys))
+fill1 g (<span class="dt">NilAbove</span> p)        k ys <span class="fu">=</span> nilAbove_ (aboveNest p <span class="dt">False</span> k (fill g ys))
+fill1 g (<span class="dt">TextBeside</span> s sl p) k ys <span class="fu">=</span> textBeside_ s sl (fillNB g p (k <span class="fu">-</span> sl) ys)</code></pre></div>
+<p>Time to memorize: 3m30s</p>
+<p>Time log (start and end of each chunk):</p>
+<pre><code>- 0:03:33 :: start writing
+- 0:03:37 :: end
+- 0:03:43 :: start type
+- 0:03:47 :: end
+- 0:03:48 :: start int to end
+- 0:03:50 :: end
+- 0:03:53 :: start fill1
+- 0:03:56 :: end
+- 0:03:58 :: start k
+- 0:03:59 :: end
+- 0:04:04 :: start k seq
+- 0:04:08 :: end
+- 0:04:11 :: start undefined
+- 0:04:13 :: end
+- 0:04:16 :: start lhs
+- 0:04:17 :: end
+- 0:04:18 :: start nodoc
+- 0:04:22 :: end
+- 0:04:25 :: start _
+- 0:04:26 :: end
+- 0:04:28 :: start nodoc
+- 0:04:29 :: end
+- 0:04:32 :: start copy
+- 0:04:34 :: end
+- 0:04:35 :: start empty
+- 0:04:36 :: end
+- 0:04:41 :: start nestabv
+- 0:04:44 :: end
+- 0:04:46 :: start nildoc
+- 0:04:47 :: end
+- 0:04:54 :: start nilabov
+- 0:04:58 :: end
+- 0:05:00 :: start above
+- 0:05:01 :: end
+- 0:05:02 :: start beside
+- 0:05:03 :: end
+- 0:05:06 :: start error
+- 0:05:07 :: end
+- 0:05:08 :: start error
+- 0:05:09 :: end
+- 0:05:15 :: start
+- 0:05:20 :: end
+- 0:05:21 :: start
+- 0:05:25 :: end
+- 0:05:27 :: start
+- 0:05:28 :: end
+- 0:05:31 :: start
+- 0:05:32 :: aend
+- 0:05:42 :: start
+- 0:05:43 :: end
+- 0:05:54 :: start
+- 0:05:55 :: ned
+- 0:05:56 :: start
+- 0:05:58 :: end
+- 0:06:00 :: start
+- 0:06:04 :: end
+- 0:06:05 :: start
+- 0:06:06 :: end
+- 0:06:09 :: tart
+- 0:06:10 :: end
+- 0:06:22 :: start
+- 0:06:23 :: end
+- 0:06:28 :: start
+- 0:06:30 :: end
+- 0:06:32 :: tart
+- 0:06:33 :: end
+- 0:06:36 :: start
+- 0:06:37 :: end
+- 0:06:40 :: start
+- 0:06:46 :: end
+- 0:06:52 :: start
+- 0:06:54 :: end
+- 0:07:33 :: astart
+- 0:07:35 :: end</code></pre>
+<p>In seconds:</p>
+<pre><code>213		  start writing
+217		  end
+223		  start type
+227		  end
+228		  start int to end
+230		  end
+233		  start fill1
+236		  end
+238		  start k
+239		  end
+244		  start k seq
+248		  end
+251		  start undefined
+253		  end
+256		  start lhs
+257		  end
+258		  start nodoc
+262		  end
+265		  start _
+266		  end
+268		  start nodoc
+269		  end
+272		  start copy
+274		  end
+275		  start empty
+276		  end
+281		  start nestabv
+284		  end
+286		  start nildoc
+287		  end
+294		  start nilabov
+298		  end
+300		  start above
+301		  end
+302		  start beside
+303		  end
+306		  start error
+307		  end
+308		  start error
+309		  end
+315		  start
+320		  end
+321		  start
+325		  end
+327		  start
+328		  end
+331		  start
+332		  aend
+342		  start
+343		  end
+354		  start
+355		  ned
+356		  start
+358		  end
+360		  start
+364		  end
+365		  start
+366		  end
+369		  tart
+370		  end
+382		  start
+383		  end
+388		  start
+390		  end
+392		  tart
+393		  end
+396		  start
+397		  end
+400		  start
+406		  end
+412		  start
+414		  end
+453		  astart
+455		  end
+460		  dummy start</code></pre>
+<p>Writing intervals (<code>= end - start</code>):</p>
+<pre><code>[4,4,2,3,1,4,2,1,4,1,1,2,1,3,1,4,1,1,1,1,5,4,1,1,1,1,2,4,1,1,1,2,1,1,6,2,2]</code></pre>
+<p>Mean = 2.1s</p>
+<p>Standard deviation = 1.4s</p>
+<p>Median and mode = 1s</p>
+<p>Recall intervals (<code>= start of this chunk - end of previous chunk</code>):</p>
+<pre><code>[6,1,3,2,5,3,3,1,3,2,3,1,5,2,7,2,1,3,1,6,1,2,3,10,11,1,2,1,3,12,5,2,3,3,6,39,5]</code></pre>
+<p>Mean = 4.5s</p>
+<p>Standard deviation = 6.3s</p>
+<p>Median and mode = 3s</p>
+<p>I was struggling to recall anything. Needless to say, the final program doesn’t really work.</p>
+<blockquote>
+<p>We should also note in passing that errors usually occur toward the end of the protocol; subjects usually report first what they know, and fast, and these errors generally have long latencies and few relations.</p>
+</blockquote>
+<p>Amen. In the end, all I could do was add <code>fill1 _ NilAbove _ _ = something</code>.</p>
+<h2 id="continuing-with-the-paper">Continuing with the Paper</h2>
+<blockquote>
+<p>The processes that occur during an interval of more than 2 set between the placing of two pieces appear to be significantly different from the proc- esses that occur during an interval of less than 2 sec.</p>
+</blockquote>
+<p>One gets a piece from the same chunk and the other gets it from a new chunk.</p>
+<blockquote>
+<p>Recall that in the perception task there was a systematic difference in the duration of the glances as a function of chess skill, with less time being taken by the more skilled players. Rut the average number of pieces per glance did not vary systematically as a function of chess skill.</p>
+<p>…</p>
+<p>Thus, it appears that the chunks are about the same size in both tasks, but that chess skill is reflected in the speed with which chunks are perceived in the perception task and the size of the chunks in the memory task.</p>
+</blockquote>
+<h2 id="chunk-size-and-memory-span">Chunk size and Memory span</h2>
+<blockquote>
+<p>The general practice of the subjects was to place first those groups of pieces they thought they remembered well, then to search memory for additional pieces. During the first phase, placing pieces in recall without “problem solving,” chunks tended to be relatively large and errors relatively few. During the second phase, pieces tended to be placed one by one (pawns sometimes by pairs or triads), time being taken for deliberation between pieces. Errors were relatively frequent, and in many instances the player appeared to be determining where pieces ought to be (i.e., where they would function well, or where they are often posted in actual games), rather than recalling where he had actually seen them.</p>
+</blockquote>
+<p>I filled in <code>Empty</code> and <code>NilAbove</code> at the end, because I was least sure of these.</p>
+<blockquote>
+<p>We observe, second, that the average number of chunks for each subject is well within the memory span, as hypothesized; but, contrary to our expectation, the number of chunks is related to chess skill.</p>
+</blockquote>
+<p>Hmm… Was I holding the function in working memory? It didn’t feel that way. Well, it wasn’t like a phone number that I would forget if I thought about something else.</p>
+<p><strong>Observation</strong>: I took 3.5 minutes to memorize that function. The chess players in the experiment had 5 <em>seconds</em> to memorize the chess board.</p>
+<p>So, I’d been building stronger associations in my mind.</p>
+<h2 id="experiment-unfamiliar-function-short-time">Experiment: Unfamiliar function, short time</h2>
+<p>Program: HughesPJ.hs</p>
+<p>Method: Record myself using <code>recordmydesktop</code>.</p>
+<p>Instruction: Memorize <code>fullRender</code> in 5s.</p>
+<p>I took around 8s.</p>
+<p>Actual code:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">fullRender <span class="dt">OneLineMode</span> _ _ txt end doc <span class="fu">=</span> easy_display space_text txt end (reduceDoc doc)
+fullRender <span class="dt">LeftMode</span>    _ _ txt end doc <span class="fu">=</span> easy_display nl_text	 txt end (reduceDoc doc)
+fullRender the_mode line_length ribbons_per_line txt end doc
+  <span class="fu">=</span> display the_mode line_length ribbon_length txt end best_doc
+  <span class="kw">where</span>
+    best_doc <span class="fu">=</span> best the_mode hacked_line_length ribbon_length (reduceDoc doc)
+    hacked_line_length,<span class="ot"> ribbon_length ::</span> <span class="dt">Int</span>
+    ribbon_length <span class="fu">=</span> round (fromIntegral line_length <span class="fu">/</span> ribbons_per_line)
+    hacked_line_length <span class="fu">=</span> <span class="kw">case</span> the_mode <span class="kw">of</span>
+			 <span class="dt">ZigZagMode</span> <span class="ot">-&gt;</span> maxBound
+			 _ <span class="ot">-&gt;</span> line_length</code></pre></div>
+<p>My answer:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">fullRender <span class="dt">OneLiner</span> <span class="fu">=</span> easy_display <span class="fu">...</span>
+fullRender <span class="dt">SomethingElse</span> <span class="fu">=</span> easy_display <span class="fu">...</span>
+fullRender <span class="dt">FullOn</span> <span class="fu">=</span> display <span class="fu">...</span>
+	<span class="kw">where</span> best_display <span class="fu">=</span> <span class="fu">...</span>
+	      foo <span class="fu">=</span> <span class="fu">...</span>
+	      bar <span class="fu">=</span> <span class="fu">...</span>
+	      baz <span class="fu">=</span> <span class="fu">...</span></code></pre></div>
+<p>LOL.</p>
+<p><strong>Observation</strong>: Missed the parameters completely. Missed the fact that the last argument to easy_display was actually a function call.</p>
+<p>It was <code>best_doc</code> not <code>best_display</code>. Didn’t even notice the case statement at the end. Nor the type signature. Didn’t even have time to understand that the last three lines were just calculating some kind of length. Or that <code>best_doc</code> just calculated the best document and passed it to <code>display</code>.</p>
+<p>In short, I didn’t figure out <em>what</em> the function really did.</p>
+<p>But I did notice the overall structure: + do some simple thing for OneLineMode + a similar simple thing for LeftMode, and then + some complex thing for the general mode (using some smaller functions).</p>
+<p>I inferred that <code>easy_display</code> was for simple special cases, and <code>display</code> for the general case.</p>
+<p>That’s all.</p>
+<h1 id="epam-like-models-of-recognition-and-learning">EPAM-like Models of Recognition and Learning</h1>
+<p>Feigenbaum, E. A., &amp; Simon, H. A. (1984). EPAM-like models of recognition and learning. Cognitive Science, 8, 305-336.</p>
+<blockquote>
+<p>[FAMILIARIZE] begins by sorting an object through the net. If no image is found, an initial image is created containing only the information that was examined along the path to the net leaf. However, if an image ex- ists, FAM checks object and image for differences. If no differences are found, at least to the extent of the (possibly incomplete) information in the</p>
+</blockquote>
+<p>So, the human mind might create a new category using only the information that it used to examine the new object.</p>
+<p><strong>TODO</strong>: example?</p>
+<blockquote>
+<p>If differences [between the object and our proposed category] are found, that means a confusion (failure to discriminate adequately) exists, and the discrimination net must be aug- mented. The strategy of DISC is to modify the discrimination net as little as possible to accomplish the augmentation. The existing net tests are used to the extent possible to accomplish the discrimination. Starting with the root node of the net, the tests are applied to both object and discrepant image. If a test is encountered for which the outcomes differ, which can happen if the image is attached to a n.e.c. branch, the object and the image are each given a new branch appropriately labeled with its test value. Thus, discrimination learning is forced to the highest possible levels of the existing tree before any new subtrees will be added. For an understanding of subsequent sections of this paper, it is important to keep in mind that in the n-ary nets of EPAM III, net growth is biased toward breadth, rather than depth.</p>
+</blockquote>
+<h1 id="a-study-of-thinking">A Study of Thinking</h1>
+<p>Examples that a categorization algorithm must explain:</p>
+<blockquote>
+<p>People learn to distinguish conceptually between daylight color film and indoor color film, between different cuts of meat, between fresh vegetables and stale ones, between policemen and subway guards, between detergents and soap flakes, between honest and crooked politicians, between a flow of traffic that permits crossing the street safely and a flow that one should not risk. How may one go about analyzing the learning process that leads to such rational behaviour?</p>
+<p>– A Study of Thinking, Bruner et al, 1956</p>
+</blockquote>
+<p>They’ve covered some very real, very “complex” categories that we humans recognize every single day. None of these is a toy example. Some of them hold a lot of value too.</p>
+<p>Note that these are categories that I can’t recognize even when I try to. Others I can recognize when I pay attention, such as perfectionism or opportunity costs or resentment.</p>
+<hr />
+<blockquote>
+<p>Virtually all the effective strategies for attaining concepts depend upon the use of some sort of initial focus.</p>
+</blockquote>
+<p>Hmm… We might remember the abstract definition using a concrete exemplar. For example, the book suggests that we use 3 as a reference prime number, noticing that it is divisible only by itself and 1.</p>
+<p>The authors suggest that we then form a “typical instance” of the category to help us “keep order” (?). For example, subjects were apparently better able to point to the typical colour of an orange than the range of colours of oranges.</p>
+<h1 id="scope-insensitivity">Scope Insensitivity</h1>
+<blockquote>
+<p>But what about the billions of other children in the world? Why isn’t it a bad idea to help this one child, when that causes the value of all the other children to go down? How can it be significantly better to have 1,329,342,410 happy children than 1,329,342,409, but then somewhat worse to have seven more at 1,329,342,417?</p>
+<p>– <a href="http://lesswrong.com/lw/n9/the_intuitions_behind_utilitarianism/"></a></p>
+</blockquote>
+<p><strong>Observation</strong>: It takes me time to differentiate between 1,329,342,409 and 1,329,342,417. I have to read past eight similar digits (“1,329,342,4”) before I can come to the part that actually differs (“09” vs “17”).</p>
+<p><strong>Hypothesis</strong>: Scope insensitivity &lt;- can’t <em>differentiate</em> large numbers because they are largely similar and we don’t invest the time necessary to dig down into the differing bits.</p>
+<p><strong>Hypothesis</strong>: If we had a notation that emphasized the differing parts, maybe we would not be so scope-insensitive after all.</p>
+<p><strong>TODO</strong>: Find a way to differentiate large numbers in a way that appeals to the human mind.</p>
+<p>What about scientific notation? 6.023 x 10^23 focusses on the first four digits of a large number. Planck’s constant (6.626 x 10^-34 J.s) focusses on the last four decimal digits of a number with 37 decimal digits (or something like that).</p>
+<h1 id="experimental-lessons">Experimental Lessons</h1>
+<p><strong>Lesson</strong>: Keep the source and target buffers in separate workspaces so that you don’t copy by staring.</p>
+
+<div class="info">Created: June 20, 2017</div>
+<div class="info">Last modified: July  9, 2017</div>
+<div class="info">Status: in-progress notes</div>
+<div class="info"><b>Tags</b>: notes, cognitive</div>
+
+<br />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'spkrationalitytrainingground'; // required: replace example with your forum shortname
+    var disqus_identifier = '/cognitive-psychology.html';
+    var disqus_title = 'Cognitive Psychology';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<script type="text/javascript" src="https://fast.fonts.net/jsapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.js"></script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+        </div>
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>
